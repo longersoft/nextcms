@@ -1,0 +1,424 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	layouts
+ * @since		1.0
+ * @version		2012-06-05
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="<?php echo $this->APP_LANGUAGE_DIR; ?>">
+<head>
+	<?php echo $this->headTitle(); ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->APP_CHARSET; ?>" />
+	<meta name="robots" content="noindex, nofollow" />
+	<?php echo $this->headMeta(); ?>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->APP_STATIC_URL; ?>/templates/admin/skins/default/images/favicon.ico" />
+	<?php 
+	$this->style()
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/' . $this->dojoConfig()->getTheme() . '.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/document.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dojox/widget/Toaster/Toaster.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dojox/layout/resources/ExpandoPane.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/templates/admin/skins/default/styles.css');
+	// Support RTL language
+	if ('rtl' == $this->APP_LANGUAGE_DIR) {
+		$this->style()
+			 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/' . $this->dojoConfig()->getTheme() . '_rtl.css')
+			 ->appendStylesheet($this->APP_STATIC_URL . '/templates/admin/skins/default/styles_rtl.css');
+	}
+	echo $this->style();
+	?>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/dojo.js" data-dojo-config="parseOnLoad: true, isDebug: false, ioPublish: true"></script>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/app-dojo.js"></script>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript">
+	dojo.registerModulePath("core", "<?php echo $this->APP_STATIC_URL; ?>/modules/core");
+	dojo.require("core.js.base.I18N");
+	dojo.require("core.js.Constant");
+	core.js.base.I18N.setLocale("<?php echo $this->APP_LANGUAGE; ?>");
+	core.js.Constant.ROOT_URL = "<?php echo $this->APP_ROOT_URL; ?>";
+	</script>
+</head>
+<body class="<?php echo $this->dojoConfig()->getTheme(); ?>">
+	<!-- Loader -->
+	<div id="appLoader" class="appLoader">
+		<div><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global._share.loadingAction'); ?></div>
+	</div>
+	<!-- /Loader -->
+
+	<!-- PoweredBy -->
+	<div id="appPoweredByContainer">
+		Powered by <a href="http://nextcms.org" target="_blank">NextCMS</a>
+	</div>
+	<!-- /PoweredBy -->
+
+	<!-- Main -->
+	<div id="appBodyContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true">
+		<!-- Menu -->
+		<div data-dojo-type="dijit.MenuBar" data-dojo-props="region:'top'">
+			<div data-dojo-type="dijit.PopupMenuBarItem">
+				<span><?php echo sprintf($this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.welcome'), Zend_Auth::getInstance()->getIdentity()->user_name); ?></span>
+
+				<div data-dojo-type="dijit.Menu">
+					<!-- DashboardMenuItem -->
+					<div data-dojo-type="dijit.MenuItem">
+						<a href="<?php echo $this->url(array(), 'core_dashboard_index'); ?>" class="appTopMenuItem" data-app-ajax="false"><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.dashboard'); ?></a>
+					</div>
+					<!-- /DashboardMenuItem -->
+
+					<!-- HomepageMenuItem -->
+					<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appHomeIcon'">
+						<a href="<?php echo $this->baseUrl(); ?>" class="appTopMenuItem" data-app-ajax="false"><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.homepage'); ?></a>
+					</div>
+					<!-- /HomepageMenuItem -->
+					
+					<div data-dojo-type="dijit.MenuSeparator"></div>
+					
+					<!-- ProfileMenuItem -->
+					<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appProfileIcon'">
+						<a href="<?php echo $this->url(array(), 'core_profile_edit'); ?>" class="appTopMenuItem" data-app-ajax="true"><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.profile'); ?></a>
+					</div>
+					<!-- /ProfileMenuItem -->
+					
+					<!-- OpenIdMenuItem -->
+					<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appOpenIdIcon'">
+						<a href="<?php echo $this->url(array(), 'core_openid_list'); ?>" class="appTopMenuItem" data-app-ajax="true"><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.openIdIdentities'); ?></a>
+					</div>
+					<!-- /OpenIdMenuItem -->
+					
+					<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowPersonalMenu'); ?>
+					
+					<div data-dojo-type="dijit.MenuSeparator"></div>
+					
+					<!-- LogoutMenuItem -->
+					<div data-dojo-type="dijit.MenuItem">
+						<a href="<?php echo $this->url(array(), 'core_auth_logout'); ?>" class="appTopMenuItem" data-app-ajax="false"><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.logout'); ?></a>
+					</div>
+					<!-- /LogoutMenuItem -->
+				</div>
+			</div>
+			
+			<!-- ModulesMenu -->
+			<?php if ($modules = $this->backendMenu()->modules()) : ?>
+			<div data-dojo-type="dijit.PopupMenuBarItem">
+				<span><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global.layout.modules'); ?></span>
+				
+				<div data-dojo-type="dijit.Menu">
+					<?php foreach ($modules as $module => $items) : ?>
+					<div data-dojo-type="dijit.PopupMenuItem">
+						<span><?php if ($items['icon']) : ?><img src="<?php echo $this->APP_STATIC_URL . $items['icon']; ?>" style="vertical-align: middle" /> <?php endif; ?><?php echo $items['name']; ?></span>
+						
+						<div data-dojo-type="dijit.Menu">
+							<?php foreach ($items['items'] as $route => $data) : ?>
+							<div data-dojo-type="dijit.MenuItem">
+								<a href="<?php echo $this->url(array(), $route); ?>" class="appTopMenuItem" data-app-ajax="<?php if ($data['ajax']) : ?>true<?php else : ?>false<?php endif; ?>"><?php if ($data['icon']) : ?><img src="<?php echo $this->APP_STATIC_URL . $data['icon']; ?>" style="vertical-align: middle" /> <?php endif; ?><?php echo $data['title']; ?></a>
+							</div>
+							<?php endforeach; ?>
+							
+							<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowMenu_' . $module); ?>
+						</div>
+					</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+			<!-- /ModulesMenu -->
+		</div>
+		<!-- /Menu -->
+
+		<!-- Content -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', region: 'center', gutters: true">
+			<!-- Toolbox -->
+			<div data-dojo-type="dojox.layout.ExpandoPane" data-dojo-props="region: 'left', splitter: true, previewOnDblClick: false, startExpanded: false, maxWidth: 300, title: '<?php echo $this->translator(true)->setLanguageDir('/modules/core/languages')->_('global.layout.toolbox'); ?>', style: 'width: 300px'">
+				<div id="appToolboxContainer" data-dojo-type="dijit.layout.TabContainer" data-dojo-props="tabPosition: 'bottom', tabStrip: true">
+					<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: false, nested: true, region: 'center', gutters: false, iconClass: 'appIcon appLinkIcon', title: '<?php echo $this->translator(true)->setLanguageDir('/modules/core/languages')->_('global.layout.linkToolbox'); ?>'">
+						<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowLinkToolbox'); ?>
+					</div>
+				
+					<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: false, nested: true, region: 'center', gutters: false, iconClass: 'appIcon appImageIcon', title: '<?php echo $this->translator(true)->setLanguageDir('/modules/core/languages')->_('global.layout.imageToolbox'); ?>'">
+						<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowImageToolbox'); ?>
+					</div>
+					
+					<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: false, nested: true, region: 'center', gutters: false, iconClass: 'appIcon appVideoIcon', title: '<?php echo $this->translator(true)->setLanguageDir('/modules/core/languages')->_('global.layout.videoToolbox'); ?>'">
+						<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowVideoToolbox'); ?>
+					</div>
+				
+					<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: false, nested: true, region: 'center', gutters: false, iconClass: 'appIcon appFileIcon', title: '<?php echo $this->translator(true)->setLanguageDir('/modules/core/languages')->_('global.layout.fileToolbox'); ?>'">
+						<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowFileToolbox'); ?>
+					</div>
+					
+					<?php Core_Base_Hook_Registry::getInstance()->executeAction('Core_Layout_Admin_ShowToolboxPane'); ?>
+				</div>
+			</div>
+			<!-- /Toolbox -->
+			
+			<div id="appContentPane" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global._share.loadingAction'); ?></span></div></div>', style: 'border: none; padding: 0'">
+				<?php echo $this->layout()->content; ?>
+			</div>
+		</div>
+		<!-- /Content -->
+	</div>
+	<!-- /Main -->
+
+	<!-- Notifications -->
+	<div data-dojo-type="dojox.widget.Toaster" data-dojo-props="positionDirection: '<?php echo $this->config('core', 'notification_position', 'tr-down'); ?>', messageTopic: '/app/global/notification', separator: '<hr />', duration: <?php echo $this->config('core', 'notification_duration', 2) * 1000; ?>">
+		<script type="dojo/connect">
+		dojo.subscribe("/app/global/updateNotificationSettings", this, function(data) {
+			this.positionDirection = data.position || "tr-down";
+			this.duration		   = data.duration || 2000;
+		});
+		</script>
+	</div>
+	<!-- /Notifications -->
+
+<?php $this->script()->captureStart(); ?>
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuBar");
+dojo.require("dijit.MenuBarItem");
+dojo.require("dijit.MenuItem");
+dojo.require("dijit.MenuSeparator");
+dojo.require("dijit.PopupMenuBarItem");
+dojo.require("dijit.PopupMenuItem");
+dojo.require("dojo.hash");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.layout.ExpandoPane");
+dojo.require("dojox.widget.Standby");
+dojo.require("dojox.widget.Toaster");
+
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("core.js.base.dnd.TargetManager");
+
+dojo.addOnLoad(function() {
+	////////// LOADING EFFECT //////////
+	
+	// Create a Standby instance
+	var appStandBy = new dojox.widget.Standby({
+		target: "appBodyContainer",
+		imageText: "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('global._share.loadingAction'); ?>"
+	});
+	document.body.appendChild(appStandBy.domNode);
+	appStandBy.startup();
+	
+	// Add pre-loading
+	setTimeout(function() {
+		dojo.fadeOut({
+			node: "appLoader",
+			duration: 500,
+			onEnd: function() {
+				dojo.style("appLoader", "display", "none");
+			}
+		}).play();
+	}, 500);
+
+	////////// HANDLE MENU EVENT //////////
+	
+	// DOJO LESSON: dijit.Menu widget is placed at the bottom of page.
+	// Therefore the following query statement does NOT work:
+	// 		dojo.query("#appHeader a.appTopMenuItem").forEach(...);
+	dojo.query("a.appTopMenuItem").forEach(function(node, index, arr) {
+		dojo.connect(node, "onclick", function(e) {
+			var ajax = dojo.attr(node, "data-app-ajax");
+			if (ajax == "true") {
+				// Load the accessoring route
+				e.preventDefault();
+				// Update the location hash
+				var href = dojo.attr(node, "href");
+				//var hash = dojo.objectToQuery({ u: href });
+				var hash = "u=" + href;
+				dojo.hash(hash);
+				dojo.publish("/app/global/onHashChange", [ hash ]);
+			} else {
+				// Redirect user to desired page
+				window.location = dojo.attr(node, "href");
+			}
+		});
+	});
+
+	////////// TOPICS //////////
+	
+	dojo.subscribe("/app/global/onSelectToolbox", function(/*String*/ toolboxIdContainer) {
+		// summary:
+		//		Activates the toolbox
+		// toolboxIdContainer:
+		//		The Id of toolbox container
+		var pane = dijit.byId(toolboxIdContainer);
+		if (!pane) {
+			return;
+		}
+		var appToolboxContainer = dijit.byId("appToolboxContainer");
+		var children = appToolboxContainer.getChildren();
+
+		// Select the toolbox pane
+		if (dojo.indexOf(children, pane) != -1) {
+			appToolboxContainer.selectChild(pane);
+		} else {
+			// The pane belongs to a group of tab containers
+			var parent = pane.getParent();
+			if (dojo.indexOf(children, parent) != -1) {
+				appToolboxContainer.selectChild(parent);
+			}
+			parent.selectChild(pane);
+		}
+
+		// Expand the toolbox pane if it is hidden
+		var expandoPane = appToolboxContainer.getParent();
+		if (dojo.style(expandoPane.cwrapper, "visibility") == "hidden") {
+			expandoPane.toggle();
+		}
+	});
+
+	dojo.subscribe("/app/global/onRemoveToolbox", function(/*String|String[]*/ toolboxIdContainers) {
+		// summary:
+		//		Removes toolbox after uninstalling the hook
+		// toolboxIdContainers:
+		//		Id or array of container's Ids
+		var appToolboxContainer = dijit.byId("appToolboxContainer");
+		var ids = dojo.isArray(toolboxIdContainers) ? toolboxIdContainers : [ toolboxIdContainers ];
+		dojo.forEach(ids, function(id) {
+			var pane = dijit.byId(id);
+			if (dojo.indexOf(appToolboxContainer.getChildren(), pane) != -1) {
+				appToolboxContainer.removeChild(pane);
+			} else {
+				var parent = pane.getParent();
+				parent.removeChild(pane);
+			}
+			pane.destroyRecursive();
+		});
+	});
+
+	// Below are the topics which the sub-modules can subscribe to update UI
+	dojo.subscribe("/app/global/onHashChange", function(/*String*/ hash) {
+		// I do not use the "dojo/hashchange" channel of Dojo, because I want 
+		// to update the location hash without making following request
+		var obj = dojo.queryToObject(hash);
+		var url = obj.u;
+		
+		// If you want to make new Ajax request, pass the param u=yourUrl to hash
+		if (!url) {
+			return;
+		}
+		
+		core.js.base.controllers.Subscriber.unsubscribeAll("/app/global/dnd/onDropImage");
+		core.js.base.controllers.Subscriber.unsubscribeAll("/app/global/dnd/onDropLink");
+		core.js.base.controllers.Subscriber.unsubscribeAll("/app/global/dnd/onDropVideo");
+
+		// DOJO LESSON: In order to make parse working and execute the external JS in new content,
+		// use dojox.layout.ContentPane instead of dijit.layout.ContentPane
+		// then use setContent() to update the content.
+		//
+		// - Work:
+		// 		dijit.byId(...).setContent(...);
+		// With this approach, I even don't need to parse the content:
+		// 		dojo.parser.parse(dijit.byId(...).domNode);
+		// 
+		// - Do NOT work:
+		// 		dojo.byId(...).innerHTML = ...;
+		// 		dojo.parser.parse(dojo.byId(...));
+		
+		// So, below is the solution:
+		//		dojo.xhrPost({
+		//			url: obj.u,
+		//			load: function(data) {
+		//				dijit.byId("appContentPane").setContent(data);
+		//			}
+		//		});
+		
+		// Well, actually, there is built-in method provided by Dojo.
+		// Just set href attribute, and Dojo does everything for me:
+		dijit.byId("appContentPane").set("href", url);
+		dojo.connect(dijit.byId("appContentPane"), "onDownloadEnd", function() {
+			dojo.publish("/app/global/onLoadComplete", [ dijit.byId("appContentPane").get("href") ]);
+		});
+	});
+
+	// I cannot retrive any Dijit widget instances in the response of an Ajax request as follow:
+	// 		<div data-dojo-type="..." id="widgetId"></div>
+	//		...
+	//		console.log(dijit.byId(widgetId));			// undefined
+	//		dojo.addOnLoad(function() {
+	//			console.log(dijit.byId(widgetId));		// undefined
+	//			setTimeout(function() {
+	//				console.log(dijit.byId(widgetId));	// It works, but it is not a nice solution
+	//			}, 100);
+	//		});
+	//
+	// The solution is that publish a topic after the additional pane is fully loaded (by connecting "onDownloadEnd" event of the pane).
+	// Publishing "/dojo/io/load" topic does not help, because it will be called before the response is fully loaded.
+	// Below is sample usage:
+	//		// At the page showing the pane
+	//		<div data-dojo-type="..." id="pane"></div>
+	//		...
+	//		dijit.byId("pane").set("href", backendUrl);
+	//		dojo.connect(dijit.byId("pane"), "onDownloadEnd", function() {
+	//			dojo.publish("/app/global/onLoadComplete/moduleName_controllerName_actionName");
+	//		});
+	
+	//		// The view script associating with backendUrl
+	//		<div data-dojo-type="..." id="widgetId"></div>
+	//		...
+	//		var handler = dojo.subscribe("/app/global/onLoadComplete/moduleName_controllerName_actionName", function() {
+	//			var widget = dijit.byId(widgetId);
+	//			... Do something with the widget ...
+	//			dojo.unsubscribe(handler);
+	//		});
+	dojo.subscribe("/app/global/onLoadComplete", function(/*String*/ url) {
+		var prefixUrl = "<?php echo $this->backendUrl(); ?>";
+		if (!url || url.substr(0, prefixUrl.length) != prefixUrl) {
+			return;
+		}
+		url = url.substr(prefixUrl.length);
+		// Now, url is in the format of /module/controller/action/query
+		if (url.length > 0 && url[0] == "/") {
+			url = url.substr(1);
+		}
+		var paths = url.split("/");
+		if (paths.length >= 3) {
+			var module = paths[0], controller = paths[1], action = paths[2];
+			if ((pos = action.indexOf("?")) != -1) {
+				action = action.substr(0, pos);
+			}
+			dojo.publish("/app/global/onLoadComplete/" + [module, controller, action].join("_"));
+		}
+	});
+
+	// Handle drag and drop
+	// Provide the URL to embed a video
+	core.js.base.controllers.ActionProvider.set("core_helper_play", {
+		url: "<?php echo $this->url(array(), 'core_helper_play'); ?>",
+		isAllowed: true
+	});
+	dojo.subscribe("/app/global/onLoadComplete", function(url) {
+		dojo.query("textarea, input[type='text'], span.mceEditor").forEach(function(node) {
+			core.js.base.dnd.TargetManager.getInstance().add(node, ["appDndImage"], core.js.base.dnd.TargetManager.handleDropImage);
+			core.js.base.dnd.TargetManager.getInstance().add(node, ["appDndVideo"], core.js.base.dnd.TargetManager.handleDropVideo);
+			core.js.base.dnd.TargetManager.getInstance().add(node, ["appDndLink"], core.js.base.dnd.TargetManager.handleDropLink);
+		});
+	});
+
+	// Automatically make a request based on current location hash
+	if (dojo.hash()) {
+		dojo.publish("/app/global/onHashChange", [ dojo.hash() ]);
+	}
+});
+<?php $this->script()->captureEnd(); ?>
+
+<?php 
+// Place scripts at the bottom of page
+echo $this->script();
+?>
+</body>
+</html>

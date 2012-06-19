@@ -1,0 +1,107 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	skins
+ * @since		1.0
+ * @version		2012-06-19
+ */
+
+@import "flags.css";
+@import "icons.css";
+
+/********** LAYOUT **********/
+html, body { height: 100%; margin: 0; overflow: hidden; padding: 0; width: 100%; }
+
+#appBodyContainer { border: 0; height: 100%; width: 100%; }
+.appBorderContainer { border: 1px solid #B5BCC7 !important; }
+#appPoweredByContainer { position: absolute; top: 10px; right: 15px; z-index: 1000; }
+
+/* Headline */
+.appHeadline { background: url(images/headline.jpg) left center repeat-x; clear: both; position: relative; }
+.appHeadline span { background-color: #f9f9f9; color: #444; display: inline; margin: 0px; padding-right: 4px; }
+
+/* Loader */
+.appLoader { background: #ededed url(images/loading.gif) center center no-repeat; display: "none"; height: 100%; left: 0; margin: 0; padding: 0; position: absolute; top: 0; vertical-align: middle; width: 100%; z-index: 999; }
+.appLoader div:first-child { font-size: 1.364em; margin: 0 auto; margin-top: 15px; position: absolute; text-align: center; top: 50%; width: 100%; }
+
+/* Login */
+#appLoginContainer { margin-top: -80px; position: absolute; top: 50%; width: 100%; }
+#appLoginWrapper { margin: 0 auto; width: 400px; }
+
+/********** COMMON ***********/
+.appCenter { position: absolute; top: 49%; width: 100%; }
+.appCenter div:first-child { text-align: center; margin: 0 8px; }
+.appForm label { float: left; margin-right: 10px; text-align: right; width: 150px; }
+.appForm div.appFormRow { clear: both; margin-bottom: 5px; }
+.appForm label.appTopLabel { padding-bottom: 4px; text-align: left; width: 100%; }
+.appClear { clear: both; height: 1px; }
+.appLeft { float: left; }
+.appRight { float: right; }
+.appSeparator { background-color: #ededed; border: 0; height: 1px; width: 100%; }
+.appTitleBar { background-color: #efefef; background-image: url(images/titleBar.png); background-repeat: repeat-x; border: 1px solid #b5bcc7; min-height: 17px; padding: 3px 7px 3px 7px; vertical-align: middle; }
+
+/* Bottom toolbar */
+.appBottomToolbar { border-bottom: none !important; border-top: 1px solid #B5BCC7; }
+.appBottomToolbar .appPaginatorActivated { background-color: #abd6ff; border-radius: 2px; -moz-border-radius: 2px; }
+
+/* Paginator */
+.appPaginator span { height: 25px; line-height: 25px; padding: 5px; text-align: center; }
+.appPaginator .appPaginatorPage { background: #cfe5fa; }
+.appPaginator .appPaginatorDisabled {}
+.appPaginator .appPaginatorActivated { background: #769dc0; color: #fff; }
+
+/* Trash */
+.appTrashBigEmpty { background: url(images/bigEmptyTrash.png) center center no-repeat; cursor: pointer; height: 64px; width: 64px; }
+.appTrashBigFull { background: url(images/bigFullTrash.png) center center no-repeat; cursor: pointer; height: 64px; width: 64px; }
+
+/********** LAYOUT EDITOR **********/
+.appAddLayoutIcon { background-image: url(images/addLayout.png); }
+.appAddTabContainerIcon { background-image: url(images/addTabContainer.png); }
+.appEditLayoutIcon { background-image: url(images/editLayout.png); }
+.appDeleteLayoutIcon { background-image: url(images/deleteLayout.png); }
+.appDeleteTabContainerIcon { background-image: url(images/deleteTabContainer.png); }
+.appLayoutGridContainer { margin: 0; overflow-x: hidden !important; overflow-y: scroll !important; padding: 5px !important; }
+.appLayoutGridContainer .gridContainerTable { border-collapse: collapse; }
+.appLayoutGridContainer .gridContainerZone { border: 2px solid #ededed; }
+.appLayoutGridContainer .gridContainerZone > * { margin: 5px !important; }
+.appLayoutBorderContainer { border: 1px solid #B5BCC7 !important; }
+.appLayoutBorderContainerIcon { background-image: url(images/borderContainer.png); height: 16px; width: 16px; }
+.appLayoutGridContainerIcon { background-image: url(images/gridContainer.png); height: 16px; width: 16px; }
+.appLayoutGridZoneIcon { background-image: url(images/gridZone.png); height: 16px; width: 16px; }
+.appLayoutTabContainerIcon { background-image: url(images/tabContainer.png); height: 16px; width: 16px; }
+.appLayoutWidgetIcon { background-image: url(images/widget.png); height: 16px; width: 16px; }
+
+/*********** PASSWORD STRENGTH METER ***********/
+/* core.js.views.PasswordStrengthMeter */
+.appPasswordStrengthMeterContainer { margin: 0 10px; position: relative; width: 200px; }
+.appPasswordStrengthMeterPercentBarContainer { background: #B5C9D7; height: 3px; left: 0; position: absolute; top: 0; width: 200px; }
+.appPasswordStrengthMeterPercentBar { background: #73C74A; height: 3px; left: 0; position: absolute; top: 0; }
+.appPasswordStrengthMeterLabel { padding-top: 5px; }
+
+/*********** OVERRIDE DOJO THEME ***********/
+/* dijit.Dialog */
+.claro .dijitDialogUnderlay { background: #a1a1a1; }
+.claro .dijitTextBoxDisabled input { color: #333; }
+
+/* dijit.layout.ContentPane */
+.appContentPane { padding: 8px !important; }
+.claro .dijitContentPane { padding: 0; }
+.claro .dijitContentPaneLoading { margin: 8px !important; }
+
+/* dijit.Menu */
+td.dijitMenuItemLabel a {  text-decoration: none; }
+
+/* dojox.highlight */
+.claro pre, .claro code { background: #FFF; border: none; font-size: 100%; }
+
+/* dojox.widget.Toaster */
+.dijitToasterContainer { font: 10px Verdana, Arial, Helvetica, sans-serif !important; }
+.dijitToasterContent { padding: 1em; padding-top: 0.25em; background: #73C74A; }
+.dijitToasterMessage { color: #FFF; }
+/*a.dijitInlineEditBoxDisplayModeDisabled { cursor: pointer; }*/

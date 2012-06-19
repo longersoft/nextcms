@@ -1,0 +1,121 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	layouts
+ * @since		1.0
+ * @version		2012-03-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="<?php echo $this->APP_LANGUAGE_DIR; ?>">
+<head>
+	<?php echo $this->headTitle(); ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->APP_STATIC_URL; ?>/templates/admin/skins/default/images/favicon.ico" />
+	<?php
+	$this->headLink()
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/claro/claro.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/claro/document.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dojox/widget/Toaster/Toaster.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/templates/admin/skins/default/styles.css');
+	// Support RTL language
+	if ('rtl' == $this->APP_LANGUAGE_DIR) {
+		$this->headLink()
+			 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/' . $this->dojoConfig()->getTheme() . '_rtl.css')
+			 ->appendStylesheet($this->APP_STATIC_URL . '/templates/admin/skins/default/styles_rtl.css');
+	}
+	echo $this->headLink();
+	?>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/dojo.js" data-dojo-config="parseOnLoad: true, isDebug: false"></script>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/app-dojo.js"></script>
+	<?php
+	$this->script()
+		 ->appendFile($this->APP_STATIC_URL . '/modules/core/js/base/I18N.js');
+	echo $this->script();
+	?>
+	<script type="text/javascript">
+	dojo.registerModulePath("core", "<?php echo $this->APP_STATIC_URL; ?>/modules/core");
+	core.js.base.I18N.setLocale("<?php echo $this->APP_LANGUAGE; ?>");
+	</script>
+</head>
+<body class="claro">
+	<div style="margin: 0 auto; height: 100%; width: 960px">
+		<h1><?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install._share.wizard'); ?></h1>
+		
+		<div id="appInstallWizardContainer">
+			<div id="appInstallTabContainer" data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: true, nested: true, doLayout: false">
+			</div>
+			
+			<!-- NextStepButton -->
+			<div class="appRight">
+				<button id="appInstallNextButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+					<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install._share.nextButton'); ?>
+				</button>
+			</div>
+			<!-- /NextStepButton -->
+			
+			<div style="clear: both">
+			Powered by <a href="http://nextcms.org" target="_blank">NextCMS</a>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Notifications -->
+	<div data-dojo-type="dojox.widget.Toaster" data-dojo-props="positionDirection: 'tr-down', messageTopic: '/app/global/installNotification', separator: '<hr />'"></div>
+	<!-- /Notifications -->	
+	
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.widget.Toaster");
+
+dojo.require("core.js.controllers.InstallController");
+
+dojo.addOnLoad(function() {
+	var appInstallController = new core.js.controllers.InstallController("appInstallWizardContainer");
+
+	appInstallController.setWizardContainer(dijit.byId("appInstallTabContainer"))
+						.setNextButton(dijit.byId("appInstallNextButton"))
+						.addStepPane(new dojox.layout.ContentPane({
+							id: "coreInstallCheckPane",
+							title: "<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install.check.title'); ?>",
+							href: "<?php echo $this->url(array(), 'core_install_check'); ?>",
+							loadingMessage: "",
+							notificationMessage: "",
+							appRoute: "core_install_check"
+						}))
+						.addStepPane(new dojox.layout.ContentPane({
+							id: "coreInstallConfigPane",
+							title: "<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install.config.title'); ?>",
+							href: "<?php echo $this->url(array(), 'core_install_config'); ?>",
+							loadingMessage: "",
+							notificationMessage: "<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install.config.saving'); ?>",
+							appRoute: "core_install_config"
+						}))
+						.addStepPane(new dojox.layout.ContentPane({
+							id: "coreInstallCompletePane",
+							title: "<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install.complete.title'); ?>",
+							href: "<?php echo $this->url(array(), 'core_install_complete'); ?>",
+							loadingMessage: "",
+							notificationMessage: "<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install.complete.creatingUser'); ?>",
+							appRoute: "core_install_complete"
+						}));
+
+	// Ready for installing
+	appInstallController.init();
+});
+</script>
+</body>
+</html>

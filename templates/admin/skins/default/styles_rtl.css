@@ -1,0 +1,18 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	skins
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/** Support RTL languages */
+.appLeft { float: right; }
+.appRight { float: left; }
+.appForm label { float: right; }

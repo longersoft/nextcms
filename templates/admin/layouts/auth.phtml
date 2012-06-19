@@ -1,0 +1,63 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	layouts
+ * @since		1.0
+ * @version		2012-03-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!DOCTYPE form PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html dir="<?php echo $this->APP_LANGUAGE_DIR; ?>">
+<head>
+	<?php echo $this->headTitle(); ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->APP_CHARSET; ?>" />
+	<meta name="robots" content="noindex, nofollow" />
+	<?php echo $this->headMeta(); ?>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->APP_STATIC_URL; ?>/templates/admin/skins/default/images/favicon.ico" />
+	<?php 
+	$this->headLink()
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/' . $this->dojoConfig()->getTheme() . '.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/document.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dojox/widget/Toaster/Toaster.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/templates/admin/skins/default/styles.css');
+	// Support RTL language
+	if ($this->APP_LANGUAGE_DIR == 'rtl') {
+		$this->headLink()
+			 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/' . $this->dojoConfig()->getTheme() . '_rtl.css')
+			 ->appendStylesheet($this->APP_STATIC_URL . '/templates/admin/skins/default/styles_rtl.css');
+	}
+	echo $this->headLink();
+	?>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/dojo.js" data-dojo-config="parseOnLoad: true"></script>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/app-dojo.js"></script>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/jquery/<?php echo APP_JQUERY_VER; ?>/jquery.min.js"></script>
+</head>
+<body class="<?php echo $this->dojoConfig()->getTheme(); ?>">
+	<?php echo $this->layout()->content; ?>
+	
+	<!-- Notifications -->
+	<div data-dojo-type="dojox.widget.Toaster" data-dojo-props="positionDirection: 'tr-down', messageTopic: '/app/global/notification', separator: '<hr />'"></div>
+	<!-- /Notifications -->
+	
+	<?php echo $this->flashMessenger(); ?>
+
+<script type="text/javascript">
+dojo.require("dojox.widget.Toaster");
+</script>
+
+<?php
+// Push the script at the bottom of page
+echo $this->script()->minify();
+?>
+</body>
+</html>

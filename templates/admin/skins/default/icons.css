@@ -1,0 +1,65 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	skins
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/********** ICONS **********/
+.appIcon { background-repeat: no-repeat; height: 16px; text-align: center; vertical-align: middle; width: 16px; }
+.appActivateIcon { background-image: url(images/activate.png); }
+.appAddIcon { background-image: url(images/add.png); }
+.appBookmarkIcon { background-image: url(images/bookmark.png); }
+.appCancelIcon { background-image: url(images/cancel.png); }
+.appCollapseIcon { background-image: url(images/collapse.png); }
+.appConfigIcon { background-image: url(images/config.png); }
+.appCopyIcon { background-image: url(images/copy.png); }
+.appDeactivateIcon { background-image: url(images/deactivate.png); }
+.appDeleteIcon { background-image: url(images/delete.png); }
+.appDownloadIcon { background-image: url(images/download.png); }
+.appExpandIcon { background-image: url(images/expand.png); }
+.appExportIcon { background-image: url(images/export.png); }
+.appFileIcon { background-image: url(images/file.png); }
+.appFilterIcon { background-image: url(images/filter.png); }
+.appHomeIcon { background-image: url(images/home.png); }
+.appHorizontalIcon { background-image: url(images/horizontal.png); }
+.appImageIcon { background-image: url(images/image.png); }
+.appImportIcon { background-image: url(images/import.png); }
+.appLinkIcon { background-image: url(images/link.png); }
+.appLockIcon { background-image: url(images/lock.png); }
+.appMessageIcon { background-image: url(images/message.png); }
+.appMoveDownIcon { background-image: url(images/moveDown.png); }
+.appMoveUpIcon { background-image: url(images/moveUp.png); }
+.appOpenIdIcon { background-image: url(images/openId.png); }
+.appPaginatorFirstIcon { background-image: url(images/first.png); }
+.appPaginatorLastIcon { background-image: url(images/last.png); }
+.appPaginatorNextIcon { background-image: url(images/next.png); }
+.appPaginatorPreviousIcon { background-image: url(images/prev.png); }
+.appPasteIcon { background-image: url(images/paste.png); }
+.appProfileIcon { background-image: url(images/profile.png); }
+.appRedoIcon { background-image: url(images/redo.png); }
+.appRedoDisabledIcon { background-image: url(images/redoDisabled.png); }
+.appRefreshIcon { background-image: url(images/refresh.png); }
+.appRenameIcon { background-image: url(images/rename.png); }
+.appRunIcon { background-image: url(images/run.png); }
+.appSaveIcon { background-image: url(images/save.png); }
+.appSearchIcon { background-image: url(images/search.png); }
+.appSortAscendingIcon { background-image: url(images/sortAscending.png); }
+.appSortDescendingIcon { background-image: url(images/sortDescending.png); }
+.appStarIcon { background-image: url(images/star.png); }
+.appTrashEmptyIcon { background-image: url(images/emptyTrash.png); }
+.appTrashFullIcon { background-image: url(images/fullTrash.png); }
+.appUndoIcon { background-image: url(images/undo.png); }
+.appUndoDisabledIcon { background-image: url(images/undoDisabled.png); }
+.appUnlockIcon { background-image: url(images/unlock.png); }
+.appUnstarIcon { background-image: url(images/unstar.png); }
+.appUploadIcon { background-image: url(images/upload.png); }
+.appVerticalIcon { background-image: url(images/vertical.png); }
+.appVideoIcon { background-image: url(images/video.png); }

@@ -1,0 +1,51 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		admin
+ * @subpackage	skins
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/********** FLAGS **********/
+.appFlag_bg_BG { background-image: url(flags/bg_BG.png); }
+.appFlag_cs_CZ { background-image: url(flags/cs_CZ.png); }
+.appFlag_da_DK { background-image: url(flags/da_DK.png); }
+.appFlag_de_DE { background-image: url(flags/de_DE.png); }
+.appFlag_en_US { background-image: url(flags/en_US.png); }
+.appFlag_es_ES { background-image: url(flags/es_ES.png); }
+.appFlag_es_MX { background-image: url(flags/es_MX.png); }
+.appFlag_fa_IR { background-image: url(flags/fa_IR.png); }
+.appFlag_fi_FI { background-image: url(flags/fi_FI.png); }
+.appFlag_fr_FR { background-image: url(flags/fr_FR.png); }
+.appFlag_he_IL { background-image: url(flags/he_IL.png); }
+.appFlag_hu_HU { background-image: url(flags/hu_HU.png); }
+.appFlag_id_ID { background-image: url(flags/id_ID.png); }
+.appFlag_is_IS { background-image: url(flags/is_IS.png); }
+.appFlag_it_IT { background-image: url(flags/it_IT.png); }
+.appFlag_ja_JP { background-image: url(flags/ja_JP.png); }
+.appFlag_ko_KR { background-image: url(flags/ko_KR.png); }
+.appFlag_mk_MK { background-image: url(flags/mk_MK.png); }
+.appFlag_nb_NO { background-image: url(flags/nb_NO.png); }
+.appFlag_nl_NL { background-image: url(flags/nl_NL.png); }
+.appFlag_pl_PL { background-image: url(flags/pl_PL.png); }
+.appFlag_pt_BR { background-image: url(flags/pt_BR.png); }
+.appFlag_pt_PT { background-image: url(flags/pt_PT.png); }
+.appFlag_ro_RO { background-image: url(flags/ro_RO.png); }
+.appFlag_ru_RU { background-image: url(flags/ru_RU.png); }
+.appFlag_sl_SI { background-image: url(flags/sl_SI.png); }
+.appFlag_sr_RS { background-image: url(flags/sr_RS.png); }
+.appFlag_sv_SE { background-image: url(flags/sv_SE.png); }
+.appFlag_th_TH { background-image: url(flags/th_TH.png); }
+.appFlag_uk_UA { background-image: url(flags/uk_UA.png); }
+.appFlag_uz_UZ { background-image: url(flags/uz_UZ.png); }
+.appFlag_vi_VN { background-image: url(flags/vi_VN.png); }
+.appFlag_zh_CN { background-image: url(flags/zh_CN.png); }
+.appFlag_zh_HK { background-image: url(flags/zh_HK.png); }
+.appFlag_zh_SG { background-image: url(flags/zh_SG.png); }
+.appFlag_zh_TW { background-image: url(flags/zh_TW.png); }
