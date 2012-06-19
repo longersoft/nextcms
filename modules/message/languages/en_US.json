@@ -1,0 +1,203 @@
+{
+	"_about": {
+		"description": "Manage private messages",
+		"title": "Message"
+	},
+	"_menu": {
+		"config": {
+			"config": "Configure module"
+		}
+	},
+	"_permission": {
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"browseFilesUploadAction": "Browse files and Upload ...",
+			"cancelAction": "Cancel",
+			"closeAction": "Close",
+			"configureAction": "Configure",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"emptyTrashAction": "Empty trash",
+			"filterAction": "Filter",
+			"loadingAction": "Loading ...",
+			"markAsReadAction": "Mark as read",
+			"markAsUnreadAction": "Mark as unread",
+			"refreshAction": "Refresh",
+			"renameAction": "Rename",
+			"replyAction": "Reply",
+			"replyAllAction": "Reply all",
+			"saveAction": "Save",
+			"searchAction": "Search",
+			"sendAction": "Send",
+			"sortAction": "Sort",
+			"starAction": "Star",
+			"unstarAction": "Unstar",
+			"viewAction": "View",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		},
+		"layout": {
+			"message": "Private messages"
+		}
+	},
+	"config": {
+		"config": {
+		    "content": "Content",
+			"error": "Sorry, cannot update the module's settings",
+			"messageAttachmentDirectory": "Message attachments directory",
+			"messageAttachmentDirectoryRequired": "The message attachments directory is required",
+			"messageAttachmentExtensions": "Message attachment extensions",
+			"messageAttachmentExtensionsHelp": "When sending private message, only allows to attach the files with one of the following extensions (separated by a comma)",
+			"messageSentContentHelp": "You can use ###username###, ###sender###, ###subject###, ###content###, and ###link### in the content",
+			"messageSentInformingEmail": "Inform new private messages via email",
+			"messageSentSubjectHelp": "You can use ###username###, ###sender###, and ###subject### in the subject",
+			"sendFromEmail": "Send from email",
+			"sendFromName": "Send from name",
+			"subject": "Subject",
+			"success": "The module's settings are updated successfully",
+			"title": "Configure the Message module"
+		}
+	},
+	"filter": {
+		"_share": {
+			"beginsWith": "begins with",
+			"comparisonRequired": "The value of comparison field is required",
+			"content": "Content",
+			"deleteMessage": "Delete the message",
+			"doActions": "then do the following actions",
+			"endsWith": "ends with",
+			"from": "From",
+			"fromAddressRequired": "The sender is required",
+			"if": "If",
+			"is": "is",
+			"isLike": "is like",
+			"isNot": "is not",
+			"isNotLike": "is not like",
+			"markAsRead": "Mark as read",
+			"moveToFolder": "Move to folder",
+			"satifyCondition": "Satifiy the condition",
+			"starMessage": "Star the message",
+			"subject": "Subject"
+		},
+		"add": {
+			"error": "Sorry, cannot add new filter",
+			"success": "The new filter is created successfully",
+			"title": "Add new filter"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the filter?",
+			"error": "Sorry, cannot delete the filter",
+			"success": "The filter is deleted successfully",
+			"title": "Delete the filter"
+		},
+		"list": {
+			"title": "Manage message filters"
+		}
+	},
+	"folder": {
+		"_share": {
+			"inboxFolder": "Inbox",
+			"name": "Name",
+			"nameRequired": "The name of folder is required",
+			"sentFolder": "Sent",
+			"starredFolder": "Starred",
+			"trashFolder": "Trash"
+		},
+		"add": {
+			"error": "Sorry, cannot add new folder",
+			"success": "The new folder is created successfully",
+			"title": "Add new folder"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the message folder named <b>%s</b>?",
+			"error": "Sorry, cannot delete the message folder",
+			"notFound": "Sorry, cannot find the message folder",
+			"success": "The message folder is deleted successfully",
+			"title": "Delete the message folder"
+		},
+		"list": {
+			"title": "Manage message folders"
+		},
+		"rename": {
+			"error": "Sorry, cannot update folder's name",
+			"success": "The folder's name is updated successfully"
+		}
+	},
+	"message": {
+		"_share": {
+			"attachments": "Attachments",
+			"bccAddress": "Bcc",
+			"content": "Content",
+			"contentRequired": "The content is required",
+			"fromAddress": "From",
+			"moveToFolderAction": "Move to folder",
+			"replyPrefix": "Re: ",
+			"sentByOnDate": "Sent by <b>%s</b> on <b>%s</b>",
+			"sentDate": "Sent date",
+			"subject": "Subject",
+			"subjectRequired": "The subject is required",
+			"toAddress": "To",
+			"toAddressHelp": "Use the Users Toolbox to seach for users, and then drag and drop users to the following area",
+			"toAddressRequired": "The recipient(s) are required"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the message titled <b>%s</b>?",
+			"confirmDeleteForever": "Are you sure that you want to delete forever the message titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the message",
+			"notFound": "Sorry, cannot find the message",
+			"success": "The message is deleted successfully",
+			"title": "Delete the message"
+		},
+		"empty": {
+			"confirm": "Are you sure that you want to empty the trash?",
+			"error": "Sorry, cannot empty the trash",
+			"success": "All the messages in the trash are deleted forever successfully",
+			"title": "Empty the trash"
+		},
+		"list": {
+			"error": "Sorry, there is an error",
+			"notFound": "Not found any messages",
+			"searchMessageHelp": "Keyword",
+			"showColumns": "Show columns:",
+			"title": "Manage private messages"
+		},
+		"mark": {
+			"markReadError": "Sorry, cannot mark the message as read",
+			"markReadSuccess": "The message is marked as read successfully",
+			"markUnreadError": "Sorry, cannot mark the message as unread",
+			"markUnreadSuccess": "The message is marked as unread successfully"
+		},
+		"move": {
+			"error": "Sorry, cannot move the message to the folder named <b>%s</b>",
+			"success": "The message is moved to the folder named <b>%s</b> successfully"
+		},
+		"send": {
+			"cannotAttachFiles": "Sorry, cannot attach files",
+			"error": "Sorry, cannot send the message",
+			"success": "The message is sent successfully",
+			"title": "Send new message"
+		},
+		"star": {
+			"starError": "Sorry, cannot star the message",
+			"starSuccess": "The message is starred successfully",
+			"unstarError": "Sorry, cannot unstar the message",
+			"unstarSuccess": "The message is unstarred successfully"
+		},
+		"view": {
+			"attachments": "%s attachment(s)",
+			"hideQuoteAction": "Hide quote content",
+			"messages": "Messages %s",
+			"notFound": "Not found any messages",
+			"showQuoteAction": "Show quote content",
+			"title": "View the message thread"
+		}
+	}
+}

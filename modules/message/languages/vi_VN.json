@@ -1,0 +1,203 @@
+{
+	"_about": {
+		"description": "Quản lý tin nhắn cá nhân",
+		"title": "Tin nhắn cá nhân"
+	},
+	"_menu": {
+		"config": {
+			"config": "Cấu hình module"
+		}
+	},
+	"_permission": {
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"browseFilesUploadAction": "Chọn tệp và Tải lên ...",
+			"cancelAction": "Hủy",
+			"closeAction": "Đóng",
+			"configureAction": "Cấu hình",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"emptyTrashAction": "Làm rỗng thùng rác",
+			"filterAction": "Lọc",
+			"loadingAction": "Đang tải ...",
+			"markAsReadAction": "Đánh dấu đã đọc",
+			"markAsUnreadAction": "Đánh dấu chưa đọc",
+			"refreshAction": "Tải lại",
+			"renameAction": "Đổi tên",
+			"replyAction": "Trả lời",
+			"replyAllAction": "Trả lời tất cả",
+			"saveAction": "Lưu",
+			"searchAction": "Tìm",
+			"sendAction": "Gửi",
+			"sortAction": "Sắp xếp",
+			"starAction": "Đánh dấu sao",
+			"unstarAction": "Gỡ bỏ đánh dấu sao",
+			"viewAction": "Xem",
+			"noMessage": "Có",
+			"yesMessage": "Không"
+		},
+		"layout": {
+			"message": "Tin nhắn"
+		}
+	},
+	"config": {
+		"config": {
+		    "content": "Nội dung",
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"messageAttachmentDirectory": "Thư mục chứa tệp đính kèm cho tin nhắn",
+			"messageAttachmentDirectoryRequired": "Thư mục chứa tệp đính kèm cho tin nhắn là bắt buộc",
+			"messageAttachmentExtensions": "Phần mở rộng của tệp đính kèm tin nhắn",
+			"messageAttachmentExtensionsHelp": "Khi gửi tin nhắn, chỉ cho phép đính kèm tệp với phần mở rộng là một trong các phần mở rộng sau (phân cách bởi dấu phẩy)",
+			"messageSentContentHelp": "Bạn có thể sử dụng ###username###, ###sender###, ###subject###, ###content### và ###link### trong nội dung",
+			"messageSentInformingEmail": "Thông báo tin nhắn mới qua email",
+			"messageSentSubjectHelp": "Bạn có thể sử dụng ###username###, ###sender### và ###subject### trong tiêu đề",
+			"sendFromEmail": "Gửi từ email",
+			"sendFromName": "Gửi từ tên",
+			"subject": "Chủ đề",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"title": "Cấu hình module Tin nhắn"
+		}
+	},
+	"filter": {
+		"_share": {
+			"beginsWith": "bắt đầu bằng",
+			"comparisonRequired": "Bạn phải xác định giá trị để so sánh",
+			"content": "Nội dung",
+			"deleteMessage": "Xóa tin nhắn",
+			"doActions": "thì thực hiện các thao tác sau",
+			"endsWith": "kết thúc bằng",
+			"from": "Từ",
+			"fromAddressRequired": "Người gửi là bắt buộc",
+			"if": "Nếu",
+			"is": "là",
+			"isLike": "giống với",
+			"isNot": "không là",
+			"isNotLike": "không giống với",
+			"markAsRead": "Đánh dấu đã đọc",
+			"moveToFolder": "Chuyển vào thư mục",
+			"satifyCondition": "Thỏa mãn điều kiện",
+			"starMessage": "Đánh dấu sao",
+			"subject": "Tiêu đề"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm bộ lọc",
+			"success": "Bộ lọc mới đã được tạo thành công",
+			"title": "Thêm bộ lọc mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn muốn xóa bộ lọc này?",
+			"error": "Xin lỗi, không thể xóa bộ lọc",
+			"success": "Bộ lọc đã được xóa thành công",
+			"title": "Xóa bộ lọc"
+		},
+		"list": {
+			"title": "Quản lý bộ lọc tin nhắn"
+		}
+	},
+	"folder": {
+		"_share": {
+			"inboxFolder": "Trong hộp tin nhắn",
+			"name": "Tên",
+			"nameRequired": "Tên thư mục là bắt buộc",
+			"sentFolder": "Đã gửi",
+			"starredFolder": "Đánh dấu sao",
+			"trashFolder": "Thùng rác"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm thư mục",
+			"success": "Thư mục mới đã được tạo thành công",
+			"title": "Thêm thư mục mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa thư mục tin nhắn <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa thư mục tin nhắn",
+			"notFound": "Xin lỗi, không thể tìm thấy thư mục tin nhắn",
+			"success": "Thư mục tin nhắn đã được xóa thành công",
+			"title": "Xóa thư mục tin nhắn"
+		},
+		"list": {
+			"title": "Quản lý thư mục tin nhắn"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể cập nhật tên mới cho thư mục",
+			"success": "Đã đổi tên thư mục thành công"
+		}
+	},
+	"message": {
+		"_share": {
+			"attachments": "Tệp đính kèm",
+			"bccAddress": "Các địa chỉ BCC",
+			"content": "Nội dung",
+			"contentRequired": "Nội dung là bắt buộc",
+			"fromAddress": "Từ",
+			"moveToFolderAction": "Chuyển tới thư mục",
+			"replyPrefix": "Trả lời: ",
+			"sentByOnDate": "Gửi bởi <b>%s</b> vào <b>%s</b>",
+			"sentDate": "Ngày gửi",
+			"subject": "Tiêu đề",
+			"subjectRequired": "Tiêu đề là bắt buộc",
+			"toAddress": "Tới",
+			"toAddressHelp": "Sử dụng hộp công cụ Người Dùng để tìm kiếm người dùng, sau đó gắp và thả người dùng vào vùng dưới đây",
+			"toAddressRequired": "Bạn chưa xác định người nhận"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa tin nhắn tiêu đề <b>%s</b>?",
+			"confirmDeleteForever": "Bạn có chắc chắn rằng bạn muốn xóa mãi mãi tin nhắn tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa tin nhắn",
+			"notFound": "Xin lỗi, không thể tìm thấy tin nhắn",
+			"success": "Tin nhắn đã được xóa thành công",
+			"title": "Xóa tin nhắn"
+		},
+		"empty": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn làm rỗng thùng rác?",
+			"error": "Xin lỗi, không thể làm rỗng thùng rác",
+			"success": "Tất cả tin nhắn trong thùng rác đã được xóa mãi mãi thành công",
+			"title": "Làm rỗng thùng rác"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"notFound": "Không tìm thấy tin nhắn nào",
+			"showColumns": "Hiển thị các cột:",
+			"searchMessageHelp": "Từ khóa",
+			"title": "Quản lý tin nhắn cá nhân"
+		},
+		"mark": {
+			"markReadError": "Xin lỗi, không thể đánh dấu tin nhắn như là tin đã đọc",
+			"markReadSuccess": "Tin nhắn đã được đánh dấu như là đã đọc",
+			"markUnreadError": "Xin lỗi, không thể đánh dấu tin nhắn như là tin chưa đọc",
+			"markUnreadSuccess": "Tin nhắn đã được đánh dấu như là chưa đọc"
+		},
+		"move": {
+			"error": "Xin lỗi, không thể chuyển tin nhắn vào thư mục <b>%s</b>",
+			"success": "Tin nhắn đã được chuyển vào thư mục <b>%s</b> thành công"
+		},
+		"send": {
+			"cannotAttachFiles": "Xin lỗi, không thể đính kèm tệp",
+			"error": "Xin lỗi, không thể gửi tin nhắn",
+			"success": "Tin nhắn đã được gửi thành công",
+			"title": "Gửi tin nhắn"
+		},
+		"star": {
+			"starError": "Xin lỗi, không thể đánh dấu sao tin nhắn",
+			"starSuccess": "Tin nhắn đã được đánh dấu sao thành công",
+			"unstarError": "Xin lỗi, không thể gỡ bỏ đánh dấu sao tin nhắn",
+			"unstarSuccess": "Tin nhắn đã được gỡ bỏ đánh dấu sao thành công"
+		},
+		"view": {
+			"attachments": "%s tệp đính kèm",
+			"hideQuoteAction": "Ẩn nội dung trích dẫn",
+			"messages": "Tin nhắn %s",
+			"notFound": "Không tìm thấy tin nhắn nào",
+			"showQuoteAction": "Hiện nội dung trích dẫn",
+			"title": "Xem luồng tin nhắn"
+		}
+	}
+}

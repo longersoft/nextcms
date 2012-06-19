@@ -1,0 +1,50 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-02-28
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!-- PrivateMessagesMenuItem -->
+<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appMessageIcon'">
+	<a href="<?php echo $this->url(array(), 'message_message_list'); ?>" class="appTopMenuItem" data-app-ajax="true"><?php echo $this->translator()->setLanguageDir('/modules/message/languages')->_('global.layout.message'); ?></a> (<span id="messageUnreadMessagesCounter"><?php echo $this->message()->countUnreadMessages(null); ?></span>)
+	<script type="dojo/connect">
+	// Update the number of unread messages:
+	// - after marking a message as unread/read
+	dojo.subscribe("/app/message/message/mark/onSuccess", this, function(data) {
+		// Don't update the counter if message is deleted
+		if (data.deleted == "0") {
+			this._increaseUnreadMessages((data.unread == "1") ? 1 : -1);
+		}
+	});
+	// - after deleting unread message
+	dojo.subscribe("/app/message/message/delete/onSuccess", this, function(data) {
+		if (data.deleted == "0" && data.unread == "1") {
+			this._increaseUnreadMessages(-1);
+		}
+	});
+	this._increaseUnreadMessages = function(increasingNumber) {
+		var numUnreadMessages = parseInt(dojo.attr("messageUnreadMessagesCounter", "innerHTML"));
+		numUnreadMessages += increasingNumber;
+		if (numUnreadMessages >= 0) {
+			dojo.attr("messageUnreadMessagesCounter", "innerHTML", numUnreadMessages);
+		}
+	};
+	</script>
+</div>
+<!-- /PrivateMessagesMenuItem -->
+
+<script type="text/javascript">
+dojo.require("dijit.MenuItem");
+</script>

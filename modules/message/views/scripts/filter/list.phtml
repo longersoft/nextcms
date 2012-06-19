@@ -1,0 +1,230 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('filter.list.title'));
+?>
+
+<div id="messageFilterListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.closeAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/message/filter/list/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('filter.add.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+			<!-- AddNewFilter -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+				<form id="messageFilterListAddFilterForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST'">
+				<div class="appLeft">
+					<select id="messageFilterListObjectSelect" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'object', style: 'width: 100px'">
+						<option value="" disabled="disabled"><?php echo $this->translator()->_('filter._share.if'); ?></option>
+						<option type="separator"></option>
+						<option value="<?php echo Message_Models_Filter::OBJECT_SUBJECT; ?>"><?php echo $this->translator()->_('filter._share.subject'); ?></option>
+						<option value="<?php echo Message_Models_Filter::OBJECT_CONTENT; ?>"><?php echo $this->translator()->_('filter._share.content'); ?></option>
+						<option value="<?php echo Message_Models_Filter::OBJECT_FROM; ?>"><?php echo $this->translator()->_('filter._share.from'); ?></option>
+						
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						// If user is going to create a "from" filter, show the container for droppping user from the User toolbox
+						var condition		 = dijit.byId("messageFilterListConditionSelect").get("value");
+						var showUserSelector = (value == "<?php echo Message_Models_Filter::OBJECT_FROM; ?>")
+												&& (condition == "<?php echo Message_Models_Filter::CONDITION_IS; ?>" || condition == "<?php echo Message_Models_Filter::CONDITION_NOT; ?>");
+						dojo.style(dijit.byId("messageFilterListComparisonTextBox").domNode, "display", showUserSelector ? "none" : "block");
+						dojo.style("messageFilterListUserCollection", "display", showUserSelector ? "block" : "none");
+						</script>
+					</select>
+				</div>
+	
+				<div class="appLeft" style="margin: 0 4px">			
+					<select id="messageFilterListConditionSelect" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'condition', style: 'width: 150px'">
+						<option value="" disabled="disabled"><?php echo $this->translator()->_('filter._share.satifyCondition'); ?></option>
+						<option type="separator"></option>
+						<option value="<?php echo Message_Models_Filter::CONDITION_LIKE; ?>"><?php echo $this->translator()->_('filter._share.isLike'); ?></option>
+						<option value="<?php echo Message_Models_Filter::CONDITION_NOT_LIKE; ?>"><?php echo $this->translator()->_('filter._share.isNotLike'); ?></option>
+						<option value="<?php echo Message_Models_Filter::CONDITION_IS; ?>"><?php echo $this->translator()->_('filter._share.is'); ?></option>
+						<option value="<?php echo Message_Models_Filter::CONDITION_NOT; ?>"><?php echo $this->translator()->_('filter._share.isNot'); ?></option>
+						<option value="<?php echo Message_Models_Filter::CONDITION_BEGIN; ?>"><?php echo $this->translator()->_('filter._share.beginsWith'); ?></option>
+						<option value="<?php echo Message_Models_Filter::CONDITION_END; ?>"><?php echo $this->translator()->_('filter._share.endsWith'); ?></option>
+						
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						// If user is going to create a "from" filter, show the container for droppping user from the User toolbox
+						var object			 = dijit.byId("messageFilterListObjectSelect").get("value");
+						var showUserSelector = (object == "<?php echo Message_Models_Filter::OBJECT_FROM; ?>")
+												&& (value == "<?php echo Message_Models_Filter::CONDITION_IS; ?>" || value == "<?php echo Message_Models_Filter::CONDITION_NOT; ?>");
+						dojo.style(dijit.byId("messageFilterListComparisonTextBox").domNode, "display", showUserSelector ? "none" : "block");
+						dojo.style("messageFilterListUserCollection", "display", showUserSelector ? "block" : "none");
+						</script>
+					</select>
+				</div>
+				
+				<div class="appLeft" style="margin: 0 4px">
+					<input id="messageFilterListComparisonTextBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'comparison_to', style: 'width: 300px'" />
+					
+					<!-- UserSelector -->
+					<div id="messageFilterListUserCollection" style="display: none; width: 100px"></div>
+					<!-- /UserSelector -->
+				</div>
+				
+				<div style="clear: both"></div>
+				
+				<div style="padding: 8px 0">
+					<div style="padding: 4px 0"><?php echo $this->translator()->_('filter._share.doActions'); ?>:</div>
+					
+					<?php if ($this->folders) : ?>
+					<div style="padding: 4px 0">
+						<div id="messageFilterListMoveFolderCheckBox" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'actions[]', value: '<?php echo Message_Models_Filter::ACTION_MOVE; ?>'">
+							<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+							dijit.byId("messageFilterListFolderSelect").set("disabled", value == false);
+							</script>
+						</div>
+						<?php echo $this->translator()->_('filter._share.moveToFolder'); ?>
+						<select id="messageFilterListFolderSelect" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'folder_id', disabled: true, style: 'width: 150px'">
+							<?php foreach ($this->folders as $folder) : ?>
+							<option value="<?php echo $folder->folder_id; ?>"><?php echo $folder->name; ?></option>
+							<?php endforeach; ?>
+							
+							<script type="dojo/connect">
+							// Update the list of folders
+							// after adding new folder
+							dojo.subscribe("/app/message/folder/add/onComplete", this, function(data) {
+								if (data.result == "APP_RESULT_OK") {
+									this.addOption({
+										label: data.name,
+										value: data.folder_id + ""
+									});
+								}
+							});
+							// after deleting the folder
+							dojo.subscribe("/app/message/folder/delete/onComplete", this, function(data) {
+								if (data.result == "APP_RESULT_OK") {
+									this.removeOption({
+										label: data.name,
+										value: data.folder_id + ""
+									});
+								}
+							});
+							// after renaming the folder
+							dojo.subscribe("/app/message/folder/rename/onSuccess", this, function(data) {
+								this.updateOption({
+									label: data.name,
+									value: data.folder_id + ""
+								});
+							});
+							</script>
+						</select>
+					</div>
+					<?php endif; ?>
+					
+					<div style="padding: 4px 0"><input id="messageFilterListMarkReadCheckBox" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'actions[]', value: '<?php echo Message_Models_Filter::ACTION_MARK_READ; ?>'" /> <?php echo $this->translator()->_('filter._share.markAsRead'); ?></div>
+					<div style="padding: 4px 0"><input id="messageFilterListStarCheckBox" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'actions[]', value: '<?php echo Message_Models_Filter::ACTION_START; ?>'" /> <?php echo $this->translator()->_('filter._share.starMessage'); ?></div>
+					<div style="padding: 4px 0"><input id="messageFilterListDeleteCheckBox" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'actions[]', value: '<?php echo Message_Models_Filter::ACTION_DELETE; ?>'" /> <?php echo $this->translator()->_('filter._share.deleteMessage'); ?></div>
+				</div>
+				
+				<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+					<?php echo $this->translator()->_('global._share.addAction'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					var params = dojo.formToObject("messageFilterListAddFilterForm");
+
+					// Validate the form
+					if (params.object == "<?php echo Message_Models_Filter::OBJECT_FROM; ?>"
+							&& (params.condition == "<?php echo Message_Models_Filter::CONDITION_IS; ?>" || params.condition == "<?php echo Message_Models_Filter::CONDITION_NOT; ?>")) {
+						if (params.from_address == null) {
+							dojo.publish("/app/global/notification", [{
+								message: "<?php echo $this->translator()->_('filter._share.fromAddressRequired'); ?>",
+								type: "error"
+							}]);
+							return;
+						} else {
+							params.comparison_to = params.from_address;
+						}
+					} else if (params.comparison_to == "") {
+						dojo.publish("/app/global/notification", [{
+							message: "<?php echo $this->translator()->_('filter._share.comparisonRequired'); ?>",
+							type: "error"
+						}]);
+						return;
+					}
+					dijit.byId("messageFilterListStandby").show();
+					dojo.xhrPost({
+						url: "<?php echo $this->url(array(), 'message_filter_add'); ?>",
+						content: params,
+						handleAs: "json",
+						load: function(data) {
+							dijit.byId("messageFilterListAddFilterForm").reset();
+							dijit.byId("messageFilterListStandby").hide();
+							var message = (data.result == "APP_RESULT_OK")
+											? "<?php echo $this->translator()->_('filter.add.success'); ?>"
+											: "<?php echo $this->translator()->_('filter.add.error'); ?>";
+							dojo.publish("/app/global/notification", [{
+								message: message,
+								type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+							}]);
+
+							// Reload the filters
+							dijit.byId("messageFilterListFiltersPane").set("href", "<?php echo $this->url(array(), 'message_filter_list'); ?>?format=html");						
+						}
+					});
+					</script>
+				</button>
+				
+				<input type="hidden" name="format" value="html" />
+				</form>
+				
+				<div style="clear: both"></div>
+			</div>
+			<!-- /AddNewFilter -->
+			
+			<!-- Filters -->
+			<div id="messageFilterListFiltersPane" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', href: '<?php echo $this->url(array(), 'message_filter_list'); ?>?format=html', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+			</div>
+			<!-- /Filters -->
+		</div>
+	</div>
+</div>
+
+<div id="messageFilterListStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'messageFilterListContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.widget.Standby");
+
+dojo.require("core.js.views.UserCollectionView");
+
+dojo.addOnLoad(function() {
+	var fromUserCollection = new core.js.views.UserCollectionView("messageFilterListUserCollection", "from_address");
+});
+</script>

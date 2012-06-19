@@ -1,0 +1,156 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-10
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('message.view.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Messages -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('message.view.messages'), '<span class="messageViewCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+		
+		<?php if ($this->total == 0) : ?>
+			<?php echo $this->translator()->_('message.view.notFound'); ?>
+		<?php else : ?>
+		
+			<div class="messageItemsContainer">
+			<?php foreach ($this->messages as $index => $message) : ?>
+				<div id="messageMessageViewTitlePane_<?php echo $message->message_id; ?>" data-dojo-type="dijit.TitlePane" data-dojo-props="__unread: '<?php echo $message->unread; ?>', __starred: '<?php echo $message->starred; ?>', title: '<?php if ($message->attachments) : ?><span class=messageHasAttachments><?php echo addslashes($message->subject); ?></span><?php else : ?><?php echo addslashes($message->subject); ?><?php endif; ?><span class=appRight><?php echo $message->sent_date; ?></span>', open: <?php if (isset($this->criteria['message_id']) && $message->message_id == $this->criteria['message_id']) : ?>true<?php else : ?>false<?php endif; ?>">
+					<script type="dojo/connect">
+					// Style the subject to indicate unread message,
+					dojo.addClass(this.titleNode, (this.get("__unread") == "1") ? "messageItemUnreadSubject" : "messageItemReadSubject");
+
+					// and starred messages
+					dojo.addClass(this.titleNode, (this.get("__starred") == "1") ? "messageItemStarredSubject" : "messageItemNotstarredSubject");
+					</script>
+				
+					<div style="padding-bottom: 4px">
+						<div style="padding-bottom: 4px">
+							<?php echo $this->translator()->_('message._share.fromAddress'); ?>: <span class="messageSender"><?php echo $message->from_user_name; ?></span>
+						</div>
+						
+						<div style="padding-bottom: 4px">
+							<?php echo $this->translator()->_('message._share.toAddress'); ?>:
+							<?php if ($recipients = $this->message()->getRecipients($message->to_address)) : ?>
+								<?php foreach ($recipients as $recipientIndex => $recipient) : ?><?php if ($recipientIndex > 0) : ?>, <?php endif; ?><span class="messageRecipient"><?php echo $recipient->user_name; ?></span><?php endforeach; ?>
+							<?php endif; ?>
+						</div>
+						
+						<div style="padding-bottom: 4px">
+							<?php echo $this->translator()->_('message._share.sentDate'); ?>: <?php echo $message->sent_date; ?>
+						</div>
+						
+						<div style="padding-bottom: 4px">
+							<?php echo $this->translator()->_('message._share.subject'); ?>: <?php echo $message->subject; ?>
+						</div>
+					</div>
+					
+					<hr class="appSeparator" style="margin-bottom: 8px" />
+					
+					<div id="messageItem_<?php echo $message->message_id; ?>" class="messageItem<?php if (Zend_Auth::getInstance()->getIdentity()->user_id == $message->sent_user) : ?> messageItemMine<?php endif; ?>"
+						data-app-entity-props="<?php echo $this->encoder()->encode($message, array('message_id', 'folder_id', 'unread', 'starred', 'deleted')); ?>">
+						<div class="messageItemContent">
+							<?php echo $message->content; ?>
+						</div>
+						
+						<div style="clear: both"></div>
+					</div>
+					
+					<!-- Signature -->
+					<?php if ($message->signature) : ?>
+					<?php echo nl2br($message->signature); ?>
+					<?php endif; ?>
+					<!-- /Signature -->
+					
+					<!-- Attachments -->					
+					<?php if ($message->attachments && $attachments = Zend_Json::decode($message->attachments)) : ?>
+					<hr class="appSeparator" style="margin-bottom: 8px" />
+					
+					<div style="padding-bottom: 4px">
+						<b><?php echo sprintf($this->translator()->_('message.view.attachments'), count($attachments)); ?>:</b>
+					</div>
+					<div style="padding-bottom: 4px">
+						<?php foreach ($attachments as $attachment) : ?>
+						
+						<?php if ($file = Zend_Json::decode($attachment)) : ?>
+						<div style="padding: 4px">
+							<b><a href="<?php echo $this->url(array(), 'message_attachment_download'); ?>?path=<?php echo $this->encryptor()->encrypt($file['path']); ?>" target="_blank"><?php echo $file['name']; ?></a></b> (.<?php echo $file['extension']; ?>, <?php echo $this->fileFormatter()->formatSize($file['size']); ?>)
+						</div>
+						<?php endif; ?>
+						
+						<?php endforeach; ?>
+					</div>
+					<?php endif; ?>
+					<!-- /Attachments -->
+				</div>
+			<?php endforeach; ?>
+			</div>
+		
+		<?php endif; ?>
+	</div>
+	<!-- /Messages -->
+	
+	<!-- Paginator -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/message/message/view/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.TitlePane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.window");
+dojo.require("dojox.fx");
+
+dojo.addOnLoad(function() {
+	<?php if (isset($this->criteria['message_id']) && $this->criteria['message_id'] != null) : ?>
+	// FIXME: How to scroll to the private message item
+	dojo.window.scrollIntoView("messageItem_<?php echo $this->criteria['message_id']; ?>");
+	dojox.fx.highlight({
+		node: "messageItem_<?php echo $this->criteria['message_id']; ?>",
+		duration: 5000
+	}).play();
+	<?php endif; ?>
+
+	// Called after marking message as read/unread
+	dojo.subscribe("/app/message/message/mark/onSuccess", function(data) {
+		var titlePane = dijit.byId("messageMessageViewTitlePane_" + data.message_id);
+		if (titlePane) {
+			titlePane.set("__unread", data.unread);
+			dojo.removeClass(titlePane.titleNode, ["messageItemReadSubject", "messageItemUnreadSubject"]);
+			dojo.addClass(titlePane.titleNode, (data.unread == "1") ? "messageItemUnreadSubject" : "messageItemReadSubject");
+		}
+	});
+
+	// Add a star icon to indicate starred message
+	dojo.subscribe("/app/message/message/star/onSuccess", function(data) {
+		var titlePane = dijit.byId("messageMessageViewTitlePane_" + data.message_id);
+		if (titlePane) {
+			titlePane.set("__starred", data.starred);
+			dojo.removeClass(titlePane.titleNode, ["messageItemStarredSubject", "messageItemNotstarredSubject"]);
+			dojo.addClass(titlePane.titleNode, (data.starred == "1") ? "messageItemStarredSubject" : "messageItemNotstarredSubject");
+		}
+	});
+});
+</script>

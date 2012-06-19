@@ -1,0 +1,136 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('message.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/message/css/admin/default/styles.css");
+</script>
+
+<div id="messageMessageListRootContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%;'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, region: 'leading', minSize: 150, splitter: true, style: 'margin: 0; padding: 0; width: 15%'">
+		<!-- FolderToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="messageMessageListFolderToolbar"></div>
+		</div>
+		<!-- /FolderToolbar -->
+		
+		<!-- Folders -->
+		<div id="messageMessageListFoldersContainer" class="messageFolderList" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->action('list', 'folder', 'message'); ?>
+		</div>
+		<!-- /Folders -->
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- MessageToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="messageMessageListMessageToolbar"></div>
+		</div>
+		<!-- /MessageToolbar -->
+		
+		<!-- Messages -->
+		<div id="messageMessageListMessagesGridContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		</div>
+		<!-- /Messages -->
+		
+		<!-- Paginator -->
+		<div id="messageMessageListPaginator" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'height: 26px; padding: -8px'">
+		</div>
+		<!-- /Paginator -->
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/message/languages')->_('message.list.title'); ?>";
+dojo.registerModulePath("message", "<?php echo $this->APP_STATIC_URL; ?>/modules/message");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("message.js.controllers.MessageController");
+dojo.require("message.js.views.FolderContextMenu");
+dojo.require("message.js.views.FolderListView");
+dojo.require("message.js.views.FolderToolbar");
+dojo.require("message.js.views.MessageGrid");
+dojo.require("message.js.views.MessageToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'message_filter_list',
+					'message_folder_add', 'message_folder_delete', 'message_folder_list', 'message_folder_rename',
+					'message_message_delete', 'message_message_empty', 'message_message_list', 'message_message_send', 'message_message_view',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: true
+	});
+	<?php endforeach; ?>
+
+	// Update the cache of message folders which will be used to show
+	// when right-clicking the message item
+	dojo.subscribe("/app/message/folder/add/onComplete", function(data) {
+		if (data.result == "APP_RESULT_OK") {
+			var folders = core.js.base.Config.get("core", "message_folders", {});
+			folders[data.folder_id] = {
+				folder_id: data.folder_id,
+				name: data.name
+			};
+			core.js.base.Config.set("core", "message_folders", folders);
+		}
+	});
+	dojo.subscribe("/app/message/folder/delete/onComplete", function(data) {
+		if (data.result == "APP_RESULT_OK") {
+			var folders = core.js.base.Config.get("core", "message_folders", {});
+			delete folders[data.folder_id];
+			core.js.base.Config.set("core", "message_folders", folders);
+		}
+	});
+	dojo.subscribe("/app/message/folder/rename/onSuccess", function(data) {
+		var folders = core.js.base.Config.get("core", "message_folders", {});
+		folders[data.folder_id].name = data.name;
+		core.js.base.Config.set("core", "message_folders", folders);
+	});
+
+	var messageToolbar = new message.js.views.MessageToolbar("messageMessageListMessageToolbar");
+	messageToolbar.setNumDeletedMessages(<?php echo $this->message()->countDeletedMessages(); ?>);
+
+	// Create new controller instance
+	var messageController = new message.js.controllers.MessageController("messageMessageListRootContainer");
+	messageController.setFolderToolbar(new message.js.views.FolderToolbar("messageMessageListFolderToolbar"))
+					 .setFolderListView(new message.js.views.FolderListView("messageMessageListFoldersContainer"))
+					 .setFolderContextMenu(new message.js.views.FolderContextMenu())
+					 .setMessageToolbar(messageToolbar)
+					 .setMessageGrid(new message.js.views.MessageGrid("messageMessageListMessagesGridContainer"))
+					 .setMessagePaginator("messageMessageListPaginator")
+					 .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>)
+					 .searchMessages();
+});
+</script>

@@ -1,0 +1,58 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-02-28
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('message.empty.title'));
+?>
+
+<div>
+	<?php echo $this->translator()->_('message.empty.confirm'); ?>
+</div>
+
+<div class="dijitDialogPaneActionBar">
+	<!-- YesButton -->
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.yesMessage'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'message_message_empty'); ?>",
+			content: {
+				format: "json"
+			},
+			handleAs: "json",
+			load: function(data) {
+				dojo.publish("/app/message/message/empty/onComplete", [ data ]);
+			}
+		});
+		</script>
+	</button>
+	<!-- /YesButton -->
+	
+	<!-- NoButton -->
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.noMessage'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.publish("/app/message/message/empty/onCancel");
+		</script>
+	</button>
+	<!-- /NoButton -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+</script>

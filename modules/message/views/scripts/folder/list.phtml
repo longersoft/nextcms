@@ -1,0 +1,71 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-02-28
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('folder.list.title'));
+?>
+
+<ul class="messageFolderItemsContainer">
+	<!-- SpecialFolders -->
+	<li class="messageFolderItem"
+		data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																	'folder_id'		=> 'inbox',
+																	'system_folder' => true,
+																)); ?>">
+		<a class="messageFolderName" href="javascript: void(0);"><?php echo $this->translator()->_('folder._share.inboxFolder'); ?></a> <span class="messageFolderCounter"><?php echo $this->message()->countUnreadMessages(); ?></span>
+	</li>
+	<li class="messageFolderItem messageStarredFolder"
+		data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																	'folder_id'		=> 'starred',
+																	'system_folder' => true,
+																)); ?>">
+		<a class="messageFolderName" href="javascript: void(0);"><?php echo $this->translator()->_('folder._share.starredFolder'); ?></a>
+	</li>
+	<li class="messageFolderItem"
+		data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																	'folder_id'		=> 'sent',
+																	'system_folder' => true,
+																)); ?>">
+		<a class="messageFolderName" href="javascript: void(0);"><?php echo $this->translator()->_('folder._share.sentFolder'); ?></a>
+	</li>
+	<li class="messageFolderItem messageTrashFolder"
+		data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																	'folder_id'		=> 'trash',
+																	'system_folder' => true,
+																)); ?>">
+		<a class="messageFolderName" href="javascript: void(0);"><?php echo $this->translator()->_('folder._share.trashFolder'); ?></a>
+	</li>
+	<!-- /SpecialFolders -->
+	
+	<li class="appSeparator" style="padding: 0"></li>
+	
+	<!-- UserFolders -->
+	<?php if ($this->folders) : ?>
+	<?php foreach ($this->folders as $folder) : ?>
+	<li class="messageFolderItem"
+		data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																	'folder_id'		=> $folder->folder_id,
+																	'name'			=> $folder->name,
+																	'system_folder' => false,
+																)); ?>">
+		<a class="messageFolderName" href="javascript: void(0);"><?php echo $folder->name; ?></a> <span class="messageFolderCounter"><?php echo $this->message()->countUnreadMessages($folder->folder_id); ?></span>
+	</li>
+	<?php endforeach; ?>
+	<?php endif; ?>
+	<!-- /UserFolders -->
+</ul>

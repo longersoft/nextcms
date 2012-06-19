@@ -1,0 +1,142 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('config.config.title'));
+?>
+
+<div id="messageConfigConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			if (dijit.byId("messageConfigConfigForm").validate()) {
+				dijit.byId("messageConfigConfigStandby").show();
+				_this.set("disabled", true);
+
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'comment_config_config'); ?>",
+					content: dojo.formToObject("messageConfigConfigForm"),
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dijit.byId("messageConfigConfigStandby").hide();
+						dojo.publish("/app/global/notification", [{
+							message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('config.config.success'); ?>" : "<?php echo $this->translator()->_('config.config.error'); ?>",
+							type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+						}]);
+					}
+				});
+			}
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- ConfigForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'" class="appContentPane">
+		<form id="messageConfigConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.title'); ?></span></h2>
+			
+			<!-- PrivateMessage -->
+			<div class="appFormRow">
+				<label for="attachments_dir"><?php echo $this->translator()->_('config.config.messageAttachmentDirectory'); ?>:</label>
+				<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'attachments_dir', value: '<?php echo addslashes($this->config('core', 'attachments_dir', Message_Services_Installer::DEFAULT_ATTACHMENTS_DIR)); ?>', style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.messageAttachmentDirectoryRequired'); ?>'" />		
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('config.config.messageAttachmentExtensions'); ?>:</label>
+				<?php echo $this->translator()->_('config.config.messageAttachmentExtensionsHelp'); ?>
+			</div>
+			
+			<div class="appFormRow">
+				<label for="attachments_exts">&nbsp;</label>
+				<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'attachments_exts', style: 'width: 400px; height: 150px'"><?php echo $this->config('core', 'attachments_exts', ''); ?></textarea>
+			</div>
+			<!-- /PrivateMessage -->
+			
+			<!-- PrivateMessageMailTemplate -->
+			<div class="appFormRow" style="padding: 4px 0">
+				<label for="email_enabled">&nbsp;</label>
+				<div data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'email_enabled', checked: <?php if ($this->config('core', 'email_enabled', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>">
+					<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+					dojo.style("messageConfigConfigMessageMailTemplate", "display", value == true ? "block" : "none");
+					</script>
+				</div>
+				<?php echo $this->translator()->_('config.config.messageSentInformingEmail'); ?>
+			</div>
+			
+			<div id="messageConfigConfigMessageMailTemplate" style="display: <?php if ($this->config('core', 'email_enabled') == 'true') : ?>block<?php else : ?>none<?php endif; ?>">
+				<div class="appFormRow">
+					<label for="sent_from_name"><?php echo $this->translator()->_('config.config.sendFromName'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sent_from_name', style: 'width: 200px', value: '<?php echo addslashes($this->messageSentMailTemplate['from_name']); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label for="sent_from_email"><?php echo $this->translator()->_('config.config.sendFromEmail'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sent_from_email', style: 'width: 200px', value: '<?php echo addslashes($this->messageSentMailTemplate['from_email']); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.subject'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.messageSentSubjectHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="sent_subject">&nbsp;</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sent_subject', value: '<?php echo $this->messageSentMailTemplate['subject']; ?>', style: 'width: 400px'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.content'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.messageSentContentHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="sent_content">&nbsp;</label>
+					<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'sent_content', style: 'width: 400px; height: 150px'"><?php echo $this->messageSentMailTemplate['content']; ?></textarea>
+				</div>
+				
+				<div style="clear: both; padding: 4px 0"></div>
+			</div>
+			<!-- /PrivateMessageMailTemplate -->
+			
+			<input type="hidden" name="format" value="json" />
+		</form>
+	</div>
+	<!-- /ConfigForm -->
+</div>
+
+<div id="messageConfigConfigStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'messageConfigConfigContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/message/languages')->_('config.config.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+</script>

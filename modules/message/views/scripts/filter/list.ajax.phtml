@@ -1,0 +1,135 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		message
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('filter.list.title'));
+?>
+
+<?php if ($this->filters) : ?>
+
+<h2 class="appHeadline" style="margin: 0 8px"><span><?php echo $this->translator()->_('filter.list.title'); ?></span></h2>
+
+<?php foreach ($this->filters as $index => $filter) : ?>
+
+<div style="margin: 8px" id="messageFilterListFilterContainer_<?php echo $filter->filter_id; ?>">
+	<?php if ($index > 0) : ?><hr class="appSeparator" style="margin: 8px 0" /><?php endif; ?>
+
+	<!-- FilterDetails -->
+	<div class="appLeft">
+		<div style="padding-bottom: 8px">
+			<?php echo $this->translator()->_('filter._share.if'); ?> 
+			<b><?php echo $this->translator()->_($this->filter()->mapObject($filter)); ?></b>
+			<?php echo $this->translator()->_($this->filter()->mapCondition($filter)); ?>
+			
+			<?php if ($filter->object == Message_Models_Filter::OBJECT_FROM
+				&& ($filter->condition == Message_Models_Filter::CONDITION_IS || $filter->condition == Message_Models_Filter::CONDITION_NOT)) : ?>
+			<b><?php echo $this->user()->getById($filter->comparison_to)->user_name; ?></b>
+			<?php else : ?>
+			<b><?php echo $filter->comparison_to; ?></b>
+			<?php endif; ?>
+			
+			, <?php echo $this->translator()->_('filter._share.doActions'); ?>:
+		</div>
+		
+		<div>
+			<?php if ($actions = Zend_Json::decode($filter->actions)) : ?>
+			
+			<?php foreach ($actions as $key => $value) : ?>
+			<?php if ($value !== 0 && $value != null) : ?>
+			<div style="padding: 4px 0">
+				<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="checked: true, disabled: true" /> <?php echo $this->translator()->_($this->filter()->mapAction($key)); ?>
+				<?php if ($key == Message_Models_Filter::ACTION_MOVE) : ?><u><?php echo $this->message()->getFolder($value)->name; ?></u><?php endif; ?>
+			</div>
+			<?php endif; ?>
+			<?php endforeach; ?>
+			
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /FilterDetails -->
+	
+	<div class="appRight">
+		<!-- DeleteFilterDialog -->
+		<div id="messageFilterListDeleteDialog_<?php echo $filter->filter_id; ?>" data-dojo-type="dojox.widget.DialogSimple" data-dojo-props="title: '<?php echo $this->translator(true)->_('filter.delete.title'); ?>'">
+			<div><?php echo $this->translator()->_('filter.delete.confirm'); ?></div>
+			
+			<div class="dijitDialogPaneActionBar">
+				<!-- YesButton -->
+				<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+					<?php echo $this->translator()->_('global._share.yesMessage'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					var filterId = "<?php echo $filter->filter_id; ?>";
+					dojo.xhrPost({
+						url: "<?php echo $this->url(array(), 'message_filter_delete'); ?>",
+						content: {
+							filter_id: filterId,
+							format: "json"
+						},
+						handleAs: "json",
+						load: function(data) {
+							var message = (data.result == "APP_RESULT_OK")
+											? "<?php echo $this->translator()->_('filter.delete.success'); ?>"
+											: "<?php echo $this->translator()->_('filter.delete.error'); ?>";
+							dojo.publish("/app/global/notification", [{
+								message: message,
+								type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+							}]);
+							if (data.result == "APP_RESULT_OK") {
+								dijit.byId("messageFilterListDeleteDialog_" + data.filter_id).destroyRecursive();
+								dojo.query("#messageFilterListFilterContainer_" + data.filter_id).orphan();
+							}
+						}
+					});
+					</script>
+				</button>
+				<!-- /YesButton -->
+				
+				<!-- NoButton -->
+				<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+					<?php echo $this->translator()->_('global._share.noMessage'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					dijit.byId("messageFilterListDeleteDialog_<?php echo $filter->filter_id; ?>").hide();
+					</script>
+				</button>
+				<!-- /NoButton -->
+			</div>
+		</div>
+		<!-- /DeleteFilterDialog -->
+	
+		<!-- DeleteFilterButton -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', filter_id: '<?php echo $filter->filter_id; ?>'">
+			<?php echo $this->translator()->_('global._share.deleteAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dijit.byId("messageFilterListDeleteDialog_" + this.get("filter_id")).show();
+			</script>
+		</button>
+		<!-- /DeleteFilterButton -->
+	</div>
+	
+	<div style="clear: both"></div>
+</div>
+
+<?php endforeach; ?>
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dojo.NodeList-traverse");
+dojo.require("dojox.widget.DialogSimple");
+</script>
