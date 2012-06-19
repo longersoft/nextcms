@@ -1,0 +1,109 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		poll
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->poll) : ?>
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/static/js/jquery.json.min.js');
+?>
+
+<div class="pollWidgetsPoll">
+	<h3><?php echo $this->poll->title; ?></h3>
+	
+	<?php if ($this->options) : ?>
+	
+	<?php if ($this->voted == false) : ?>
+	<div class="show">
+		<ul>
+			<?php foreach ($this->options as $option) : ?>
+			<li>
+				<input type="<?php if ($this->poll->multiple_options == '0') : ?>radio<?php else : ?>checkbox<?php endif; ?>" name="options[]" value="<?php echo $option->option_id; ?>" /> <span><?php echo $option->title; ?></span>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<div class="results" style="display: none"></div>
+	
+	<p>
+		<button type="button" class="voteButton"><?php echo $this->translator()->_('show.vote'); ?></button>
+		<button type="button" class="resultsButton"><?php echo $this->translator()->_('show.results'); ?></button>
+		<input type="hidden" name="poll_id" value="<?php echo $this->poll->poll_id; ?>" />
+	</p>
+	<?php else : ?>
+	<div class="results">
+		<?php echo $this->render('result.phtml'); ?>
+	</div>
+	<?php endif; ?>
+	
+	<?php endif; ?>
+</div>
+
+<?php $this->script()->captureStartOnce('pollWidgetsPoll'); ?>
+$(document).ready(function() {
+	$(".pollWidgetsPoll .voteButton").click(function() {
+		var widget = $(this).parents(".pollWidgetsPoll");
+		
+		// Check if the results container is hidden or shown
+		if ($(widget).find(".results").css("display") == "block") {
+			$(widget).find(".results").hide();
+			$(widget).find(".show").show();
+			return;
+		}
+		
+		// Get answers
+		var answers = Array();
+		$(widget).find("li input").each(function() {
+			if ($(this).attr("checked") == "checked") {
+				answers.push($(this).attr("value"));
+			}
+		});
+		if (answers.length == 0) {
+			dojo.publish("/app/global/notification", [{
+				message: "<?php echo $this->translator(true)->_('show.optionsRequired'); ?>",
+				type: "error"
+			}]);
+			return;
+		}
+		$.post("<?php echo $this->url(array(), 'core_widget_render'); ?>", {
+			"_mod": "poll",
+			"_name": "poll",
+			"_method": "result",
+			"poll_id": $(widget).find("input[name='poll_id']").eq(0).attr("value"),
+			"answers": answers.join(",")
+		}, function(data) {
+			$(widget).find(".show, .voteButton, .resultsButton").hide();
+			$(widget).find(".results").html(data).show();
+		});
+	});
+	
+	$(".pollWidgetsPoll .resultsButton").click(function() {
+		var widget = $(this).parents(".pollWidgetsPoll");
+		
+		$.post("<?php echo $this->url(array(), 'core_widget_render'); ?>", {
+			"_mod": "poll",
+			"_name": "poll",
+			"_method": "result",
+			"poll_id": $(widget).find("input[name='poll_id']").eq(0).attr("value")
+		}, function(data) {
+			$(widget).find(".show").hide();
+			$(widget).find(".results").html(data).show();
+		});
+	});
+});
+<?php $this->script()->captureEndOnce('pollWidgetsPoll'); ?>
+<?php endif; ?>

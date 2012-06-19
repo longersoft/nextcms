@@ -1,0 +1,83 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		poll
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('poll.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+</script>
+
+<div id="pollPollListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, style: 'padding: 0; height: 100%; width: 100%'">
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, class: 'appBorderContainer'">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="pollPollListToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- Polls -->
+		<div id="pollPollListGridContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		</div>
+		<!-- /Polls -->
+		
+		<!-- Paginator -->
+		<div id="pollPollListPaginator" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'height: 26px; padding: -8px'">
+		</div>
+		<!-- /Paginator -->
+	</div>
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/poll/languages')->_('poll.list.title'); ?>";
+dojo.registerModulePath("poll", "<?php echo $this->APP_STATIC_URL; ?>/modules/poll");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("poll.js.controllers.PollController");
+dojo.require("poll.js.views.PollGrid");
+dojo.require("poll.js.views.PollToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'poll_poll_add', 'poll_poll_delete', 'poll_poll_edit', 'poll_poll_list',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	var pollController = new poll.js.controllers.PollController("pollPollListContainer");
+	pollController.setPollToolbar(new poll.js.views.PollToolbar("pollPollListToolbar"))
+				  .setPollGrid(new poll.js.views.PollGrid("pollPollListGridContainer"))
+				  .setPollPaginator("pollPollListPaginator")
+				  .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>)
+				  .searchPolls();
+});
+</script>

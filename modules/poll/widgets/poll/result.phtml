@@ -1,0 +1,27 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		poll
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-07
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->options) : ?>
+<?php foreach ($this->options as $option) : ?>
+	<div><?php echo $option->title; ?></div>
+	<p>
+		<label><?php echo sprintf($this->translator()->_('result.numChoices'), $option->num_choices, $this->total == 0 ? 0 : floor($option->num_choices * 100 / $this->total) . '%'); ?></label>
+		<span><b style="background: <?php echo $this->helper()->generateRandomColor(); ?>; width: <?php echo $this->total == 0 ? 1 : ($option->num_choices * 100 / $this->total); ?>%;">&nbsp;</b></span>
+	</p>
+<?php endforeach; ?>
+<?php endif; ?>

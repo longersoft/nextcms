@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Hiển thị thăm dò",
+		"title": "Thăm dò ý kiến"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"language": "Ngôn ngữ",
+		"poll": "Thăm dò",
+		"selectLanguage": "Chọn ngôn ngữ",
+		"theme": "Mẫu giao diện"
+	},
+	"result": {
+		"numChoices": "%s phiếu (%s)"
+	},
+	"show": {
+		"optionsRequired": "Bạn phải chọn ít nhất một lựa chọn",
+		"results": "Kết quả",
+		"vote": "Bầu chọn"
+	}
+}

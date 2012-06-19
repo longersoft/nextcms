@@ -1,0 +1,82 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		poll
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appForm">
+	<div class="appFormRow" style="width: 100%">
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%; width: 100%', closable: true, doLayout: false">
+			<!-- Basic -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="selected: true, title: '<?php echo $this->translator(true)->_('config.basic'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.language'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="maxHeight: 200, class: 'appWidgetInput'<?php if ($this->poll) : ?>, value: '<?php echo $this->poll->language; ?>'<?php endif; ?>">
+						<option value=""><?php echo $this->translator()->_('config.selectLanguage'); ?></option>
+						<option type="separator"></option>
+						<?php foreach ($this->polls as $key => $value) : ?>
+						<option value="<?php echo $key; ?>"><?php echo $value['language']; ?></option>
+						<?php endforeach; ?>
+						
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						if (value == "") {
+							return;
+						}
+						var polls = <?php echo Zend_Json::encode($this->polls); ?>;
+						if (polls[value]) {
+							// Update the polls select box
+							var pollSelect = dijit.byId("pollWidgetsPollConfigPollSelect");
+							pollSelect.removeOption(pollSelect.getOptions());
+							dojo.forEach(polls[value]["polls"], function(poll) {
+								pollSelect.addOption({
+									value: poll.poll_id + "",
+									label: poll.title
+								});
+							}); 
+						}
+						</script>
+					</select>
+				</div>
+	
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.poll'); ?>:</label>
+					<select id="pollWidgetsPollConfigPollSelect" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'poll_id', maxHeight: 200, class: 'appWidgetInput'<?php if ($this->poll) : ?>, value: '<?php echo $this->poll->poll_id; ?>'<?php endif; ?>">
+					<?php if ($this->poll && isset($this->polls[$this->poll->language]['polls'])) : ?>
+						<?php foreach ($this->polls[$this->poll->language]['polls'] as $poll) : ?>
+						<option value="<?php echo $poll['poll_id']; ?>"><?php echo $poll['title']; ?></option>
+						<?php endforeach; ?>
+					<?php endif; ?>
+					</select>
+				</div>
+			</div>
+			<!-- /Basic -->
+			
+			<!-- Theme -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.theme'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'theme', class: 'appWidgetInput'" />
+				</div>
+			</div>
+			<!-- /Theme -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+</script>

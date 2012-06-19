@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Show a poll",
+		"title": "Poll"
+	},
+	"config": {
+		"basic": "Basic",
+		"language": "Language",
+		"poll": "Poll",
+		"selectLanguage": "Select language",
+		"theme": "Theme"
+	},
+	"result": {
+		"numChoices": "%s votes (%s)"
+	},
+	"show": {
+		"optionsRequired": "Please select at least one option",
+		"results": "Results",
+		"vote": "Vote"
+	}
+}

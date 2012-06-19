@@ -1,0 +1,80 @@
+{
+	"_about": {
+		"description": "Quản lý thăm dò ý kiến",
+		"title": "Thăm dò ý kiến"
+	},
+	"_menu": {
+		"poll": {
+			"list": "Quản lý thăm dò ý kiến"
+		}
+	},
+	"_permission": {
+		"poll": {
+			"description": "Quản lý thăm dò ý kiến",
+			"actions": {
+				"add": "Thêm thăm dò mới",
+				"delete": "Xóa thăm dò",
+				"edit": "Sửa thăm dò",
+				"list": "Xem danh sách các thăm dò"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"cancelAction": "Hủy",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"loadingAction": "Đang tải ...",
+			"localizeAction": "Địa phương hóa",
+			"refreshAction": "Tải lại",
+			"saveAction": "Lưu",
+			"searchAction": "Tìm",
+			"message": "Thông báo",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"poll": {
+		"_share": {
+			"createdDate": "Ngày tạo",
+			"description": "Mô tả",
+			"language": "Ngôn ngữ",
+			"localization": "Địa phương hóa",
+			"localizationHelp": "Gắp bản sao của thăm dò trong các ngôn ngữ khác từ bảng danh sách thăm dò<br />và thả vào đây",
+			"multipleOptionsHelp": "Cho phép lựa chọn nhiều câu trả lời",
+			"option": "Lựa chọn",
+			"optionHelp": "Dưới dây là danh sách các lựa chọn. Bạn có thể thay đổi thứ tự bằng cách kéo và thả các lựa chọn.",
+			"options": "Lựa chọn",
+			"properties": "Thuộc tính",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm thăm dò mới",
+			"success": "Thăm dò đã được tạo thành công",
+			"title": "Thêm thăm dò"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa thăm dò tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa thăm dò",
+			"notFound": "Xin lỗi, không thể tìm thấy thăm dò",
+			"success": "Thăm dò đã được xóa thành công",
+			"title": "Xóa thăm dò"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật thăm dò",
+			"notFound": "Xin lỗi, không thể tìm thấy thăm dò có Id là <b>%s</b>",
+			"success": "Thăm dò đã được cập nhật thành công",
+			"title": "Cập nhật thăm dò"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"notFound": "Không tìm thấy thăm dò nào",
+			"searchHelp": "Tiêu đề",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý thăm dò"
+		}
+	}
+}

@@ -1,0 +1,80 @@
+{
+	"_about": {
+		"description": "Manage polls",
+		"title": "Poll"
+	},
+	"_menu": {
+		"poll": {
+			"list": "Manage polls"
+		}
+	},
+	"_permission": {
+		"poll": {
+			"description": "Manage polls",
+			"actions": {
+				"add": "Add new poll",
+				"delete": "Delete poll",
+				"edit": "Edit poll",
+				"list": "List polls"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"allLanguages": "All languages",
+			"cancelAction": "Cancel",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"loadingAction": "Loading ...",
+			"localizeAction": "Localize",
+			"refreshAction": "Refresh",
+			"saveAction": "Save",
+			"searchAction": "Search",
+			"message": "Message",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"poll": {
+		"_share": {
+			"createdDate": "Created date",
+			"description": "Description",
+			"language": "Language",
+			"localization": "Localization",
+			"localizationHelp": "Drag the copies of poll in other languages from the table of polls<br />and drop them here",
+			"multipleOptionsHelp": "Allow to choose multiple options",
+			"option": "Option",
+			"optionHelp": "Below is the list of options. You can change their orders by dragging and dropping the option.",
+			"options": "Options",
+			"properties": "Properties",
+			"title": "Title",
+			"titleRequired": "The title is required"
+		},
+		"add": {
+			"error": "Sorry, cannot add new poll",
+			"success": "The poll is created successfully",
+			"title": "Add new poll"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the poll titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the poll",
+			"notFound": "Sorry, cannot find the poll",
+			"success": "The poll is deleted successfully",
+			"title": "Delete poll"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the poll",
+			"notFound": "Sorry, cannot find the poll with Id of <b>%s</b>",
+			"success": "The poll is updated successfully",
+			"title": "Edit the poll"
+		},
+		"list": {
+			"error": "Sorry, there is error",
+			"notFound": "Not found any polls",
+			"searchHelp": "Title",
+			"showColumns": "Show columns:",
+			"title": "Manage polls"
+		}
+	}
+}

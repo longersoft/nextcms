@@ -1,0 +1,248 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		poll
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('poll.add.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/poll/css/admin/default/styles.css");
+</script>
+
+<div id="pollPollAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button id="pollPollAddSaveButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			if (dijit.byId("pollPollAddForm").validate()) {
+				dojo.publish("/app/poll/poll/add/onStart");
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'poll_poll_add'); ?>",
+					content: dojo.formToObject("pollPollAddForm"),
+					handleAs: "json",
+					load: function(data) {
+						dojo.publish("/app/poll/poll/add/onComplete", [ data ]);
+					}
+				});
+			}
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/poll/poll/add/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, region: 'center'">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('poll.add.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<form id="pollPollAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('poll._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="language"><?php echo $this->translator()->_('poll._share.language'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language'">
+						<?php foreach ($this->languages as $language => $name) : ?>
+							<option value="<?php echo $language; ?>"<?php if ($language == $this->language) : ?> selected="selected"<?php else : ?> disabled="disabled"<?php endif; ?>><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+				
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('poll._share.title'); ?>:</label>
+						<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'title', type: 'text', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->title); ?><?php endif; ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('poll._share.titleRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('poll._share.description'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'description', style: 'width: 300px; height: 150px'"><?php if ($this->source) : ?><?php echo $this->source->description; ?><?php endif; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="multiple_options">&nbsp;</label>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'multiple_options', value: true, checked: <?php if ($this->source && $this->source->multiple_options == "1") : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('poll._share.multipleOptionsHelp'); ?>
+					</div>
+					
+					<input type="hidden" name="format" value="json" />
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Options -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('poll._share.options'); ?>', class: 'appContentPane'">
+					<div style="padding: 8px 0">
+						<?php echo $this->translator()->_('poll._share.optionHelp'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<div id="pollPollAddOptionsContainer" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: ['pollOptionDnd'], selfAccept: true">
+						<?php if ($this->sourceOptions) : ?>
+							<?php foreach ($this->sourceOptions as $option) : ?>
+							<div class="pollOption dojoDndItem" dndtype="pollOptionDnd">
+								<input type="hidden" name="num_choices[]" value="<?php echo $option->num_choices; ?>" />
+								<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'options[]', value: '<?php echo addslashes($option->title); ?>', style: 'width: 300px'" />
+								<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', label: '<?php echo $this->translator(true)->_('global._share.deleteAction'); ?>'">
+									<script type="dojo/connect" data-dojo-event="onClick">
+									dojo.destroy(dojo.query(this.domNode).closest(".pollOption")[0]);
+									</script>
+								</button>
+							</div>
+							<?php endforeach; ?>
+						<?php endif; ?>
+						</div>
+					</div>
+					
+					<div style="padding: 8px 0">
+						<input id="pollPollAddNewOption" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', style: 'width: 300px', placeHolder: '<?php echo $this->translator(true)->_('poll._share.option'); ?>'" />
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', label: '<?php echo $this->translator(true)->_('global._share.addAction'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onClick">
+							// Add new option
+							var div = dojo.create("div", {
+								className: "pollOption dojoDndItem",
+								dndtype: "pollOptionDnd"
+							}, "pollPollAddOptionsContainer");
+							new dijit.form.TextBox({
+								name: "options[]",
+								value: dijit.byId("pollPollAddNewOption").get("value"),
+								style: "width: 300px"
+							}).placeAt(div);
+							new dijit.form.Button({
+								label: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>",
+								onClick: function() {
+									dojo.destroy(div);
+								}
+							}).placeAt(div);
+							</script>
+						</button>
+					</div>
+				</div>
+				<!-- /Options -->
+				
+				<!-- Localization -->
+				<div id="pollPollAddLocalizedContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('poll._share.localization'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+					<?php if ($this->source) : ?>
+					<div class="pollPollAddLocalizedItem" style="padding: 2px 8px">
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->title); ?>', style: 'width: 300px', readOnly: true" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->language); ?>', style: 'margin: 0 8px; width: 100px', readOnly: true" />
+						<input type="hidden" name="translations" value='<?php echo $this->source->translations; ?>' />
+						
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', label: '<?php echo $this->translator(true)->_('global._share.deleteAction'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onClick">
+							dojo.destroy(dojo.query(this.domNode).closest(".pollPollAddLocalizedItem")[0]);
+							if (dojo.query(".pollPollAddLocalizedItem", "pollPollAddLocalizedContainer").length == 0) {
+								// Show the guide
+								dojo.style("pollPollAddLocalizedHelp", "display", "block");
+							}
+							</script>
+						</button>
+					</div>
+					<?php endif; ?>
+					
+					<div id="pollPollAddLocalizedHelp" class="appCenter" style="display: <?php if ($this->source) : ?>none<?php else : ?>block<?php endif; ?>">
+						<div><?php echo $this->translator()->_('poll._share.localizationHelp'); ?></div>
+					</div>
+				</div>
+				<!-- /Localization -->
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.grid.enhanced.plugins.GridSource");
+
+dojo.addOnLoad(function() {
+	// DOJO LESSON: Allow to drag poll from the grid and drop on the localized container
+	var target = new dojox.grid.enhanced.plugins.GridSource("pollPollAddLocalizedContainer", {
+		isSource: false,
+		insertNodesForGrid: false
+	});
+	dojo.connect(target, "onDropGridRows", function(grid, rowIndexes) {
+		var sourceItems = [];
+		dojo.forEach(rowIndexes, function(rowIndex, index) {
+			var item = grid.getItem(rowIndex);
+			if (item) {
+				sourceItems.push(item);
+			}
+		});
+
+		if (sourceItems.length > 0) {
+			// Hide the guide
+			dojo.style("pollPollAddLocalizedHelp", "display", "none");
+		}
+
+		dojo.forEach(sourceItems, function(item) {
+			var div = dojo.create("div", {
+				className: "pollPollAddLocalizedItem",
+				style: "padding: 2px 8px"
+			}, "pollPollAddLocalizedContainer");
+
+			new dijit.form.TextBox({
+				value: item.title[0],
+				style: "width: 300px",
+				readOnly: true
+			}).placeAt(div);
+			
+			new dijit.form.TextBox({
+				value: item.language[0],
+				style: "margin: 0 8px; width: 100px",
+				readOnly: true
+			}).placeAt(div);
+
+			dojo.create("input", {
+				name: "translations",
+				type: "hidden",
+				value: item.translations[0]
+			}, div);
+
+			new dijit.form.Button({
+				label: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>",
+				onClick: function() {
+					dojo.destroy(div);
+					if (dojo.query(".pollPollAddLocalizedItem", "pollPollAddLocalizedContainer").length == 0) {
+						// Show the guide
+						dojo.style("pollPollAddLocalizedHelp", "display", "block");
+					}
+				}
+			}).placeAt(div);
+		});
+	});
+});
+</script>
