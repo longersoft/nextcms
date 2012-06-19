@@ -1,0 +1,276 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div id="contentHooksLinkProviderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.content'); ?>', class: 'appContentPane'">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top'">
+		<!-- LanguageSelector -->
+		<?php if ($this->languages) : ?>
+		<div id="contentHooksLinkProviderLanguageDropDown" data-dojo-type="dijit.form.DropDownButton" data-dojo-props="label: '<?php echo $this->translator(true)->_('show.selectLanguageAction'); ?>'">
+			<div data-dojo-type="dijit.Menu">
+				<?php foreach ($this->languages as $locale => $name) : ?>
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="__locale: '<?php echo $locale; ?>', label: '<?php echo $name; ?>', iconClass: 'appIcon appFlag_<?php echo $locale; ?>'">
+					<script type="dojo/connect" data-dojo-event="onClick">
+					dijit.byId("contentHooksLinkProviderLanguageDropDown").set("label", this.label);
+					dijit.byId("contentHooksLinkProviderLanguageDropDown").set("iconClass", this.iconClass);
+					content.hooks.linkprovider.ArticleController._criteria.language = this.__locale;
+					</script>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php endif; ?>
+		<!-- /LanguageSelector -->
+		
+		<div id="contentHooksLinkProviderTypeDropDown" data-dojo-type="dijit.form.DropDownButton" data-dojo-props="label: '<?php echo $this->translator(true)->_('show.type'); ?>'">
+			<div data-dojo-type="dijit.Menu">
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="label: '<?php echo $this->translator(true)->_('show.typeAll'); ?>'">
+					<script type="dojo/connect" data-dojo-event="onClick">
+					dijit.byId("contentHooksLinkProviderTypeDropDown").set("label", this.label);
+					content.hooks.linkprovider.ArticleController._criteria.type = null;
+					</script>
+				</div>
+				<div data-dojo-type="dijit.MenuSeparator"></div>
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="appSearchFor: '<?php echo Content_Models_Article::TYPE_ARTICLE; ?>', label: '<?php echo $this->translator(true)->_('show.typeArticle'); ?>'">
+					<script type="dojo/connect" data-dojo-event="onClick">
+					dijit.byId("contentHooksLinkProviderTypeDropDown").set("label", this.label);
+					content.hooks.linkprovider.ArticleController._criteria.type = this.appSearchFor;
+					</script>
+				</div>
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="appSearchFor: '<?php echo Content_Models_Article::TYPE_PAGE; ?>', label: '<?php echo $this->translator(true)->_('show.typePage'); ?>'">
+					<script type="dojo/connect" data-dojo-event="onClick">
+					dijit.byId("contentHooksLinkProviderTypeDropDown").set("label", this.label);
+					content.hooks.linkprovider.ArticleController._criteria.type = this.appSearchFor;
+					</script>
+				</div>
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="appSearchFor: '<?php echo Content_Models_Article::TYPE_BLOG; ?>', label: '<?php echo $this->translator(true)->_('show.typeBlog'); ?>'">
+					<script type="dojo/connect" data-dojo-event="onClick">
+					dijit.byId("contentHooksLinkProviderTypeDropDown").set("label", this.label);
+					content.hooks.linkprovider.ArticleController._criteria.type = this.appSearchFor;
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: false, nested: true">
+		<!-- Categories -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.categories'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div data-dojo-type="dijit.Toolbar">
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appRefreshIcon', label: '<?php echo $this->translator(true)->_('show.refreshAction'); ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						content.hooks.linkprovider.ArticleController.showCategories();
+						</script>
+					</button>
+				</div>
+			</div>
+			
+			<div id="contentHooksLinkProviderCategoriesContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'padding-top: 8px'">
+				<div class="appCenter">
+					<div><?php echo $this->translator()->_('show.categoriesHelp'); ?></div>
+				</div>
+			</div>
+		</div>
+		<!-- /Categories -->
+		
+		<!-- Articles -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.articles'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+			<?php if ($this->accessor()->route('content_article_list')) : ?>
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div data-dojo-type="dijit.Toolbar">
+					<input id="contentHooksLinkProviderSearchBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', placeHolder: '<?php echo $this->translator(true)->_('show.searchHelp'); ?>', style: 'width: 150px'" />
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appSearchIcon', label: '<?php echo $this->translator(true)->_('show.searchAction'); ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						content.hooks.linkprovider.ArticleController.searchArticles({
+							keyword: dijit.byId("contentHooksLinkProviderSearchBox").get("value"),
+							page: 1
+						});
+						</script>
+					</button>
+				</div>
+			</div>
+			<?php endif; ?>
+			
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', style: 'height: 100%; width: 100%'">
+				<div id="contentHooksLinkProviderItemsContainer" class="appContentPane" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+					<div id="contentHooksLinkProviderTemplate" style="display: none">
+						<a href="{article_link}" title="{article_title}">{article_title}</a>
+					</div>
+				</div>
+				<div id="contentHooksLinkProviderHelp" class="appCenter">
+					<div><?php echo $this->translator()->_('show.articlesHelp'); ?></div>
+				</div>
+			</div>
+			
+			<!-- Paginator -->
+			<div id="contentHooksLinkProviderPaginator" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'height: 26px; padding: -8px'">
+			</div>
+			<!-- /Paginator -->
+		</div>
+		<!-- /Articles -->
+		
+		<!-- Feed -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.feed'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div data-dojo-type="dijit.Toolbar">
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appRefreshIcon', label: '<?php echo $this->translator(true)->_('show.refreshAction'); ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						content.hooks.linkprovider.ArticleController.showFeedChannels();
+						</script>
+					</button>
+					
+					<div id="contentHooksLinkProviderFeedFormatDropDown" data-dojo-type="dijit.form.DropDownButton" data-dojo-props="feed_format: 'rss', label: '<?php echo $this->translator(true)->_('show.feedFormatRss'); ?>', class: 'appRight'">
+						<div data-dojo-type="dijit.Menu">
+							<?php foreach (array('rss', 'atom') as $format) : ?>
+							<div data-dojo-type="dijit.MenuItem" data-dojo-props="appFeedFormat: '<?php echo $format; ?>', label: '<?php echo $this->translator(true)->_('show.feedFormat' . ucfirst(strtolower($format))); ?>'">
+								<script type="dojo/connect" data-dojo-event="onClick">
+								dijit.byId("contentHooksLinkProviderFeedFormatDropDown").set("label", this.label);
+								dijit.byId("contentHooksLinkProviderFeedFormatDropDown").set("feed_format", this.appFeedFormat);
+								</script>
+							</div>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="contentHooksLinkProviderFeedContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'padding-top: 8px'">
+				<div class="appCenter">
+					<div><?php echo $this->translator()->_('show.feedHelp'); ?></div>
+				</div>
+			</div>
+		</div>
+		<!-- /Feed -->
+	</div>
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* content.hooks.linkprovider */
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.DropDownButton");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuItem");
+dojo.require("dijit.MenuSeparator");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojo.NodeList-traverse");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Encoder");
+dojo.provide("content.hooks.linkprovider.ArticleController");
+
+content.hooks.linkprovider.ArticleController.PAGINATOR_TOPIC = "/app/content/hooks/linkprovider/onGotoPage";
+
+content.hooks.linkprovider.ArticleController._criteria = {
+	status: "<?php echo Content_Models_Article::STATUS_ACTIVATED; ?>",
+	keyword: null,
+	page: 1,
+	per_page: 20,
+	language: "<?php echo $this->language; ?>",
+	type: null
+};
+
+content.hooks.linkprovider.ArticleController.searchArticles = function(/*Object*/ criteria) {
+	// summary:
+	//		Searches for articles
+	dojo.mixin(content.hooks.linkprovider.ArticleController._criteria, criteria);
+	var q = core.js.base.Encoder.encode(content.hooks.linkprovider.ArticleController._criteria);
+
+	dojo.style("contentHooksLinkProviderItemsContainer", "display", "none");
+	dojo.style("contentHooksLinkProviderHelp", "display", "block");
+	dojo.byId("contentHooksLinkProviderHelp").innerHTML = '<div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div>';
+	
+	dojo.xhrPost({
+		url: "<?php echo $this->url(array(), 'content_article_list'); ?>",
+		content: {
+			format: "json",
+			topic: content.hooks.linkprovider.ArticleController.PAGINATOR_TOPIC,
+			q: q
+		},
+		handleAs: "json",
+		load: function(data) {
+			// Remove current article items
+			dojo.query(".contentHooksLinkProviderLinkItem", "contentHooksLinkProviderItemsContainer").orphan();
+
+			// Hide the searching guide
+			dojo.style("contentHooksLinkProviderHelp", "display", "none");
+			dojo.style("contentHooksLinkProviderItemsContainer", "display", "block");
+			
+			var template = dojo.byId("contentHooksLinkProviderTemplate").innerHTML;
+			dojo.forEach(data.articles, function(article) {
+				var html = template.replace(/{article_link}/g, article.link)
+								   .replace(/{article_title}/g, article.title);
+				dojo.create("div", {
+					className: "dojoDndItem contentHooksLinkProviderLinkItem",
+					innerHTML: html,
+					dndtype: "appDndLink",
+					// It will work as an Articles Provider
+					"data-app-entity-class": "Content_Models_Article",
+					"data-app-entity-props": core.js.base.Encoder.encode(article)
+				}, "contentHooksLinkProviderItemsContainer");
+			});
+			
+			// Update paginator
+			dijit.byId("contentHooksLinkProviderPaginator").setContent(data.paginator);
+		}
+	});
+};
+
+dojo.subscribe(content.hooks.linkprovider.ArticleController.PAGINATOR_TOPIC, function(/*Integer*/ page) {
+	// summary:
+	//		Paging handler
+	content.hooks.linkprovider.ArticleController.searchArticles({
+		page: page
+	});
+});
+
+content.hooks.linkprovider.ArticleController.showCategories = function() {
+	// summary:
+	//		Shows categories
+	var params = {
+		_type: "hook",
+		_mod: "content",
+		_name: "linkprovider",
+		_method: "category",
+		language: content.hooks.linkprovider.ArticleController._criteria.language,
+		type: content.hooks.linkprovider.ArticleController._criteria.type
+	};
+	dijit.byId("contentHooksLinkProviderCategoriesContainer")
+		 .set("href", "<?php echo $this->url(array(), 'core_extension_render'); ?>" + "?" + dojo.objectToQuery(params));
+};
+
+content.hooks.linkprovider.ArticleController.showFeedChannels = function() {
+	// summary:
+	//		Shows RSS channels
+	var params = {
+		_type: "hook",
+		_mod: "content",
+		_name: "linkprovider",
+		_method: "feed",
+		language: content.hooks.linkprovider.ArticleController._criteria.language,
+		type: content.hooks.linkprovider.ArticleController._criteria.type,
+		feed_format: dijit.byId("contentHooksLinkProviderFeedFormatDropDown").get("feed_format")
+	};
+	dijit.byId("contentHooksLinkProviderFeedContainer")
+		 .set("href", "<?php echo $this->url(array(), 'core_extension_render'); ?>" + "?" + dojo.objectToQuery(params));
+};
+<?php $this->script()->captureEnd(); ?>

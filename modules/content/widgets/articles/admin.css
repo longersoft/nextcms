@@ -1,0 +1,19 @@
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2011-10-22
+ */
+
+.contentWidgetsArticlesConfigArticleItemsContainer { margin: 0; padding: 0; }
+.contentWidgetsArticlesConfigArticleItem { /*border-top: 1px solid #B5BCC7;*/ padding: 5px; }
+.contentWidgetsArticlesConfigArticleItem img { margin: 0 5px; }
+.contentWidgetsArticlesConfigAction a { margin: 0 5px; }
+.contentWidgetsArticlesConfigAction a:first-child { margin-left: 0; }

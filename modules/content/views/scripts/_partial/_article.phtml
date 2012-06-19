@@ -1,0 +1,48 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->article) : ?>
+
+<?php $this->headTitle()->append($this->article->title); ?>
+
+<div class="contentArticleView">
+	<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Content_FilterArticleTitle', '<h1 class="title">' . $this->article->title . '</h1>'); ?>
+	
+	<p class="meta">
+		<?php echo $this->article->activated_date; ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numComments'), $this->article->num_comments); ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numViews'), $this->article->num_views); ?>
+	</p>
+	<h2 class="summary"><?php echo $this->article->description; ?></h2>
+	<p class="cover">
+		<a href="<?php echo $this->article->getCover('large'); ?>" title="<?php echo addslashes($this->article->getCoverTitle()); ?>">
+			<img src="<?php echo $this->article->getCover('medium'); ?>" title="<?php echo addslashes($this->article->getCoverTitle()); ?>" />
+		</a>
+		<cite><?php echo $this->article->getCoverTitle(); ?></cite>
+	</p>
+	<div class="content">
+		<?php echo $this->article->content; ?>
+	</div>
+	
+	<?php if ($this->tags) : ?>
+	<div class="tags">
+		<span><?php echo $this->translator()->_('global._share.tags'); ?>:</span>
+		<?php foreach ($this->tags as $tag) : ?><a href="<?php echo $this->url($tag->getProperties(), (Content_Models_Article::TYPE_BLOG == $this->article->type) ? 'content_blog_tag' : 'content_article_tag'); ?>"><?php echo $tag->title; ?></a><?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+</div>
+
+<?php endif; ?>

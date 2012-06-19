@@ -1,0 +1,42 @@
+{
+	"_about": {
+		"description": "Cung cấp liên kết của các bài viết",
+		"title": "Liên kết"
+	},
+	"menu": {
+		"label": "Liên kết bài viết"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"category": {
+		"notFound": "Không tìm thấy chuyên mục nào"
+	},
+	"feed": {
+		"latestArticles": "Các bài viết đã được kích hoạt mới nhất",
+		"notFound": "Không tìm thấy chuyên mục nào"
+	},
+	"show": {
+		"articles": "Bài viết",
+		"articlesHelp": "Nhấp vào biểu tượng Tìm kiếm để xem danh sách bài viết đã được kích hoạt mới nhất",
+		"categories": "Chuyên mục",
+		"categoriesHelp": "Nhấp vào biểu tượng Tải lại để xem liên kết của các chuyên mục",
+		"content": "Nội dung",
+		"feed": "Feed",
+		"feedFormat": "Định dạng feed",
+		"feedFormatAtom": "Atom",
+		"feedFormatRss": "Rss",
+		"feedHelp": "Nhấp vào biểu tượng Tải lại để xem liên kết của các kênh RSS/Atom chứa các bài viết đã được kích hoạt mới nhất",
+		"refreshAction": "Tải lại",
+		"searchAction": "Tìm",
+		"searchHelp": "Từ khóa",
+		"selectLanguageAction": "Lựa chọn ngôn ngữ",
+		"type": "Kiểu",
+		"typeAll": "Tất cả",
+		"typeArticle": "Bài viết",
+		"typeBlog": "Blog",
+		"typePage": "Trang"
+	}
+}

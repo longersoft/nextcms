@@ -1,0 +1,42 @@
+{
+	"_about": {
+		"description": "Provide links of categories, articles",
+		"title": "Links Provider"
+	},
+	"menu": {
+		"label": "Article links"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"category": {
+		"notFound": "Not found any categories"
+	},
+	"feed": {
+		"latestArticles": "Latest activated articles",
+		"notFound": "Not found any categories"
+	},
+	"show": {
+		"articles": "Articles",
+		"articlesHelp": "Click the Search icon to view the list of latest activated articles",
+		"categories": "Categories",
+		"categoriesHelp": "Click the Refresh icon to view the list of categories",
+		"content": "Content",
+		"feed": "Feed",
+		"feedFormat": "Feed format",
+		"feedFormatAtom": "Atom",
+		"feedFormatRss": "Rss",
+		"feedHelp": "Click the Refresh icon to view the link of RSS/Atom channels to the latest activated articles",
+		"refreshAction": "Refresh",
+		"searchAction": "Search",
+		"searchHelp": "Keyword",
+		"selectLanguageAction": "Select language",
+		"type": "Type",
+		"typeAll": "All",
+		"typeArticle": "Article",
+		"typeBlog": "Blog entry",
+		"typePage": "Page"
+	}
+}

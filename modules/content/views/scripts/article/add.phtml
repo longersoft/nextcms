@@ -1,0 +1,435 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('article.add.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/layout/resources/GridContainer.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/widget/Portlet/Portlet.css");
+</script>
+
+<div id="contentArticleAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button id="contentArticleAddSaveButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			core.js.base.controllers.Subscriber.unsubscribe("/app/content/article/add", "/app/global/dnd/onDropImage");
+			dojo.publish("/app/content/article/add/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- Form -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('article.add.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<form id="contentArticleAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="language"><?php echo $this->translator()->_('article._share.language'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language'">
+						<?php foreach ($this->languages as $language => $name) : ?>
+							<option value="<?php echo $language; ?>"<?php if ($language == $this->language) : ?> selected="selected"<?php else : ?> disabled="disabled"<?php endif; ?>><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="type"><?php echo $this->translator()->_('article._share.type'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'type', value: '<?php if ($this->source) : ?><?php echo $this->source->type; ?><?php else : ?>article<?php endif; ?>'">
+							<option value="<?php echo Content_Models_Article::TYPE_ARTICLE; ?>"><?php echo $this->translator()->_('article._share.typeArticle'); ?></option>
+							<option value="<?php echo Content_Models_Article::TYPE_PAGE; ?>"><?php echo $this->translator()->_('article._share.typePage'); ?></option>
+							<option value="<?php echo Content_Models_Article::TYPE_BLOG; ?>"><?php echo $this->translator()->_('article._share.typeBlog'); ?></option>
+						</select>
+					</div>
+				
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('article._share.title'); ?>:</label>
+						<div data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->title); ?><?php endif; ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('article._share.titleRequired'); ?>'">
+							<script type="dojo/connect">
+							new core.js.views.CharacterCounter(this);
+							</script>
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_helper_slug'); ?>",
+								content: {
+									input: value
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("contentArticleAddSlugTextBox").set("value", data.output);
+								}
+							});
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="sub_title"><?php echo $this->translator()->_('article._share.subTitle'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sub_title', value: '<?php if ($this->source && $this->source->sub_title) : ?><?php echo addslashes($this->source->sub_title); ?><?php endif; ?>', style: 'width: 300px'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="slug"><?php echo $this->translator()->_('article._share.slug'); ?>:</label>
+						<div id="contentArticleAddSlugTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'slug', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->slug); ?><?php endif; ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('article._share.slugRequired'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'content_article_slug'); ?>",
+								content: {
+									slug: value
+								},
+								handleAs: "json",
+								load: function(data) {
+									if (data.available == false) {
+										dojo.publish("/app/global/notification", [{
+											message: "<?php echo $this->translator()->_('article._share.slugNotAvailable'); ?>",
+											type: "error"
+										}])
+									}
+								}
+							});
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('article._share.description'); ?>:</label>
+						<div data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'description', style: 'width: 250px; height: 100px'"><?php if ($this->source) : ?><?php echo $this->source->description; ?><?php endif; ?><script type="dojo/connect">new core.js.views.CharacterCounter(this);</script></div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="meta_keyword"><?php echo $this->translator()->_('article._share.metaKeywordTag'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'meta_keyword', style: 'width: 250px; height: 100px'"><?php if ($this->source) : ?><?php echo $this->source->meta_keyword; ?><?php endif; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="meta_description"><?php echo $this->translator()->_('article._share.metaDescriptionTag'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'meta_description', style: 'width: 250px; height: 100px'"><?php if ($this->source) : ?><?php echo $this->source->meta_description; ?><?php endif; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="author"><?php echo $this->translator()->_('article._share.author'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'author', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->author); ?><?php endif; ?>', style: 'width: 200px'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="credit"><?php echo $this->translator()->_('article._share.credit'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'credit', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->credit); ?><?php endif; ?>', style: 'width: 200px'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('article._share.icon'); ?>:</label>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'image_icon', value: 1, checked: <?php if ($this->source && $this->source->image_icon == '1') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('article._share.iconImage'); ?>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'video_icon', value: 1, checked: <?php if ($this->source && $this->source->video_icon == '1') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('article._share.iconVideo'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="publishing_date"><?php echo $this->translator()->_('article._share.publishingDate'); ?>:</label>
+						<input data-dojo-type="dijit.form.DateTextBox" data-dojo-props="type: 'text', name: 'publishing_date'" />
+						<input data-dojo-type="dijit.form.TimeTextBox" data-dojo-props="type: 'text', name: 'publishing_time', value: 'T00:00:00', constraints: { timePattern: 'HH:mm:ss' }" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="featured">&nbsp;</label>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'featured', value: 1, checked: <?php if ($this->source && $this->source->featured == '1') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('article._share.markAsFeatured'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="category"><?php echo $this->translator()->_('article._share.category'); ?>:</label>
+						<?php 
+						echo $this->helperLoader('category')
+								  ->categorySelect('content', $this->language, array(
+										'name'	   => 'category',
+								  		'selected' => $this->source ? $this->source->category_id : null,
+								  ));
+						?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="categories"><?php echo $this->translator()->_('article._share.categories'); ?>:</label>
+						<div id="contentArticleAddCategories" class="appLeft">
+							<?php 
+							echo $this->helperLoader('category')
+									  ->categoryCheckboxTree('content', $this->language, array(
+											'id'	   => 'contentArticleAddCategories',
+											'name'	   => 'categories[]',
+											'selected' => $this->source ? $this->source->categories : null,
+									  ));
+							?>
+						</div>
+					</div>
+					
+					<input type="hidden" name="format" value="json" />
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Cover -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.cover'); ?>', class: 'appContentPane'">
+					<div style="padding-bottom: 8px"><?php echo $this->translator()->_('article._share.coverHelp'); ?></div>
+					
+					<div id="contentArticleAddCoverTarget" class="appBorderContainer" style="height: 225px; width: 300px; margin-bottom: 8px" data-dojo-type="dojo.dnd.Target" data-dojo-props="accept: ['appDndImage']">
+						<script type="dojo/connect">
+						// Automatically set the cover's title after dropping image to the cover area
+						core.js.base.dnd.TargetManager.getInstance().addTarget(this);
+						core.js.base.dnd.TargetManager.getInstance().add(this.node, ["appDndImage"], core.js.base.dnd.TargetManager.handleDropImage);
+						core.js.base.controllers.Subscriber.subscribe("/app/content/article/add", "/app/global/dnd/onDropImage", this, function(data) {
+							if (dojo.attr(data.target, "id") == dojo.attr(this.node, "id")) {
+								dijit.byId("contentArticleAddCoverTitleBox").set("value", data.title);
+							}
+						});
+						</script>
+						<script type="dojo/method" data-dojo-event="onDropExternal" data-dojo-args="source, nodes, copy">
+						var thumbnails = dojo.attr(nodes[0], "data-app-dndthumbnails");
+						if (thumbnails) {
+							dojo.attr("contentArticleAddCover", "value", thumbnails);
+							dojo.query("img", this.node).orphan();
+							dojo.create("img", {
+								src: core.js.Constant.ROOT_URL + dojo.fromJson(thumbnails).crop
+							}, this.node);
+						}
+						</script>
+						
+						<?php if ($this->source && $this->source->image_crop) : ?>
+						<img src="<?php echo $this->APP_ROOT_URL . $this->source->image_crop; ?>" />
+						<?php endif; ?>
+					</div>
+					<input type="hidden" id="contentArticleAddCover" name="thumbnails" value=<?php if ($this->source) : ?><?php echo (Zend_Json::encode($this->source->getCoverThumbnails())); ?><?php else : ?>""<?php endif; ?> />
+					
+					<input id="contentArticleAddCoverTitleBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'cover_title', style: 'width: 300px', placeHolder: '<?php echo $this->translator(true)->_('article._share.coverTitleHelp'); ?>'" />
+				</div>
+				<!-- /Cover -->
+			
+				<!-- Content -->
+				<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="selected: true, gutters: true, style: 'height: 100%; width: 100%', title: '<?php echo $this->translator(true)->_('article._share.content'); ?>'">
+					<div id="contentArticleAddContentEditor" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', style: 'height: 100%; width: 100%', class: 'appLayoutBorderContainer'">
+					</div>
+					
+					<input type="hidden" id="contentArticleAddContent" name="content" value="<?php if ($this->source) : ?><?php echo addslashes($this->source->content); ?><?php endif; ?>" />
+					<input type="hidden" id="contentArticleAddLayout" name="layout" value="<?php if ($this->source && $this->source->layout) : ?><?php echo htmlentities($this->source->layout); ?><?php endif; ?>" />
+				</div>
+				<!-- /Content -->
+				
+				<!-- Tags -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.tags'); ?>', class: 'appContentPane'">
+					<div style="padding-bottom: 8px"><?php echo $this->translator()->_('article._share.tagsHelp'); ?></div>
+					
+					<?php echo $this->helperLoader('tag')->tagCollector('contentArticleAddTagsContainer'); ?>
+				</div>
+				<!-- /Tags -->
+				
+				<!-- Localization -->
+				<div id="contentArticleAddLocalizedContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.localization'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+					<?php if ($this->source) : ?>
+					<div class="contentArticleAddLocalizedItem" style="padding: 2px 8px">
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->title); ?>', style: 'width: 200px', readOnly: true" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->language); ?>', style: 'margin: 0 8px; width: 100px', readOnly: true" />
+						<input type="hidden" name="translations" value='<?php echo $this->source->translations; ?>' />
+						
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', label: '<?php echo $this->translator(true)->_('global._share.deleteAction'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onClick">
+							dojo.destroy(dojo.query(this.domNode).closest(".contentArticleAddLocalizedItem")[0]);
+							if (dojo.query(".contentArticleAddLocalizedItem", "contentArticleAddLocalizedContainer").length == 0) {
+								// Show the guide
+								dojo.style("contentArticleAddLocalizedHelp", "display", "block");
+							}
+							</script>
+						</button>
+					</div>
+					<?php endif; ?>
+				
+					<div id="contentArticleAddLocalizedHelp" class="appCenter" style="display: <?php if ($this->source) : ?>none<?php else : ?>block<?php endif; ?>">
+						<div><?php echo $this->translator()->_('article._share.localizationHelp'); ?></div>
+					</div>
+				</div>
+				<!-- /Localization -->
+			</div>
+			</form>
+		</div>
+	</div>
+	<!-- /Form -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.TimeTextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojo.NodeList-traverse");
+
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("core.js.base.Encoder");
+dojo.require("core.js.Constant");
+dojo.require("core.js.controllers.LayoutController");
+dojo.require("core.js.views.CharacterCounter");
+dojo.require("core.js.views.LayoutToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'core_extension_render',	// Required by the content editor
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Allow to drag the article from the list view and drop to the localized container
+	new dojo.dnd.Target("contentArticleAddLocalizedContainer", {
+		accept: ["contentArticleItemDnd"],
+		onDropExternal: function(source, nodes, copy) {
+			// Hide the guide
+			dojo.style("contentArticleAddLocalizedHelp", "display", "none");
+			
+			var article = core.js.base.Encoder.decode(dojo.attr(nodes[0], "data-app-entity-props"));
+
+			var div = dojo.create("div", {
+				className: "contentArticleAddLocalizedItem",
+				style: "padding: 2px 8px"
+			}, "contentArticleAddLocalizedContainer");
+			
+			new dijit.form.TextBox({
+				value: article.title,
+				style: "width: 200px",
+				readOnly: true
+			}).placeAt(div);
+			
+			new dijit.form.TextBox({
+				value: article.language,
+				style: "margin: 0 8px; width: 100px",
+				readOnly: true
+			}).placeAt(div);
+
+			dojo.create("input", {
+				name: "translations",
+				type: "hidden",
+				value: article.translations
+			}, div);
+
+			new dijit.form.Button({
+				label: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>",
+				onClick: function() {
+					dojo.destroy(div);
+					if (dojo.query(".contentArticleAddLocalizedItem", "contentArticleAddLocalizedContainer").length == 0) {
+						// Show the guide
+						dojo.style("contentArticleAddLocalizedHelp", "display", "block");
+					}
+				}
+			}).placeAt(div);
+		}
+	});
+
+	var handler = dojo.subscribe("/app/global/onLoadComplete/content_article_add", function() {
+		var editorController = new core.js.controllers.LayoutController("contentArticleAddContentEditor");
+		editorController.setLayoutToolbar(null);
+
+		<?php if ($this->source) : ?>
+		editorController.setLayoutData(<?php echo $this->source->layout; ?>)
+		<?php else : ?>
+		// Get the title of Editor widget
+		var title = "<?php echo $this->extensionTranslator()->translateTitle(new Core_Models_Widget(array('module' => 'content', 'name' => 'editor'))); ?>";
+		// Set the default layout with the Editor widget inside a grid container
+		var defaultLayout = {
+			"containers": [{
+			   	"containers": [{
+					"containers": [],
+					"cls": "core.js.views.LayoutPortlet",
+					"zoneIndex": 0,
+					"widget": {
+						"title": title,
+						"module": "content",
+						"name": "editor",
+						"params": {}
+					}
+				}],
+				"cls": "dojox.layout.GridContainer",
+				"numZones": 1
+			}],
+			"cls": "dijit.layout.BorderContainer",
+			"region": "center",
+			"style": "height: 100%; width: 100%"
+		};
+		editorController.setLayoutData(defaultLayout);
+		<?php endif; ?>
+
+		// Switch the layout editor to the edit mode
+		editorController.getLayoutContainer().setShowPortletOutput(false);
+		editorController.switchToMode("edit");
+
+		// Tag suggestions
+		tag.views.helpers.TagCollector.getContent = function() {
+			return editorController.getHtmlData();
+		};
+		
+		dojo.connect(editorController, "onSaveLayout", function(layoutData) {
+			dojo.attr("contentArticleAddContent", "value", editorController.getHtmlData());
+			dojo.attr("contentArticleAddLayout", "value", dojo.toJson(layoutData));
+		});
+	
+		dojo.connect(dijit.byId("contentArticleAddSaveButton"), "onClick", function() {
+			dijit.byId("contentArticleAddSaveButton").set("disabled", true);
+			dojo.attr("contentArticleAddContent", "value", editorController.getHtmlData());
+			dojo.attr("contentArticleAddLayout", "value", dojo.toJson(editorController.getLayoutData()));
+	
+			// Because dojo.formToObject("contentArticleAddForm") does not include the selected categories,
+			// I have to determine it manually
+			var categories = [];
+			dojo.query("input[name='categories[]'][checked='checked']", "contentArticleAddForm").forEach(function(node) {
+				categories.push(dojo.attr(node, "value"));
+			});
+			editorController.addPrefixToFields("app-widget-input-");
+			dojo.publish("/app/content/article/add/onStart");
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'content_article_add'); ?>",
+				content: dojo.mixin(dojo.formToObject("contentArticleAddForm"), { "categories[]": categories }),
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("contentArticleAddSaveButton").set("disabled", false);
+					dojo.publish("/app/content/article/add/onComplete", [ data ]);
+				}
+			});
+		});
+
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

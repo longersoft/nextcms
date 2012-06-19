@@ -1,0 +1,50 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles == 0) : ?>
+<div><?php echo $this->translator()->_('article._share.notFound'); ?></div>
+<?php elseif ($this->articles) : ?>
+
+<ul>
+	<?php foreach ($this->articles as $article) : ?>
+	<li>
+		<div class="thumb">
+			<a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>"><img src="<?php echo $article->getCover('crop'); ?>" title="<?php echo addslashes($article->getCoverTitle()); ?>" height="225" width="300" /></a>
+			<?php if ($article->image_icon) : ?>
+			<span class="icon"><span class="iconImage"></span></span>
+			<?php elseif ($article->video_icon) : ?>
+			<span class="icon"><span class="iconVideo"></span></span>
+			<?php endif; ?>
+		</div>
+		<div class="summary">
+			<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Content_FilterArticleTitle', '<h2><a href="' . $article->getViewUrl() . '" title="' . addslashes($article->title) . '">' . $article->title . '</a></h2>'); ?>
+			<span class="meta">
+				<?php echo sprintf($this->translator()->_('global._share.by'), $article->getAuthor()); ?> <span>|</span> <?php echo $this->dateFormatter()->diff(strtotime($article->activated_date), $this->timeDiffFormats); ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numComments'), $article->num_comments); ?>
+			</span>
+			<p class="desc"><?php echo $article->description; ?></p>
+			<a class="more" href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>"><?php echo $this->translator()->_('global._share.more'); ?></a>
+		</div>
+	</li>
+	<?php endforeach; ?>
+</ul>
+
+<div class="appPaginatorContainer">
+	<?php echo $this->paginator; ?>
+</div>
+
+<?php endif; ?>

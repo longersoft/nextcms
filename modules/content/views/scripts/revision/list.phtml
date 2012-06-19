@@ -1,0 +1,79 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('revision.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+</script>
+
+<div id="contentRevisionListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%'">
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="contentRevisionListToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+	
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false, class: 'appContentPane'">
+			<?php echo sprintf($this->translator()->_('revision.list.help'), $this->article->title); ?>
+		</div>
+	
+		<!-- Revisions -->
+		<div id="contentRevisionListGrid" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		</div>
+		<!-- /Revisions -->
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.registerModulePath("content", "<?php echo $this->APP_STATIC_URL; ?>/modules/content");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("content.js.controllers.RevisionController");
+dojo.require("content.js.views.RevisionGrid");
+dojo.require("content.js.views.RevisionToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'content_revision_delete', 'content_revision_list', 'content_revision_restore', 'content_revision_view',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	var handler = dojo.subscribe("/app/global/onLoadComplete/content_revision_list", function() {
+		dojo.style(dojo.byId("contentRevisionListContainer").parentNode, "border", "none");
+		dojo.unsubscribe(handler);
+	});
+
+	var revisionController = new content.js.controllers.RevisionController("contentRevisionListContainer", "<?php echo $this->article->article_id; ?>");
+	revisionController.setRevisionToolbar(new content.js.views.RevisionToolbar("contentRevisionListToolbar"))
+					  .setRevisionGrid(new content.js.views.RevisionGrid("contentRevisionListGrid"))
+					  .searchRevisions();
+});
+</script>

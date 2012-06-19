@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Import articles from RSS/Atom channels automatically",
+		"title": "Feed Importer"
+	},
+	"_permission": {
+		"description": "Import articles from RSS/Atom channels automatically",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"addAction": "Add",
+		"addFeedHelp": "Add new feed:",
+		"deleteAction": "Delete",
+		"loadingAction": "Loading ...",
+		"listFeedsHelp": "The feeds are listed as below. Click the <b>Delete</b> button if you want to remove the feed.",
+		"selectCategory": "Select category",
+		"selectLanguage": "Select language",
+		"url": "The URL of feed"
+	}
+}

@@ -1,0 +1,39 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+	<div class="dojoDndItem contentHooksLinkProviderLinkItem" dndtype="appDndLink" style="padding-left: 20px">
+		<a href="<?php echo $this->url(array('feed_format' => $this->feedFormat, 'type' => $this->type), 'content_feed_index'); ?>" title="<?php echo $this->translator()->_('feed.latestArticles'); ?>"><?php echo $this->translator()->_('feed.latestArticles'); ?></a>
+	</div>
+
+	<?php if (!$this->categories || count($this->categories) == 0) : ?>
+		<?php echo $this->translator()->_('feed.notFound'); ?>
+	<?php else : ?>
+	
+	<?php foreach ($this->categories as $category) : ?>
+	<div class="dojoDndItem contentHooksLinkProviderLinkItem" dndtype="appDndLink" style="padding-left: <?php echo 20 * ($category->depth + 1); ?>px">
+		<a href="<?php echo $this->serverUrl() . $this->url(array_merge($category->getProperties(), array('feed_format' => $this->feedFormat, 'type' => $this->type)), 'content_feed_category'); ?>" title="<?php echo addslashes($category->name); ?>"><?php echo $category->name; ?></a>
+	</div>
+	<?php endforeach; ?>
+	
+	<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+dojo.require("dojo.dnd.Source");
+</script>

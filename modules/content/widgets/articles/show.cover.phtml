@@ -1,0 +1,38 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles >= 6) : ?>
+<div class="contentWidgetsArticlesCover">
+	<?php foreach ($this->articles as $index => $article) : ?>
+	<div class="<?php if ($index == 0) : ?>medium<?php elseif ($index == 1 || $index == 2) : ?>crop<?php else : ?>small<?php endif; ?>">
+		<a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>">
+			<img <?php if ($index == 0) : ?>src="<?php echo $article->getCover('medium'); ?>"<?php elseif ($index == 1 || $index == 2) : ?>src="<?php echo $article->getCover('crop'); ?>" height="225" width="300"<?php else : ?>src="<?php echo $article->getCover('small'); ?>"<?php endif; ?> title="<?php echo addslashes($article->getCoverTitle()); ?>" />
+		</a>
+		<div class="summary">
+			<h2><a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>"><?php echo $article->title; ?></a></h2>
+			<?php if ($index == 0) : ?>
+			<h3><?php echo $this->stringFormatter()->sub($article->description, 150); ?></h3>
+			<a class="iconArrow" href="<?php echo $article->getViewUrl(); ?>">&nbsp;</a>
+			<?php else : ?>
+			<span class="<?php if ($article->image_icon) : ?>iconImage<?php elseif ($article->video_icon) : ?>iconVideo<?php endif; ?>">&nbsp;</span>
+			<?php endif; ?>
+		</div>
+	</div>
+	<?php endforeach; ?>
+</div>
+<?php endif; ?>

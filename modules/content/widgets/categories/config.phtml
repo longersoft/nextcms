@@ -1,0 +1,125 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-23
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appForm">
+	<div class="appFormRow" style="width: 100%">
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%; width: 100%', closable: true, doLayout: false">
+			<!-- Basic -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="selected: true, title: '<?php echo $this->translator(true)->_('config.basic'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<label class="appTopLabel" for="lang"><?php echo $this->translator()->_('config.language'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', value: '<?php echo $this->language; ?>', class: 'appWidgetInput'">
+						<?php if ($this->languages) : ?>
+						<?php foreach ($this->languages as $language => $name) : ?>
+						<option value="<?php echo $language; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+						
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						// Update the category select box
+						dojo.xhrPost({
+							url: "<?php echo $this->url(array(), 'core_extension_render'); ?>",
+							content: {
+								_type: "widget",
+								_mod: "content",
+								_name: "breadcrumb",
+								_method: "category",
+								noRenderScript: true,
+								language: value
+							},
+							handleAs: "json",
+							load: function(data) {
+								var categorySelect = dijit.byId("contentWidgetsCategoriesConfigCategorySelect_<?php echo $this->uid; ?>");
+								categorySelect.removeOption(categorySelect.getOptions());
+								categorySelect.addOption([{
+									value: "",
+									label: "<?php echo $this->translator()->_('config.selectRootCategory'); ?>"
+								}, {
+									// DOJO LESSON: Add a separator to a dijit.form.Select widget
+									value: "",
+									label: "",
+									selected: false,
+									disabled: false
+								}]);
+								if (data.length > 0) {
+									categorySelect.addOption({
+										value: "",
+										label: "",
+										selected: false,
+										disabled: false
+									});
+								}
+								dojo.forEach(data, function(item) {
+									categorySelect.addOption({
+										value: item.category_id + "",
+										label: item.label
+									});
+								});
+							}
+						});
+						</script>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel" for="category"><?php echo $this->translator()->_('config.rootCategory'); ?>:</label>
+					<select id="contentWidgetsCategoriesConfigCategorySelect_<?php echo $this->uid; ?>" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'category_id', class: 'appWidgetInput', maxHeight: 200">
+						<option value=""><?php echo $this->translator()->_('config.selectRootCategory'); ?></option>
+						<option type="separator"></option>
+						<?php if ($this->categories) : ?>
+						<option type="separator"></option>
+						<?php foreach ($this->categories as $category) : ?>
+						<option value="<?php echo $category->category_id; ?>"><?php echo str_repeat('---', $category->depth) . $category->name; ?></option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.type'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'type', class: 'appWidgetInput'">
+						<option value="<?php echo Content_Models_Article::TYPE_ARTICLE; ?>"><?php echo $this->translator()->_('config.typeArticle'); ?></option>
+						<option value="<?php echo Content_Models_Article::TYPE_PAGE; ?>"><?php echo $this->translator()->_('config.typePage'); ?></option>
+						<option value="<?php echo Content_Models_Article::TYPE_BLOG; ?>"><?php echo $this->translator()->_('config.typeBlog'); ?></option>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'show_num_articles', value: 1, class: 'appWidgetInput'" /> <?php echo $this->translator()->_('config.showNumArticles'); ?>
+				</div>
+			</div>
+			<!-- /Basic -->
+			
+			<!-- Theme -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.theme'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'theme', class: 'appWidgetInput'" />
+				</div>
+			</div>
+			<!-- /Theme -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+</script>

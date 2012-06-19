@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Nhập các bài viết từ các kênh RSS/Atom",
+		"title": "Feed Importer"
+	},
+	"_permission": {
+		"description": "Nhập các bài viết từ các kênh RSS/Atom",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"addAction": "Thêm",
+		"addFeedHelp": "Thêm feed mới:",
+		"deleteAction": "Xóa",
+		"loadingAction": "Đang tải ...",
+		"listFeedsHelp": "Dưới đây là danh sách các feed. Nhấp nút <b>Xóa</b> nếu bạn muốn xóa feed tương ứng.",
+		"selectCategory": "Chọn chuyên mục",
+		"selectLanguage": "Chọn ngôn ngữ",
+		"url": "Địa chỉ của Feed"
+	}
+}

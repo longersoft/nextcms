@@ -1,0 +1,50 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->append($this->translator()->_('article.archive.title'));
+?>
+
+<?php if ($this->articles) : ?>
+<div class="contentArticleArchive">
+	<h1><?php echo $this->translator()->_('article.archive.archives'); ?></h1>
+	
+	<?php foreach ($this->articles as $date => $articles) : ?>
+	<div class="archives">
+		<div class="date">
+			<label><?php echo date('d', strtotime($date)); ?></label>
+			<span><?php echo $this->translator()->_('global._share.day' . date('w', strtotime($date))); ?></span>
+			<?php echo sprintf($this->translator()->_('global._share.numPosts'), count($articles)); ?>
+		</div>
+		<ul>
+			<?php foreach ($articles as $article) : ?>
+			<li>
+				<p class="time"><?php echo date('H:i:s', strtotime($article->activated_date)); ?></p>
+				<div class="title">
+					<h2><a href="<?php echo $article->getViewUrl(); ?>"><?php echo $article->title; ?></a></h2>
+				</div>
+				<p class="meta"><?php echo sprintf($this->translator()->_('global._share.by'), $article->getAuthor()); ?></p>
+				<p class="comments">| <?php echo sprintf($this->translator()->_('global._share.numComments'), $article->num_comments); ?></p>
+				<p class="views">| <?php echo sprintf($this->translator()->_('global._share.numViews'), $article->num_views); ?></p>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<?php endforeach; ?>
+</div>
+<?php endif; ?>

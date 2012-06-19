@@ -1,0 +1,50 @@
+{
+	"_about": {
+		"description": "Hiển thị bài viết",
+		"title": "Bài viết"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"category": "Chuyên mục",
+		"categoryDeterminedAutomatically": "Tự động xác định chuyên mục",
+		"dataSource": "Nguồn dữ liệu",
+		"dragDropHelp": "Gắp và thả bài viết ở đây",
+		"featuredArticles": "Bài viết nổi bật",
+		"folder": "Thư mục",
+		"keyword": "Từ khóa",
+		"language": "Ngôn ngữ",
+		"latestArticles": "Bài viết mới nhất",
+		"mostCommentedArticles": "Bài được bình luận nhiều nhất",
+		"mostViewedArticles": "Bài được xem nhiều nhất",
+		"moveDownAction": "Lên",
+		"moveUpAction": "Xuống",
+		"numberOfArticles": "Số bài viết",
+		"photoArticles": "Bài viết có nhiều ảnh",
+		"removeAction": "Xóa",
+		"selectCategory": "Chọn chuyên mục",
+		"selectFolder": "Chọn thư mục",
+		"setOfArticles": "Tập các bài viết",
+		"theme": "Mẫu giao diện",
+		"type": "Kiểu",
+		"typeArticle": "Bài viết",
+		"typeBlog": "Blog",
+		"typePage": "Trang",
+		"videoArticles": "Bài viết có nhiều video"
+	},
+	"show": {
+		"by": "Bởi %s",
+		"comments": "bình luận",
+		"daysAgo": "%s ngày trước",
+		"daysHoursAgo": "%s ngày %s giờ trước",
+		"hoursAgo": "%s giờ trước",
+		"hoursMinutesAgo": "%s giờ %s phút trước",
+		"minutesAgo": "%s phút trước",
+		"minutesSecondsAgo": "%s phút %s giây trước",
+		"more": "Chi tiết",
+		"mostCommented": "Bình luận nhiều nhất",
+		"mostViewed": "Xem nhiều nhất",
+		"numComments": "%s bình luận",
+		"numViews": "%s lượt xem",
+		"secondsAgo": "%s giây trước"
+	}
+}

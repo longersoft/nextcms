@@ -1,0 +1,49 @@
+{
+	"_about": {
+		"description": "Xem tin theo ngày trong tháng",
+		"title": "Lưu trữ"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"category": "Chuyên mục",
+		"categoryDeterminedAutomatically": "Tự động xác định chuyên mục",
+		"language": "Ngôn ngữ",
+		"selectCategory": "Chọn chuyên mục",
+		"theme": "Mẫu giao diện",
+		"type": "Kiểu",
+		"typeArticle": "Bài viết",
+		"typeBlog": "Blog",
+		"typePage": "Trang"
+	},
+	"show": {
+		"archives": "Lưu trữ",
+		"day0": "Chủ Nhật",
+		"day1": "Thứ 2",
+		"day2": "Thứ 3",
+		"day3": "Thứ 4",
+		"day4": "Thứ 5",
+		"day5": "Thứ 6",
+		"day6": "Thứ 7",
+		"month01": "Tháng Giêng",
+		"month02": "Tháng Hai",
+		"month03": "Tháng Ba",
+		"month04": "Tháng Tư",
+		"month05": "Tháng Năm",
+		"month06": "Tháng Sáu",
+		"month07": "Tháng Bảy",
+		"month08": "Tháng Tám",
+		"month09": "Tháng Chín",
+		"month10": "Tháng Mười",
+		"month11": "Tháng Mười Một",
+		"month12": "Tháng Mười Hai",
+		"monthYearFormat": "#month# - #year#",
+		"numPosts": "%s bài",
+		"shortDay0": "CN",
+		"shortDay1": "T2",
+		"shortDay2": "T3",
+		"shortDay3": "T4",
+		"shortDay4": "T5",
+		"shortDay5": "T6",
+		"shortDay6": "T7"
+	}
+}

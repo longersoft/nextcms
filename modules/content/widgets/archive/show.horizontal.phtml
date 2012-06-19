@@ -1,0 +1,43 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-24
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.tipsy.js');
+?>
+
+<div class="contentWidgetsArchiveHorizontal">
+	<p><a href="<?php echo $this->category ? $this->url(array_merge(array('date' => $this->currentMonth), $this->category->getProperties()), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive_category' : 'content_article_archive_category') : $this->url(array('date' => $this->currentMonth), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive' : 'content_article_archive'); ?>"><?php echo $this->translator()->_('show.archives'); ?></a></p>
+	<h2>
+		<a href="<?php echo $this->category ? $this->url(array_merge(array('date' => $this->currentMonth), $this->category->getProperties()), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive_category' : 'content_article_archive_category') : $this->url(array('date' => $this->currentMonth), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive' : 'content_article_archive'); ?>"><?php echo str_replace(array('#month#', '#year#'), array(date('m'), date('Y')), $this->translator()->_('show.monthYearFormat')); ?></a>
+	</h2>
+	<h3>
+		<?php foreach ($this->posts as $day => $v) : ?>
+		<a href="<?php echo $this->category ? $this->url(array_merge(array('date' => $this->currentMonth . '-' . (strlen($day) == 1 ? '0' . $day : $day)), $this->category->getProperties()), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive_category' : 'content_article_archive_category') : $this->url(array('date' => $this->currentMonth . '-' . (strlen($day) == 1 ? '0' . $day : $day)), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive' : 'content_article_archive'); ?>" class="tooltip<?php if ($day == $this->currentDay) : ?> active<?php endif; ?><?php if ($v['numPosts'] > 0) : ?> has<?php endif; ?>" original-title="<?php echo $this->translator()->_('show.day' . $v['dayInWeek']); ?>: <b><?php echo sprintf($this->translator()->_('show.numPosts'), $v['numPosts']); ?></b>"><?php echo $day; ?></a> 
+		<?php endforeach; ?>
+	</h3>
+</div>
+
+<?php $this->script()->captureStartOnce('contentWidgetsArchiveHorizontal'); ?>
+$(document).ready(function() {
+	$(".contentWidgetsArchiveHorizontal .tooltip").tipsy({
+		gravity: "s",
+		html: true
+	});
+});
+<?php $this->script()->captureEndOnce('contentWidgetsArchiveHorizontal'); ?>

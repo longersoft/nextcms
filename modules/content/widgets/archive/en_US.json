@@ -1,0 +1,49 @@
+{
+	"_about": {
+		"description": "Browse articles by date in a given month",
+		"title": "Archive"
+	},
+	"config": {
+		"basic": "Basic",
+		"category": "Category",
+		"categoryDeterminedAutomatically": "Determined automatically",
+		"language": "Language",
+		"selectCategory": "Select category",
+		"theme": "Theme",
+		"type": "Type",
+		"typeArticle": "Article",
+		"typeBlog": "Blog entry",
+		"typePage": "Page"
+	},
+	"show": {
+		"archives": "Archives",
+		"day0": "Sunday",
+		"day1": "Monday",
+		"day2": "Tuesday",
+		"day3": "Wednesday",
+		"day4": "Thursday",
+		"day5": "Friday",
+		"day6": "Saturday",
+		"month01": "January",
+		"month02": "February",
+		"month03": "March",
+		"month04": "April",
+		"month05": "May",
+		"month06": "June",
+		"month07": "July",
+		"month08": "August",
+		"month09": "September",
+		"month10": "October",
+		"month11": "November",
+		"month12": "December",
+		"monthYearFormat": "#year# - #month#",
+		"numPosts": "%s posts",
+		"shortDay0": "Sun",
+		"shortDay1": "Mon",
+		"shortDay2": "Tue",
+		"shortDay3": "Wed",
+		"shortDay4": "Thu",
+		"shortDay5": "Fri",
+		"shortDay6": "Sat"
+	}
+}

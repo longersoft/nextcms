@@ -1,0 +1,33 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if (!$this->categories || count($this->categories) == 0) : ?>
+	<?php echo $this->translator()->_('category.notFound'); ?>
+<?php else : ?>
+	<div data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+	<?php foreach ($this->categories as $category) : ?>
+		<div class="dojoDndItem contentHooksLinkProviderLinkItem" dndtype="appDndLink" style="padding-left: <?php echo 20 * ($category->depth + 1); ?>px">
+			<a href="<?php echo $this->serverUrl() . $this->url($category->getProperties(), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_category' : 'content_article_category'); ?>" title="<?php echo addslashes($category->name); ?>"><?php echo $category->name; ?></a>
+		</div>
+	<?php endforeach; ?>
+	</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dojo.dnd.Source");
+</script>

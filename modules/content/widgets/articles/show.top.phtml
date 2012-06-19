@@ -1,0 +1,66 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<div class="contentWidgetsArticlesTop">
+	<div class="main">
+		<div class="thumb">
+			<a href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>"><img src="<?php echo $this->articles[0]->getCover('medium'); ?>" title="<?php echo addslashes($this->articles[0]->getCoverTitle()); ?>" /></a>
+			<?php if ($this->articles[0]->image_icon) : ?>
+			<span class="icon"><span class="iconImage"></span></span>
+			<?php elseif ($this->articles[0]->video_icon) : ?>
+			<span class="icon"><span class="iconVideo"></span></span>
+			<?php endif; ?>
+		</div>	
+	</div>
+	
+	<div class="main">
+		<div class="summary">
+			<h2><a href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>"><?php echo $this->articles[0]->title; ?></a></h2>
+			<span class="meta">
+				<?php echo sprintf($this->translator()->_('show.by'), $this->articles[0]->getAuthor()); ?> <span>|</span> <?php echo $this->dateFormatter()->diff(strtotime($this->articles[0]->activated_date), $this->timeDiffFormats); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $this->articles[0]->num_comments); ?>
+			</span>
+			<p class="desc"><?php echo $this->articles[0]->description; ?></p>
+			<a class="more" href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>"><?php echo $this->translator()->_('show.more'); ?></a>
+		</div>
+	</div>
+	
+	<ul>
+		<?php for ($i = 1; $i < $this->numArticles; $i++) : ?>
+		<li>
+			<div class="thumb">
+				<span class="icon">
+					<?php if ($this->articles[0]->image_icon) : ?>
+					<span class="iconImage"></span>
+					<?php elseif ($this->articles[0]->video_icon) : ?>
+					<span class="iconVideo"></span>
+					<?php endif; ?>
+				</span>
+			</div>
+			<div class="summary">
+				<h3><a href="<?php echo $this->articles[$i]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[$i]->title); ?>"><?php echo $this->stringFormatter()->sub($this->articles[$i]->title, 45); ?></a></h3>
+				<span class="meta">
+					<?php echo sprintf($this->translator()->_('show.by'), $this->articles[$i]->getAuthor()); ?> <span>|</span> <?php echo $this->dateFormatter()->diff(strtotime($this->articles[$i]->activated_date), $this->timeDiffFormats); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $this->articles[$i]->num_comments); ?>
+				</span>
+			</div>
+			<div class="appClear"></div>
+		</li>
+		<?php endfor; ?>
+	</ul>
+</div>
+<?php endif; ?>

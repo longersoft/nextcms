@@ -1,0 +1,289 @@
+{
+	"_about": {
+		"description": "Manage content",
+		"title": "Content"
+	},
+	"_menu": {
+		"article": {
+			"list": "Manage articles"
+		},
+		"config": {
+			"config": "Configure module"
+		}
+	},
+	"_permission": {
+		"article": {
+			"description": "Manage articles",
+			"actions": {
+				"activate": "Activate/deactivate article",
+				"add": "Add new article",
+				"cover": "Update cover",
+				"delete": "Delete article",
+				"edit": "Edit article",
+				"empty": "Empty trash",
+				"list": "List articles",
+				"move": "Move articles to other category",
+				"order": "Order articles"
+			}
+		},
+		"folder": {
+			"description": "Manage articles in folders",
+			"actions": {
+				"add": "Add an article to a folder",
+				"remove": "Remove an article from a folder"
+			}
+		},
+		"revision": {
+			"description": "Manage revisions",
+			"actions": {
+				"delete": "Delete revision",
+				"list": "List revisions",
+				"restore": "Restore revision",
+				"view": "View revision details"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Activate",
+			"addAction": "Add",
+			"by": "By %s",
+			"cancelAction": "Cancel",
+			"closeAction": "Close",
+			"day0": "Monday",
+			"day1": "Tuesday",
+			"day2": "Wednesday",
+			"day3": "Thursday",
+			"day4": "Friday",
+			"day5": "Saturday",
+			"day6": "Sunday",
+			"daysAgo": "%s days ago",
+			"daysHoursAgo": "%s days %s hours ago",
+			"deactivateAction": "Deactivate",
+			"deleteAction": "Delete",
+			"deleteForeverAction": "Delete forever",
+			"editAction": "Edit",
+			"emptyTrashAction": "Empty trash",
+			"hoursAgo": "%s hours ago",
+			"hoursMinutesAgo": "%s hours %s minute ago",
+			"loadingAction": "Loading ...",
+			"localizeAction": "Localize",
+			"minutesAgo": "%s minutes ago",
+			"minutesSecondsAgo": "%s minutes %s seconds ago",
+			"more": "Read more",
+			"numComments": "%s comments",
+			"numPosts": "%s posts",
+			"numViews": "%s views",
+			"refreshAction": "Refresh",
+			"removeFromFolderAction": "Remove from the selected folder",
+			"restoreAction": "Restore",
+			"saveAction": "Save",
+			"saveOrderAction": "Save order",
+			"searchAction": "Search",
+			"searchFor": "Search for %s",
+			"searchForTag": "Search for %s tag",
+			"secondsAgo": "%s seconds ago",
+			"tags": "Tags",
+			"viewAction": "View",
+			"viewRevisionsAction": "View revisions",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"article": {
+		"_share": {
+			"author": "Author",
+			"authorRequired": "The author is required",
+			"category": "Category",
+			"categories": "Other categories",
+			"comments": "comments",
+			"content": "Content",
+			"cover": "Cover",
+			"coverHelp": "Use <b>Image Toolbox</b> to upload the cover, then drag and drop uploaded image to the area below:",
+			"coverTitleHelp": "Title of cover",
+			"credit": "Credit",
+			"description": "Description",
+			"folders": "Folders",
+			"icon": "Icon",
+			"iconImage": "Image",
+			"iconVideo": "Video",
+			"language": "Language",
+			"localization": "Localization",
+			"localizationHelp": "Drag the copies of article in other languages from the listing pane<br />and drop them here",
+			"markAsFeatured": "Mark as featured article",
+			"metaDescriptionTag": "Meta description tag",
+			"metaKeywordTag": "Meta keyword tag",
+			"notFound": "Not found any articles",
+			"properties": "Properties",
+			"publishingDate": "Publishing date",
+			"revision": "Revision",
+			"slug": "Slug",
+			"slugNotAvailable": "The slug is already used by other article",
+			"slugRequired": "The slug is required",
+			"subTitle": "Sub-title",
+			"tags": "Tags",
+			"tagsHelp": "Drag tag from the Tags Provider and drop to the area below:",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"type": "Type",
+			"typeArticle": "Article",
+			"typeBlog": "Blog entry",
+			"typePage": "Page"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the article",
+			"activateSuccess": "The article is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the article",
+			"deactivateSuccess": "The article is deactivated successfully"
+		},
+		"add": {
+			"error": "Sorry, cannot add new article",
+			"success": "The new article is created successfully",
+			"title": "Add new article"
+		},
+		"archive": {
+			"archives": "Archives",
+			"category": "List articles in given category by date",
+			"title": "List articles by date"
+		},
+		"category": {
+			"pager": "List articles by given category (pager)",
+			"title": "List articles by given category"
+		},
+		"cover": {
+			"error": "Sorry, cannot update cover of the article",
+			"success": "The cover of article is updated successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the article titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the article",
+			"notFound": "Sorry, cannot find the article",
+			"success": "The article is deleted successfully",
+			"title": "Delete article"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the article",
+			"notFound": "Not found article",
+			"revisionHelp": "Enter the purpose of the changing article:",
+			"success": "The article is updated successfully",
+			"title": "Edit the article"
+		},
+		"empty": {
+			"confirm": "Are you sure that you want to empty the trash?",
+			"error": "Sorry, cannot empty the trash",
+			"success": "All the articles in the trash are deleted forever successfully",
+			"title": "Empty trash"
+		},
+		"list": {
+			"articles": "Articles %s",
+			"categories": "Categories",
+			"searchArticleHelp": "Keyword",
+			"status": "Status",
+			"statusActivated": "Activated",
+			"statusNotActivated": "Not activated",
+			"title": "Manage articles",
+			"viewAll": "View all"
+		},
+		"move": {
+			"error": "Sorry, cannot move the article titled <b>%s</b> to the category named <b>%s</b>",
+			"success": "The article titled <b>%s</b> is moved to the category named <b>%s</b> successfully"
+		},
+		"order": {
+			"error": "Sorry, cannot save the order of articles",
+			"success": "The order of articles are saved successfully",
+			"title": "Order articles in the category"
+		},
+		"search": {
+			"title": "Search for articles"
+		},
+		"tag": {
+			"pager": "View articles by given tag (pager)",
+			"title": "View articles by given tag"
+		},
+		"view": {
+			"title": "View article details"
+		}
+	},
+	"blog": {
+		"archive": {
+			"archives": "Archives",
+			"category": "List blog entries in given category by date",
+			"title": "List blog entries by date"
+		},
+		"category": {
+			"pager": "List blog entries by given category (pager)",
+			"title": "List blog entries by given category"
+		},
+		"index": {
+			"pager": "Homepage of blog (pager)",
+			"title": "Homepage of blog"
+		},
+		"search": {
+			"title": "Search for blog entries"
+		},
+		"tag": {
+			"pager": "View blog entries by given tag (pager)",
+			"title": "View blog entries by given tag"
+		},
+		"view": {
+			"title": "View blog entry details"
+		}
+	},
+	"feed": {
+		"index": {
+			"byCategory": "RSS/Atom channel of given category",
+			"byUser": "RSS/Atom channel of given user",
+			"title": "RSS/Atom channel"
+		}
+	},
+	"folder": {
+		"remove": {
+			"error": "Sorry, cannot remove the article from the selected folder",
+			"success": "The article is removed from the selected folder successfully",
+			"title": "Remove an article from a folder"
+		}
+	},
+	"index": {
+		"index": {
+			"title": "Homepage of the Content module"
+		}
+	},
+	"page": {
+		"view": {
+			"title": "View page details"
+		}
+	},
+	"revision": {
+		"_share": {
+			"comment": "Comment",
+			"createdDate": "Created date",
+			"title": "Title"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the revision titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the revision",
+			"notFound": "Sorry, cannot find the revision",
+			"success": "The revision is deleted successfully",
+			"title": "Delete revision"
+		},
+		"list": {
+			"error": "Sorry, there is error",
+			"help": "Below is the list of revisions of the article titled <b>%s</b>:",
+			"notFound": "Not found any revisions",
+			"searchRevisionHelp": "Keyword",
+			"showColumns": "Show columns:",
+			"title": "Manage article's revisions"
+		},
+		"restore": {
+			"confirm": "Are you sure that you want to restore the revision titled <b>%s</b>?",
+			"error": "Sorry, cannot restore the revision",
+			"notFound": "Sorry, cannot find the revision",
+			"success": "The revision is restored successfully",
+			"title": "Restore revision"
+		},
+		"view": {
+			"notFound": "Sorry, cannot find the revision",
+			"title": "View the revision"
+		}
+	}
+}

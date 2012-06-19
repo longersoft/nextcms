@@ -1,0 +1,247 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('revision.view.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/layout/resources/GridContainer.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/widget/Portlet/Portlet.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/tag/css/admin/default/styles.css");
+</script>
+
+<div id="contentRevisionViewContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.closeAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/content/revision/view/onClose");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+
+	<!-- Form -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<?php if (!$this->revision) : ?>
+			<?php echo $this->translator()->_('revision.view.notFound'); ?>
+		<?php else : ?>
+		
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: true, nested: true">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.properties'); ?>', class: 'appForm appContentPane'">
+					<div class="appFormRow">
+						<label for="type"><?php echo $this->translator()->_('article._share.type'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="disabled: true, name: 'type', value: '<?php echo $this->revision->type; ?>'">
+							<option value="article"><?php echo $this->translator()->_('article._share.typeArticle'); ?></option>
+							<option value="page"><?php echo $this->translator()->_('article._share.typePage'); ?></option>
+						</select>
+					</div>
+				
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('article._share.title'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" 
+							data-dojo-props="type: 'text', name: 'title', value: '<?php echo addslashes($this->revision->title); ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('article._share.titleRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="sub_title"><?php echo $this->translator()->_('article._share.subTitle'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sub_title', style: 'width: 300px'<?php if ($this->revision->sub_title) : ?>, value: '<?php echo addslashes($this->revision->sub_title); ?>'<?php endif; ?>">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="slug"><?php echo $this->translator()->_('article._share.slug'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" 
+							data-dojo-props="type: 'text', name: 'slug', value: '<?php echo addslashes($this->revision->slug); ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('article._share.slugRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('article._share.description'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'description', style: 'width: 250px; height: 150px'"><?php echo $this->revision->description; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="meta_keyword"><?php echo $this->translator()->_('article._share.metaKeywordTag'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'meta_keyword', style: 'width: 250px; height: 100px'"><?php echo $this->revision->meta_keyword; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="meta_description"><?php echo $this->translator()->_('article._share.metaDescriptionTag'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'meta_description', style: 'width: 250px; height: 100px'"><?php echo $this->revision->meta_description; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="author"><?php echo $this->translator()->_('article._share.author'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'author', value: '<?php echo addslashes($this->revision->author); ?>', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('article._share.authorRequired'); ?>'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="credit"><?php echo $this->translator()->_('article._share.credit'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'credit', style: 'width: 200px'<?php if ($this->revision->credit) : ?>, value: '<?php echo addslashes($this->revision->credit); ?>'<?php endif; ?>">
+					</div>
+					
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('article._share.icon'); ?>:</label>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'image_icon', value: 1, checked: <?php if ($this->revision->image_icon == '1') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('article._share.iconImage'); ?>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'video_icon', value: 1, checked: <?php if ($this->revision->video_icon == '1') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('article._share.iconVideo'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="publishing_date"><?php echo $this->translator()->_('article._share.publishingDate'); ?>:</label>
+						<input data-dojo-type="dijit.form.DateTextBox" data-dojo-props="type: 'text', name: 'publishing_date', value: '<?php if ($this->revision->publishing_date) : ?><?php echo date('Y-m-d', strtotime($this->revision->publishing_date)); ?><?php endif; ?>'" />
+						<input data-dojo-type="dijit.form.TimeTextBox" data-dojo-props="type: 'text', name: 'publishing_time', value: 'T<?php if ($this->revision->publishing_date) : ?><?php echo date('H:i:s', strtotime($this->revision->publishing_date)); ?><?php endif; ?>', constraints: { timePattern: 'HH:mm:ss' }" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="featured">&nbsp;</label>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'featured', value: 1, checked: <?php if ($this->revision->featured == '1') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('article._share.markAsFeatured'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="category"><?php echo $this->translator()->_('article._share.category'); ?>:</label>
+						<?php 
+						echo $this->helperLoader('category')
+								  ->categorySelect('content', $this->revision->language, array(
+										'name'	   => 'category',
+										'selected' => $this->revision->category_id,
+								  		'disabled' => true,
+								  ));
+						?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="categories"><?php echo $this->translator()->_('article._share.categories'); ?>:</label>
+						<div id="contentRevisionViewCategories" class="appLeft">
+							<?php 
+							echo $this->helperLoader('category')
+									  ->categoryCheckboxTree('content', $this->revision->language, array(
+											'id'	   => 'contentRevisionViewCategories',
+											'name'	   => 'categories[]',
+											'selected' => $this->revision->categories,
+									  		'disabled' => true,
+									  ));
+							?>
+						</div>
+					</div>
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Cover -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.cover'); ?>', class: 'appContentPane'">
+					<div class="appBorderContainer" style="height: 225px; width: 300px; margin-bottom: 8px">
+						<?php if ($this->revision->image_crop) : ?>
+						<img src="<?php echo $this->APP_ROOT_URL . $this->revision->image_crop; ?>" />
+						<?php endif; ?>
+					</div>
+					
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'cover_title', style: 'width: 300px', placeHolder: '<?php echo $this->translator(true)->_('article._share.coverTitleHelp'); ?>', value: '<?php if ($this->revision->cover_title) : ?><?php echo addslashes($this->revision->cover_title); ?><?php endif; ?>'" />
+				</div>
+				<!-- /Cover -->
+			
+				<!-- Content -->
+				<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: true, style: 'height: 100%; width: 100%', title: '<?php echo $this->translator(true)->_('article._share.content'); ?>'">
+					<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false, style: 'height: 26px'">
+						<div id="contentRevisionViewContentToolbar"></div>
+					</div>
+					
+					<div id="contentRevisionViewContentEditor" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', style: 'height: 100%; width: 100%', class: 'appLayoutBorderContainer'">
+					</div>
+				</div>
+				<!-- /Content -->
+				
+				<!-- Tags -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.tags'); ?>', class: 'appContentPane'">
+					<div id="contentRevisionViewTagsContainer" style="height: 300px; width: 100%; margin-bottom: 8px">
+					</div>
+				</div>
+				<!-- /Tags -->
+				
+				<!-- Revision -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.revision'); ?>', class: 'appForm appContentPane'">
+					<div class="appFormRow">
+						<label for="comment"><?php echo $this->translator()->_('revision._share.comment'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'comment', style: 'width: 250px; height: 150px'"><?php if ($this->revision->comment) : ?><?php echo $this->revision->comment; ?><?php endif; ?></textarea>
+					</div>
+				</div>
+				<!-- /Revision -->
+			</div>
+		</div>
+		
+		<?php endif; ?>
+	</div>
+	<!-- /Form -->
+</div>
+
+<script type="text/javascript">
+dojo.registerModulePath("tag", "<?php echo $this->APP_STATIC_URL; ?>/modules/tag");
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.TimeTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+
+dojo.require("core.js.Constant");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("core.js.controllers.LayoutController");
+dojo.require("core.js.views.LayoutToolbar");
+dojo.require("tag.js.views.TagCollectionView");
+
+<?php if ($this->revision) : ?>
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'core_extension_render',	// Required by the content editor
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Show article's tags
+	var tagCollectionView = new tag.js.views.TagCollectionView("contentRevisionViewTagsContainer", "tags[]");
+	<?php foreach ($this->tags as $tag) : ?>
+	tagCollectionView.addTag(core.js.base.Encoder.decode("<?php echo $this->encoder()->encode($tag); ?>"));
+	<?php endforeach; ?>
+
+	var handler = dojo.subscribe("/app/global/onLoadComplete/content_revision_view", function() {
+		// Disable all fields
+		dojo.query("input, select, textarea, button", "contentRevisionViewContainer").attr("disabled", "disabled");
+		
+		var editorController = new core.js.controllers.LayoutController("contentRevisionViewContentEditor");
+		editorController.setLayoutToolbar(new core.js.views.LayoutToolbar("contentRevisionViewContentToolbar"))
+						.setLayoutData(<?php echo $this->revision->layout; ?>)
+						.switchToMode("view");
+		dojo.unsubscribe(handler);
+	});
+});
+
+<?php endif; ?>
+</script>

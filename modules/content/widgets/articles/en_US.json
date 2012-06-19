@@ -1,0 +1,50 @@
+{
+	"_about": {
+		"description": "Show articles",
+		"title": "Articles"
+	},
+	"config": {
+		"basic": "Basic",
+		"category": "Category",
+		"categoryDeterminedAutomatically": "Determined automatically",
+		"dataSource": "Data source",
+		"dragDropHelp": "Drag and drop articles here",
+		"featuredArticles": "Featured articles",
+		"folder": "Folder",
+		"keyword": "Keyword",
+		"language": "Language",
+		"latestArticles": "Latest articles",
+		"mostCommentedArticles": "Most commented articles",
+		"mostViewedArticles": "Most viewed articles",
+		"moveDownAction": "Down",
+		"moveUpAction": "Up",
+		"numberOfArticles": "The number of articles",
+		"photoArticles": "Photo articles",
+		"removeAction": "Remove",
+		"selectCategory": "Select category",
+		"selectFolder": "Select folder",
+		"setOfArticles": "Set of articles",
+		"theme": "Theme",
+		"type": "Type",
+		"typeArticle": "Article",
+		"typeBlog": "Blog entry",
+		"typePage": "Page",
+		"videoArticles": "Video articles"
+	},
+	"show": {
+		"by": "By %s",
+		"comments": "comments",
+		"daysAgo": "%s days ago",
+		"daysHoursAgo": "%s days %s hours ago",
+		"hoursAgo": "%s hours ago",
+		"hoursMinutesAgo": "%s hours %s minute ago",
+		"minutesAgo": "%s minutes ago",
+		"minutesSecondsAgo": "%s minutes %s seconds ago",
+		"more": "Read more",
+		"mostCommented": "Most commented",
+		"mostViewed": "Most viewed",
+		"numComments": "%s comments",
+		"numViews": "%s views",
+		"secondsAgo": "%s seconds ago"
+	}
+}

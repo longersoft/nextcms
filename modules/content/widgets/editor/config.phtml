@@ -1,0 +1,62 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-19
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div style="margin: 0 auto; width: 100%" id="contentWidgetsEditorConfigContainer_<?php echo $this->editorId; ?>">
+	<textarea id="<?php echo $this->editorId; ?>" name="content" class="appWidgetInput appWidgetInputTinyMce" style="width: 98%"><?php if ($this->content) : ?><?php echo $this->escape($this->content); ?><?php endif; ?></textarea>
+</div>
+
+<script type="text/javascript">
+var settings = {
+	theme: "advanced",
+	plugins: "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,contentsplitter",
+	theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo",
+	theme_advanced_buttons3: "link,unlink,anchor,image,media,cleanup,code,|,preview,|,forecolor,backcolor",
+	theme_advanced_buttons4: "tablecontrols,ltr,rtl", //",tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+	theme_advanced_toolbar_location: "top",
+	theme_advanced_toolbar_align: "left",
+	theme_advanced_resizing : true,
+	mode: "exact",
+	elements: "<?php echo $this->editorId; ?>",
+	width: "100%",
+	height: "100",
+	relative_urls: false,
+	remove_script_host: false,
+	onchange_callback: function(ed) {
+//		tinyMCE.triggerSave();
+//		dojo.query('#' + ed.id)[0].innerHTML = ed.getBody().innerHTML;
+	},
+	setup: function(ed) {
+		ed.onChange.add(function(ed, l) {
+			dojo.query('#' + ed.id)[0].innerHTML = l.content;
+		});
+		ed.onInit.add(function(ed) {
+			dojo.publish("/app/global/onLoadComplete");
+		});
+	}
+};
+if (/Firefox/.test(navigator.userAgent)) {
+	var editor = new tinyMCE.Editor("<?php echo $this->editorId; ?>", settings);
+	// Firefox 10, 11 needs a little time to render editor
+	var t = setTimeout(function() {
+		editor.render();
+		clearTimeout(t);
+	}, 500);
+} else {
+	tinyMCE.init(settings);
+}
+</script>

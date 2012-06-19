@@ -1,0 +1,289 @@
+{
+	"_about": {
+		"description": "Quản lý nội dung",
+		"title": "Nội dung"
+	},
+	"_menu": {
+		"article": {
+			"list": "Quản lý bài viết"
+		},
+		"config": {
+			"config": "Cấu hình module"
+		}
+	},
+	"_permission": {
+		"article": {
+			"description": "Quản lý bài viết",
+			"actions": {
+				"activate": "Duyệt/hủy bài viết",
+				"add": "Thêm bài viết",
+				"cover": "Cập nhật ảnh đại diện",
+				"delete": "Xóa bài viết",
+				"edit": "Sửa bài viết",
+				"empty": "Làm rỗng thùng rác",
+				"list": "Xem danh sách các bài viết",
+				"move": "Chuyển bài viết sang chuyên mục khác",
+				"order": "Xếp thứ tự các bài viết"
+			}
+		},
+		"folder": {
+			"description": "Quản lý bài viết theo thư mục",
+			"actions": {
+				"add": "Thêm bài viết vào thư mục",
+				"remove": "Gỡ bài viết khỏi thư mục"
+			}
+		},
+		"revision": {
+			"description": "Quản lý phiên bản",
+			"actions": {
+				"delete": "Xóa phiên bản",
+				"list": "Xem danh sách các phiên bản",
+				"restore": "Khôi phục phiên bản",
+				"view": "Xem chi tiết phiên bản"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Kích hoạt",
+			"addAction": "Thêm",
+			"by": "Bởi %s",
+			"cancelAction": "Hủy",
+			"closeAction": "Đóng",
+			"day0": "Thứ 2",
+			"day1": "Thứ 3",
+			"day2": "Thứ 4",
+			"day3": "Thứ 5",
+			"day4": "Thứ 6",
+			"day5": "Thứ 7",
+			"day6": "Chủ Nhật",
+			"daysAgo": "%s ngày trước",
+			"daysHoursAgo": "%s ngày %s giờ trước",
+			"deactivateAction": "Hủy kích hoạt",
+			"deleteAction": "Xóa",
+			"deleteForeverAction": "Xóa mãi mãi",
+			"editAction": "Sửa",
+			"emptyTrashAction": "Làm rỗng thùng rác",
+			"hoursAgo": "%s giờ trước",
+			"hoursMinutesAgo": "%s giờ %s phút trước",
+			"loadingAction": "Đang tải ...",
+			"localizeAction": "Địa phương hóa",
+			"minutesAgo": "%s phút trước",
+			"minutesSecondsAgo": "%s phút %s giây trước",
+			"more": "Chi tiết",
+			"numComments": "%s bình luận",
+			"numPosts": "%s bài",
+			"numViews": "%s lượt xem",
+			"refreshAction": "Tải lại",
+			"removeFromFolderAction": "Gỡ khỏi thư mục hiện tại",
+			"restoreAction": "Khôi phục",
+			"saveAction": "Lưu",
+			"saveOrderAction": "Lưu thứ tự",
+			"searchAction": "Tìm",
+			"searchFor": "Tìm kiếm %s",
+			"searchForTag": "Tìm kiếm theo thẻ %s",
+			"secondsAgo": "%s giây trước",
+			"tags": "Thẻ",
+			"viewAction": "Xem",
+			"viewRevisionsAction": "Xem các phiên bản",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"article": {
+		"_share": {
+			"author": "Tác giả",
+			"authorRequired": "Tên tác giả là bắt buộc",
+			"category": "Chuyên mục",
+			"categories": "Các chuyên mục khác",
+			"comments": "bình luận",
+			"content": "Nội dung",
+			"cover": "Ảnh đại diện",
+			"coverHelp": "Sử dụng <b>Trình tải ảnh</b> để tải ảnh đại diện, sau đó gắp và thả vào vùng dưới đây:",
+			"coverTitleHelp": "Tiêu đề ảnh đại diện",
+			"credit": "Nguồn",
+			"description": "Mô tả",
+			"folders": "Thư mục",
+			"icon": "Biểu tượng",
+			"iconImage": "Ảnh",
+			"iconVideo": "Video",
+			"language": "Ngôn ngữ",
+			"localization": "Địa phương hóa",
+			"localizationHelp": "Gắp bản sao của bài viết trong các ngôn ngữ khác từ danh sách các bài viết<br />và thả vào đây",
+			"markAsFeatured": "Đánh dấu như là bài viết nổi bật",
+			"metaDescriptionTag": "Thẻ mô tả (meta description)",
+			"metaKeywordTag": "Thẻ từ khóa (meta keyword)",
+			"notFound": "Không tìm thấy bài viết nào",
+			"properties": "Thuộc tính",
+			"publishingDate": "Ngày xuất bản",
+			"revision": "Phiên bản",
+			"slug": "Tiêu đề rút gọn",
+			"slugNotAvailable": "Tiêu đề rút gọn này đã được sử dụng bởi bài viết khác",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc",
+			"subTitle": "Tiêu đề phụ",
+			"tags": "Tags",
+			"tagsHelp": "Kéo tag từ Công cụ cung cấp tag và thả vào vùng dưới đây:",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"type": "Kiểu",
+			"typeArticle": "Bài viết",
+			"typeBlog": "Blog",
+			"typePage": "Trang"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt bài viết",
+			"activateSuccess": "Bài viết đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt bài viết",
+			"deactivateSuccess": "Bài viết đã được hủy kích hoạt thành công"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm bài viết",
+			"success": "Bài viết mới đã được tạo thành công",
+			"title": "Thêm bài viết"
+		},
+		"archive": {
+			"archives": "Lưu trữ",
+			"category": "Xem bài viết của chuyên mục theo ngày tháng",
+			"title": "Xem bài viết theo ngày tháng"
+		},
+		"category": {
+			"pager": "Xem bài viết theo chuyên mục (phân trang)",
+			"title": "Xem bài viết theo chuyên mục"
+		},
+		"cover": {
+			"error": "Xin lỗi, không thể cập nhật ảnh đại diện của bài viết",
+			"success": "Ảnh đại diện của bài viết đã được cập nhật thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa bài viết tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa bài viết",
+			"notFound": "Xin lỗi, không thể tìm thấy bài viết",
+			"success": "Bài viết đã được xóa thành công",
+			"title": "Xóa bài viết"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật bài viết",
+			"notFound": "Xin lỗi, không thể tìm thấy bài viết",
+			"revisionHelp": "Mục đích chỉnh sửa bài viết:",
+			"success": "Bài viết đã được cập nhật thành công",
+			"title": "Sửa bài viết"
+		},
+		"empty": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn làm rỗng thùng rác?",
+			"error": "Xin lỗi, không thể làm rỗng thùng rác",
+			"success": "Tất cả bài viết trong thùng rác đã được xóa mãi mãi thành công",
+			"title": "Làm rỗng thùng rác"
+		},
+		"list": {
+			"articles": "Bài viết %s",
+			"categories": "Các chuyên mục",
+			"searchArticleHelp": "Từ khóa",
+			"status": "Trạng thái",
+			"statusActivated": "Đã được duyệt",
+			"statusNotActivated": "Chưa được duyệt",
+			"title": "Quản lý bài viết",
+			"viewAll": "Xem tất cả"
+		},
+		"move": {
+			"error": "Xin lỗi, không thể chuyển bài viết <b>%s</b> tới chuyên mục <b>%s</b>",
+			"success": "Bài viết <b>%s</b> đã được chuyển tới chuyên mục <b>%s</b> thành công"
+		},
+		"order": {
+			"error": "Xin lỗi, không thể lưu thứ tự của các bài viết",
+			"success": "Thứ tự của các bài viết đã được lưu thành công",
+			"title": "Xếp thứ tự các bài viết trong chuyên mục"
+		},
+		"search": {
+			"title": "Tìm kiếm bài viết"
+		},
+		"tag": {
+			"pager": "Xem bài viết theo một từ khóa nào đó (phân trang)",
+			"title": "Xem bài viết theo một từ khóa nào đó"
+		},
+		"view": {
+			"title": "Xem chi tiết bài viết"
+		}
+	},
+	"blog": {
+		"archive": {
+			"archives": "Lưu trữ",
+			"category": "Xem bài viết trên blog của chuyên mục theo ngày tháng",
+			"title": "Xem bài viết trên blog theo ngày tháng"
+		},
+		"category": {
+			"pager": "Xem bài viết trên blog theo chuyên mục (phân trang)",
+			"title": "Xem bài viết trên blog theo chuyên mục"
+		},
+		"index": {
+			"pager": "Trang chủ của blog (phân trang)",
+			"title": "Trang chủ của blog"
+		},
+		"search": {
+			"title": "Tìm kiếm bài viết blog"
+		},
+		"tag": {
+			"pager": "Xem bài viết blog theo một từ khóa nào đó (phân trang)",
+			"title": "Xem bài viết blog theo một từ khóa nào đó"
+		},
+		"view": {
+			"title": "Xem chi tiết bài viết blog"
+		}
+	},
+	"feed": {
+		"index": {
+			"byCategory": "Kênh RSS/Atom của chuyên mục",
+			"byUser": "Kênh RSS/Atom của tác giả",
+			"title": "Kênh RSS/Atom"
+		}
+	},
+	"folder": {
+		"remove": {
+			"error": "Xin lỗi, không thể gỡ bài viết khỏi thư mục",
+			"success": "Bài viết đã được gỡ khỏi thư mục thành công",
+			"title": "Gỡ bài viết khỏi thư mục"
+		}
+	},
+	"index": {
+		"index": {
+			"title": "Trang chủ của module Tin tức"
+		}
+	},
+	"page": {
+		"view": {
+			"title": "Xem chi tiết trang"
+		}
+	},
+	"revision": {
+		"_share": {
+			"comment": "Mục đích",
+			"createdDate": "Ngày tạo",
+			"title": "Tiêu đề"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa phiên bản có tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa phiên bản",
+			"notFound": "Xin lỗi, không tìm thấy phiên bản",
+			"success": "Phiên bản đã được xóa thành công",
+			"title": "Xóa phiên bản"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"help": "Dưới đây là danh sách các phiên bản của bài viết tiêu đề <b>%s</b>:",
+			"notFound": "Không tìm thấy phiên bản nào",
+			"searchRevisionHelp": "Từ khóa",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý phiên bản bài viết"
+		},
+		"restore": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn khôi phục phiên bản tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể khôi phục phiên bản",
+			"notFound": "Xin lỗi, không thể tìm thấy phiên bản",
+			"success": "Phiên bản đã được khôi phục thành công",
+			"title": "Khôi phục phiên bản"
+		},
+		"view": {
+			"notFound": "Xin lỗi, không thể tìm thấy phiên bản",
+			"title": "Xem chi tiết phiên bản"
+		}
+	}
+}

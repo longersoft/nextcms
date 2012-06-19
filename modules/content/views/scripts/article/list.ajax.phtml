@@ -1,0 +1,79 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Users -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'padding: 8px'">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('article.list.articles'), '<span class="contentArticleListCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+		
+		<?php if ($this->total == 0) : ?>
+			<?php echo $this->translator()->_('article._share.notFound'); ?>
+		<?php else : ?>
+			<div class="contentArticleItemsContainer">
+			<?php foreach ($this->articles as $index => $article) : ?>
+				
+				<div id="contentArticleItem_<?php echo $article->article_id; ?>" class="contentArticleItem dojoDndItem" dndType="contentArticleItemDnd,categoryFolderItemDnd"
+					<?php if ($this->accessor()->route('content_article_move')) : ?>
+					data-app-dndcategory="<?php echo $this->encoder()->encode(array(
+																				'category_id' => $article->category_id,
+																				'article_id'  => $article->article_id,
+																				'title'		  => $article->title,
+																			)); ?>"
+					<?php endif; ?>
+					data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																				'view_size'    => $this->criteria['view_size'],
+																				'article_id'   => $article->article_id,
+																				'status'	   => $article->status,
+																				'title'		   => $article->title,
+																				'square'	   => $article->getCover('square'),
+																				'thumbnail'	   => $article->getCover('thumbnail'),
+																				'small'		   => $article->getCover('small'),
+																				'crop'		   => $article->getCover('crop'),
+																				'medium'	   => $article->getCover('medium'),
+																				'large'		   => $article->getCover('large'),
+																				'language'	   => $article->language,
+																				'translations' => $article->translations, 
+																			)); ?>">
+					<div class="contentArticleItemCover">
+						<img src="<?php echo $article->getCover($this->criteria['view_size']); ?>" title="<?php echo addslashes($article->title); ?>" />
+					</div>
+					
+					<div class="contentArticleItemTitle"><?php echo $this->stringFormatter()->sub($article->title, 60); ?></div>
+				</div>
+				
+			<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+	</div>
+	<!-- /Users -->
+	
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/content/article/list/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+</script>

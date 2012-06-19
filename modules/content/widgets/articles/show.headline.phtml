@@ -1,0 +1,31 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-08
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<div class="contentWidgetsArticlesHeadline">
+	<ul>
+		<?php foreach ($this->articles as $article) : ?>
+		<li>
+			<h2><a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>"><?php echo $article->title; ?></a></h2>
+			<p><?php echo $article->description; ?></p>
+			<span><a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>">&nbsp;</a></span>
+		</li>
+		<?php endforeach; ?>	
+	</ul>
+</div>
+<?php endif; ?>

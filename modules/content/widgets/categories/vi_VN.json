@@ -1,0 +1,18 @@
+{
+	"_about": {
+		"description": "Hiển thị các chuyên mục",
+		"title": "Chuyên mục"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"language": "Language",
+		"rootCategory": "Chuyên mục gốc",
+		"selectRootCategory": "Lựa chọn chuyên mục gốc",
+		"showNumArticles": "Hiển thị số bài thuộc mỗi chuyên mục",
+		"theme": "Mẫu giao diện",
+		"type": "Kiểu",
+		"typeArticle": "Bài viết",
+		"typeBlog": "Blog",
+		"typePage": "Trang"
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"_about": {
+		"description": "Hiển thị hộp tìm kiếm bài viết",
+		"title": "Hộp tìm kiếm"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"searchFor": "Tìm kiếm",
+		"searchForArticle": "Bài viết",
+		"searchForBlog": "Blog",
+		"searchForPage": "Trang",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"keyword": "Từ khóa",
+		"searchAction": "Tìm kiếm"
+	}
+}

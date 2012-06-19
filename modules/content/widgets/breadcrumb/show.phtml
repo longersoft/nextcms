@@ -1,0 +1,29 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->category && $this->categories) : ?>
+<div class="contentWidgetsBreadcrumb">
+	<h2>
+		<a href="<?php echo $this->url(array(), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_index' : 'content_index_index'); ?>"><?php echo $this->translator()->_((Content_Models_Article::TYPE_BLOG == $this->type) ? 'show.blogHomepage' : 'show.contentHomepage'); ?></a>
+		<?php foreach ($this->categories as $index => $category) : ?>
+		<span>&raquo;</span><a href="<?php echo $this->url($category->getProperties(), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_category' : 'content_article_category'); ?>"><?php echo $category->name; ?></a>
+		<?php endforeach; ?>
+		<label><a href="<?php echo $this->url(array_merge(array('feed_format' => 'atom', 'type' => $this->type), $this->category->getProperties()), 'content_feed_category'); ?>"></a></label>
+	</h2>
+</div>
+<?php endif; ?>

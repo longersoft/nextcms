@@ -1,0 +1,42 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<div class="contentWidgetsArticlesVideo">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<?php foreach ($this->articles as $index => $article) : ?>
+	<h3><span><a><?php echo $article->title; ?></a></span></h3>
+	<div class="content" style="display: <?php if ($index == 0) : ?>block<?php else : ?>none<?php endif; ?>">
+		<h4><a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>"><img src="<?php echo $article->getCover('crop'); ?>" title="<?php echo addslashes($article->getCoverTitle()); ?>" height="225" width="300" /></a></h4>
+		<span>
+			<?php echo sprintf($this->translator()->_('show.by'), $article->getAuthor()); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numViews'), $article->num_views); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $article->num_comments); ?>
+		</span>
+	</div>
+	<?php endforeach; ?>
+</div>
+
+<?php $this->script()->captureStartOnce('contentWidgetsArticlesVideo'); ?>
+$(document).ready(function() {
+	$(".contentWidgetsArticlesVideo h3").click(function() {
+		$(".contentWidgetsArticlesVideo .content").slideUp("normal");
+		$(this).next().slideDown("normal");
+	});
+});
+<?php $this->script()->captureEndOnce('contentWidgetsArticlesVideo'); ?>
+<?php endif; ?>

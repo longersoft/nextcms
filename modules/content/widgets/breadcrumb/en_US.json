@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Show navigation from the root category to current one",
+		"title": "Breadcrumb"
+	},
+	"config": {
+		"basic": "Basic",
+		"category": "Category",
+		"categoryDeterminedAutomatically": "Determined automatically",
+		"language": "Language",
+		"selectCategory": "Select category",
+		"theme": "Theme",
+		"type": "Type",
+		"typeArticle": "Article",
+		"typeBlog": "Blog entry",
+		"typePage": "Page"
+	},
+	"show": {
+		"blogHomepage": "Blog",
+		"contentHomepage": "News"
+	}
+}

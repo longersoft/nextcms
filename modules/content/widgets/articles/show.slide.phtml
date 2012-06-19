@@ -1,0 +1,57 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.tinycarousel.min.js');
+?>
+
+<div class="contentWidgetsArticlesSlide">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+
+	<div class="content">
+		<a class="button prev">Prev</a>
+		<div class="viewport">
+			<ul class="overview">
+				<?php foreach ($this->articles as $article) : ?>
+				<li>
+					<p><a href="<?php echo $article->getViewUrl(); ?>" title="<?php echo addslashes($article->title); ?>"><img src="<?php echo $article->getCover('small'); ?>" title="<?php echo addslashes($article->getCoverTitle()); ?>" /></a></p>
+					<h2><a href="<?php echo $article->getViewUrl(); ?>"><?php echo $article->title; ?></a></h2>
+					<span>
+						<?php echo sprintf($this->translator()->_('show.numViews'), $article->num_views); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $article->num_comments); ?>
+					</span>
+				</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+		<a class="button next">Next</a>
+	</div>
+</div>
+
+<?php $this->script()->captureStartOnce('contentWidgetsArticlesSlide'); ?>
+$(document).ready(function() {
+	$(".contentWidgetsArticlesSlide .content").tinycarousel({
+		interval: true,
+		display: 1,
+		intervaltime: 3000,
+		duration: 1000
+	});
+});
+<?php $this->script()->captureEndOnce('contentWidgetsArticlesSlide'); ?>
+<?php endif; ?>

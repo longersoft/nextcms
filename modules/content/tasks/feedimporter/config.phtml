@@ -1,0 +1,184 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	tasks
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div style="padding-bottom: 8px"><?php echo $this->translator()->_('config.addFeedHelp'); ?></div>
+
+<div style="padding-bottom: 16px">
+	<input id="contentTasksFeedimporterUrl" data-dojo-type="dijit.form.TextBox" data-dojo-props="style: 'width: 200px', placeHolder: '<?php echo $this->translator(true)->_('config.url'); ?>'" />
+	<select id="contentTasksFeedimporterLanguageSelect" data-dojo-type="dijit.form.Select" data-dojo-props="style: 'width: 150px', value: '<?php echo $this->language; ?>'">
+		<option value="" disabled="disabled"><?php echo $this->translator()->_('config.selectLanguage'); ?></option>
+		<?php foreach ($this->languages as $locale => $language) : ?>
+		<option value="<?php echo $locale; ?>"><?php echo $language; ?></option>
+		<?php endforeach; ?>
+		
+		<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="language">
+		dijit.byId("contentTasksFeedimporterStandby").show();
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'core_extension_render'); ?>",
+			content: {
+				_type: "task",
+				_mod: "content",
+				_name: "feedimporter",
+				_method: "category",
+				language: language
+			},
+			load: function(data) {
+				dijit.byId("contentTasksFeedimporterStandby").hide();
+				data = dojo.fromJson(data);
+
+				// Update the options of category select box
+				var categorySelect = dijit.byId("contentTasksFeedimporterCategorySelect");
+				
+				var options = categorySelect.getOptions();
+				dojo.forEach(options, function(option, index) {
+					if (option.value != "") {
+						categorySelect.removeOption(option);
+					}
+				});
+
+				dojo.forEach(data, function(item) {
+					var label = [], depth = parseInt(item.depth);
+					while (label.length < depth) {
+						label.push("---");
+					}
+					categorySelect.addOption({
+						label: label.join("") + item.name,
+						value: item.category_id + ""
+					});
+				});
+			}
+		});
+		</script>
+	</select>
+	<select id="contentTasksFeedimporterCategorySelect" data-dojo-type="dijit.form.Select" data-dojo-props="maxHeight: 200">
+		<option value="" disabled="disabled"><?php echo $this->translator()->_('config.selectCategory'); ?></option>
+		<?php if ($this->categories) : ?>
+		<?php foreach ($this->categories as $category) : ?>
+		<option value="<?php echo $category->category_id; ?>"><?php echo str_repeat('---', $category->depth); ?> <?php echo $category->name; ?></option>
+		<?php endforeach; ?>
+		<?php endif; ?>
+	</select>
+	
+	<button data-dojo-type="dijit.form.Button">
+		<?php echo $this->translator()->_('config.addAction'); ?>
+		<script type="dojo/connect" data-dojo-event="onClick">
+		// Add feed entry
+		var url		 = dijit.byId("contentTasksFeedimporterUrl").get("value");
+		var language = dijit.byId("contentTasksFeedimporterLanguageSelect").get("value");
+		var category = dijit.byId("contentTasksFeedimporterCategorySelect").get("value");
+
+		if (url == "" || language == "" || category == "") {
+			return;
+		}
+
+		dojo.style("contentTasksFeedimporterFeedsHelp", {
+			display: "block"
+		});
+
+		var div = dojo.create("div", {
+			style: "padding-bottom: 4px",
+			className: "contentTasksFeedimporterFeedItem"
+		}, "contentTasksFeedimporterFeedsContainer");
+		
+		new dijit.form.TextBox({
+			name: "urls[]",
+			value: url,
+			style: "width: 200px"
+		}).placeAt(div);
+
+		var languageSelect = new dijit.form.Select({
+			name: "languages[]",
+			value: language,
+			style: "width: 150px",
+			readOnly: true
+		}).placeAt(div);
+		dojo.forEach(dijit.byId("contentTasksFeedimporterLanguageSelect").getOptions(), function(option, index) {
+			languageSelect.addOption(option);
+		});
+		languageSelect.set("value", language);
+
+		var categorySelect = new dijit.form.Select({
+			name: "categories[]"
+		}).placeAt(div);
+		dojo.forEach(dijit.byId("contentTasksFeedimporterCategorySelect").getOptions(), function(option, index) {
+			categorySelect.addOption(option);
+		});
+		categorySelect.set("value", category);
+
+		new dijit.form.Button({
+			label: "<?php echo $this->translator()->_('config.deleteAction'); ?>",
+			onClick: function() {
+				dojo.destroy(div);
+				var numFeeds = dojo.query("#contentTasksFeedimporterFeedsContainer .contentTasksFeedimporterFeedItem").length;
+				dojo.style("contentTasksFeedimporterFeedsHelp", {
+					display: (numFeeds > 0) ? "block" : "none" 
+				});
+			}
+		}).placeAt(div);
+		</script>
+	</button>
+</div>
+
+<div id="contentTasksFeedimporterFeedsHelp" style="padding-bottom: 8px; display: <?php if ($this->feeds && count($this->feeds) > 0) : ?>block<?php else : ?>none<?php endif; ?>"><?php echo $this->translator()->_('config.listFeedsHelp'); ?></div>
+
+<!-- Feeds -->
+<div id="contentTasksFeedimporterFeedsContainer">
+	<?php if ($this->feeds) : ?>
+	<?php foreach ($this->feeds as $feed) : ?>
+	<div style="padding-bottom: 4px" class="contentTasksFeedimporterFeedItem">
+		<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'urls[]', style: 'width: 200px', value: '<?php echo $feed['url']; ?>'" />
+		
+		<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'languages[]', style: 'width: 150px', value: '<?php echo $feed['language']; ?>'">
+			<option value="<?php echo $feed['language']; ?>"><?php echo $this->languages[$feed['language']]; ?></option>
+		</select>
+		
+		<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'categories[]', maxHeight: 200, value: '<?php echo $feed['category']; ?>'">
+			<?php if ($categories = $this->helper()->getCategories($feed['language'])) : ?>
+			<?php foreach ($categories as $category) : ?>
+			<option value="<?php echo $category->category_id; ?>"><?php echo str_repeat('---', $category->depth); ?> <?php echo $category->name; ?></option>
+			<?php endforeach; ?>
+			<?php endif; ?>
+		</select>
+		
+		<button data-dojo-type="dijit.form.Button">
+			<?php echo $this->translator()->_('config.deleteAction'); ?>
+			<script type="dojo/connect" data-dojo-event="onClick">
+			var div = dojo.query(this.domNode).closest(".contentTasksFeedimporterFeedItem");
+			dojo.query(div).orphan();
+			
+			var numFeeds = dojo.query("#contentTasksFeedimporterFeedsContainer .contentTasksFeedimporterFeedItem").length;
+			dojo.style("contentTasksFeedimporterFeedsHelp", {
+				display: (numFeeds > 0) ? "block" : "none" 
+			});
+			</script>
+		</button>
+	</div>
+	<?php endforeach; ?>
+	<?php endif; ?>
+</div>
+<!-- /Feeds -->
+
+<div id="contentTasksFeedimporterStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'contentTasksFeedimporterCategorySelect', imageText: '<?php echo $this->translator(true)->_('config.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dojo.NodeList-traverse");
+dojo.require("dojox.widget.Standby");
+</script>

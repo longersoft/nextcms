@@ -1,0 +1,18 @@
+{
+	"_about": {
+		"description": "Show categories",
+		"title": "Categories"
+	},
+	"config": {
+		"basic": "Basic",
+		"language": "Language",
+		"rootCategory": "Root category",
+		"selectRootCategory": "Select root category",
+		"showNumArticles": "Show the number of articles in each category",
+		"theme": "Theme",
+		"type": "Type",
+		"typeArticle": "Article",
+		"typeBlog": "Blog entry",
+		"typePage": "Page"
+	}
+}

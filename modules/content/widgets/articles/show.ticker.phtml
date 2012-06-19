@@ -1,0 +1,56 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-24
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jcarousellite.js');
+?>
+
+<div class="contentWidgetsArticlesTicker">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<a href="javascript: void(0);" class="prev">&nbsp;</a>
+	<div class="content">
+		<div>
+			<ul>
+				<?php foreach ($this->articles as $article) : ?>
+				<li><a href="<?php echo $article->getViewUrl(); ?>"><?php echo $article->title; ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<a href="javascript: void(0);" class="next">&nbsp;</a>
+</div>
+
+<?php $this->script()->captureStartOnce('contentWidgetsArticlesTicker'); ?>
+$(document).ready(function() {
+	$(".contentWidgetsArticlesTicker").each(function() {
+		var _this = this;
+		$(this).find(".content").jCarouselLite({
+			btnNext: $(_this).find(".prev"),
+			btnPrev: $(_this).find(".next"),
+			auto: 3000,
+			speed: 1000,
+			visible: 1,
+			vertical: true
+		});
+	});
+});
+<?php $this->script()->captureEndOnce('contentWidgetsArticlesTicker'); ?>
+<?php endif; ?>

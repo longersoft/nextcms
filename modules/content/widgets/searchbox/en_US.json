@@ -1,0 +1,18 @@
+{
+	"_about": {
+		"description": "Show a search box",
+		"title": "Search Box"
+	},
+	"config": {
+		"basic": "Basic",
+		"searchFor": "Search for",
+		"searchForArticle": "Article",
+		"searchForBlog": "Blog entry",
+		"searchForPage": "Page",
+		"theme": "Theme"
+	},
+	"show": {
+		"keyword": "Keyword",
+		"searchAction": "Search"
+	}
+}

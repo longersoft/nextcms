@@ -1,0 +1,62 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="contentWidgetsCategories">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<?php if ($this->categories) : ?>
+	<ul>
+		<?php foreach ($this->categories as $category) : ?>
+		<li data-app-id="<?php echo $category->category_id; ?>" data-app-parent="<?php echo $category->parent_id; ?>" data-app-depth="<?php echo $category->depth; ?>" style="padding-left: <?php echo $category->depth * 20; ?>px">
+			<span class="toggle">&nbsp;</span> <a href="<?php echo $this->url($category->getProperties(), $this->route); ?>"><?php echo $category->name; ?></a><?php if ($category->image) : ?><img src="<?php echo $this->urlHelper()->normalizeFileUrl($category->image); ?>" /><?php endif; ?> <?php if ('1' == $this->showNumArticles && ($numArticles = $this->helper()->getNumArticles($category, $this->language, $this->type)) && ($numArticles > 0)) : ?> <span class="counter"><?php echo $numArticles; ?></span><?php endif; ?>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php endif; ?>
+</div>
+
+<?php $this->script()->captureStartOnce('contentWidgetsCategories'); ?>
+$(document).ready(function() {
+	var hideCategories = function(li) {
+		if ($(li).hasClass("opened")) {
+			$(li).removeClass("opened").addClass("closed");
+		}
+		$("li[data-app-parent='" + $(li).attr("data-app-id") + "']").each(function() {
+			$(this).hide();
+			hideCategories($(this));
+		});
+	};
+
+	$(".contentWidgetsCategories li").each(function() {
+		var self = $(this);
+		var container = $(this).parents(".contentWidgetsCategories");
+		$(container).find("li[data-app-id='" + $(this).attr("data-app-parent") + "']").addClass("opened");
+		$(self).find("span.toggle").click(function() {
+			if ($(self).hasClass("opened")) {
+				hideCategories($(self));
+			} else if ($(self).hasClass("closed")) {
+				$(self).removeClass("closed").addClass("opened");
+				$(container).find("li[data-app-parent='" + $(self).attr("data-app-id") + "']").show();
+			}
+		});
+	});
+	
+	$(".contentWidgetsCategories li a[href='" + document.location.href + "']").parents("li").addClass("active");
+	$(".contentWidgetsCategories li a[href='" + document.location.pathname + "']").parents("li").addClass("active");
+});
+<?php $this->script()->captureEndOnce('contentWidgetsCategories'); ?>

@@ -1,0 +1,48 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<div class="contentWidgetsArticlesCategory">
+	<?php if ($this->title) : ?><h1><?php echo $this->title; ?></h1><?php endif; ?>
+	<?php if ($this->category) : ?><h1><a href="<?php echo $this->url($this->category->getProperties(), 'content_article_category'); ?>"><?php echo $this->category->name; ?></a><a class="iconRss" href="<?php echo $this->url(array_merge(array('feed_format' => 'atom', 'type' => $this->type), $this->category->getProperties()), 'content_feed_category'); ?>"></a></h1><?php endif; ?>
+	
+	<div class="main">
+		<div class="thumb">
+			<a href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>"><img src="<?php echo $this->articles[0]->getCover('medium'); ?>" title="<?php echo addslashes($this->articles[0]->getCoverTitle()); ?>" /></a>
+			<span class="numComments">
+				<b><?php echo $this->articles[0]->num_comments; ?></b><br />
+				<?php echo $this->translator()->_('show.comments'); ?>
+			</span>
+		</div>
+		<div class="summary">
+			<h2><a href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>"><?php echo $this->articles[0]->title; ?></a></h2>
+			<span class="meta">
+				<?php echo $this->dateFormatter()->diff(strtotime($this->articles[0]->activated_date), $this->timeDiffFormats); ?>
+			</span>
+		</div>
+	</div>
+	
+	<ul>
+		<?php for ($i = 1; $i < $this->numArticles; $i++) : ?>
+		<li>
+			<h3><a href="<?php echo $this->articles[$i]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[$i]->title); ?>"><?php echo $this->articles[$i]->title; ?></a></h3>
+		</li>
+		<?php endfor; ?>
+	</ul>
+</div>
+<?php endif; ?>

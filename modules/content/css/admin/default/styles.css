@@ -1,0 +1,40 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-06-01
+ */
+ 
+/********** MANAGE ARTICLES **********/
+.contentArticleItemsContainer {}
+
+/* Item */
+.contentArticleItem { display: inline-block; margin-bottom: 25px; margin-right: 15px; vertical-align: top; }
+
+/* Counter */
+.contentArticleListCounter { background: #CFE5FA !important; border-radius: 2px; font-size: 11px; padding: 4px !important; }
+
+/* Dnd */
+.contentArticleItemsContainer .dojoDndItem { padding: 5px; }
+.contentArticleItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.contentArticleItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.contentArticleItemsContainer .dojoDndItemOver { background: #CFE5FA; }
+
+/********** STATUS FILTER **********/
+.contentArticleStatusContainer { margin: 0; padding: 8px; }
+.contentArticleStatusContainer li { clear: both; cursor: pointer; display: block; height: 25px; list-style-type: none; }
+.contentArticleStatusContainer .contentArticleStatusLabel { background-color: #fff; color: blue; }
+.contentArticleStatusSelected .contentArticleStatusLabel { background-color: #769DC0; color: #FFF; }
+.contentArticleStatusLabel { float: left; padding: 4px; text-decoration: none; }
+.contentArticleStatusLabel:hover { background-color: #B5C9D7; color: #FFF; }
+.contentArticleStatusCounter { background: #CFE5FA; border-radius: 2px; float: right; padding: 2px; -moz-border-radius: 2px; }
+
+/* Dnd */
+.contentArticleStatusContainer .dojoDndContainerOver .contentArticleStatusLabel { background: #CFE5FA; }

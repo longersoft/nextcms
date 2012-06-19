@@ -1,0 +1,145 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('article.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/content/css/admin/default/styles.css");
+</script>
+
+<div id="contentArticleListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'leading', gutters: true, minSize: 150, splitter: true, style: 'border: none; height: 100%; padding: 0; width: 15%'">
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', nested: false">
+			<!-- Categories -->
+			<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article.list.categories'); ?>'">
+				<?php echo $this->action('list', 'category', 'category', array('mod' => 'content', 'language' => $this->criteria['language'], 'helper_container' => 'contentArticleListContainer')); ?>
+			</div>
+			<!-- /Categories -->
+			
+			<!-- Folders -->
+			<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('article._share.folders'); ?>'">
+				<?php echo $this->action('list', 'folder', 'category', array('entity_class' => 'Content_Models_Article', 'language' => $this->criteria['language'], 'helper_container' => 'contentArticleListContainer')); ?>
+			</div>
+			<!-- /Folders -->
+		</div>
+		
+		<!-- Status -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'bottom', gutters: false, splitter: true, style: 'height: 200px'">
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div class="appTitleBar" style="border-left: none; border-right: none; border-top: none">
+					<?php echo $this->translator()->_('article.list.status'); ?>
+				</div>
+			</div>
+			
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+				<ul id="contentArticleListStatusContainer" class="contentArticleStatusContainer">
+					<li<?php if (!$this->criteria['status']) : ?> class="contentArticleStatusSelected"<?php endif; ?>>
+						<a data-app-status="" class="contentArticleStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('article.list.viewAll'); ?></a>
+						<span class="contentArticleStatusCounter"><?php echo $this->articleCounter(array('status' => null, 'language' => $this->criteria['language'])); ?></span>
+					</li>
+					<li<?php if ($this->criteria['status'] == Content_Models_Article::STATUS_ACTIVATED) : ?> class="contentArticleStatusSelected"<?php endif; ?>>
+						<a data-app-status="<?php echo Content_Models_Article::STATUS_ACTIVATED; ?>" class="contentArticleStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('article.list.statusActivated'); ?></a>
+						<span class="contentArticleStatusCounter"><?php echo $this->articleCounter(array('status' => Content_Models_Article::STATUS_ACTIVATED, 'language' => $this->criteria['language'])); ?></span>
+					</li>
+					<li<?php if ($this->criteria['status'] == Content_Models_Article::STATUS_NOT_ACTIVATED) : ?> class="contentArticleStatusSelected"<?php endif; ?>>
+						<a data-app-status="<?php echo Content_Models_Article::STATUS_NOT_ACTIVATED; ?>" class="contentArticleStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('article.list.statusNotActivated'); ?></a>
+						<span class="contentArticleStatusCounter"><?php echo $this->articleCounter(array('status' => Content_Models_Article::STATUS_NOT_ACTIVATED, 'language' => $this->criteria['language'])); ?></span>
+					</li>
+				</ul>
+			</div>
+			
+			<!-- Trash -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom'">
+				<div style="margin: 0 auto; text-align: center; width: 64px">
+					<div id="contentArticleListTrash" data-app-deleted-articles="<?php echo $this->articleCounter(array('status' => Content_Models_Article::STATUS_DELETED, 'language' => $this->criteria['language'])); ?>">
+					</div>
+				</div>
+			</div>
+			<!-- /Trash -->
+		</div>
+		<!-- /Status -->
+		
+		<!-- Hook -->
+		<?php Core_Base_Hook_Registry::getInstance()->executeAction('Content_Article_List_ShowLeftPane'); ?>
+		<!-- /Hook -->
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="contentArticleListArticleToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- Articles -->
+		<div id="contentArticleListArticlesContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->render('article/list.ajax.phtml'); ?>
+		</div>
+		<!-- /Articles -->
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/content/languages')->_('article.list.title'); ?>";
+dojo.registerModulePath("content", "<?php echo $this->APP_STATIC_URL; ?>/modules/content");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("content.js.controllers.ArticleController");
+dojo.require("content.js.views.ArticleContextMenu");
+dojo.require("content.js.views.ArticleListView");
+dojo.require("content.js.views.ArticleStatusListView");
+dojo.require("content.js.views.ArticleToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'content_article_activate', 'content_article_add', 'content_article_count', 'content_article_cover', 'content_article_delete',
+					'content_article_edit', 'content_article_empty', 'content_article_list', 'content_article_move', 'content_article_order',
+					'content_folder_add', 'content_folder_remove',
+					'content_revision_list',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	var articleController = new content.js.controllers.ArticleController("contentArticleListContainer");
+	articleController.setArticleToolbar(new content.js.views.ArticleToolbar("contentArticleListArticleToolbar"))
+					 .setArticleListView(new content.js.views.ArticleListView("contentArticleListArticlesContainer"))
+					 .setArticleContextMenu(new content.js.views.ArticleContextMenu())
+					 .setStatusListView(new content.js.views.ArticleStatusListView("contentArticleListStatusContainer", "contentArticleListTrash"))
+					 .initArticleSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>);
+});
+</script>

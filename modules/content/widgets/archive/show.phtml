@@ -1,0 +1,54 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		content
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-05-23
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.tipsy.js');
+?>
+
+<div class="contentWidgetsArchive">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<div>
+		<h3><label><a href="<?php echo $this->category ? $this->url(array_merge(array('date' => $this->currentMonth), $this->category->getProperties()), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive_category' : 'content_article_archive_category') : $this->url(array('date' => $this->currentMonth), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive' : 'content_article_archive'); ?>"><?php echo str_replace(array('#month#', '#year#'), array($this->translator()->_('show.month' . date('m')), date('Y')), $this->translator()->_('show.monthYearFormat')); ?></a></label></h3>
+		<h4>
+			<?php for ($i = 0; $i < 7; $i++) : ?>
+			<span><?php echo $this->translator()->_('show.shortDay' . $i); ?></span>
+			<?php endfor; ?>
+		</h4>
+		
+		<ul>
+			<?php for ($i = 0; $i < $this->posts['1']['dayInWeek']; $i++) : ?>
+			<li></li>
+			<?php endfor; ?>
+		
+			<?php foreach ($this->posts as $day => $v) : ?>
+			<li><a href="<?php echo $this->category ? $this->url(array_merge(array('date' => $this->currentMonth . '-' . (strlen($day) == 1 ? '0' . $day : $day)), $this->category->getProperties()), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive_category' : 'content_article_archive_category') : $this->url(array('date' => $this->currentMonth . '-' . (strlen($day) == 1 ? '0' . $day : $day)), (Content_Models_Article::TYPE_BLOG == $this->type) ? 'content_blog_archive' : 'content_article_archive'); ?>" class="tooltip<?php if ($day == $this->currentDay) : ?> active<?php endif; ?><?php if ($v['numPosts'] > 0) : ?> has<?php endif; ?>" original-title="<b><?php echo sprintf($this->translator()->_('show.numPosts'), $v['numPosts']); ?></b>"><?php echo $day; ?></a></li> 
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>
+
+<?php $this->script()->captureStartOnce('contentWidgetsArchive'); ?>
+$(document).ready(function() {
+	$(".contentWidgetsArchive .tooltip").tipsy({
+		gravity: "s",
+		html: true
+	});
+});
+<?php $this->script()->captureEndOnce('contentWidgetsArchive'); ?>
