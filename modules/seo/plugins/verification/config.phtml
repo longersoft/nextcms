@@ -1,0 +1,40 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		seo
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2011-12-28
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label class="appTopLabel"><?php echo $this->translator()->_('config.help'); ?>:</label>
+</div>
+
+<div class="appFormRow">
+	<label for="google_code"><?php echo $this->translator()->_('config.googleVerificationCode'); ?>:</label>
+	<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'google_code', style: 'width: 200px', value: '<?php echo $this->googleCode; ?>'" />
+</div>
+
+<div class="appFormRow">
+	<label for="bing_code"><?php echo $this->translator()->_('config.bingVerificationCode'); ?>:</label>
+	<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'bing_code', style: 'width: 200px', value: '<?php echo $this->bingCode; ?>'" />
+</div>
+
+<div class="appFormRow">
+	<label for="alexa_code"><?php echo $this->translator()->_('config.alexaVerificationCode'); ?>:</label>
+	<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'alexa_code', style: 'width: 200px', value: '<?php echo $this->alexaCode; ?>'" />
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.TextBox");
+</script>

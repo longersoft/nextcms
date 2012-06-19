@@ -1,0 +1,72 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		seo
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div style="padding: 0 8px 0 0">
+	<input id="seoPluginsRedirectorConfigSourceUrl" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', style: 'width: 200px; margin: 0 4px', placeHolder: '<?php echo $this->translator(true)->_('config.sourceUrl'); ?>', missingMessage: '<?php echo $this->translator(true)->_('config.sourceUrlRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('config.urlValidator'); ?>'" />
+	<input id="seoPluginsRedirectorConfigDestinationUrl" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', style: 'width: 200px; margin: 0 4px', placeHolder: '<?php echo $this->translator(true)->_('config.destinationUrl'); ?>', missingMessage: '<?php echo $this->translator(true)->_('config.destinationUrlRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('config.urlValidator'); ?>'" />
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('config.addAction'); ?>
+		<script type="dojo/connect" data-dojo-event="onClick">
+		var div = dojo.create("div", {
+			className: "seoPluginsRedirectorConfigItem",
+			style: "padding-bottom: 4px"
+		}, "seoPluginsRedirectorConfigUrls");
+		
+		new dijit.form.ValidationTextBox({
+			name: "source_urls[]",
+			style: "width: 200px; margin: 0 4px",
+			value: dijit.byId("seoPluginsRedirectorConfigSourceUrl").get("value")
+		}).placeAt(div);
+
+		new dijit.form.ValidationTextBox({
+			name: "destination_urls[]",
+			style: "width: 200px; margin: 0 4px",
+			value: dijit.byId("seoPluginsRedirectorConfigDestinationUrl").get("value")
+		}).placeAt(div);
+
+		new dijit.form.Button({
+			label: "<?php echo $this->translator()->_('config.deleteAction'); ?>",
+			onClick: function() {
+				dojo.destroy(div);
+			}
+		}).placeAt(div);
+		</script>
+	</button>
+</div>
+
+<div id="seoPluginsRedirectorConfigUrls">
+<?php if ($this->urls) : ?>
+	<?php foreach ($this->urls as $source => $destination) : ?>
+	<div class="seoPluginsRedirectorConfigItem" style="padding-bottom: 4px">
+		<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'source_urls[]', value: '<?php echo addslashes($source); ?>', style: 'width: 200px; margin: 0 4px', placeHolder: '<?php echo $this->translator(true)->_('config.sourceUrl'); ?>', missingMessage: '<?php echo $this->translator(true)->_('config.sourceUrlRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('config.urlValidator'); ?>'" />
+		<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'destination_urls[]', value: '<?php echo addslashes($destination); ?>', style: 'width: 200px; margin: 0 4px', placeHolder: '<?php echo $this->translator(true)->_('config.sourceUrl'); ?>', missingMessage: '<?php echo $this->translator(true)->_('config.sourceUrlRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('config.urlValidator'); ?>'" />
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('config.deleteAction'); ?>
+			<script type="dojo/connect" data-dojo-event="onClick">
+			dojo.destroy(dojo.query(this.domNode).closest(".seoPluginsRedirectorConfigItem")[0]);
+			</script>
+		</button>
+	</div>
+	<?php endforeach; ?>
+<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

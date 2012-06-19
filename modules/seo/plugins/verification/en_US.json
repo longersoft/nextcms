@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Insert website verification codes to the head section",
+		"title": "Website verification"
+	},
+	"_permission": {
+		"description": "Insert website verification codes to the head section",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"alexaVerificationCode": "Alexa",
+		"bingVerificationCode": "Bing",
+		"codeRequired": "The verification code is required",
+		"codeValidator": "The verification code is invalid",
+		"googleVerificationCode": "Google",
+		"help": "Enter your website verification codes provided by"
+	}
+}

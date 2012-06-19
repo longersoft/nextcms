@@ -1,0 +1,241 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		seo
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('sitemap.build.title'));
+?>
+
+<script type="text/javascript">
+// DOJO LESSON: Use Javascript to load the CSS styles.
+// The page will show the scrolls if I put the following line at the top of this view script:
+// <link href="/modules/seo/css/admin/default/styles.css" rel="stylesheet" type="text/css" />	
+dojo.create("link", {
+				href: "<?php echo $this->APP_STATIC_URL; ?>/modules/seo/css/admin/default/styles.css",
+				media: "screen",
+				rel: "stylesheet",
+				type: "text/css"
+			}, dojo.query("head")[0]);
+</script>
+
+<div id="seoSitemapBuildContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button id="seoSitemapBuildSaveButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+		</button>
+	</div>
+	<!-- Toolbar -->
+	
+	<!-- BuilderForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', region: 'center', gutters: false, class: 'appContentPane'">
+		<!-- Items -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: true, region: 'center', style: 'padding: 0; width: 50%'">
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'border: none'">
+				<div class="appHeadline">
+					<span><?php echo $this->translator()->_('sitemap._share.items'); ?></span>
+				</div>
+			</div>
+			
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+				<div id="seoSitemapBuildItemsListContainer" class="seoSitemapItemsContainer">
+					<?php if ($this->items) : ?>
+					<?php foreach ($this->items as $index => $item) : ?>
+					<div id="seoSitemapBuildItem_<?php echo $index; ?>" class="seoSitemapItem"
+						data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																					'id'			=> $index,
+																					'link'			=> $item['link'],
+																					'frequency'		=> $item['frequency'],
+																					'priority'		=> $item['priority'],
+																					'last_modified' => $item['last_modified'],
+																				)); ?>">
+						<a href="<?php echo $item['link']; ?>" target="_blank"><?php echo $item['link']; ?></a>
+					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+		<!-- /Items -->
+		
+		<!-- Item -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'left', style: 'width: 50%', class: 'seoSitemapItemFormContainer'">
+		<form id="seoSitemapBuildItemForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div class="appHeadline">
+				<span><?php echo $this->translator()->_('sitemap._share.item'); ?></span>
+			</div>
+			
+			<div id="seoSitemapBuildItemContainer" style="margin: 8px; padding: 8px">
+				<div class="appFormRow">
+					<label for="link"><?php echo $this->translator()->_('sitemap._share.link'); ?>:</label>
+					<input id="seoSitemapBuildLinkTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="itemProperty: 'link', name: 'link', type: 'text', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('sitemap._share.linkRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label for="frequency"><?php echo $this->translator()->_('sitemap._share.frequency'); ?>:</label>
+					<select id="seoSitemapBuildFrequencySelect" data-dojo-type="dijit.form.Select" data-dojo-props="itemProperty: 'frequency', name: 'frequency'">
+						<option value="always"><?php echo $this->translator()->_('sitemap._share.frequencyAlways'); ?></option>
+						<option value="hourly"><?php echo $this->translator()->_('sitemap._share.frequencyHourly'); ?></option>
+						<option value="daily" selected="selected"><?php echo $this->translator()->_('sitemap._share.frequencyDaily'); ?></option>
+						<option value="monthly"><?php echo $this->translator()->_('sitemap._share.frequencyMonthly'); ?></option>
+						<option value="yearly"><?php echo $this->translator()->_('sitemap._share.frequencyYearly'); ?></option>
+						<option value="never"><?php echo $this->translator()->_('sitemap._share.frequencyNever'); ?></option>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="priority"><?php echo $this->translator()->_('sitemap._share.priority'); ?>:</label>
+					<select id="seoSitemapBuildPrioritySelect" data-dojo-type="dijit.form.Select" data-dojo-props="itemProperty: 'priority', name: 'priority'">
+						<?php for ($i = 0; $i < 1; $i = $i + 0.1) : ?>
+						<option value="<?php echo $i; ?>"<?php if ($i == 0.5) : ?> selected="selected"<?php endif; ?>><?php echo $i; ?></option>
+						<?php endfor; ?>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="last_modified"><?php echo $this->translator()->_('sitemap._share.lastModified'); ?>:</label>
+					<!-- FIXME: Show the current date -->
+					<input id="seoSitemapBuildLastModifiedDate" data-dojo-type="dijit.form.DateTextBox" data-dojo-props="type: 'text', name: 'last_modified', itemProperty: 'last_modified', value: '<?php echo date('m/d/Y'); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label>&nbsp;</label>
+					<button id="seoSitemapBuildNewItemButton" data-dojo-type="dijit.form.Button" data-dojo-props="label: '<?php echo $this->translator(true)->_('global._share.addAction'); ?>'"></button>
+					
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="label: '<?php echo $this->translator(true)->_('global._share.cancelAction'); ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						dojo.attr("seoSitemapBuildItemId", "value", "");
+						dijit.byId("seoSitemapBuildLinkTextBox").set("value", "");
+						dijit.byId("seoSitemapBuildFrequencySelect").set("value", "daily");
+						dijit.byId("seoSitemapBuildPrioritySelect").set("value", "0.5");
+						dijit.byId("seoSitemapBuildNewItemButton").set("label", "<?php echo $this->translator()->_('global._share.addAction'); ?>");
+						</script>
+					</button>
+				</div>
+				
+				<input type="hidden" id="seoSitemapBuildItemId" value="" />
+			</div>
+		</form>
+		</div>
+		<!-- /Item -->
+	</div>
+	<!-- /BuilderForm -->
+</div>
+
+<div id="seoSitemapBuildStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'seoSitemapBuildContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/seo/languages')->_('sitemap.build.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.widget.Standby");
+
+dojo.registerModulePath("seo", "<?php echo $this->APP_STATIC_URL; ?>/modules/seo");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("core.js.base.Encoder");
+dojo.require("seo.js.views.SitemapContextMenu");
+dojo.require("seo.js.views.SitemapListView");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'seo_sitemap_build',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	var handler = dojo.subscribe("/app/global/onLoadComplete/seo_sitemap_build", function() {
+		// Create the sitemap list view instance
+		var sitemapListView = new seo.js.views.SitemapListView("seoSitemapBuildItemsListContainer");
+		
+		dojo.connect(dijit.byId("seoSitemapBuildNewItemButton"), "onClick", function() {
+			if (dijit.byId("seoSitemapBuildItemForm").validate()) {
+				sitemapItem	   = dojo.formToObject("seoSitemapBuildItemForm");
+				sitemapItem.id = dojo.attr("seoSitemapBuildItemId", "value");
+				sitemapListView.saveSitemapItem(sitemapItem);
+			}
+		});
+
+		// Quickly edit by dragging the item and dropping it on the form
+		new dojo.dnd.Target("seoSitemapBuildItemContainer", {
+			accept: ["seoSitemapItemDnd"],
+			onDropExternal: function(source, nodes, copy) {
+				var id = core.js.base.Encoder.decode(dojo.attr(nodes[0], "data-app-entity-props")).id;
+				var sitemapItemView = sitemapListView.getSitemapItemView(id);
+				if (sitemapItemView) {
+					sitemapListView.onEditSitemapItem(sitemapItemView);
+				}
+			}
+		});
+		
+		// Edit item handler
+		dojo.connect(sitemapListView, "onEditSitemapItem", function(sitemapItemView) {
+			var sitemapItem = sitemapItemView.getSitemapItem();
+			dojo.attr("seoSitemapBuildItemId", "value", sitemapItem.id);
+			
+			// Change the label of "Add item" button
+			dijit.byId("seoSitemapBuildNewItemButton").set("label", "<?php echo $this->translator()->_('global._share.saveAction'); ?>");
+			
+			// Populate data to the item form
+			dojo.forEach(dijit.byId("seoSitemapBuildItemForm").getChildren(), function(child) {
+				if (name = child.get("itemProperty")) {
+					if (sitemapItem[name]) {
+						child.set("value", sitemapItem[name]);
+					}
+				}
+			});
+		});
+
+		// Submit form handler
+		dojo.connect(dijit.byId("seoSitemapBuildSaveButton"), "onClick", function() {
+			var items = sitemapListView.getSitemapItems();
+			if (items.length > 0) {
+				var params = { format: "json", items: dojo.toJson(items) };
+				dijit.byId("seoSitemapBuildStandby").show();
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'seo_sitemap_build'); ?>",
+					content: params,
+					handleAs: "json",
+					load: function(data) {
+						dijit.byId("seoSitemapBuildStandby").hide();
+						var message = (data.result == "APP_RESULT_OK") 
+										? "<?php echo $this->translator()->_('sitemap.build.success'); ?>"
+										: "<?php echo $this->translator()->_('sitemap.build.error'); ?>"; 
+						dojo.publish("/app/global/notification", [{
+							message: message,
+							type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+						}]);
+					}
+				});
+			}
+		});
+
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

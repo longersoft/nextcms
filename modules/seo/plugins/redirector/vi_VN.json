@@ -1,0 +1,19 @@
+{
+	"_about": {
+		"description": "Quản lý việc chuyển hướng các liên kết",
+		"title": "Chuyển hướng"
+	},
+	"_permission": {
+		"description": "Quản lý việc chuyển hướng các liên kết",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"addAction": "Thêm",
+		"deleteAction": "Xóa",
+		"destinationUrl": "Liên kết đích",
+		"sourceUrl": "Liên kết nguồn"
+	}
+}

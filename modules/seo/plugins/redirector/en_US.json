@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Manage the redirections",
+		"title": "Redirector"
+	},
+	"_permission": {
+		"description": "Manage the redirections",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"addAction": "Add",
+		"deleteAction": "Delete",
+		"destinationUrl": "Destination URL",
+		"destinationUrlRequired": "The destination URL is required",
+		"sourceUrl": "Source URL",
+		"sourceUrlRequired": "The source URL is required",
+		"urlValidator": "The URL is invalid"
+	}
+}

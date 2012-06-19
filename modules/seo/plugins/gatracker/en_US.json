@@ -1,0 +1,18 @@
+{
+	"_about": {
+		"description": "Insert Google Analytics tracking code to the website",
+		"title": "Google Analytics tracker"
+	},
+	"_permission": {
+		"description": "Insert Google Analytics tracking code to the website",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"codeRequired": "The tracking code is required",
+		"codeValidator": "The tracking code is invalid",
+		"help": "Enter the Google Analytics tracking code (like UA-x-x)"
+	}
+}

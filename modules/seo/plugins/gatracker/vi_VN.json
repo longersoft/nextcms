@@ -1,0 +1,18 @@
+{
+	"_about": {
+		"description": "Chèn mã của Google Analytics",
+		"title": "Mã Google Analytics"
+	},
+	"_permission": {
+		"description": "Chèn mã của Google Analytics",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"codeRequired": "Mã thống kê là bắt buộc",
+		"codeValidator": "Mã thống kê không hợp lệ",
+		"help": "Chèn mã của Google Analytics (có dạng UA-x-x)"
+	}
+}

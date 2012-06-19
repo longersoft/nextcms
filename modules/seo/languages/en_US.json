@@ -1,0 +1,51 @@
+{
+	"_about": {
+		"description": "Provides SEO utilities",
+		"title": "SEO"
+	},
+	"_menu": {
+		"sitemap": {
+			"build": "Sitemap Builder"
+		}
+	},
+	"_permission": {
+		"sitemap": {
+			"description": "Sitemap Builder",
+			"actions": {
+				"build": "Build sitemap"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"cancelAction": "Cancel",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"loadingAction": "Loading ...",
+			"saveAction": "Save"
+		}
+	},
+	"sitemap": {
+		"_share": {
+			"frequency": "Frequency",
+			"frequencyAlways": "Always",
+			"frequencyDaily": "Daily",
+			"frequencyHourly": "Hourly",
+			"frequencyMonthly": "Monthly",
+			"frequencyNever": "Never",
+			"frequencyYearly": "Yearly",
+			"item": "Item",
+			"items": "Items",
+			"lastModified": "Last modified",
+			"link": "Link",
+			"linkRequired": "The link is required",
+			"priority": "Priority"
+		},
+		"build": {
+			"error": "Sorry, cannot update the sitemap",
+			"success": "The sitemap is updated successfully",
+			"title": "Build sitemap"
+		}
+	}
+}

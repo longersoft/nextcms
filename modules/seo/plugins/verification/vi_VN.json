@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Chèn mã xác nhận website",
+		"title": "Mã xác nhận website"
+	},
+	"_permission": {
+		"description": "Chèn mã xác nhận website",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"alexaVerificationCode": "Alexa",
+		"bingVerificationCode": "Bing",
+		"codeRequired": "Mã xác nhận là bắt buộc",
+		"codeValidator": "Mã xác nhận không hợp lệ",
+		"googleVerificationCode": "Google",
+		"help": "Chèn mã xác nhận website của bạn được cung cấp bởi"
+	}
+}

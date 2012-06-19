@@ -1,0 +1,51 @@
+{
+	"_about": {
+		"description": "Cung cấp các tiện ích SEO",
+		"title": "Tối ưu bộ máy tìm kiếm"
+	},
+	"_menu": {
+		"sitemap": {
+			"build": "Tạo sitemap"
+		}
+	},
+	"_permission": {
+		"sitemap": {
+			"description": "Quản lý sitemap",
+			"actions": {
+				"build": "Tạo sitemap"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"cancelAction": "Hủy",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"loadingAction": "Đang tải ...",
+			"saveAction": "Lưu"
+		}
+	},
+	"sitemap": {
+		"_share": {
+			"frequency": "Mức độ cập nhật",
+			"frequencyAlways": "Luôn luôn",
+			"frequencyDaily": "Ngày",
+			"frequencyHourly": "Giờ",
+			"frequencyMonthly": "Tháng",
+			"frequencyNever": "Không bao giờ",
+			"frequencyYearly": "Năm",
+			"item": "Phần tử",
+			"items": "Các phần tử",
+			"lastModified": "Cập nhật lần cuối",
+			"link": "Liên kết",
+			"linkRequired": "Liên kết là bắt buộc",
+			"priority": "Độ ưu tiên"
+		},
+		"build": {
+			"error": "Xin lỗi, không thể cập nhật sitemap",
+			"success": "Sitemap đã được cập nhật thành công",
+			"title": "Tạo sitemap"
+		}
+	}
+}

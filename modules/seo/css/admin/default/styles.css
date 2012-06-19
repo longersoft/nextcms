@@ -1,0 +1,18 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		seo
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/********** BUILD SITEMAP **********/
+.seoSitemapItemsContainer { margin: 8px; }
+.seoSitemapItem { background: url(images/bullet.png) center left no-repeat; padding: 4px 0 4px 20px; }
+.seoSitemapItemFormContainer .dojoDndContainerOver { background: #CFE5FA; }
