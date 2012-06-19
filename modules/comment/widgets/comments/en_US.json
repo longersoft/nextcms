@@ -1,0 +1,44 @@
+{
+	"_about": {
+		"description": "Show comments of given entity",
+		"title": "Comments"
+	},
+	"_share": {
+		"content": "Content",
+		"contentRequired": "The content is required",
+		"email": "Email",
+		"emailHelp": "The email will not be shown and shared with anyone",
+		"fullName": "Full name",
+		"replyPrefix": "Re: ",
+		"title": "Title",
+		"titleRequired": "The title is required",
+		"website": "Website"
+	},
+	"config": {
+		"basic": "Basic",
+		"entityClass": "Entity's class",
+		"entityClassRequired": "Entity's class is required",
+		"entityId": "Entity's Id",
+		"entityIdDeterminedAutomatically": "Determine entity's Id automatically",
+		"theme": "Theme"
+	},
+	"send": {
+		"error": "Sorry, cannot send the comment",
+		"success": "The comment is sent successfully"
+	},
+	"show": {
+		"authenticationRequired": "You have to <a href='%s'>login</a> to write new comment",
+		"by": "By %s",
+		"cancelAction": "Cancel",
+		"daysAgo": "%s days ago",
+		"daysHoursAgo": "%s days %s hours ago",
+		"hoursAgo": "%s hours ago",
+		"hoursMinutesAgo": "%s hours %s minute ago",
+		"minutesAgo": "%s minutes ago",
+		"minutesSecondsAgo": "%s minutes %s seconds ago",
+		"numComments": "%s comments",
+		"secondsAgo": "%s seconds ago",
+		"sendAction": "Send",
+		"writeComment": "Write a comment"
+	}
+}

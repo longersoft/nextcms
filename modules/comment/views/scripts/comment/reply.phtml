@@ -1,0 +1,132 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('comment.reply.title'));
+?>
+
+<form id="commentCommentReplyForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'comment_comment_reply'); ?>', method: 'POST', class: 'appForm'">
+<div id="commentCommentReplyContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<?php if ($this->comment) : ?>
+		<button id="commentCommentReplySubmitButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/connect" data-dojo-event="onClick" data-dojo-args="e">
+			if (dijit.byId("commentCommentReplyForm").validate()) {
+				dojo.publish("/app/comment/comment/reply/onStart");
+
+				var params = dojo.formToObject("commentCommentReplyForm");
+				params.content = tinyMCE.getInstanceById("commentCommentReplyContentEditor").getContent();
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'comment_comment_reply'); ?>",
+					content: params,
+					handleAs: "json",
+					load: function(data) {
+						dojo.publish("/app/comment/comment/reply/onComplete", [ data ]);
+					}
+				});
+			}
+			</script>
+		</button>
+		<?php endif; ?>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/comment/comment/reply/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- ReplyCommentForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', design: 'sidebar', gutters: false, style: 'height: 100%', class: 'appContentPane'">
+		<?php if (!$this->comment) : ?>
+			<?php echo sprintf($this->translator()->_('comment.reply.notFound'), $this->commentId); ?>
+		<?php else : ?>
+	
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo $this->translator()->_('comment.reply.title'); ?></span>
+		</h2>
+		
+		<div class="appFormRow">
+			<label for="title"><?php echo $this->translator()->_('comment._share.title'); ?>:</label>
+			<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php echo $this->translator(true)->_('comment._share.replyPrefix'); ?><?php echo addslashes($this->comment->title); ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('comment._share.titleRequired'); ?>'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="content"><?php echo $this->translator()->_('comment._share.content'); ?>:</label>
+			<textarea id="commentCommentReplyContentEditor" name="content" style="height: 300px; width: 400px"><?php if ($this->quote) : ?><?php echo $this->escape('<br /><div class="commentCommentQuote"><div class="commentCommentQuoteSentDate">' . sprintf($this->translator()->_('comment._share.sentByOnDate'), $this->comment->full_name, $this->comment->created_date) . '</div><div class="commentCommentQuoteContent">' . $this->comment->content . '</div></div><br />'); ?><?php endif; ?></textarea>
+		</div>
+		
+		<div class="appFormRow">
+			<label for="full_name"><?php echo $this->translator()->_('comment._share.fullName'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'full_name', type: 'text', style: 'width: 200px', value: '<?php echo addslashes($this->user->full_name); ?>'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="web_site"><?php echo $this->translator()->_('comment._share.webSite'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'web_site', type: 'text', style: 'width: 200px', value: '<?php echo addslashes($this->user->website); ?>'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="email"><?php echo $this->translator()->_('comment._share.email'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'email', type: 'text', style: 'width: 200px', value: '<?php echo addslashes($this->user->email); ?>'" />
+		</div>
+		
+		<input type="hidden" name="format" value="json" />
+		<input type="hidden" name="comment_id" value="<?php echo $this->comment->comment_id; ?>" />
+		
+		<?php endif; ?>
+	</div>
+	<!-- /ReplyCommentForm -->
+</div>
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/comment_comment_reply", function() {
+		tinyMCE.init({
+			theme: "advanced",
+			plugins: "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo",
+			theme_advanced_buttons3: "link,unlink,anchor,image,cleanup,code,|,preview,|,forecolor,backcolor",
+			theme_advanced_buttons4: "tablecontrols,ltr,rtl", //",tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+			theme_advanced_toolbar_location: "top",
+			theme_advanced_toolbar_align: "left",
+			mode: "exact",
+			width: "400px",
+			elements: "commentCommentReplyContentEditor",
+			relative_urls: false,
+			content_css: "<?php echo $this->APP_STATIC_URL; ?>/modules/comment/css/admin/default/styles.css",
+			remove_script_host: false
+		});
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

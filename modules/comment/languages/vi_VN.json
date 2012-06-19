@@ -1,0 +1,127 @@
+{
+	"_about": {
+		"description": "Quản lý bình luận",
+		"title": "Bình luận"
+	},
+	"_menu": {
+		"comment": {
+			"list": "Quản lý bình luận"
+		},
+		"config": {
+			"config": "Cấu hình module"
+		}
+	},
+	"_permission": {
+		"comment": {
+			"description": "Quản lý bình luận",
+			"actions": {
+				"activate": "Duyệt/hủy bình luận",
+				"delete": "Xóa bình luận",
+				"edit": "Sửa bình luận",
+				"list": "Xem danh sách bình luận",
+				"reply": "Trả lời bình luận",
+				"spam": "Báo cáo bình luận rác",
+				"view": "Xem các bình luận theo luồng"
+			}
+		},
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Kích hoạt",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"cancelAction": "Hủy",
+			"closeAction": "Đóng",
+			"deactivateAction": "Hủy kích hoạt",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"hideQuoteAction": "Ẩn nội dung trích dẫn",
+			"loadingAction": "Đang tải ...",
+			"refreshAction": "Tải lại",
+			"replyAction": "Trả lời",
+			"replyWithQuoteAction": "Trả lời với trích dẫn",
+			"reportSpamAction": "Báo cáo bình luận rác",
+			"saveAction": "Lưu",
+			"searchAction": "Tìm",
+			"showQuoteAction": "Hiện nội dung trích dẫn",
+			"viewThreadAction": "Xem luồng",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"comment": {
+		"_share": {
+			"content": "Nội dung",
+			"createdDate": "Ngày tạo",
+			"email": "Email",
+			"fullName": "Tên đầy đủ",
+			"id": "Id",
+			"replyPrefix": "Trả lời: ",
+			"sentByOnDate": "Bình luận bởi <b>%s</b> vào <b>%s</b>",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"webSite": "Trang web"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt bình luận",
+			"activateSuccess": "Bình luận đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt bình luận",
+			"deactivateSuccess": "Bình luận đã được hủy kích hoạt thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa bình luận tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa bình luận",
+			"notFound": "Xin lỗi, không tìm thấy bình luận",
+			"success": "Bình luận đã được xóa thành công",
+			"title": "Xóa bình luận"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật bình luận",
+			"notFound": "Xin lỗi, không tìm thấy bình luận có Id là <b>%s</b>",
+			"success": "Bình luận đã được cập nhật thành công",
+			"title": "Cập nhật bình luận"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"notFound": "Không tìm thấy bình luận nào",
+			"searchHelp": "Từ khóa",
+			"showColumns": "Hiển thị các cột:",
+			"status": "Trạng thái",
+			"statusActivated": "Đã kích hoạt",
+			"statusNotActivated": "Chưa kích hoạt",
+			"statusSpam": "Bình luận rác",
+			"title": "Quản lý bình luận",
+			"viewAll": "Xem tất cả"
+		},
+		"reply": {
+			"error": "Xin lỗi, không thể trả lời bình luận",
+			"notFound": "Xin lỗi, không tìm thấy bình luận có Id là <b>%s</b>",
+			"success": "Bình luận đã được trả lời thành công",
+			"title": "Trả lời bình luận"
+		},
+		"spam": {
+			"error": "Xin lỗi, không thể báo cáo bình luận như là bình luận rác",
+			"success": "Bình luận đã được báo cáo như là bình luận rác thành công",
+			"title": "Báo cáo bình luận rác"
+		},
+		"view": {
+			"comments": "Bình luận %s",
+			"notFound": "Không tìm thấy bình luận nào",
+			"title": "Xem luồng bình luận"
+		}
+	},
+	"config": {
+		"config": {
+			"akismetApiKey": "Mã API của dịch vụ Akismet",
+			"authenticationRequired": "Yêu cầu đăng nhập để bình luận",
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"title": "Cấu hình module Bình luận"
+		}
+	}
+}

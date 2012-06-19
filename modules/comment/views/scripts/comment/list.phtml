@@ -1,0 +1,122 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('comment.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/comment/css/admin/default/styles.css");
+</script>
+
+<div id="commentCommentListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, style: 'padding: 0; height: 100%; width: 100%'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'leading', gutters: false, minSize: 150, splitter: true, style: 'height: 100%; padding: 0; width: 15%'">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div class="appTitleBar" style="border-left: none; border-right: none; border-top: none">
+				<?php echo $this->translator()->_('comment.list.status'); ?>
+			</div>
+		</div>
+			
+		<!-- Status -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+			<ul id="commentCommentListStatusContainer" class="commentCommentStatusContainer">
+				<li<?php if (!$this->criteria['status']) : ?> class="commentCommentStatusSelected"<?php endif; ?>>
+					<a data-app-status="" class="commentCommentStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('comment.list.viewAll'); ?></a>
+					<span class="commentCommentStatusCounter"><?php echo $this->commentCounter(array('status' => null)); ?></span>
+				</li>
+				<li class="commentCommentActivated<?php if ($this->criteria['status'] == Comment_Models_Comment::STATUS_ACTIVATED) : ?> commentCommentStatusSelected<?php endif; ?>">
+					<a data-app-status="<?php echo Comment_Models_Comment::STATUS_ACTIVATED; ?>" class="commentCommentStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('comment.list.statusActivated'); ?></a>
+					<span class="commentCommentStatusCounter"><?php echo $this->commentCounter(array('status' => Comment_Models_Comment::STATUS_ACTIVATED)); ?></span>
+				</li>
+				<li class="commentCommentNotActivated<?php if ($this->criteria['status'] == Comment_Models_Comment::STATUS_NOT_ACTIVATED) : ?> commentCommentStatusSelected<?php endif; ?>">
+					<a data-app-status="<?php echo Comment_Models_Comment::STATUS_NOT_ACTIVATED; ?>" class="commentCommentStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('comment.list.statusNotActivated'); ?></a>
+					<span class="commentCommentStatusCounter"><?php echo $this->commentCounter(array('status' => Comment_Models_Comment::STATUS_NOT_ACTIVATED)); ?></span>
+				</li>
+				<li class="commentCommentSpam<?php if ($this->criteria['status'] == Comment_Models_Comment::STATUS_SPAM) : ?> commentCommentStatusSelected<?php endif; ?>">
+					<a data-app-status="<?php echo Comment_Models_Comment::STATUS_SPAM; ?>" class="commentCommentStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('comment.list.statusSpam'); ?></a>
+					<span class="commentCommentStatusCounter"><?php echo $this->commentCounter(array('status' => Comment_Models_Comment::STATUS_SPAM)); ?></span>
+				</li>
+			</ul>
+		</div>
+		<!-- /Status -->
+	</div>
+	<!-- /LeftPane -->
+
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, class: 'appBorderContainer'">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="commentCommentListToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- Comments -->
+		<div id="commentCommentListGridContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		</div>
+		<!-- /Comments -->
+		
+		<!-- Paginator -->
+		<div id="commentCommentListPaginator" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'height: 26px; padding: -8px'">
+		</div>
+		<!-- /Paginator -->
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/comment/languages')->_('comment.list.title'); ?>";
+dojo.registerModulePath("comment", "<?php echo $this->APP_STATIC_URL; ?>/modules/comment");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("comment.js.controllers.CommentController");
+dojo.require("comment.js.views.CommentGrid");
+dojo.require("comment.js.views.CommentStatusListView");
+dojo.require("comment.js.views.CommentToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'comment_comment_activate', 'comment_comment_delete', 'comment_comment_edit', 'comment_comment_list', 'comment_comment_reply',
+					'comment_comment_spam', 'comment_comment_view',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	var commentController = new comment.js.controllers.CommentController("commentCommentListContainer");
+	commentController.setCommentToolbar(new comment.js.views.CommentToolbar("commentCommentListToolbar"))
+					 .setCommentGrid(new comment.js.views.CommentGrid("commentCommentListGridContainer"))
+					 .setCommentPaginator("commentCommentListPaginator")
+					 .setStatusListView(new comment.js.views.CommentStatusListView("commentCommentListStatusContainer"))
+					 .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>)
+					 .searchComments();
+});
+</script>

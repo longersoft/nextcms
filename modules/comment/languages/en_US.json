@@ -1,0 +1,127 @@
+{
+	"_about": {
+		"description": "Manage comments",
+		"title": "Comment"
+	},
+	"_menu": {
+		"comment": {
+			"list": "Manage comments"
+		},
+		"config": {
+			"config": "Configure module"
+		}
+	},
+	"_permission": {
+		"comment": {
+			"description": "Manage comments",
+			"actions": {
+				"activate": "Activate/deactivate comment",
+				"delete": "Delete comment",
+				"edit": "Edit comment",
+				"list": "List comments",
+				"reply": "Reply to a comment",
+				"spam": "Report spam",
+				"view": "View comment thread"
+			}
+		},
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Activate",
+			"allLanguages": "All languages",
+			"cancelAction": "Cancel",
+			"closeAction": "Close",
+			"deactivateAction": "Deactivate",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"hideQuoteAction": "Hide quote content",
+			"loadingAction": "Loading ...",
+			"refreshAction": "Refresh",
+			"replyAction": "Reply",
+			"replyWithQuoteAction": "Reply with quote",
+			"reportSpamAction": "Report spam",
+			"saveAction": "Save",
+			"searchAction": "Search",
+			"showQuoteAction": "Show quote content",
+			"viewThreadAction": "View thread",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"comment": {
+		"_share": {
+			"content": "Content",
+			"createdDate": "Created date",
+			"email": "Email",
+			"fullName": "Full name",
+			"id": "Id",
+			"replyPrefix": "Re: ",
+			"sentByOnDate": "Commented by <b>%s</b> on <b>%s</b>",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"webSite": "Web site"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the comment",
+			"activateSuccess": "The comment is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the comment",
+			"deactivateSuccess": "The comment is deactivated successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the comment titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the comment",
+			"notFound": "Sorry, cannot find the comment",
+			"success": "The comment is deleted successfully",
+			"title": "Delete comment"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the comment",
+			"notFound": "Sorry, cannot find the comment with Id of <b>%s</b>",
+			"success": "The comment is updated successfully",
+			"title": "Edit the comment"
+		},
+		"list": {
+			"error": "Sorry, there is error",
+			"notFound": "Not found any comments",
+			"searchHelp": "Keyword",
+			"showColumns": "Show columns:",
+			"status": "Status",
+			"statusActivated": "Activated",
+			"statusNotActivated": "Not activated",
+			"statusSpam": "Spam",
+			"title": "Manage comments",
+			"viewAll": "View all"
+		},
+		"reply": {
+			"error": "Sorry, cannot reply to the comment",
+			"notFound": "Sorry, cannot find the comment with Id of <b>%s</b>",
+			"success": "The comment is replied successfully",
+			"title": "Reply to the comment"
+		},
+		"spam": {
+			"error": "Sorry, cannot report the comment as spam",
+			"success": "The comment is reported as spam successfully",
+			"title": "Report spam comment"
+		},
+		"view": {
+			"comments": "Comments %s",
+			"notFound": "Not found any comments",
+			"title": "View the comment thread"
+		}
+	},
+	"config": {
+		"config": {
+			"akismetApiKey": "Akismet API key",
+			"authenticationRequired": "Require login to comment",
+			"error": "Sorry, cannot update the module's settings",
+			"success": "The module's settings are updated successfully",
+			"title": "Configure the Comment module"
+		}
+	}
+}

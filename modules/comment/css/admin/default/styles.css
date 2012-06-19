@@ -1,0 +1,51 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-05-11
+ */
+ 
+/********** COMMENTS THREAD **********/
+/* Comment */
+.commentCommentQuoteContent { border-left: 1px solid #B5BCC7; padding-left: 8px !important; }
+.commentCommentToggleQuote { color: #B5BCC7; cursor: pointer; padding: 4px 0 !important; }
+.commentCommentToggleQuote:before, .commentCommentToggleQuote:after { content: "---"; }
+
+/* Override Dijit TitlePane */
+.commentCommentItemPane { margin-bottom: 8px; }
+.commentCommentItemPane .dijitTitlePaneContentInner { padding: 0px; }
+.commentCommentItem { padding: 8px; position: relative; }
+.commentCommentItemActivated { background-image: url(images/activate.png); background-position: 99% 8px; background-repeat: no-repeat; }
+.commentCommentItemSpam { background-image: url(images/spam.png); background-position: 99% 8px; background-repeat: no-repeat; }
+.commentCommentItemNotActivated { background-image: url(images/deactivate.png); background-position: 99% 8px; background-repeat: no-repeat; }
+.commentCommentItemMine { background-color: #CEE6FA; }
+.commentCommentItemAvatar { left: 8px; position: absolute; top: 8px; }
+.commentCommentItemAvatar img { height: 48px; width: 48px; }
+.commentCommentItemContent { margin-left: 56px; min-height: 50px; padding-right: 8px; }
+.commentCommentItemContent * { margin: 0; padding: 0; }
+
+/* Counter */
+.commentCommentViewCounter:before { content: "("; }
+.commentCommentViewCounter:after { content: ")"; }
+
+/* Icons */
+.commentQuoteIcon { background-image: url(images/quote.png); }
+
+/********** STATUS FILTER **********/
+.commentCommentStatusContainer { margin: 0; padding: 8px; }
+.commentCommentStatusContainer li { clear: both; cursor: pointer; display: block; height: 25px; list-style-type: none; }
+.commentCommentActivated { background: url(images/activate.png) center left no-repeat; padding: 0 0 0 20px; }
+.commentCommentNotActivated { background: url(images/deactivate.png) center left no-repeat; padding: 0 0 0 20px; }
+.commentCommentSpam { background: url(images/spam.png) center left no-repeat; padding: 0 0 0 20px; }
+.commentCommentStatusContainer .commentCommentStatusLabel { background-color: #fff; color: blue; }
+.commentCommentStatusSelected .commentCommentStatusLabel { background-color: #769DC0; color: #FFF; }
+.commentCommentStatusLabel { float: left; padding: 4px; text-decoration: none; }
+.commentCommentStatusLabel:hover { background-color: #B5C9D7; color: #FFF; }
+.commentCommentStatusCounter { background: #CFE5FA; border-radius: 2px; float: right; padding: 2px; -moz-border-radius: 2px; }

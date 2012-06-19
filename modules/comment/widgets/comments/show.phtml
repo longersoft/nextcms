@@ -1,0 +1,142 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-05-23
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="commentWidgetsComments">
+	<!-- Comments -->
+	<?php if ($this->total > 0) : ?>
+	<h4><?php echo sprintf($this->translator()->_('show.numComments'), $this->total); ?></h4>
+	
+	<div class="comments" id="<?php echo $this->container; ?>">
+		<?php echo $this->render('show.ajax.phtml'); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Comments -->
+
+	<!-- NewCommentForm -->
+	<?php if ($this->entityId && $this->entityClass) : ?>
+	<form method="post" action="" id="commentWidgetsCommentsForm">
+		<h5><?php echo $this->translator()->setLanguageDir('/modules/comment/widgets/comments')->_('show.writeComment'); ?></h5>
+		
+		<?php if ('true' == $this->config('comment', 'auth_required', 'false') && !Zend_Auth::getInstance()->hasIdentity()) : ?>
+			<p><?php echo sprintf($this->translator()->_('show.authenticationRequired'), $this->url(array(), 'core_auth_login')); ?></p>
+		<?php else : ?>
+			<p><input type="text" name="full_name" data-app-value="<?php echo $this->translator(true)->_('_share.fullName'); ?>" /></p>
+			<p><input type="text" name="email" data-app-value="<?php echo $this->translator(true)->_('_share.email'); ?>" /> <span><?php echo $this->translator(true)->_('_share.emailHelp'); ?></span></p>
+			<p><input type="text" name="web_site" data-app-value="<?php echo $this->translator(true)->_('_share.website'); ?>" /></p>
+			<p><input type="text" name="title" data-app-value="<?php echo $this->translator(true)->_('_share.title'); ?>" /> <span><?php echo $this->translator(true)->_('_share.titleRequired'); ?></span></p>
+			<p>
+				<textarea name="content" data-app-value="<?php echo $this->translator(true)->_('_share.content'); ?>"></textarea><br /> 
+				<span><?php echo $this->translator(true)->_('_share.contentRequired'); ?></span>
+			</p>
+			<button type="button" class="cancelButton"><?php echo $this->translator()->_('show.cancelAction'); ?></button>
+			<button type="button" class="sendButton"><?php echo $this->translator()->_('show.sendAction'); ?></button>
+			<input type="hidden" name="entity_id" value="<?php echo $this->entityId; ?>" />
+			<input type="hidden" name="entity_class" value="<?php echo $this->entityClass; ?>" />
+			<input type="hidden" name="reply_to" />
+		<?php endif; ?>
+	</form>
+	<?php endif; ?>
+	<!-- /NewCommentForm -->
+</div>
+
+<?php $this->script()->captureStartOnce('commentWidgetsComment'); ?>
+dojo.require("core.js.base.Encoder");
+dojo.provide("comment.widgets.comments");
+comment.widgets.comments.load = function(/*String*/ id, /*Int*/ page, /*String*/ entityId, /*String*/ entityClass) {
+	// summary:
+	//		Loads comments in given page
+	$.post("<?php echo $this->url(array(), 'core_widget_render'); ?>", {
+		"_mod": "comment",
+		"_name": "comments",
+		"_method": "show",
+		container: id,
+		format: "ajax",
+		page: page,
+		entity_id: entityId,
+		entity_class: entityClass
+	}, function(data) {
+		$('#' + id).html(data);
+	});
+};
+
+$(document).ready(function() {
+	// Reply a comment
+	$(document).on("click", ".commentWidgetsComments .replyButton", function() {
+		var props   = core.js.base.Encoder.decode($(this).attr("data-app-entity-props"));
+		var form	= $(this).parents(".commentWidgetsComments").find("form").eq(0);
+		$(form).find("input[name='title']").val("<?php echo $this->translator()->_('_share.replyPrefix'); ?>" + props.title);
+		$(form).find("input[name='reply_to']").val(props.comment_id);
+	});
+
+	$(".commentWidgetsComments form input[type='text'], .commentWidgetsComments form textarea").each(function() {
+		var defaultValue = $(this).attr("data-app-value");
+		if (defaultValue) {
+			$(this).val(defaultValue);
+		}
+		$(this).click(function() {
+			if ($(this).val() == defaultValue) {
+				$(this).val("");
+			}
+		}).blur(function() {
+			if ($(this).val() == "") {
+				// $(this).val(defaultValue);
+			}
+		});
+	});
+	
+	$(".commentWidgetsComments form .sendButton").click(function() {
+		var data = {
+			"_mod": "comment",
+			"_name": "comments",
+			"_method": "send",
+			"_format": "json",
+			"noRenderScript": true	
+		};
+		var form = $(this).parents("form");
+		var a	 = $(form).serializeArray();
+		for (var i in a) {
+			data[a[i]["name"]] = a[i]["value"];
+		}
+		var button = this;
+		$(button).attr("disabled", true);
+		$.post("<?php echo $this->url(array(), 'core_widget_render'); ?>", data, function(data) {
+			$(button).attr("disabled", false);
+			// Reset the title and content fields
+			$(form).find("input[name='title']").val("");
+			$(form).find("textarea[name='content']").val("");
+			
+			dojo.publish("/app/global/notification", [{
+				message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator(true)->_('send.success'); ?>" : "<?php echo $this->translator(true)->_('send.error'); ?>",
+				type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+			}]);
+		});
+	});
+	
+	$(".commentWidgetsComments form .cancelButton").click(function() {
+		var form = $(this).parents("form");
+		$(form).find("input[name='reply_to']").val("");
+		
+		$(form).find("input[type='text'], textarea").each(function() {
+			var defaultValue = $(this).attr("data-app-value");
+			if (defaultValue) {
+				$(this).val(defaultValue);
+			}
+		});
+	});
+});
+<?php $this->script()->captureEndOnce('commentWidgetsComment'); ?>

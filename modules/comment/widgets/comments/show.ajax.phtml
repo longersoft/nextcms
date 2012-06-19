@@ -1,0 +1,68 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->comments) : ?>
+<ul>
+	<?php foreach ($this->comments as $comment) : ?>
+	<li <?php if ($comment->depth > 0) : ?>class="reply"<?php endif; ?> style="margin-left: <?php echo $comment->depth * 50; ?>px">
+		<?php if ($comment->depth > 0) : ?>
+		<div class="t">
+			<div class="b">
+				<div class="lt">
+					<div class="rt">
+						<div class="lb">
+							<div class="rb">
+								<div class="inner">
+		<?php endif; ?>
+	
+		<p class="avatar"><?php echo $this->gravatar($comment->email, array('img_size' => 80)); ?></p>
+		<div class="summary">
+			<p class="meta"><a href="<?php if ($comment->web_site) : ?><?php echo $comment->web_site; ?><?php endif; ?>"><?php echo sprintf($this->translator()->setLanguageDir('/modules/comment/widgets/comments')->_('show.by'), $comment->full_name); ?></a> <?php echo $this->dateFormatter()->diff(strtotime($comment->activated_date), $this->timeDiffFormats); ?></p>
+			<div class="content">
+				<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Comment_FilterCommentContent', $comment->content); ?>
+			</div>
+		</div>
+		
+		<?php
+		echo $this->widget('vote', 'vote', array(
+												'params' => array(
+													'entity_id'	   => $comment->getId(),
+													'entity_class' => get_class($comment),
+													'num_ups'	   => $comment->num_ups,
+													'num_downs'	   => $comment->num_downs,
+												),
+											));
+		?>
+		
+		<?php if ($comment->depth > 0) : ?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+		
+		<a href="#commentWidgetsCommentsForm" class="replyButton" data-app-entity-props="<?php echo $this->encoder()->encode($comment, array('comment_id', 'title')); ?>"></a>
+	</li>
+	<?php endforeach; ?>
+</ul>
+
+<?php echo $this->paginator('sliding')->render($this->paginator, "javascript: comment.widgets.comments.load('" . $this->container . "', __PAGE__, '" . $this->entityId . "', '" . $this->entityClass . "');"); ?>
+<?php endif; ?>

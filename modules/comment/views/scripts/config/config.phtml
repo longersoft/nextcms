@@ -1,0 +1,87 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('config.config.title'));
+?>
+
+<div id="commentConfigConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			if (dijit.byId("commentConfigConfigForm").validate()) {
+				dijit.byId("commentConfigConfigStandby").show();
+				_this.set("disabled", true);
+
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'comment_config_config'); ?>",
+					content: dojo.formToObject("commentConfigConfigForm"),
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dijit.byId("commentConfigConfigStandby").hide();
+						dojo.publish("/app/global/notification", [{
+							message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('config.config.success'); ?>" : "<?php echo $this->translator()->_('config.config.error'); ?>",
+							type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+						}]);
+					}
+				});
+			}
+			</script>
+		</button>
+	</div>
+	<!-- Toolbar -->
+	
+	<!-- ConfigForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'" class="appContentPane">
+		<form id="commentConfigConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.title'); ?></span></h2>
+			
+			<div class="appFormRow">
+				<label for="auth_required">&nbsp;</label>
+				<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'auth_required', checked: <?php if ($this->config('comment', 'auth_required', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('config.config.authenticationRequired'); ?>
+			</div>
+			
+			<div class="appFormRow">
+				<label for="akismet_api_key"><?php echo $this->translator()->_('config.config.akismetApiKey'); ?>:</label>
+				<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'akismet_api_key', style: 'height: 100px; width: 300px'"><?php if ($this->akismetApiKey) : ?><?php echo $this->akismetApiKey; ?><?php endif; ?></textarea>
+			</div>
+			
+			<input type="hidden" name="format" value="json" />
+		</form>
+	</div>
+	<!-- /ConfigForm -->
+</div>
+
+<div id="commentConfigConfigStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'commentConfigConfigContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/comment/languages')->_('config.config.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+</script>

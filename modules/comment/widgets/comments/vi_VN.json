@@ -1,0 +1,44 @@
+{
+	"_about": {
+		"description": "Hiển thị bình luận của một đối tượng nào đó",
+		"title": "Bình luận"
+	},
+	"_share": {
+		"content": "Nội dung",
+		"contentRequired": "Nội dung là bắt buộc",
+		"email": "Email",
+		"emailHelp": "Địa chỉ email sẽ không được hiển thị và chia sẻ với bất kỳ ai",
+		"fullName": "Tên đầy đủ",
+		"replyPrefix": "Trả lời: ",
+		"title": "Tiêu đề",
+		"titleRequired": "Tiêu đề là bắt buộc",
+		"webSite": "Trang web"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"entityClass": "Lớp đối tượng",
+		"entityClassRequired": "Lớp đối tượng là bắt buộc",
+		"entityId": "Id đối tượng",
+		"entityIdDeterminedAutomatically": "Tự động xác định Id của đối tượng",
+		"theme": "Mẫu giao diện"
+	},
+	"send": {
+		"error": "Xin lỗi, không thể gửi bình luận",
+		"success": "Bình luận đã được gửi đi thành công"
+	},
+	"show": {
+		"authenticationRequired": "Bạn phải <a href='%s'>đăng nhập</a> mới có thể gửi bình luận",
+		"by": "Bởi %s",
+		"cancelAction": "Hủy",
+		"daysAgo": "%s ngày trước",
+		"daysHoursAgo": "%s ngày %s giờ trước",
+		"hoursAgo": "%s giờ trước",
+		"hoursMinutesAgo": "%s giờ %s phút trước",
+		"minutesAgo": "%s phút trước",
+		"minutesSecondsAgo": "%s phút %s giây trước",
+		"numComments": "%s bình luận",
+		"secondsAgo": "%s giây trước",
+		"sendAction": "Gửi",
+		"writeComment": "Viết bình luận"
+	}
+}

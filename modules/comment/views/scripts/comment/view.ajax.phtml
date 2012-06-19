@@ -1,0 +1,81 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		comment
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-10
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('comment.view.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Comments -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('comment.view.comments'), '<span class="commentCommentViewCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+		
+		<?php if ($this->total == 0) : ?>
+			<?php echo $this->translator()->_('comment.view.notFound'); ?>
+		<?php else : ?>
+			<div class="commentCommentItemsContainer">
+			<?php foreach ($this->comments as $comment) : ?>
+				<div data-dojo-type="dijit.TitlePane" data-dojo-props="title: '<?php echo addslashes($comment->title); ?>', class: 'commentCommentItemPane', style: 'margin-left: <?php echo $comment->depth * 40; ?>px'">
+					<div id="commentCommentItem_<?php echo $comment->comment_id; ?>" class="commentCommentItem<?php if (Zend_Auth::getInstance()->getIdentity()->user_id == $comment->created_user) : ?> commentCommentItemMine<?php endif; ?>"
+						data-app-entity-props="<?php echo $this->encoder()->encode($comment, array('comment_id', 'status')); ?>">
+						<div class="commentCommentItemAvatar">
+							<?php echo $this->commentAvatar($comment); ?>
+						</div>
+						
+						<div class="commentCommentItemContent">
+							<div style="padding-bottom: 8px"><?php echo sprintf($this->translator()->_('comment._share.sentByOnDate'), $comment->full_name, $comment->created_date); ?>:</div>
+							<?php echo $comment->content; ?>
+						</div>
+						
+					</div>
+				</div>
+			<?php endforeach; ?>
+			</div>
+		
+		<?php endif; ?>
+	</div>
+	<!-- /Comments -->
+	
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/comment/comment/view/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.TitlePane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.window");
+dojo.require("dojox.fx");
+
+dojo.addOnLoad(function() {
+	// FIXME: How to scroll to the comment item
+	dojo.window.scrollIntoView("commentCommentItem_<?php echo $this->criteria['comment_id']; ?>");
+	dojox.fx.highlight({
+		node: "commentCommentItem_<?php echo $this->criteria['comment_id']; ?>",
+		duration: 5000
+	}).play();
+});
+</script>
