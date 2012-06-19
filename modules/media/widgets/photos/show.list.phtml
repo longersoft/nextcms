@@ -1,0 +1,40 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-14
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numPhotos > 0) : ?>
+<div class="mediaWidgetsPhotosList">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<ul>
+		<?php foreach ($this->photos as $photo) : ?>
+		<li>
+			<p>
+				<a href="<?php echo $this->url($photo->getProperties(), 'media_photo_view'); ?>" title="<?php echo addslashes($photo->title); ?>"><img src="<?php echo $photo->getThumbnail('small'); ?>" title="<?php echo addslashes($photo->title); ?>" /></a>
+			</p>
+			<div>
+				<h3><a href="<?php echo $this->url($photo->getProperties(), 'media_photo_view'); ?>"><?php echo $photo->title; ?></a></h3>
+				<span>
+					<?php echo sprintf($this->translator()->_('show.by'), $photo->getAuthor()); ?><br />
+					<?php echo sprintf($this->translator()->_('show.numComments'), $photo->num_comments); ?>
+				</span>
+			</div>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

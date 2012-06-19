@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Show a search box",
+		"title": "Search Box"
+	},
+	"config": {
+		"basic": "Basic",
+		"searchFor": "Search for",
+		"searchForPhoto": "Photo",
+		"searchForVideo": "Video",
+		"theme": "Theme"
+	},
+	"show": {
+		"keyword": "Keyword",
+		"searchAction": "Search"
+	}
+}

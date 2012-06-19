@@ -1,0 +1,387 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if (!$this->accessor()->route('file_file_upload')) : ?>
+
+<div id="mediaHooksEditorContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', title: '<?php echo $this->translator(true)->_('show.title'); ?>'">
+	<div class="appContentPane"><?php echo $this->translator()->_('show.notAllowed'); ?></div>
+</div>
+
+<?php else : ?>
+<!-- Uploader -->
+<div id="mediaHooksEditorContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: true, title: '<?php echo $this->translator(true)->_('show.uploadTab'); ?>', class: 'appContentPane'">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'border: none'">
+		<form data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'file_file_upload'); ?>', method: 'POST', encType: 'multipart/form-data', class: 'appForm'">
+			<div style="padding-bottom: 8px">
+				<span id="mediaHooksEditorGenerateThumb" data-dojo-type="dijit.form.CheckBox">
+					<script type="dojo/method" data-dojo-event="onChange">
+					var uploader = dijit.byId("mediaHooksEditorUploader");
+					var params = {
+						mod: uploader.get("_module"),
+						thumbnail: this.get("checked") ? "true" : "false",
+						watermark: dijit.byId("mediaHooksEditorAddWatermark").get("checked") ? "true" : "false"
+					};
+					uploader.set("url", uploader.get("_url") + "&" + dojo.objectToQuery(params));
+					</script>
+				</span>
+				<span><?php echo $this->translator()->_('show.generateThumbnails'); ?></span>
+			</div>
+			
+			<div style="padding-bottom: 8px">
+				<span id="mediaHooksEditorAddWatermark" data-dojo-type="dijit.form.CheckBox" data-dojo-props="disabled: <?php if (($options = $this->config('file', 'watermark')) && ($options = Zend_Json::decode($options)) && ($options['using'] != 'none')) : ?>false<?php else: ?>true<?php endif; ?>">
+					<script type="dojo/method">
+					dojo.subscribe("/app/file/config/config/onSetWatermark", this, function(data) {
+						// Disable or enable the "Add watermark" option based on the file module's settings
+						this.set("disabled", data == "none");
+					});
+					</script>
+					<script type="dojo/method" data-dojo-event="onChange">
+					var uploader = dijit.byId("mediaHooksEditorUploader");
+					var params = {
+						mod: uploader.get("_module"),
+						thumbnail: dijit.byId("mediaHooksEditorGenerateThumb").get("checked") ? "true" : "false",
+						watermark: this.get("checked") ? "true" : "false"
+					};
+					uploader.set("url", uploader.get("_url") + "&" + dojo.objectToQuery(params));
+					</script>
+				</span>
+				<span><?php echo $this->translator()->_('show.addWatermark'); ?></span>
+			</div>
+			
+			<div id="mediaHooksEditorUploader" data-dojo-type="dojox.form.Uploader" data-dojo-props="name: 'uploadedfiles', multiple: true, type: 'file', uploadOnSelect: true, label: '<?php echo $this->translator(true)->_('show.browseFilesAction'); ?>', url: '<?php echo $this->url(array(), 'file_file_upload'); ?>?PHPSESSID=<?php echo Zend_Session::getId(); ?>&mod=<?php echo $this->module; ?>&thumbnail=false', _url: '<?php echo $this->url(array(), 'file_file_upload'); ?>?PHPSESSID=<?php echo Zend_Session::getId(); ?>', _module: '<?php echo $this->module; ?>', style: 'width: 200px'">
+				<script type="dojo/method" data-dojo-event="onBegin" data-dojo-args="dataArray">
+				this.set("disabled", true);
+				</script>
+			</div>
+		</form>
+	</div>
+	
+	<div id="mediaHooksEditorImagesContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'mediaHooksEditorImagesContainer'">
+	</div>
+</div>
+<!-- /Uploader -->
+
+<!-- Editor -->
+<div id="mediaHooksEditorEditContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.editTab'); ?>'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('show.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/media/hooks/editor/onSave");
+			</script>
+		</button>
+		
+		<div data-dojo-type="dijit.ToolbarSeparator"></div>
+		
+		<!-- UndoRedo -->
+		<button id="mediaHooksEditorUndoButton" type="button" disabled="disabled">
+			<?php echo $this->translator()->_('show.undoAction'); ?>
+		</button>
+		
+		<button id="mediaHooksEditorRedoButton" type="button" disabled="disabled">
+			<?php echo $this->translator()->_('show.redoAction'); ?>
+		</button>
+		<!-- /UndoRedo -->
+		
+		<!-- ResizeDialog -->
+		<div data-dojo-type="dijit.form.DropDownButton" data-dojo-props="showLabel: false, iconClass: 'appIcon mediaPhotoResizeIcon'">
+			<span><?php echo $this->translator()->_('show.resizeAction'); ?></span>
+			<div id="mediaHooksEditorResizeDialog" data-dojo-type="dijit.TooltipDialog" data-dojo-props="style: 'width: 250px', class: 'appForm'">
+				<div class="appFormRow">
+					<label for="by" style="width: 50px"><?php echo $this->translator()->_('show.resizeBy'); ?>:</label>
+					<div data-dojo-type="dijit.form.RadioButton" data-dojo-props="type: 'radio', name: 'resizeBy', value: 'percentage', checked: true">
+						<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+						dojo.publish("/app/media/hooks/editor/onSetResizeBy", [ "percentage" ]);
+						</script>
+					</div>
+					<?php echo $this->translator()->_('show.resizeByPercentage'); ?>
+					
+					<div data-dojo-type="dijit.form.RadioButton" data-dojo-props="type: 'radio', name: 'resizeBy', value: 'pixels'">
+						<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+						dojo.publish("/app/media/hooks/editor/onSetResizeBy", [ "pixels" ]);
+						</script>
+					</div>
+					<?php echo $this->translator()->_('show.resizeByPixels'); ?>
+				</div>
+			
+				<div class="appFormRow">
+					<label for="width" style="width: 50px"><?php echo $this->translator()->_('show.width'); ?>:</label>
+					<div id="mediaHooksEditorResizeWidth" data-dojo-type="dijit.form.TextBox" data-dojo-props="value: 100, intermediateChanges: true, style: 'width: 50px'">
+						<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.publish("/app/media/hooks/editor/onSetResizeWidth", [ value ]);
+						</script>
+					</div>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="width" style="width: 50px"><?php echo $this->translator()->_('show.height'); ?>:</label>
+					<div id="mediaHooksEditorResizeHeight" data-dojo-type="dijit.form.TextBox" data-dojo-props="value: 100, intermediateChanges: true, style: 'width: 50px'">
+						<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.publish("/app/media/hooks/editor/onSetResizeHeight", [ value ]);
+						</script>
+					</div>
+				</div>
+				
+				<div class="appFormRow">
+					<label style="width: 50px">&nbsp;</label>
+					<div data-dojo-type="dijit.form.CheckBox" data-dojo-props="type: 'checkBox', checked: true">
+						<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="value">
+						dojo.publish("/app/media/hooks/editor/onSetMaintainRatio", [ value ]);
+						</script>
+					</div>
+					<?php echo $this->translator()->_('show.maintainAspectRatio'); ?>
+				</div>
+				
+				<hr class="appSeparator" />
+				
+				<div class="appFormRow">
+					<label style="width: 50px">&nbsp;</label>
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+						<?php echo $this->translator()->_('show.resizeAction'); ?>
+						<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+						dojo.publish("/app/media/hooks/editor/onResize");
+						</script>
+					</button>
+					
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+						<?php echo $this->translator()->_('show.cancelAction'); ?>
+						<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+						dojo.style("mediaHooksEditorResizeDialog", "display", "none");
+						</script>
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- /ResizeDialog -->
+		
+		<!-- RotateAndFlip -->
+		<div data-dojo-type="dijit.form.DropDownButton" data-dojo-props="showLabel: false, iconClass: 'appIcon mediaPhotoRotateLeftIcon'">
+			<span><?php echo $this->translator()->_('show.rotateAction'); ?></span>
+			
+			<div data-dojo-type="dijit.Menu" style="display: none">
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon mediaPhotoRotateLeftIcon'">
+					<?php echo $this->translator()->_('show.rotateLeftAction'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					dojo.publish("/app/media/hooks/editor/onRotate", [ 90 ]);
+					</script>
+				</div>
+				
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon mediaPhotoRotateRightIcon'">
+					<?php echo $this->translator()->_('show.rotateRightAction'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					dojo.publish("/app/media/hooks/editor/onRotate", [ -90 ]);
+					</script>
+				</div>
+				
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon mediaPhotoFlipHorizontalIcon'">
+					<?php echo $this->translator()->_('show.flipHorizontalAction'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					dojo.publish("/app/media/hooks/editor/onFlip", [ "horizontal" ]);
+					</script>
+				</div>
+				
+				<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon mediaPhotoFlipVerticalIcon'">
+					<?php echo $this->translator()->_('show.flipVerticalAction'); ?>
+					<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					dojo.publish("/app/media/hooks/editor/onFlip", [ "vertical" ]);
+					</script>
+				</div>
+			</div>
+		</div>
+		<!-- /RotateAndFlip -->
+		
+		<!-- Crop -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon mediaPhotoCropIcon'">
+			<?php echo $this->translator()->_('show.cropAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/media/hooks/editor/onCrop");
+			</script>
+		</button>
+		<!-- /Crop -->
+	</div>
+	<!-- /Toolbar -->
+
+	<!-- ImageEditor -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<div id="mediaHooksEditorEditorContainer" class="appBorderContainer" style="height: 100%; margin-top: -2px; overflow: auto; position: relative">
+		</div>
+	</div>
+	<!-- /ImageEditor -->
+</div>
+<!-- /Editor -->
+
+<?php $this->script()->captureStart(); ?>
+/* media.hooks.editor */
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.DropDownButton");
+dojo.require("dijit.form.RadioButton");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dijit.ToolbarSeparator");
+dojo.require("dijit.TooltipDialog");
+dojo.require("dojox.form.Uploader");
+dojo.require("dojox.form.uploader.plugins.Flash");
+
+dojo.registerModulePath("media", "<?php echo $this->APP_STATIC_URL; ?>/modules/media");
+dojo.require("core.js.Constant");
+dojo.require("media.js.controllers.PhotoEditor");
+dojo.require("media.js.controllers.PhotoEditorMediator");
+dojo.require("media.hooks.editor.ImageListView");
+
+dojo.addOnLoad(function() {
+	// Update the uploader endpoint when loading a back-end URL
+	dojo.subscribe("/app/global/onHashChange", function(hash) {
+		var obj = dojo.queryToObject(hash);
+		if (!obj.u) {
+			return;
+		}
+		var url = obj.u;
+		var prefixUrl = "<?php echo $this->backendUrl(); ?>";
+		if (url.substr(0, prefixUrl.length) == prefixUrl) {
+			url = url.substr(prefixUrl.length);
+			// Now, url is in the format of /module/controller/action/query
+			if (url.length > 0 && url[0] == "/") {
+				url = url.substr(1);
+			}
+			var pos = url.indexOf("/");
+			var module = (pos == -1) ? url : url.substr(0, pos); 
+
+			var uploader = dijit.byId("mediaHooksEditorUploader");
+			uploader.set("_module", module);
+			uploader.set("url", uploader.get("_url") + "&mod=" + uploader.get("_module") + "&thumbnail=" + (dijit.byId("mediaHooksEditorGenerateThumb").checked ? "true" : "false"));
+		}
+	});
+	
+	// Create image list view
+	var imageListView = new media.hooks.editor.ImageListView("mediaHooksEditorImagesContainer");
+	
+	var mediaHooksEditor = new media.js.controllers.PhotoEditor("mediaHooksEditorEditorContainer");
+	mediaHooksEditor.setEditUrl("<?php echo $this->url(array(), 'media_photo_edit'); ?>" + "?size=original")
+					.setTopics({
+						onSaved: "/app/media/hooks/editor/onSaved",
+						onCleaned: "/app/media/hooks/editor/onCleaned"
+					});
+
+	// Upload handler
+	dojo.connect(dijit.byId("mediaHooksEditorUploader"), "onComplete", function(dataArray) {
+		dijit.byId("mediaHooksEditorUploader").set("disabled", false);
+		dojo.forEach(dataArray, function(file) {
+			imageListView.addImageItem(file);
+		});
+	});
+
+	// Load the image in the editor pane when clicking on the context menu
+	dojo.connect(imageListView, "onEditSize", function(path) {
+		var url = core.js.Constant.ROOT_URL + path;
+		mediaHooksEditor.setOriginalImage(path, url);
+		
+		// Add image node
+		var imageNodes = dojo.query("img", "mediaHooksEditorEditorContainer");
+		if (imageNodes.length == 0) {
+			var img = dojo.create("img", {
+				src: url
+			}, "mediaHooksEditorEditorContainer");
+			mediaHooksEditor.setImageNode(img);
+		} else {
+			dojo.attr(imageNodes[0], "src", url);
+		}
+
+		// Select the edit tab
+		var editTab = dijit.byId("mediaHooksEditorEditContainer");
+		editTab.getParent().selectChild(editTab);
+	});
+
+	var mediaHooksEditorMediator = new media.js.controllers.PhotoEditorMediator();
+	mediaHooksEditorMediator.setUndoButton(new dijit.form.Button({
+		showLabel: false,
+		disabled: false,
+		iconClass: "appIcon appUndoDisabledIcon",
+		onClick: function() {
+			mediaHooksEditor.undo();
+		}
+	}, "mediaHooksEditorUndoButton"));
+	mediaHooksEditorMediator.setRedoButton(new dijit.form.Button({
+		showLabel: false,
+		disabled: true,
+		iconClass: "appIcon appRedoDisabledIcon",
+		onClick: function() {
+			mediaHooksEditor.redo();
+		}
+	}, "mediaHooksEditorRedoButton"));
+	mediaHooksEditor.setEditorMediator(mediaHooksEditorMediator);
+
+	// Save handler
+	dojo.subscribe("/app/media/hooks/editor/onSave", mediaHooksEditor, function() {
+		mediaHooksEditor.save();
+	});
+	dojo.subscribe("/app/media/hooks/editor/onSaved", function(data) {
+		dojo.publish("/app/global/notification", [{ message: "<?php echo $this->translator()->_('show.saveSuccess'); ?>" }]);
+		imageListView.updateImage(data.size, data.path);
+	});
+
+	dojo.subscribe("/app/media/hooks/editor/onClose", mediaHooksEditor, function() {
+		mediaHooksEditor.clean();
+	});
+
+	// Processing handler
+	dojo.subscribe("/app/media/hooks/editor/onRotate", mediaHooksEditor, function(angle) {
+		mediaHooksEditor.rotate(angle);
+	});
+	dojo.subscribe("/app/media/hooks/editor/onFlip", mediaHooksEditor, function(direction) {
+		mediaHooksEditor.flip(direction);
+	});
+	dojo.subscribe("/app/media/hooks/editor/onCrop", mediaHooksEditor, function() {
+		mediaHooksEditor.toggleCropper();
+	});
+	dojo.subscribe("/app/media/hooks/editor/onZoom", mediaHooksEditor, function(numOfPercents) {
+		mediaHooksEditor.zoom(numOfPercents);
+	});
+
+	// Resize handler
+	dojo.subscribe("/app/media/hooks/editor/onSetResizeBy", mediaHooksEditor, function(resizeBy) {
+		mediaHooksEditor.setResizeBy(resizeBy);
+	});
+	dojo.subscribe("/app/media/hooks/editor/onSetResizeWidth", mediaHooksEditor, function(width) {
+		mediaHooksEditor.setResizeWidth(width);
+		if (mediaHooksEditor.isMaintainRatio()) {
+			dijit.byId("mediaHooksEditorResizeHeight").set("value", mediaHooksEditor.getResizeBy() == "percentage" ? width : mediaHooksEditor.getResizeHeight());
+		}
+	});
+	dojo.subscribe("/app/media/hooks/editor/onSetResizeHeight", mediaHooksEditor, function(height) {
+		mediaHooksEditor.setResizeHeight(height);
+		if (mediaHooksEditor.isMaintainRatio()) {
+			dijit.byId("mediaHooksEditorResizeWidth").set("value", mediaHooksEditor.getResizeBy() == "percentage" ? height : mediaHooksEditor.getResizeWidth());
+		}
+	});
+	dojo.subscribe("/app/media/hooks/editor/onSetMaintainRatio", mediaHooksEditor, function(checked) {
+		mediaHooksEditor.setMaintainRatio(checked == "on");
+	});
+	dojo.subscribe("/app/media/hooks/editor/onResize", mediaHooksEditor, function() {
+		dojo.style("mediaHooksEditorResizeDialog", "display", "none");
+		mediaHooksEditor.resize();
+	});	
+});
+<?php $this->script()->captureEnd(); ?>
+
+<?php endif; ?>

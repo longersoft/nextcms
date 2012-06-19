@@ -1,0 +1,49 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-05-01
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numVideos > 0) : ?>
+<div class="mediaWidgetsVideosAccordion">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<?php foreach ($this->videos as $index => $video) : ?>
+	<h3><span><b><?php echo $video->duration; ?></b><a><?php echo $video->title; ?></a></span></h3>
+	<div class="content" style="display: <?php if ($index == 0) : ?>block<?php else : ?>none<?php endif; ?>">
+		<p data-app-frame="<?php echo $this->url(array(), 'core_helper_play') . '?src=' . $video->getVideoUrl() . '&poster=' . $video->getPoster('crop'); ?>"></p>
+		<span>
+			<?php echo sprintf($this->translator()->_('show.by'), $video->getAuthor()); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numViews'), $video->num_views); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $video->num_comments); ?>
+		</span>
+	</div>
+	<?php endforeach; ?>
+</div>
+
+<?php $this->script()->captureStartOnce('mediaWidgetsVideosAccordion'); ?>
+$(document).ready(function() {
+	$(".mediaWidgetsVideosAccordion h3").click(function() {
+		$(".mediaWidgetsVideosAccordion .content").slideUp("normal");
+		
+		var p = $(this).next().find("p").eq(0);
+		if ($(p).find("iframe").length == 0) {
+			// Optimize page loading: Only load the iframe when user click on the title
+			$(p).html('<iframe src="' + $(p).attr("data-app-frame") + '"></iframe>');
+		}
+		$(p).parent().slideDown("normal");
+	});
+	$(".mediaWidgetsVideosAccordion h3:first").click();
+});
+<?php $this->script()->captureEndOnce('mediaWidgetsVideosAccordion'); ?>
+<?php endif; ?>

@@ -1,0 +1,30 @@
+{
+	"_about": {
+		"description": "Show videos",
+		"title": "Videos"
+	},
+	"config": {
+		"basic": "Basic",
+		"dataSource": "Data source",
+		"dragDropHelp": "Drag and drop videos here",
+		"keyword": "Keyword",
+		"language": "Language",
+		"latestVideos": "Latest videos",
+		"mostCommentedVideos": "Most commented videos",
+		"mostViewedVideos": "Most viewed videos",
+		"numberOfVideos": "The number of videos",
+		"playlist": "Playlist",
+		"playlistDeterminedAutomatically": "Determined automatically",
+		"removeAction": "Remove",
+		"selectPlaylist": "Select playlist",
+		"setOfVideos": "Set of videos",
+		"theme": "Theme"
+	},
+	"show": {
+		"by": "By %s",
+		"numComments": "%s comments",
+		"numViews": "%s views",
+		"viewAll": "View all",
+		"viewMore": "View more"
+	}
+}

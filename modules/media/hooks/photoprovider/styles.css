@@ -1,0 +1,22 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+.mediaHooksPhotoProviderPhotoItemsContainer .mediaHooksPhotoProviderPhotoItem { float: left; list-style-type: none; margin-bottom: 20px; margin-right: 15px; padding: 5px; }
+.mediaHooksPhotoProviderPhotoItemsContainer .mediaHooksPhotoProviderPhotoItem img { /*height: 60px; width: 60px;*/ }
+
+/* Dnd */
+.mediaHooksPhotoProviderPhotoItemsContainer .dojoDndItem { padding: 5px; }
+.mediaHooksPhotoProviderPhotoItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.mediaHooksPhotoProviderPhotoItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.mediaHooksPhotoProviderPhotoItemsContainer .dojoDndContainerOver { background: #CFE5FA; }

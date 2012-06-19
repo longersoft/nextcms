@@ -1,0 +1,135 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('photo.update.title'));
+?>
+
+<div id="mediaPhotoUpdateContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			var form  = dijit.byId("mediaPhotoUpdateForm");
+			if (form.validate()) {
+				dijit.byId("mediaPhotoUpdateStandby").show();
+				dojo.publish("/app/global/notification", [{
+					message: "<?php echo $this->translator()->_('global._share.savingAction'); ?>",
+					type: "message"
+				}]);
+				_this.set("disabled", true);
+				
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'media_photo_update'); ?>",
+					content: dojo.formToObject("mediaPhotoUpdateForm"),
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dijit.byId("mediaPhotoUpdateStandby").hide();
+						dojo.publish("/app/media/photo/update/onSuccess");
+					}
+				});
+			}
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/media/photo/update/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- UpdateForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('photo.update.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<form id="mediaPhotoUpdateForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('photo._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('photo._share.title'); ?></label>
+						<div id="mediaPhotoUpdateTitleBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'title', value: '<?php echo addslashes($this->photo->title); ?>', width: '200px', required: true, promptMessage: '<?php echo $this->translator(true)->_('photo._share.titleRequired'); ?>'">
+							<script type="dojo/connect">
+							new core.js.views.CharacterCounter(this);
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('photo._share.description'); ?>:</label>
+						<div id="mediaPhotoUpdateDescriptionBox" data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'description', style: 'width: 300px; height: 100px'"><?php echo $this->photo->description; ?><script type="dojo/connect">new core.js.views.CharacterCounter(this);</script></div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="photographer"><?php echo $this->translator()->_('photo._share.photographer'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'photographer', <?php if ($this->photo->photographer) : ?>value: '<?php echo addslashes($this->photo->photographer); ?>',<?php endif; ?> style: 'width: 200px'">
+					</div>
+					
+					<input type="hidden" name="format" value="json" />
+					<input type="hidden" name="photo_id" value="<?php echo $this->photo->photo_id; ?>" />
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Tags -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('photo._share.tags'); ?>', class: 'appContentPane'">
+					<div style="padding-bottom: 8px"><?php echo $this->translator()->_('photo._share.tagsHelp'); ?></div>
+					
+					<?php echo $this->helperLoader('tag')->tagCollector('mediaPhotoUpdateTagsContainer', 'tags[]', $this->tags); ?>
+				</div>
+				<!-- /Tags -->
+			</div>
+			</form>
+		</div>
+	</div>
+	<!-- /UpdateForm -->
+</div>
+
+<div id="mediaPhotoUpdateStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'mediaPhotoUpdateContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+
+dojo.require("core.js.views.CharacterCounter");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/media_photo_update", function() {
+		// Tag suggestions
+		tag.views.helpers.TagCollector.getContent = function() {
+			return dijit.byId("mediaPhotoUpdateTitleBox").get("value") + " " + dijit.byId("mediaPhotoUpdateDescriptionBox").get("value");
+		};
+
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

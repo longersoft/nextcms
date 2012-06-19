@@ -1,0 +1,42 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numPlaylists > 0) : ?>
+<div class="mediaWidgetsPlaylistsList">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<ul>
+		<?php foreach ($this->playlists as $playlist) : ?>
+		<li>
+			<p>
+				<a href="<?php echo $this->url($playlist->getProperties(), 'media_playlist_view'); ?>" title="<?php echo addslashes($playlist->title); ?>"><img src="<?php echo $playlist->getPoster('square'); ?>" title="<?php echo addslashes($playlist->title); ?>" height="75" width="75" /></a>
+			</p>
+			<div>
+				<h3><a href="<?php echo $this->url($playlist->getProperties(), 'media_playlist_view'); ?>"><?php echo $playlist->title; ?></a></h3>
+				<span>
+					<?php echo sprintf($this->translator()->_('show.numVideos'), $playlist->num_videos); ?><br />
+					<?php echo sprintf($this->translator()->_('show.numViews'), $playlist->num_views); ?><br />
+					<?php echo date($this->translator()->_('show.dateFormat', 'Y-m-d'), strtotime($playlist->activated_date)); ?><br />
+					<?php echo sprintf($this->translator()->_('show.by'), $playlist->getAuthor()); ?>
+				</span>
+			</div>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

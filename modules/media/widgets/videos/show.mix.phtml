@@ -1,0 +1,54 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numVideos > 0) : ?>
+<div class="mediaWidgetsVideosMix">
+	<?php if ($this->title) : ?><h1><?php echo $this->title; ?></h1><?php endif; ?>
+	
+	<div class="main">
+		<div class="thumb">
+			<a href="<?php echo $this->url($this->videos[0]->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($this->videos[0]->title); ?>"><img src="<?php echo $this->videos[0]->getPoster('crop'); ?>" title="<?php echo addslashes($this->videos[0]->title); ?>" height="225" width="300" /></a>
+			<span></span>
+		</div>
+		<div class="summary">
+			<h2><a href="<?php echo $this->url($this->videos[0]->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($this->videos[0]->title); ?>"><?php echo $this->videos[0]->title; ?></a></h2>
+			<span class="meta">
+				<?php echo sprintf($this->translator()->_('show.by'), $this->videos[0]->getAuthor()); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $this->videos[0]->num_comments); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numViews'), $this->videos[0]->num_views); ?>
+			</span>
+		</div>
+	</div>
+	
+	<ul>
+		<?php for ($i = 1; $i < $this->numVideos; $i++) : ?>
+		<li>
+			<div class="thumb">
+				<a href="<?php echo $this->url($this->videos[$i]->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($this->videos[$i]->title); ?>"><img src="<?php echo $this->videos[$i]->getPoster('small'); ?>" title="<?php echo addslashes($this->videos[$i]->title); ?>" /></a>
+				<span class="duration"><?php echo $this->videos[$i]->duration; ?></span>
+			</div>
+			<div class="summary">
+				<h3><a href="<?php echo $this->url($this->videos[$i]->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($this->videos[$i]->title); ?>"><?php echo $this->videos[$i]->title; ?></a></h3>
+				<span class="meta">
+					<?php echo sprintf($this->translator()->_('show.by'), $this->videos[$i]->getAuthor()); ?><br />
+					<?php echo sprintf($this->translator()->_('show.numComments'), $this->videos[$i]->num_comments); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numViews'), $this->videos[$i]->num_views); ?>
+				</span>
+			</div>
+		</li>
+		<?php endfor; ?>
+	</ul>
+</div>
+<?php endif; ?>

@@ -1,0 +1,24 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-25
+ */
+
+.mediaHooksVideoProviderVideoItem { display: inline-block; list-style-type: none; margin-bottom: 20px; margin-right: 15px; padding: 5px; position: relative; vertical-align: top; width: 75px; }
+.mediaHooksVideoProviderVideoItem img { height: 60px; width: 60px; }
+.mediaHooksVideoProviderVideoItem img { z-index: 0; }
+.mediaHooksVideoProviderPlayIcon { background: url(images/play.png) center center no-repeat; height: 16px; left: 30px; position: absolute; top: 30px; width: 16px; z-index: 1000; }
+
+/* Dnd */
+.mediaHooksVideoProviderVideoItemsContainer .dojoDndItem { padding: 5px; }
+.mediaHooksVideoProviderVideoItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.mediaHooksVideoProviderVideoItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.mediaHooksVideoProviderVideoItemsContainer .dojoDndContainerOver { background: #CFE5FA; }

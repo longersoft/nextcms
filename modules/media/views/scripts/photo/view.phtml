@@ -1,0 +1,57 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->photo) : ?>
+
+<?php $this->headTitle()->append($this->photo->title); ?>
+<div class="mediaPhotoView">
+	<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Media_FilterPhotoTitle', '<h1>' . $this->photo->title . '</h1>'); ?>
+	
+	<div class="thumb">
+		<img src="<?php echo $this->photo->getThumbnail('medium'); ?>" title="<?php echo addslashes($this->photo->title); ?>" />
+		<p>
+			<?php echo sprintf($this->translator()->_('global._share.numViews'), '<span>' . $this->photo->num_views . '</span><br />'); ?>
+		</p>
+	</div>
+	
+	<div class="toolbar">
+		<?php
+		echo $this->widget('vote', 'vote', array(
+												'params' => array(
+													'entity_id'	   => $this->photo->getId(),
+													'entity_class' => get_class($this->photo),
+													'theme'		   => 'button',
+													'num_ups'	   => $this->photo->num_ups,
+													'num_downs'	   => $this->photo->num_downs,
+												),
+											));
+		?>
+		<a href="<?php echo $this->url($this->photo->getProperties(), 'media_download_photo'); ?>" class="downloadButton"><?php echo $this->translator()->setLanguageDir(null)->_('global._share.downloadAction'); ?></a>
+	</div>
+	
+	<div class="desc"><?php echo $this->photo->description; ?></div>
+	
+	<?php if ($this->tags) : ?>
+	<div class="tags">
+		<span><?php echo $this->translator()->_('global._share.tags'); ?>:</span>
+		<?php foreach ($this->tags as $tag) : ?><a href="<?php echo $this->url($tag->getProperties(), 'media_photo_tag'); ?>"><?php echo $tag->title; ?></a><?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+</div>
+
+<?php endif; ?>

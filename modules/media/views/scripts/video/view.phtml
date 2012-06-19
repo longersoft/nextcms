@@ -1,0 +1,94 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->video) : ?>
+
+<?php
+$this->headTitle()->append($this->video->title);
+$this->style()
+	 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/strobemediaplayback/jquery.strobemediaplayback.css');
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/static/js/swfobject/swfobject.js')
+	 ->prependFile($this->APP_STATIC_URL . '/static/js/strobemediaplayback/jquery.strobemediaplayback.js');
+?>
+
+<div class="mediaVideoView">
+	<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Media_FilterVideoTitle', '<h1>' . $this->video->title . '</h1>'); ?>
+	
+	<div class="player" id="mediaVideoViewPlayerContainer">
+		<div id="mediaVideoViewPlayer"></div>
+	</div>
+	
+	<div class="toolbar">
+		<?php
+		echo $this->widget('vote', 'vote', array(
+												'params' => array(
+													'entity_id'	   => $this->video->getId(),
+													'entity_class' => get_class($this->video),
+													'theme'		   => 'button',
+													'num_ups'	   => $this->video->num_ups,
+													'num_downs'	   => $this->video->num_downs,
+												),
+											));
+		?>
+		<a id="mediaVideoViewHighlight" href="javascript: void(0);" class="highlightButton"><?php echo $this->translator()->_('global._share.highlightAction'); ?></a>
+		<div id="mediaVideoViewHighlightMasker" class="masker" style="display: none"></div>
+	</div>
+	
+	<div class="desc"><?php if ($this->video->description) : ?><?php echo nl2br($this->video->description); ?><?php endif; ?></div>
+	
+	<?php if ($this->tags) : ?>
+	<div class="tags">
+		<span><?php echo $this->translator()->_('global._share.tags'); ?>:</span>
+		<?php foreach ($this->tags as $tag) : ?><a href="<?php echo $this->url($tag->getProperties(), 'media_video_tag'); ?>"><?php echo $tag->title; ?></a><?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+</div>
+
+<?php echo $this->script()->captureStart(); ?>
+$(document).ready(function() {
+	$("#mediaVideoViewPlayer").strobemediaplayback({
+		swf: "<?php echo $this->APP_STATIC_URL; ?>/static/js/strobemediaplayback/StrobeMediaPlayback.swf",
+		width: 656,
+		height: 369,
+		src: "<?php echo $this->video->getVideoUrl(); ?>",
+		poster: "<?php echo $this->video->getPoster('medium'); ?>"
+	});
+	
+	// Highlight the player
+	$("#mediaVideoViewHighlight").click(function() {
+		if ($(this).hasClass("highlightCloseButton")) {
+			$("#mediaVideoViewHighlightMasker").animate({ opacity: 0.9 }, 1).fadeOut(1000);
+			$("#mediaVideoViewPlayerContainer").css({
+				"position": "static",
+				"z-index": 1
+			});
+			$(this).removeClass("highlightCloseButton");
+		} else {
+			$(this).addClass("highlightCloseButton");
+			$("#mediaVideoViewHighlightMasker").animate({ opacity: 0.9 }, 1).fadeIn(750);
+			$("#mediaVideoViewPlayerContainer").css({
+				"position": "relative",
+				"z-index": 9999999
+			});
+		}
+	});
+});
+<?php echo $this->script()->captureEnd(); ?>
+
+<?php endif; ?>

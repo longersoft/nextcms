@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Hiển thị tập ảnh",
+		"title": "Tập ảnh"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"dataSource": "Nguồn dữ liệu",
+		"language": "Ngôn ngữ",
+		"latestAlbums": "Tập ảnh mới nhất",
+		"mostViewedAlbums": "Tập ảnh xem nhiều nhất",
+		"numberOfAlbums": "Số tập ảnh",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"by": "Bởi %s",
+		"dateFormat": "d-m-Y",
+		"numPhotos": "%s ảnh",
+		"numViews": "%s lượt xem"
+	}
+}

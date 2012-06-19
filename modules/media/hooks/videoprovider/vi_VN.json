@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Tìm kiếm video và cho phép gắp, thả video vào các vùng chứa khác",
+		"title": "Tìm kiếm video"
+	},
+	"menu": {
+		"label": "Tìm kiếm video"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"show": {
+		"keywordHelp": "Tiêu đề của video",
+		"notFound": "Không tìm thấy video nào",
+		"playAction": "Chơi",
+		"searchAction": "Tìm",
+		"searchHelp": "Nhấp vào biểu tượng Tìm kiếm để xem danh sách các video",
+		"title": "Video"
+	}
+}

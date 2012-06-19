@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Search for videos and allow to drag and drop the videos to other targets",
+		"title": "Videos Provider"
+	},
+	"menu": {
+		"label": "Videos provider"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"show": {
+		"keywordHelp": "Video's title",
+		"notFound": "Not found any videos",
+		"playAction": "Play",
+		"searchAction": "Search",
+		"searchHelp": "Click the Search icon to view the list of videos",
+		"title": "Videos"
+	}
+}

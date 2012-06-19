@@ -1,0 +1,465 @@
+{
+	"_about": {
+		"description": "This module is used to manage photos and videos",
+		"title": "Media"
+	},
+	"_menu": {
+		"config": {
+			"config": "Configure module"
+		},
+		"flickr": {
+			"import": "Import photos from Flickr"
+		},
+		"photo": {
+			"list": "Manage photos"
+		},
+		"video": {
+			"list": "Manage videos"
+		}
+	},
+	"_permission": {
+		"album": {
+			"description": "Manage albums",
+			"actions": {
+				"activate": "Activate/deactivate album",
+				"add": "Add new album",
+				"cover": "Set cover",
+				"delete": "Delete album",
+				"list": "View the list of albums",
+				"rename": "Rename album"
+			}
+		},
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		},
+		"flickr": {
+			"description": "Import photos from Flickr",
+			"actions": {
+				"import": "Import photos"
+			}
+		},
+		"photo": {
+			"description": "Manage photos",
+			"actions": {
+				"activate": "Activate/deactivate photo",
+				"copy": "Copy photos to album",
+				"delete": "Delete photo",
+				"download": "Download photo",
+				"edit": "Edit photo",
+				"list": "View the list of photos",
+				"order": "Order photos in the album",
+				"remove": "Remove photo from album",
+				"rename": "Rename photo",
+				"replace": "Replace photo",
+				"update": "Update photo information",
+				"upload": "Upload photos"
+			}
+		},
+		"playlist": {
+			"description": "Manage playlists",
+			"actions": {
+				"activate": "Activate/deactivate playlist",
+				"add": "Add new playlist",
+				"cover": "Set poster",
+				"delete": "Delete playlist",
+				"list": "View the list of playlists",
+				"rename": "Rename playlist"
+			}
+		},
+		"video": {
+			"description": "Manage videos",
+			"actions": {
+				"activate": "Activate/deactivate video",
+				"add": "Add new video",
+				"copy": "Copy videos to playlist",
+				"cover": "Set poster",
+				"delete": "Delete video",
+				"download": "Download video",
+				"list": "View the list of videos",
+				"order": "Order videos in the playlist",
+				"remove": "Remove video from playlist",
+				"rename": "Rename video",
+				"update": "Update video information"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Activate",
+			"addAction": "Add",
+			"addNewVideoAction": "Add new video",
+			"browseFileAction": "Browse files ...",
+			"by": "By %s",
+			"cancelAction": "Cancel",
+			"chooseSizeAction": "Choose the size:",
+			"closeAction": "Close",
+			"createAction": "Create",
+			"dateFormat": "Y-m-d",
+			"deactivateAction": "Deactivate",
+			"deleteAction": "Delete",
+			"downloadAction": "Download",
+			"editAction": "Edit",
+			"highlightAction": "Highlight",
+			"importAction": "Import",
+			"language": "Language",
+			"loadingAction": "Loading ...",
+			"maxUploadSize": "The maxium size of uploaded file is %s",
+			"numComments": "%s comments",
+			"numViews": "%s views",
+			"processingAction": "Processing ...",
+			"redoAction": "Redo",
+			"refreshAction": "Refresh",
+			"renameAction": "Rename",
+			"replaceAction": "Replace",
+			"saveAction": "Save",
+			"savingAction": "Saving ...",
+			"saveOrderAction": "Save order",
+			"searchAction": "Search",
+			"searchFor": "Search for %s",
+			"searchForTag": "Search for %s tag",
+			"showSlideAction": "Slideshow",
+			"tags": "Tags",
+			"undoAction": "Undo",
+			"uploadAction": "Upload",
+			"uploadingAction": "Uploading ...",
+			"viewAsGridAction": "Grid view",
+			"viewAsListAction": "List view",
+			"cropSize": "Crop",
+			"largeSize": "Large",
+			"mediumSize": "Medium",
+			"originalSize": "Original",
+			"smallSize": "Small",
+			"squareSize": "Square",
+			"thumbnailSize": "Thumbnail",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"album": {
+		"_share": {
+			"language": "Language",
+			"slug": "Slug",
+			"slugRequired": "The slug is required",
+			"title": "Title",
+			"titleRequired": "The title is required"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the album",
+			"activateSuccess": "The album is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the album",
+			"deactivateSuccess": "The album is deactivated successfully"
+		},
+		"add": {
+			"success": "The album is created successfully",
+			"title": "Add new album"
+		},
+		"cover": {
+			"setCoverAction": "Set as cover of the album",
+			"success": "The album's cover is updated successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the album titled <b>%s</b>?",
+			"notFound": "Sorry, cannot find the album",
+			"success": "The album is deleted successfully",
+			"title": "Delete album"
+		},
+		"list": {
+			"newAlbumButton": "New album",
+			"notFound": "Not found any albums",
+			"searchAlbumHelp": "Album's title",
+			"title": "Manage albums",
+			"total": "Albums %s",
+			"viewAll": "View all"
+		},
+		"rename": {
+			"success": "The album's name is updated successfully"
+		},
+		"view": {
+			"pager": "View album (pager)",
+			"title": "View album"
+		}
+	},
+	"config": {
+		"config": {
+			"apiKey": "API key",
+			"error": "Sorry, cannot update the module's settings",
+			"flickr": "Flickr",
+			"secretKey": "Secret key",
+			"success": "The module's settings are updated successfully",
+			"title": "Configure the Media module"
+		}
+	},
+	"download": {
+		"photo": {
+			"title": "Download a photo"
+		}
+	},
+	"feed": {
+		"video": {
+			"playlist": "View the latest activated videos of given playlist in RSS/Atom format",
+			"title": "View the latest activated videos in RSS/Atom format"
+		}
+	},
+	"flickr": {
+		"import": {
+			"authHelp": "Click <a href=%s>here</a> to authenticate your Flickr account",
+			"error": "Sorry, cannot import the selected photos",
+			"listPhotosHelp": "Step 2: Click on the name of set to view the list of its photos.<br />Then click the plus icon (+) on the photo that you want to import",
+			"listSetsHelp": "Step 1: Click the refresh icon to view the list of Flickr sets",
+			"success": "The photos are imported successfully",
+			"title": "Import photos from Flickr"
+		},
+		"photo": {
+			"notFound": "Not found any photos",
+			"title": "List photos from given Flickr set"
+		},
+		"set": {
+			"notFound": "Not found any sets",
+			"title": "List Flickr sets"
+		}
+	},
+	"index": {
+		"index": {
+			"title": "Homepage of the Media module"
+		}
+	},
+	"photo": {
+		"_share": {
+			"description": "Description",
+			"height": "Height",
+			"notFound": "Not found any photos",
+			"photographer": "Photographer",
+			"properties": "Properties",
+			"tags": "Tags",
+			"tagsHelp": "Drag tag from the Tags Provider and drop to the area below:",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"width": "Width"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the photo",
+			"activateSuccess": "The photo is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the photo",
+			"deactivateSuccess": "The photo is deactivated successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the photo titled <b>%s</b>?",
+			"notFound": "Sorry, cannot find the photo",
+			"success": "The photo is deleted successfully",
+			"title": "Delete photo"
+		},
+		"download": {
+			"title": "Download photo"
+		},
+		"edit": {
+			"cropAction": "Crop",
+			"cropHelp": "Double-click on the selected section to crop",
+			"cropSize": "You are editing the <b>crop</b> version of the photo",
+			"flipHorizontalAction": "Flip Horizontal",
+			"flipVerticalAction": "Flip Vertical",
+			"imageEditor": "Image Editor",
+			"largeSize": "You are editing the <b>large</b> version of the photo",
+			"maintainAspectRatio": "Maintain aspect ratio",
+			"mediumSize": "You are editing the <b>medium</b> version of the photo",
+			"originalSize": "You are editing the <b>original</b> version of the photo",
+			"resizeAction": "Resize",
+			"resizeBy": "By",
+			"resizeByPercentage": "Percentage",
+			"resizeByPixels": "Pixels",
+			"rotateAction": "Rotate",
+			"rotateLeftAction": "Rotate Left",
+			"rotateRightAction": "Rotate Right",
+			"smallSize": "You are editing the <b>small</b> version of the photo",
+			"squareSize": "You are editing the <b>square</b> version of the photo",
+			"thumbnailSize": "You are editing the <b>thumbnail</b> version of the photo",
+			"title": "Photo Editor"
+		},
+		"list": {
+			"searchPhotoHelp": "Photo's title",
+			"title": "Manage photos",
+			"total": "Photos %s"
+		},
+		"order": {
+			"success": "The order of photos are saved successfully",
+			"title": "Order photos in the album"
+		},
+		"remove": {
+			"removeAction": "Remove from the album",
+			"success": "The photo is removed from the album successfully",
+			"title": "Remove photo from album"
+		},
+		"rename": {
+			"success": "The photo's title is updated successfully"
+		},
+		"replace": {
+			"error": "Sorry, cannot replace the photo",
+			"success": "The photo is replaced successfully",
+			"title": "Replace the photo"
+		},
+		"search": {
+			"title": "Search for photos"
+		},
+		"tag": {
+			"pager": "View photos by given tag (pager)",
+			"title": "View photos by given tag"
+		},
+		"update": {
+			"success": "The photo's information are updated successfully",
+			"title": "Update information"
+		},
+		"upload": {
+			"addWatermark": "Add watermark",
+			"album": "Album",
+			"createAlbumHelp": "Or create new album",
+			"selectPhotos": "Photos",
+			"title": "Upload photos"
+		},
+		"view": {
+			"inAlbumTitle": "View photo in album",
+			"title": "View photo"
+		}
+	},
+	"playlist": {
+		"_share": {
+			"language": "Language",
+			"setPosterAction": "Set as poster of the playlist",
+			"slug": "Slug",
+			"slugRequired": "The slug is required",
+			"title": "Title",
+			"titleRequired": "The title is required"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the playlist",
+			"activateSuccess": "The playlist is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the playlist",
+			"deactivateSuccess": "The playlist is deactivated successfully"
+		},
+		"add": {
+			"error": "Sorry, cannot add new playlist",
+			"success": "The playlist is created successfully",
+			"title": "Add new playlist"
+		},
+		"cover": {
+			"error": "Sorry, cannot update the playlist's poster",
+			"success": "The playlist's poster is updated successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the playlist titled <b>%s</b>?",
+			"notFound": "Sorry, cannot find the playlist",
+			"success": "The playlist is deleted successfully",
+			"title": "Delete playlist"
+		},
+		"list": {
+			"newPlaylistButton": "Add new playlist",
+			"notFound": "Not found any playlists",
+			"searchHelp": "Playlist's title",
+			"title": "Manage playlists",
+			"total": "Playlists %s",
+			"viewAll": "View all"
+		},
+		"rename": {
+			"error": "Sorry, cannot rename the playlist",
+			"notFound": "Sorry, cannot find the playlist with Id of <b>%s</b>",
+			"success": "The playlist's name is updated successfully",
+			"title": "Rename playlist"
+		},
+		"view": {
+			"pager": "View playlist (pager)",
+			"title": "View playlist"
+		}
+	},
+	"video": {
+		"_share": {
+			"credit": "Credit",
+			"description": "Description",
+			"duration": "Duration",
+			"durationHelp": "hh:mm:ss",
+			"durationRequired": "The duration is required",
+			"embedCode": "Embed code",
+			"language": "Language",
+			"notFound": "Not found any videos",
+			"playAction": "Play the video",
+			"playlist": "Playlist",
+			"poster": "Poster",
+			"posterHelp": "Use <b>Image Toolbox</b> to upload the poster,<br />then drag and drop uploaded image to the area below:",
+			"properties": "Properties",
+			"removeAction": "Remove from the playlist",
+			"slug": "Slug",
+			"slugRequired": "The slug is required",
+			"tags": "Tags",
+			"tagsHelp": "Drag tag from the Tags Provider and drop to the area below:",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"url": "URL"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the video",
+			"activateSuccess": "The video is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the video",
+			"deactivateSuccess": "The video is deactivated successfully"
+		},
+		"add": {
+			"error": "Sorry, cannot add new video",
+			"success": "The video is added successfully",	
+			"title": "Add new video"
+		},
+		"cover": {
+			"error": "Sorry, cannot update the video's poster",
+			"success": "The video's poster is updated successfully",
+			"title": "Set poster"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the video titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the video",
+			"notFound": "Sorry, cannot find the video with Id of <b>%s</b>",
+			"success": "The video is deleted successfully",
+			"title": "Delete video"
+		},
+		"index": {
+			"pager": "List the videos (pager)",
+			"title": "List the videos"
+		},
+		"list": {
+			"addVideoAction": "Add new video",
+			"searchHelp": "Video's title",
+			"title": "Manage videos",
+			"total": "Videos %s"
+		},
+		"order": {
+			"error": "Sorry, cannot update the order of videos in the playlist",
+			"success": "The order of videos are saved successfully",
+			"title": "Order videos in the playlist"
+		},
+		"remove": {
+			"error": "Sorry, cannot remove the video from the playlist",
+			"success": "The video is removed from the playlist successfully",
+			"title": "Remove video from playlist"
+		},
+		"rename": {
+			"error": "Sorry, cannot rename the video",
+			"notFound": "Sorry, cannot find the video with Id of <b>%s</b>",
+			"success": "The video's name is updated successfully",
+			"title": "Rename video"
+		},
+		"search": {
+			"title": "Search for videos"
+		},
+		"tag": {
+			"pager": "View videos by given tag (pager)",
+			"title": "View videos by given tag"
+		},
+		"update": {
+			"error": "Sorry, cannot update the video",
+			"notFound": "Sorry, cannot find the video with Id of <b>%s</b>",
+			"success": "The video is updated successfully",
+			"title": "Update the video"
+		},
+		"view": {
+			"inPlaylistTitle": "View video in a playlist",
+			"title": "View video"
+		}
+	}
+}

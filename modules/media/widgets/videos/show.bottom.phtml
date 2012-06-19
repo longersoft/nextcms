@@ -1,0 +1,71 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-15
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numVideos > 0) : ?>
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.tinycarousel.min.js');
+?>
+
+<a class="mediaWidgetsVideosBottomShow"></a>
+<div class="mediaWidgetsVideosBottom">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<div class="wrapper">
+		<div class="container">
+			<a class="button prev">Prev</a>
+			<div class="viewport">
+				<ul class="overview">
+					<?php foreach ($this->videos as $video) : ?>
+					<li>
+						<p>
+							<a href="<?php if ($this->playlist) : ?><?php echo $this->url(array_merge(array('playlist_id' => $this->playlist->playlist_id), $video->getProperties()), 'media_video_playlist_view'); ?><?php else : ?><?php echo $this->url($video->getProperties(), 'media_video_view'); ?><?php endif; ?>" title="<?php echo addslashes($video->title); ?>"><img src="<?php echo $video->getPoster('small'); ?>" title="<?php echo addslashes($video->title); ?>" /></a>
+							<span><?php echo $video->duration; ?></span>
+						</p>
+						<h3><a href="<?php if ($this->playlist) : ?><?php echo $this->url(array_merge(array('playlist_id' => $this->playlist->playlist_id), $video->getProperties()), 'media_video_playlist_view'); ?><?php else : ?><?php echo $this->url($video->getProperties(), 'media_video_view'); ?><?php endif; ?>"><?php echo $video->title; ?></a></h3>
+						<div>
+							<?php echo sprintf($this->translator()->_('show.numViews'), $video->num_views); ?> <span>-</span> <?php echo sprintf($this->translator()->_('show.numComments'), $video->num_comments); ?>  
+						</div>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<a class="button next">Next</a>
+		</div>
+	</div>
+	
+	<a class="mediaWidgetsVideosBottomHide"></a>
+</div>
+
+<?php $this->script()->captureStartOnce('mediaWidgetsVideosBottom'); ?>
+$(document).ready(function() {
+	$(".mediaWidgetsVideosBottom .container").tinycarousel({
+		interval: true,
+		display: 1,
+		intervaltime: 3000,
+		duration: 1000
+	});
+	$(".mediaWidgetsVideosBottomHide").click(function() {
+		$(this).parents(".mediaWidgetsVideosBottom").hide();
+	});
+	$(".mediaWidgetsVideosBottomShow").click(function() {
+		$(this).next().show();	
+	});
+});
+<?php $this->script()->captureEndOnce('mediaWidgetsVideosBottom'); ?>
+<?php endif; ?>

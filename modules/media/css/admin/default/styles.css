@@ -1,0 +1,139 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-06-01
+ */
+ 
+/********** MANAGE ALBUMS **********/
+.mediaAlbumList, .mediaAlbumItemsContainer { margin: 0; padding: 0; }
+
+/* Item */
+.mediaAlbumCoverContainer img { height: 60px; width: 60px; }
+.mediaAlbumList .mediaAlbumTitle { padding: 3px; text-decoration: none; }
+.mediaAlbumItemSelected .mediaAlbumTitle { background: #769DC0; /*#769DC0*/ color: #fff; }
+.mediaAlbumTitle:hover { background-color: #abd6ff; color: #fff; }
+
+/* Counter */
+.mediaAlbumListCounter { background: #CFE5FA !important; border-radius: 2px; font-size: 11px; padding: 4px !important; }
+.mediaAlbumPhotoCounter { background: #cfe5fa; border-radius: 2px; padding: 2px; -moz-border-radius: 2px; }
+
+/* Icons */
+.mediaAlbumListViewIcon { background-image: url(images/viewList.png); }
+.mediaAlbumGridViewIcon { background-image: url(images/viewGrid.png); }
+
+/* Grid view */
+.mediaAlbumItemGridView { display: inline-block; list-style-type: none; margin-bottom: 10px; margin-right: 5px; vertical-align: top; width: 80px; }
+.mediaAlbumItemGridView a { float: none; }
+.mediaAlbumItemGridView span:last-child { float: none; text-align: center; }
+.mediaAlbumItemGridView .mediaAlbumCoverContainer { display: block; }
+.mediaAlbumItemGridView .mediaAlbumPhotoCounter { background: #fff; }
+.mediaAlbumItemGridView .mediaAlbumPhotoCounter:before { content: "("; }
+.mediaAlbumItemGridView .mediaAlbumPhotoCounter:after { content: ")"; }
+.mediaAlbumItemGridView .dijitInline { width: 60px; }
+
+/* List view */
+.mediaAlbumItemListView { clear: both; display: block; padding-bottom: 3px; padding-top: 3px; }
+.mediaAlbumItemListView .mediaAlbumCoverContainer { display: none; }
+.mediaAlbumItemListView a { float: left; }
+.mediaAlbumItemListView span:last-child { float: right; text-align: right; }
+.mediaAlbumItemListView .dijitInline { float: left; }
+
+/********** MANAGE PHOTOS **********/
+.mediaPhotoItemsContainer {}
+
+/* Icon */
+.mediaPhotoEditIcon { background-image: url(images/edit.png); }
+.mediaPhotoSlideshowIcon { background-image: url(images/slideshow.png); }
+
+/* Item */
+.mediaPhotoItemsContainer .mediaPhotoItem { display: inline-block; margin-bottom: 25px; margin-right: 15px; vertical-align: top; }
+
+/* Counter */
+.mediaPhotoListCounter { background: #CFE5FA !important; border-radius: 2px; font-size: 11px; padding: 4px !important; }
+
+/* Dnd */
+.mediaPhotoItemsContainer .dojoDndItem { padding: 5px; }
+.mediaPhotoItemsContainer .dojoDndItemOver { background: #EDEDED; cursor: pointer; }
+.mediaPhotoItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.mediaPhotoItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+
+/* Editor */
+.mediaPhotoRotateLeftIcon { background-image: url(images/rotateLeft.png); }
+.mediaPhotoRotateRightIcon { background-image: url(images/rotateRight.png); }
+.mediaPhotoFlipHorizontalIcon { background-image: url(images/flipHorizontal.png); }
+.mediaPhotoFlipVerticalIcon { background-image: url(images/flipVertical.png); }
+.mediaPhotoCropIcon { background-image: url(images/crop.png); }
+.mediaPhotoResizeIcon { background-image: url(images/resize.png); }
+.mediaPhotoEditCroppedSizeLabel { color: #333; }
+
+/********** MANAGE PLAYLISTS **********/
+.mediaPlaylistList, .mediaPlaylistItemsContainer { margin: 0; padding: 0; }
+
+/* Item */
+.mediaPlaylistPosterContainer img { height: 60px; width: 60px; }
+.mediaPlaylistList .mediaPlaylistTitle { padding: 3px; text-decoration: none; }
+.mediaPlaylistItemSelected .mediaPlaylistTitle { background: #769DC0; /*#769DC0*/ color: #fff; }
+.mediaPlaylistTitle:hover { background-color: #abd6ff; color: #fff; }
+
+/* Counter */
+.mediaPlaylistListCounter { background: #CFE5FA !important; border-radius: 2px; font-size: 11px; padding: 4px !important; }
+.mediaPlaylistVideoCounter { background: #cfe5fa; border-radius: 2px; padding: 2px; -moz-border-radius: 2px; }
+
+/* Icons */
+.mediaPlaylistListViewIcon { background-image: url(images/viewList.png); }
+.mediaPlaylistGridViewIcon { background-image: url(images/viewGrid.png); }
+
+/* Grid view */
+.mediaPlaylistItemGridView { display: inline-block; list-style-type: none; margin-bottom: 10px; margin-right: 5px; vertical-align: top; width: 80px; }
+.mediaPlaylistItemGridView a { float: none; }
+.mediaPlaylistItemGridView span:last-child { float: none; text-align: center; }
+.mediaPlaylistItemGridView .mediaPlaylistPosterContainer { display: block; }
+.mediaPlaylistItemGridView .mediaPlaylistVideoCounter { background: #fff; }
+.mediaPlaylistItemGridView .mediaPlaylistVideoCounter:before { content: "("; }
+.mediaPlaylistItemGridView .mediaPlaylistVideoCounter:after { content: ")"; }
+.mediaPlaylistItemGridView .dijitInline { width: 60px; }
+
+/* List view */
+.mediaPlaylistItemListView { clear: both; display: block; padding-bottom: 3px; padding-top: 3px; }
+.mediaPlaylistItemListView .mediaPlaylistPosterContainer { display: none; }
+.mediaPlaylistItemListView a { float: left; }
+.mediaPlaylistItemListView span:last-child { float: right; text-align: right; }
+.mediaPlaylistItemListView .dijitInline { float: left; }
+
+/* Dnd */
+.mediaPlaylistItemsContainer .dojoDndContainerOver .mediaPlaylistTitle { background: #CFE5FA; }
+
+/********** MANAGE VIDEOS **********/
+.mediaVideoItemsContainer {}
+
+/* Item */
+.mediaVideoItemsContainer .mediaVideoItem { display: inline-block; margin-bottom: 25px; margin-right: 15px; vertical-align: top; }
+.mediaVideoItemPoster { position: relative; }
+.mediaVideoItemPoster img { z-index: 0; }
+.mediaVideoItemPlayIcon { background: url(images/play.png) center center no-repeat; height: 100%; left: 0; position: absolute; top: 0; width: 100%; z-index: 1000; }
+
+/* Counter */
+.mediaVideoListCounter { background: #CFE5FA !important; border-radius: 2px; font-size: 11px; padding: 4px !important; }
+
+/* Dnd */
+.mediaVideoItemsContainer .dojoDndItem { padding: 5px; }
+.mediaVideoItemsContainer .dojoDndItemOver { background: #EDEDED; cursor: pointer; }
+.mediaVideoItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.mediaVideoItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+
+/********** IMPORT FROM FLICKR **********/
+.mediaFlickrImportIcon { background-image: url(images/import.png); }
+.mediaFlickrSets { list-style-type: none; margin: 0; padding: 0; }
+.mediaFlickrSetItem { border-bottom: 1px solid #B5BCC7; clear: both; padding: 5px; }
+.mediaFlickrSetSelectedItem { background-color: #CFE5FA; }
+.mediaFlickrSetItem img { border: 1px solid #B5BCC7; cursor: pointer; float: left; height: 75px; margin-right: 10px; width: 75px; }
+.mediaFlickrPhotoItem { float: left; margin: 5px; padding: 5px; position: relative; }
+.mediaFlickrAddRemoveIcon { cursor: pointer; height: 16px; position: absolute; top: 0; left: 0; width: 16px; }

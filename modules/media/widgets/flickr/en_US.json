@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Show photos taken from Flickr",
+		"title": "Flickr"
+	},
+	"config": {
+		"apiKey": "API key",
+		"apiKeyRequired": "API key is required",
+		"basic": "Basic",
+		"numberOfPhotos": "The number of photos",
+		"numberOfPhotosRequired": "The number of photos is required",
+		"searchByTag": "Search for photos by tag",
+		"searchByUser": "Search for photos by username or email of user",
+		"size": "Size of photos",
+		"sizeLarge": "Large (640px)",
+		"sizeMedium": "Medium (500px)",
+		"sizeOriginal": "Original",
+		"sizeSmall": "Small (240px)",
+		"sizeSquare": "Square (75px x 75px)",
+		"sizeThumbnail": "Thumbnail (100px)",
+		"theme": "Theme"
+	}
+}

@@ -1,0 +1,48 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numVideos == 0) : ?>
+<div><?php echo $this->translator()->_('video._share.notFound'); ?></div>
+<?php else : ?>
+
+<?php if ($this->videos) : ?>
+<ul>
+	<?php foreach ($this->videos as $video) : ?>
+	<li>
+		<p class="thumb">
+			<a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($video->title); ?>">
+				<img src="<?php echo $video->getPoster('small'); ?>" title="<?php echo addslashes($video->title); ?>" />
+			</a>
+			<span><?php echo $video->duration; ?></span>
+		</p>
+		<div class="summary">
+			<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Media_FilterVideoTitle', '<h2><a href="' . $this->url($video->getProperties(), 'media_video_view') . '" title="' . addslashes($video->title) . '">' . $video->title . '</a></h2>'); ?>
+			<p class="meta">
+				<?php echo sprintf($this->translator()->_('global._share.by'), $video->getAuthor()); ?><br />
+				<?php echo sprintf($this->translator()->_('global._share.numViews'), $video->num_views); ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numComments'), $video->num_comments); ?> 
+			</p>
+			<div class="desc"><?php echo $video->description; ?></div>
+		</div>
+	</li>
+	<?php endforeach; ?>
+</ul>
+
+<?php echo $this->paginator; ?>
+<?php endif; ?>
+
+<?php endif; ?>

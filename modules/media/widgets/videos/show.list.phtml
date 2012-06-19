@@ -1,0 +1,41 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-14
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numVideos > 0) : ?>
+<div class="mediaWidgetsVideosList">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<ul>
+		<?php foreach ($this->videos as $video) : ?>
+		<li>
+			<p>
+				<a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($video->title); ?>"><img src="<?php echo $video->getPoster('small'); ?>" title="<?php echo addslashes($video->title); ?>" /></a>
+				<span><?php echo $video->duration; ?></span>
+			</p>
+			<div>
+				<h3><a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>"><?php echo $video->title; ?></a></h3>
+				<span>
+					<?php echo sprintf($this->translator()->_('show.by'), $video->getAuthor()); ?><br />
+					<?php echo sprintf($this->translator()->_('show.numComments'), $video->num_comments); ?>
+				</span>
+			</div>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

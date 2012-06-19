@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Show playlists",
+		"title": "Playlists"
+	},
+	"config": {
+		"basic": "Basic",
+		"dataSource": "Data source",
+		"language": "Language",
+		"latestPlaylists": "Latest playlists",
+		"mostViewedPlaylists": "Most viewed playlists",
+		"numberOfPlaylists": "The number of playlists",
+		"theme": "Theme"
+	},
+	"show": {
+		"by": "By %s",
+		"dateFormat": "Y-m-d",
+		"numVideos": "%s videos",
+		"numViews": "%s views"
+	}
+}

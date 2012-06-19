@@ -1,0 +1,39 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-11-05
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('flickr.set.title'));
+?>
+
+<?php if (!$this->sets || count($this->sets) == 0) : ?>
+	<div class="appCenter">
+		<div><?php echo $this->translator()->_('flickr.set.notFound'); ?></div>
+	</div>
+<?php else : ?>
+
+	<ul class="mediaFlickrSets">
+		<?php foreach ($this->sets as $set) : ?>
+		<li class="mediaFlickrSetItem" data-app-set="<?php echo $set['id']; ?>">
+			<img src="<?php echo $set['thumb']; ?>" title="<?php echo addslashes($set['title']['_content']); ?>" /> <?php echo $set['title']['_content']; ?>
+			(<?php echo $set['photos']; ?>)
+			<div class="appClear"></div>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	
+<?php endif; ?>

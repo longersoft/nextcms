@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Hiển thị các playlist",
+		"title": "Playlist"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"dataSource": "Nguồn dữ liệu",
+		"language": "Ngôn ngữ",
+		"latestPlaylists": "Playlist mới nhất",
+		"mostViewedPlaylists": "Playlist xem nhiều nhất",
+		"numberOfPlaylists": "Số playlist",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"by": "Bởi %s",
+		"dateFormat": "d-m-Y",
+		"numVideos": "%s video",
+		"numViews": "%s lượt xem"
+	}
+}

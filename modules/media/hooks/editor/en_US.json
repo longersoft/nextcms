@@ -1,0 +1,45 @@
+{
+	"_about": {
+		"description": "Provide a toolbox allowing to upload and edit image",
+		"title": "Image editor"
+	},
+	"menu": {
+		"label": "Image editor"
+	},
+	"show": {
+		"addWatermark": "Add watermark",
+		"browseFilesAction": "Browse files and Upload ...",
+		"cancelAction": "Cancel",
+		"cropAction": "Crop",
+		"cropHelp": "Double-click on the selected section to crop",
+		"editTab": "Edit",
+		"flipHorizontalAction": "Flip Horizontal",
+		"flipVerticalAction": "Flip Vertical",
+		"generateThumbnails": "Generate thumbnails",
+		"height": "Height",
+		"maintainAspectRatio": "Maintain aspect ratio",
+		"notAllowed": "You are not allowed to upload",
+		"redoAction": "Redo",
+		"resizeAction": "Resize",
+		"resizeBy": "By",
+		"resizeByPercentage": "Percentage",
+		"resizeByPixels": "Pixels",
+		"rotateAction": "Rotate",
+		"rotateLeftAction": "Rotate Left",
+		"rotateRightAction": "Rotate Right",
+		"selectEditSize": "Select size to edit:",
+		"saveAction": "Save",
+		"saveSuccess": "The image is updated successfully",
+		"title": "Image",
+		"undoAction": "Undo",
+		"uploadTab": "Upload",
+		"width": "Width",
+		"cropSize": "Crop",
+		"largeSize": "Large",
+		"mediumSize": "Medium",
+		"originalSize": "Original",
+		"smallSize": "Small",
+		"squareSize": "Square",
+		"thumbnailSize": "Thumbnail"
+	}
+}

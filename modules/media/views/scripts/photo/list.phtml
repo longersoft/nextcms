@@ -1,0 +1,107 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('photo.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/media/css/admin/default/styles.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/image/resources/Lightbox.css");
+</script>
+
+<div id="mediaPhotoListRootContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%;'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, region: 'leading', minSize: 200, splitter: true, style: 'margin: 0; padding: 0; width: 25%'">
+		<!-- AlbumToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaPhotoListAlbumToolbar"></div>
+		</div>
+		<!-- /AlbumToolbar -->
+	
+		<!-- Albums -->
+		<div id="mediaPhotoListAlbumsContainer" class="mediaAlbumList" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+		<?php echo $this->action('list', 'album', 'media', array('q' => rawurlencode(base64_encode(Zend_Json::encode(array('language' => $this->criteria['language'], 'active_album_id' => $this->criteria['album_id'])))))); ?>
+		</div>
+		<!-- /Albums -->
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- PhotoToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaPhotoListPhotoToolbar"></div>
+		</div>
+		<!-- /PhotoToolbar -->
+		
+		<!-- Photos -->
+		<div id="mediaPhotoListPhotosContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->render('photo/list.ajax.phtml'); ?>
+		</div>
+		<!-- /Photos -->
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/media/languages')->_('photo.list.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+
+dojo.registerModulePath("media", "<?php echo $this->APP_STATIC_URL; ?>/modules/media");
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("media.js.controllers.PhotoController");
+dojo.require("media.js.views.AlbumContextMenu");
+dojo.require("media.js.views.AlbumListView");
+dojo.require("media.js.views.AlbumToolbar");
+dojo.require("media.js.views.PhotoContextMenu");
+dojo.require("media.js.views.PhotoListView");
+dojo.require("media.js.views.PhotoToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'media_album_activate', 'media_album_add', 'media_album_cover', 'media_album_delete', 'media_album_list', 
+					'media_album_rename',
+					'media_photo_activate', 'media_photo_copy', 'media_photo_delete', 'media_photo_download', 'media_photo_edit',
+					'media_photo_list', 'media_photo_order', 'media_photo_remove', 'media_photo_rename', 'media_photo_replace',
+					'media_photo_update', 'media_photo_upload',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	var photoController = new media.js.controllers.PhotoController("mediaPhotoListRootContainer");
+	photoController.setAlbumContextMenu(new media.js.views.AlbumContextMenu())
+				   .setAlbumListView(new media.js.views.AlbumListView("mediaPhotoListAlbumsContainer"))
+				   .setAlbumToolbar(new media.js.views.AlbumToolbar("mediaPhotoListAlbumToolbar"))
+				   .setPhotoContextMenu(new media.js.views.PhotoContextMenu())
+				   .setPhotoListView(new media.js.views.PhotoListView("mediaPhotoListPhotosContainer"))
+				   .setPhotoToolbar(new media.js.views.PhotoToolbar("mediaPhotoListPhotoToolbar"))
+				   .initPhotoSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>);
+});
+</script>

@@ -1,0 +1,32 @@
+{
+	"_about": {
+		"description": "Hiển thị ảnh",
+		"title": "Ảnh"
+	},
+	"config": {
+		"album": "Tập ảnh",
+		"albumDeterminedAutomatically": "Tự động xác định tập ảnh",
+		"basic": "Cơ bản",
+		"dataSource": "Nguồn dữ liệu",
+		"dragDropHelp": "Gắp và thả ảnh ở đây",
+		"keyword": "Từ khóa",
+		"language": "Ngôn ngữ",
+		"latestPhotos": "Ảnh mới nhất",
+		"mostCommentedPhotos": "Ảnh nhiều bình luận nhất",
+		"mostDownloadedPhotos": "Ảnh tải về nhiều nhất",
+		"mostViewedPhotos": "Ảnh xem nhiều nhất",
+		"numberOfPhotos": "Số ảnh",
+		"removeAction": "Xóa",
+		"selectAlbum": "Chọn tập ảnh",
+		"setOfPhotos": "Tập các ảnh",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"by": "Bởi %s",
+		"dateFormat": "d-m-Y",
+		"numComments": "%s bình luận",
+		"numDownloads": "%s lượt tải",
+		"numViews": "%s lượt xem",
+		"viewAlbum": "Xem tập ảnh"
+	}
+}

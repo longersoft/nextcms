@@ -1,0 +1,93 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-05
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('playlist.add.title'));
+?>
+
+<form id="mediaPlaylistAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<script type="dojo/method" data-dojo-event="onSubmit" data-dojo-args="e">
+	e.preventDefault();
+	var _this = this;
+	if (_this.validate()) {
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'media_playlist_add'); ?>",
+			content: dojo.formToObject("mediaPlaylistAddForm"),
+			handleAs: "json",
+			load: function(data) {
+				_this.reset();
+				dojo.publish("/app/media/playlist/add/onComplete", [ data ]);
+			}
+		});
+	}
+	</script>
+	
+	<div class="appFormRow">
+		<label for="slug"><?php echo $this->translator()->_('playlist._share.language'); ?>:</label>
+		<select id="mediaPlaylistAddLanguage" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', value: '<?php echo $this->language; ?>'">
+		<?php foreach ($this->languages as $language => $name) : ?>
+			<option value="<?php echo $language; ?>"<?php if ($language == $this->language) : ?> selected="selected"<?php else : ?> disabled="disabled"<?php endif; ?>><?php echo $name; ?></option>
+		<?php endforeach; ?>
+		</select>
+	</div>
+
+	<div class="appFormRow">
+		<label for="title"><?php echo $this->translator()->_('playlist._share.title'); ?>:</label>
+		<div data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('playlist._share.titleRequired'); ?>'">
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_helper_slug'); ?>",
+				content: {
+					locale: dijit.byId("mediaPlaylistAddLanguage").get("value"),
+					input: value
+				},
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("mediaPlaylistAddSlugTextBox").set("value", data.output);
+				}
+			});
+			</script>
+		</div>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="slug"><?php echo $this->translator()->_('playlist._share.slug'); ?>:</label>
+		<input id="mediaPlaylistAddSlugTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'slug', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('playlist._share.slugRequired'); ?>'" />
+	</div>
+
+	<div class="dijitDialogPaneActionBar">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('global._share.addAction'); ?>
+		</button>
+
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/media/playlist/add/onCancel");
+			</script>
+		</button>
+	</div>
+
+	<input type="hidden" name="format" value="json" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

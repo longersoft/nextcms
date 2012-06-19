@@ -1,0 +1,120 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('flickr.import.title'));
+?>
+
+<?php if (!$this->authenticated) : ?>
+
+<div class="appCenter">
+	<div><?php echo sprintf($this->translator()->_('flickr.import.authHelp'), $this->url(array(), 'media_flickr_auth')); ?></div>
+</div>
+
+<?php else : ?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/media/css/admin/default/styles.css");
+</script>
+
+<div id="mediaFlickrImportContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: true, style: 'height: 100%; padding: 0; width: 100%;'">
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, region: 'leading', minSize: 200, splitter: true, style: 'margin: 0; padding: 0; width: 20%'">
+		<!-- SetToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaFlickrImportSetToolbar"></div>
+		</div>
+		<!-- /SetToolbar -->
+	
+		<!-- Sets -->
+		<div id="mediaFlickrImportSetsContainer" class="mediaFlickrSetList" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+			<div class="appCenter">
+				<div><?php echo $this->translator()->_('flickr.import.listSetsHelp'); ?></div>
+			</div>
+		</div>
+		<!-- /Sets -->
+	</div>
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'top', gutters: false, splitter: true, style: 'height: 50%'">
+		<!-- PhotoToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaFlickrImportPhotoToolbar"></div>
+		</div>
+		<!-- /PhotoToolbar -->
+		
+		<!-- Photos -->
+		<div id="mediaFlickrImportPhotosContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+			<div class="appCenter">
+				<div><?php echo $this->translator()->_('flickr.import.listPhotosHelp'); ?></div>
+			</div>
+		</div>
+		<!-- /Photos -->
+	</div>
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaFlickrImportToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- SelectedPhotos -->
+		<div id="mediaFlickrImportImportedContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+		</div>
+		<!-- /SelectedPhotos -->
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.registerModulePath("media", "<?php echo $this->APP_STATIC_URL; ?>/modules/media");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("media.js.controllers.FlickrController");
+dojo.require("media.js.views.FlickrPhotoToolbar");
+dojo.require("media.js.views.FlickrSetToolbar");
+dojo.require("media.js.views.FlickrToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'media_flickr_import', 'media_flickr_photo', 'media_flickr_set',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	var flickrController = new media.js.controllers.FlickrController("mediaFlickrImportContainer");
+	flickrController.setSetToolbar(new media.js.views.FlickrSetToolbar("mediaFlickrImportSetToolbar"))
+					.setPhotoToolbar(new media.js.views.FlickrPhotoToolbar("mediaFlickrImportPhotoToolbar"))
+					.setToolbar(new media.js.views.FlickrToolbar("mediaFlickrImportToolbar"))
+					.setSetsContainer("mediaFlickrImportSetsContainer")
+					.setPhotosContainer("mediaFlickrImportPhotosContainer")
+					.setImportedContainer("mediaFlickrImportImportedContainer");
+});
+</script>
+	
+<?php endif; ?>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/media/languages')->_('flickr.import.title'); ?>";
+</script>

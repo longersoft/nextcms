@@ -1,0 +1,118 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div id="mediaHooksPhotoProviderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.title'); ?>'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+		<div data-dojo-type="dijit.Toolbar">
+			<input id="mediaHooksPhotoProviderSearchBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', placeHolder: '<?php echo $this->translator(true)->_('show.keywordHelp'); ?>', style: 'width: 150px'" />
+			<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appSearchIcon', label: '<?php echo $this->translator(true)->_('show.searchAction'); ?>'">
+				<script type="dojo/connect" data-dojo-event="onClick">
+				var keyword = dijit.byId("mediaHooksPhotoProviderSearchBox").get("value");
+				media.hooks.photoprovider.PhotoController.searchPhotos({
+					title: keyword,
+					page: 1
+				});
+				</script>
+			</button>
+			
+			<?php if ($this->thumbSizes) : ?>
+			<select data-dojo-type="dijit.form.Select" data-dojo-props="class: 'appRight', style: 'height: 20px; margin: 0 5px'">
+				<?php foreach ($this->thumbSizes as $size) : ?>
+				<option value="<?php echo $size; ?>"><?php echo $this->translator()->_('show.' . $size . 'Size'); ?></option>
+				<?php endforeach; ?>
+				<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+				media.hooks.photoprovider.PhotoController._criteria.view_size = value;
+				media.hooks.photoprovider.PhotoController.updateViewSize(value);
+				</script>
+			</select>
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- PhotosPane -->
+	<div id="mediaHooksPhotoProviderPhotosContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'height: 100%; width: 100%'">
+		<div class="appCenter">
+			<div><?php echo $this->translator()->_('show.searchHelp'); ?></div>
+		</div>
+	</div>
+	<!-- /PhotosPane -->
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* media.hooks.photoprovider */
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Encoder");
+dojo.require("core.js.Constant");
+dojo.provide("media.hooks.photoprovider.PhotoController");
+
+media.hooks.photoprovider.PhotoController._criteria = {
+	title: null,
+	page: 1,
+	per_page: 20,
+	view_size: "square"
+};
+
+media.hooks.photoprovider.PhotoController.searchPhotos = function(/*Object*/ criteria) {
+	// summary:
+	//		Searches for photos
+	dojo.mixin(media.hooks.photoprovider.PhotoController._criteria, criteria);
+	var q = core.js.base.Encoder.encode(media.hooks.photoprovider.PhotoController._criteria);
+
+	var params = {
+		_type: "hook",
+		_mod: "media",
+		_name: "photoprovider",
+		_method: "search",
+		q: q
+	};
+	dijit.byId("mediaHooksPhotoProviderPhotosContainer")
+		 .set("href", "<?php echo $this->url(array(), 'core_extension_render'); ?>" + "?" + dojo.objectToQuery(params));
+};
+
+media.hooks.photoprovider.PhotoController.updateViewSize = function(/*String*/ size) {
+	// summary:
+	//		Updates view size
+	// size: 
+	//		Can be "square", "thumbnail", "small", "crop", "medium", "large", "original"
+	dojo.query(".mediaHooksPhotoProviderPhotoItem", "mediaHooksPhotoProviderPhotosContainer").forEach(function(node) {
+		var img  = dojo.query("img", node)[0];
+		var data = dojo.attr(node, "data-app-entity-props");
+		if (data) {
+			data = core.js.base.Encoder.decode(data);
+			dojo.attr(img, "src", core.js.Constant.normalizeUrl(data["image_" + size]));
+		}
+	});
+};
+
+dojo.subscribe("/app/media/hooks/photoprovider/search/onGotoPage", function(/*Integer*/ page) {
+	// summary:
+	//		Paging handler
+	media.hooks.photoprovider.PhotoController.searchPhotos({
+		page: page
+	});
+});
+<?php $this->script()->captureEnd(); ?>

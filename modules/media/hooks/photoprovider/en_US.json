@@ -1,0 +1,28 @@
+{
+	"_about": {
+		"description": "Search for photos and allow to drag and drop the photos to other targets",
+		"title": "Photos Provider"
+	},
+	"menu": {
+		"label": "Photos provider"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"show": {
+		"keywordHelp": "Photo's title",
+		"notFound": "Not found any photos",
+		"searchAction": "Search",
+		"searchHelp": "Click the Search icon to view the list of photos",
+		"title": "Photos",
+		"cropSize": "Crop",
+		"largeSize": "Large",
+		"mediumSize": "Medium",
+		"originalSize": "Original",
+		"smallSize": "Small",
+		"squareSize": "Square",
+		"thumbnailSize": "Thumbnail"
+	}
+}

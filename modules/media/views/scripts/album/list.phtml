@@ -1,0 +1,71 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-01
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('album.list.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, class: 'appContentPane'">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('album.list.total'), '<span class="mediaAlbumListCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+
+		<?php if ($this->total == 0) : ?>
+		<?php echo $this->translator()->_('album.list.notFound'); ?>
+		<?php else : ?>
+
+		<ul class="mediaAlbumItemsContainer">
+			<li <?php if (!$this->criteria['active_album_id']) : ?>class="mediaAlbumItemSelected" <?php endif; ?>style="padding-bottom: 8px">
+				<a class="mediaAlbumTitle" id="mediaAlbumListFilterAll" href="javascript: void(0);">
+					<?php echo $this->translator()->_('album.list.viewAll'); ?>
+				</a>
+			</li>
+			
+			<?php foreach ($this->albums as $album) : ?>
+			<?php echo $this->partial('album/add.ajax.phtml', array('album' => $album, 'APP_ROOT_URL' => $this->APP_ROOT_URL, 'criteria' => $this->criteria)); ?>
+			<?php endforeach; ?>
+
+			<?php endif; ?>
+		</ul>
+	</div>
+
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+		<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/media/album/list/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+
+dojo.addOnLoad(function() {
+	// DOJO LESSON: Becareful with dojo.connect. I have to check if the DomNode already exists.
+	// Otherwise, it will fire the event whenever you click on the screen and it is not easy to find out the root of problem.
+	if (dojo.byId("mediaAlbumListFilterAll")) {
+		dojo.connect(dojo.byId("mediaAlbumListFilterAll"), "onclick", function() {
+			dojo.publish("/app/media/album/list/onViewAll", [ this.parentNode ]);
+		});
+	}
+});
+</script>

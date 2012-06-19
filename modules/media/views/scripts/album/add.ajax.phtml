@@ -1,0 +1,37 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-26
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<li id="mediaAlbumItem_<?php echo $this->album->album_id; ?>"
+	class="mediaAlbumItem mediaAlbumItemListView<?php if ($this->album->album_id == $this->criteria['active_album_id']) : ?> mediaAlbumItemSelected<?php endif; ?>"
+	data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																'album_id'	  => $this->album->album_id,
+																'title'		  => $this->album->title,
+																'short_title' => $this->stringFormatter()->sub($this->album->title, 20),
+																'status'	  => $this->album->status,
+																'num_photos'  => $this->album->num_photos,
+																'cover'		  => $this->album->cover,
+																'view_type'	  => $this->criteria['view_type'],
+															)); ?>">
+	<div class="mediaAlbumCoverContainer">
+		<img class="mediaAlbumCover" src="<?php if ($this->album->image_square) : ?><?php echo $this->APP_ROOT_URL . $this->album->image_square; ?><?php else : ?><?php echo $this->APP_ROOT_URL; ?>/modules/media/images/defaultAlbumCover.png<?php endif; ?>" />
+	</div>
+	
+	<a class="mediaAlbumTitle" href="javascript: void(0);"><?php echo $this->album->title; ?></a>
+	
+	<span class="mediaAlbumPhotoCounter"><?php echo $this->album->num_photos; ?></span>
+</li>

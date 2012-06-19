@@ -1,0 +1,98 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-25
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/swfobject/swfobject.js"></script>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Videos -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'padding: 8px'">
+		<div class="mediaHooksVideoProviderVideoItemsContainer" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+			<?php if (!$this->videos || count($this->videos) == 0) : ?>
+			<?php echo $this->translator()->_('show.notFound'); ?>
+			<?php else : ?>
+			
+			<?php foreach ($this->videos as $video) : ?>
+			<div id="mediaHooksVideoProviderVideoItem_<?php echo $video->video_id; ?>" class="mediaHooksVideoProviderVideoItem dojoDndItem" dndtype="mediaVideoDndItem,appDndVideo<?php if ($video->url) : ?>,appDndLink<?php endif; ?>"
+				data-app-entity-class="Media_Models_Video"
+				data-app-entity-props="<?php echo $this->encoder()->encode($video); ?>"
+				<?php if ($video->url) : ?>
+				data-app-dndvideo="<?php echo $this->encoder()->encode(array('url' => $this->url($video->getProperties(), 'media_video_embed'), 'width' => 480, 'height' => 360)); ?>"
+				data-app-dndlink="<?php echo $this->encoder()->encode($video, array('url', 'title')); ?>"
+				<?php endif; ?>
+				data-app-dndthumbnails=<?php echo Zend_Json::encode($video->getPosterThumbnails()); ?>>
+				<div class="mediaHooksVideoProviderPlayIcon" title="<?php echo addslashes($video->title); ?>"></div>
+				<img src="<?php echo $video->getPoster('square'); ?>" title="<?php echo addslashes($video->title); ?>" />
+				<br />
+				<?php echo $video->title; ?>
+			</div>
+			<?php endforeach; ?>
+			
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /Videos -->
+	
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/media/hooks/videoprovider/search/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.widget.DialogSimple");
+
+dojo.require("core.js.base.Encoder");
+dojo.require("core.js.Constant");
+
+dojo.addOnLoad(function() {
+	// Play video
+	dojo.query(".mediaHooksVideoProviderPlayIcon").forEach(function(node) {
+		dojo.connect(node, "onclick", function() {
+			var videoNode = node.parentNode;
+			var video = dojo.attr(videoNode, "data-app-entity-props");
+			video = core.js.base.Encoder.decode(video);
+
+			var playerId = "mediaHooksVideoProviderPlayer_" + video.video_id;
+			if (dojo.byId(playerId)) {
+				dojo.destroy(playerId);
+			}
+			var dialog = new dojox.widget.DialogSimple({
+				title: "<?php echo $this->translator()->_('show.playAction'); ?>",
+				style: "height: 360px; width: 500px"
+			});
+			
+			var jsCode = [];
+			jsCode.push('swfobject.embedSWF("' + core.js.Constant.ROOT_URL + '/static/js/strobemediaplayback/StrobeMediaPlayback.swf"', 
+											'"' + playerId + '"',
+											'"470"',
+											'"320"',
+											'"10.0.1"',
+											'"' + core.js.Constant.ROOT_URL + '/static/js/strobemediaplayback/expressInstall.swf"',
+											'{ autoPlay: true, src: "' + core.js.Constant.normalizeUrl(video.url) + '" }, { allowfullscreen: true });');
+			dialog.set("content", '<div id="' + playerId + '"></div><script type="text/javascript">' + "\n" + jsCode.join(",") + "</" + "script>");
+			dialog.show();
+		});
+	});
+});
+</script>

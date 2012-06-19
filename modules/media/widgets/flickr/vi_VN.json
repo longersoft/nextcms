@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Hiển thị ảnh từ Flickr",
+		"title": "Flickr"
+	},
+	"config": {
+		"apiKey": "Mã API",
+		"apiKeyRequired": "Mã API là bắt buộc",
+		"basic": "Cơ bản",
+		"numberOfPhotos": "Số ảnh",
+		"numberOfPhotosRequired": "Số ảnh là bắt buộc",
+		"searchByTag": "Tìm kiếm ảnh theo tag",
+		"searchByUser": "Tìm kiếm ảnh theo tên tài khoản hoặc email của người dùng",
+		"size": "Kích thước",
+		"sizeLarge": "Lớn (640px)",
+		"sizeMedium": "Trung bình (500px)",
+		"sizeOriginal": "Gốc",
+		"sizeSmall": "Nhỏ (240px)",
+		"sizeSquare": "Vuông (75px x 75px)",
+		"sizeThumbnail": "Thumbnail (100px)",
+		"theme": "Mẫu giao diện"
+	}
+}

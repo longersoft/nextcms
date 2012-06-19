@@ -1,0 +1,202 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-05
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('photo.upload.title'));
+?>
+
+<div id="mediaPhotoUploadContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var photos  = [];
+			var albumId = dijit.byId("mediaPhotoUploadAlbumSelect").get("value");
+
+			dojo.query("input[name='thumbnails[]']", "mediaPhotoUploadForm").forEach(function(node, index, arr) {
+				photos.push(dojo.attr(node, "value"));
+			});
+
+			dijit.byId("mediaPhotoUploadStandby").set("imageText", "<?php echo $this->translator()->_('global._share.savingAction'); ?>");
+			dijit.byId("mediaPhotoUploadStandby").show();
+
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'media_photo_upload'); ?>",
+				content: {
+					album_id: albumId,
+					"photos[]": photos,
+					format: "json",
+					language: "<?php echo $this->language; ?>"
+				},
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("mediaPhotoUploadStandby").hide();
+					dojo.publish("/app/media/photo/upload/onSuccess", [{ num_photos: photos.length, album_id: albumId }]);
+				}
+			});
+			</script>
+		</button>
+
+		<button data-dojo-type="dijit.form.Button"
+			data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/media/photo/upload/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+
+	<!-- UploadForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: true">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'border: none', class: 'appContentPane'">
+			<form id="mediaPhotoUploadForm" data-dojo-type="dijit.form.Form"
+				data-dojo-props="action: '', method: 'POST', encType: 'multipart/form-data', class: 'appForm'">
+				<h2 class="appHeadline" style="margin-top: 0">
+					<span><?php echo $this->translator()->_('photo.upload.title'); ?> </span>
+				</h2>
+
+				<div class="appFormRow">
+					<label for="album"><?php echo $this->translator()->_('photo.upload.album'); ?>:</label>
+					<select id="mediaPhotoUploadAlbumSelect" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'album', maxHeight: '150px'">
+						<option value="">---</option>
+						<?php foreach ($this->albums as $album) : ?>
+						<option value="<?php echo $album->album_id; ?>"<?php if ($this->album && $this->album->album_id == $album->album_id) : ?>selected="selected" <?php endif; ?>>
+							<?php echo $album->title; ?>
+						</option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+
+				<div class="appFormRow">
+					<label for="newAlbum">&nbsp;</label> 
+					<input id="mediaPhotoUploadNewAlbum" data-dojo-type="dijit.form.TextBox"
+						data-dojo-props="name: 'newAlbum', width: '200px', placeHolder: '<?php echo $this->translator(true)->_('photo.upload.createAlbumHelp'); ?>'" />
+					<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+						<?php echo $this->translator()->_('global._share.createAction'); ?>
+						<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+						var title = dijit.byId("mediaPhotoUploadNewAlbum").attr("value");
+						if (title != "") {
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'media_album_add'); ?>",
+								content: {
+									title: title,
+									language: "<?php echo $this->language; ?>",
+									format: "json"
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("mediaPhotoUploadNewAlbum").set("value", "");
+									dijit.byId("mediaPhotoUploadAlbumSelect").addOption({
+										value: data.album_id + "",
+										label: title,
+										selected: true
+									});
+									// Set the newly added album as the selected one
+									dijit.byId("mediaPhotoUploadAlbumSelect").set("value", data.album_id + "");
+									dojo.publish("/app/media/album/add/onSuccess");
+								}
+							});
+						}
+						</script>
+					</button>
+				</div>
+				
+				<div class="appFormRow">
+					<label>&nbsp;</label>
+					<span data-dojo-type="dijit.form.CheckBox" data-dojo-props="disabled: <?php if (($options = $this->config('file', 'watermark')) && ($options = Zend_Json::decode($options)) && ($options['using'] != 'none')) : ?>false<?php else: ?>true<?php endif; ?>">
+						<script type="dojo/method" data-dojo-event="onChange">
+						var uploader = dijit.byId("mediaPhotoUploadUploader");
+						var params = {
+							watermark: this.get("checked") ? "true" : "false"
+						};
+						uploader.set("url", uploader.get("appUploadUrl") + "&" + dojo.objectToQuery(params));
+						</script>
+					</span>
+					<span><?php echo $this->translator()->_('photo.upload.addWatermark'); ?></span>
+				</div>
+
+				<!-- Uploader -->
+				<div class="appFormRow" id="mediaPhotoUploadUploaderContainer">
+					<label for="photos"><?php echo $this->translator()->_('photo.upload.selectPhotos'); ?>:</label>
+					<div id="mediaPhotoUploadUploader" data-dojo-type="dojox.form.Uploader" data-dojo-props="name: 'photos', multiple: true, type: 'file', uploadOnSelect: true, label: '<?php echo $this->translator(true)->_('global._share.browseFileAction'); ?>', url: '<?php echo $this->url(array(), 'file_file_upload'); ?>?PHPSESSID=<?php echo Zend_Session::getId(); ?>&mod=media&name=photoss&thumbnail=true', appUploadUrl: '<?php echo $this->url(array(), 'file_file_upload'); ?>?PHPSESSID=<?php echo Zend_Session::getId(); ?>&mod=media&name=photoss&thumbnail=true', style: 'width: 150px'">
+						<script type="dojo/method" data-dojo-event="onBegin">
+						this.set("disabled", true);
+						dijit.byId("mediaPhotoUploadStandby").set("imageText", "<?php echo $this->translator()->_('global._share.uploadingAction'); ?>");
+						dijit.byId("mediaPhotoUploadStandby").show();
+						</script>
+						<script type="dojo/method" data-dojo-event="onComplete" data-dojo-args="dataArray">
+						this.set("disabled", false);
+						dijit.byId("mediaPhotoUploadStandby").hide();
+						dojo.forEach(dataArray, function(file) {
+							var div    = dojo.create("div", {
+								className: "mediaPhotoItem"
+							}, "mediaPhotoUploadPhotos", "last");
+							var image  = dojo.create("img", {
+								src: core.js.Constant.ROOT_URL + file.thumbnail.url,
+								title: file.original.name
+							}, div);
+							var thumbs = {
+								name: file.original.name
+							};
+							dojo.forEach(['square', 'thumbnail', 'small', 'crop', 'medium', 'large', 'original'], function(thumbnailSize) {
+								thumbs[thumbnailSize] = file[thumbnailSize].url;
+							});
+							dojo.create("input", {
+								type: "hidden",
+								name: "thumbnails[]",
+								value: dojo.toJson(thumbs)
+							}, "mediaPhotoUploadForm", "last"); 
+						});
+						</script>
+					</div>
+				</div>
+				
+				<div class="appFormRow">
+					<label>&nbsp;</label>
+					<?php echo sprintf($this->translator()->_('global._share.maxUploadSize'), ini_get('upload_max_filesize')); ?>
+				</div>
+				<!-- /Uploader -->
+			</form>
+		</div>
+
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<div id="mediaPhotoUploadPhotos" class="mediaPhotoItemsContainer"></div>
+		</div>
+	</div>
+	<!-- /UploadForm -->
+</div>
+
+<div id="mediaPhotoUploadStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'mediaPhotoUploadContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dojox.form.Uploader");
+dojo.require("dojox.form.uploader.plugins.Flash");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+
+dojo.require("core.js.Constant");
+</script>

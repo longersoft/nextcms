@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Show albums",
+		"title": "Albums"
+	},
+	"config": {
+		"basic": "Basic",
+		"dataSource": "Data source",
+		"language": "Language",
+		"latestAlbums": "Latest albums",
+		"mostViewedAlbums": "Most viewed albums",
+		"numberOfAlbums": "The number of albums",
+		"theme": "Theme"
+	},
+	"show": {
+		"by": "By %s",
+		"dateFormat": "Y-m-d",
+		"numPhotos": "%s photos",
+		"numViews": "%s views"
+	}
+}

@@ -1,0 +1,41 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numPhotos > 0) : ?>
+<div class="mediaWidgetsPhotosMix">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	<p>
+		<a href="<?php echo $this->url($this->photos[0]->getProperties(), 'media_photo_view'); ?>" title="<?php echo addslashes($this->photos[0]->title); ?>"><img src="<?php echo $this->photos[0]->getThumbnail('crop'); ?>" title="<?php echo addslashes($this->photos[0]->title); ?>" height="225" width="300" /></a>
+		<span>
+			<?php echo $this->photos[0]->title; ?><br />
+			<?php echo date($this->translator()->_('show.dateFormat'), strtotime($this->photos[0]->activated_date)); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.by'), $this->photos[0]->getAuthor()); ?>
+		</span>
+	</p>
+	<ul>
+		<?php for ($i = 1; $i < $this->numPhotos; $i++) : ?>
+		<li>
+			<a href="<?php echo $this->url($this->photos[$i]->getProperties(), 'media_photo_view'); ?>" title="<?php echo addslashes($this->photos[$i]->title); ?>"><img src="<?php echo $this->photos[$i]->getThumbnail('square'); ?>" title="<?php echo addslashes($this->photos[$i]->title); ?>" height="75" width="75" /></a>
+			<div>
+				<?php echo date($this->translator()->_('show.dateFormat'), strtotime($this->photos[$i]->activated_date)); ?><br />
+				<?php echo sprintf($this->translator()->_('show.by'), $this->photos[$i]->getAuthor()); ?>
+			</div> 
+		</li>
+		<?php endfor; ?>
+	</ul>
+</div>
+<?php endif; ?>

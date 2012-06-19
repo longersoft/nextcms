@@ -1,0 +1,37 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-11-05
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('flickr.photo.title'));
+?>
+
+<?php if (!$this->photos || count($this->photos) == 0) : ?>
+	<div class="appCenter">
+		<div><?php echo $this->translator()->_('flickr.photo.notFound'); ?></div>
+	</div>
+<?php else : ?>
+
+	<?php foreach ($this->photos as $photo) : ?>
+	<div class="mediaFlickrPhotoItem" data-app-entity-props="<?php echo $this->encoder()->encode($photo); ?>">
+		<img src="<?php echo $photo['thumbnails']['small']; ?>" title="<?php echo addslashes($photo['title']); ?>" />
+		<br />
+		<?php echo $photo['title']; ?>
+	</div>
+	<?php endforeach; ?>
+
+<?php endif; ?>

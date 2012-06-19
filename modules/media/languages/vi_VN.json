@@ -1,0 +1,465 @@
+{
+	"_about": {
+		"description": "Quản lý ảnh và video",
+		"title": "Đa phương tiện"
+	},
+	"_menu": {
+		"config": {
+			"config": "Cấu hình module"
+		},
+		"flickr": {
+			"import": "Nhập ảnh từ Flickr"
+		},
+		"photo": {
+			"list": "Quản lý ảnh"
+		},
+		"video": {
+			"list": "Quản lý video"
+		}
+	},
+	"_permission": {
+		"album": {
+			"description": "Quản lý tập ảnh",
+			"actions": {
+				"activate": "Duyệt/hủy tập ảnh",
+				"add": "Thêm tập ảnh mới",
+				"cover": "Thiết lập ảnh đại diện",
+				"delete": "Xóa tập ảnh",
+				"list": "Xem danh sách các tập ảnh",
+				"rename": "Đổi tên tập ảnh"
+			}
+		},
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		},
+		"flickr": {
+			"description": "Nhập ảnh từ Flickr",
+			"actions": {
+				"import": "Nhập ảnh"
+			}
+		},
+		"photo": {
+			"description": "Quản lý ảnh",
+			"actions": {
+				"activate": "Duyệt/hủy ảnh",
+				"copy": "Chép ảnh vào tập ảnh",
+				"delete": "Xóa ảnh",
+				"download": "Tải ảnh xuống",
+				"edit": "Sửa ảnh",
+				"list": "Xem danh sách các ảnh",
+				"order": "Xếp thứ tự các ảnh trong tập ảnh",
+				"remove": "Xóa ảnh khỏi tập ảnh",
+				"rename": "Đổi tên ảnh",
+				"replace": "Thay thế ảnh",
+				"update": "Cập nhật thông tin ảnh",
+				"upload": "Tải ảnh lên"
+			}
+		},
+		"playlist": {
+			"description": "Quản lý playlist",
+			"actions": {
+				"activate": "Duyệt/hủy playlist",
+				"add": "Thêm playlist mới",
+				"cover": "Thiết lập ảnh đại diện",
+				"delete": "Xóa playlist",
+				"list": "Xem danh sách các playlist",
+				"rename": "Đổi tên playlist"
+			}
+		},
+		"video": {
+			"description": "Quản lý video",
+			"actions": {
+				"activate": "Duyệt/hủy video",
+				"add": "Thêm video mới",
+				"copy": "Chép video vào playlist",
+				"cover": "Thiết lập ảnh đại diện",
+				"delete": "Xóa video",
+				"download": "Tải video xuống",
+				"list": "Xem danh sách các video",
+				"order": "Xếp thứ tự các video trong playlist",
+				"remove": "Xóa video khỏi playlist",
+				"rename": "Đổi tên video",
+				"update": "Cập nhật thông tin video"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Kích hoạt",
+			"addAction": "Thêm",
+			"addNewVideoAction": "Thêm video",
+			"browseFileAction": "Chọn ảnh ...",
+			"by": "Bởi %s",
+			"cancelAction": "Hủy",
+			"chooseSizeAction": "Chọn kích thước:",
+			"closeAction": "Đóng",
+			"createAction": "Tạo",
+			"dateFormat": "d-m-Y",
+			"deactivateAction": "Hủy kích hoạt",
+			"deleteAction": "Xóa",
+			"downloadAction": "Tải xuống",
+			"editAction": "Sửa",
+			"highlightAction": "Làm sáng",
+			"importAction": "Nhập",
+			"language": "Ngôn ngữ",
+			"loadingAction": "Đang tải ...",
+			"maxUploadSize": "Dung lượng tối đa của tệp tải lên là %s",
+			"numComments": "%s bình luận",
+			"numViews": "%s lượt xem",
+			"processingAction": "Đang xử lý ...",
+			"redoAction": "Làm lại",
+			"refreshAction": "Tải lại",
+			"renameAction": "Đổi tên",
+			"replaceAction": "Thay thế",
+			"saveAction": "Lưu",
+			"savingAction": "Đang lưu ...",
+			"saveOrderAction": "Lưu thứ tự",
+			"searchAction": "Tìm",
+			"searchFor": "Tìm kiếm %s",
+			"searchForTag": "Tìm kiếm theo thẻ %s",
+			"showSlideAction": "Trình diễn",
+			"tags": "Thẻ",
+			"undoAction": "Hủy bỏ",
+			"uploadAction": "Tải lên",
+			"uploadingAction": "Đang tải lên ...",
+			"viewAsGridAction": "Xem dạng lưới",
+			"viewAsListAction": "Xem dạng danh sách",
+			"cropSize": "Crop",
+			"largeSize": "Lớn",
+			"mediumSize": "Trung bình",
+			"originalSize": "Gốc",
+			"smallSize": "Nhỏ",
+			"squareSize": "Vuông",
+			"thumbnailSize": "Thu nhỏ",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"album": {
+		"_share": {
+			"language": "Ngôn ngữ",
+			"slug": "Tiêu đề rút gọn",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt tập ảnh",
+			"activateSuccess": "Tập ảnh đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt tập ảnh",
+			"deactivateSuccess": "Tập ảnh đã được hủy kích hoạt thành công"
+		},
+		"add": {
+			"success": "Tập ảnh đã được tạo thành công",
+			"title": "Thêm tập ảnh"
+		},
+		"cover": {
+			"setCoverAction": "Thiết lập ảnh đại diện cho tập ảnh",
+			"success": "Tập ảnh đã được thiết lập ảnh đại diện thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa tập ảnh tiêu đề <b>%s</b>?",
+			"notFound": "Xin lỗi, không tìm thấy tập ảnh",
+			"success": "Tập ảnh đã được xóa thành công",
+			"title": "Xóa tập ảnh"
+		},
+		"list": {
+			"newAlbumButton": "Tập ảnh mới",
+			"notFound": "Không tìm thấy tập ảnh nào",
+			"searchAlbumHelp": "Tiêu đề tập ảnh",
+			"title": "Quản lý tập ảnh",
+			"total": "Tập ảnh %s",
+			"viewAll": "Xem tất cả"
+		},
+		"rename": {
+			"success": "Tập ảnh đã được đổi tên thành công"
+		},
+		"view": {
+			"pager": "Xem tập ảnh (phân trang)",
+			"title": "Xem tập ảnh"
+		}
+	},
+	"config": {
+		"config": {
+			"apiKey": "Mã API",
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"flickr": "Flickr",
+			"secretKey": "Mã bí mật",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"title": "Cấu hình module Đa phương tiện"
+		}
+	},
+	"download": {
+		"photo": {
+			"title": "Tải ảnh xuống"
+		}
+	},
+	"feed": {
+		"video": {
+			"playlist": "Kênh RSS/Atom của video mới nhất trong playlist",
+			"title": "Kênh RSS/Atom của video mới nhất"
+		}
+	},
+	"flickr": {
+		"import": {
+			"authHelp": "Nhấp <a href=%s>vào đây</a> để xác thực tài khoản Flickr của bạn",
+			"error": "Xin lỗi, không thể nhập các ảnh đã chọn",
+			"listPhotosHelp": "Bước 2: Nhấp vào tên của tập ảnh để xem các ảnh trong tập ảnh đó.<br />Sau đó nhấp vào biểu tượng dấu cộng (+) trên mỗi ảnh mà bạn muốn nhập",
+			"listSetsHelp": "Bước 1: Nhấp nút Tải lại để xem danh sách các tập ảnh trên Flickr",
+			"success": "Các ảnh đã chọn đã được nhập thành công",
+			"title": "Nhập ảnh từ Flickr"
+		},
+		"photo": {
+			"notFound": "Không tìm thấy ảnh nào",
+			"title": "Xem ảnh của tập ảnh từ Flickr"
+		},
+		"set": {
+			"notFound": "Không tìm thấy tập ảnh nào",
+			"title": "Xem các tập ảnh từ Flickr"
+		}
+	},
+	"index": {
+		"index": {
+			"title": "Trang chủ của module Đa phương tiện"
+		}
+	},
+	"photo": {
+		"_share": {
+			"description": "Mô tả",
+			"height": "Cao",
+			"notFound": "Không tìm thấy ảnh nào",
+			"photographer": "Tên người chụp",
+			"properties": "Thuộc tính",
+			"tags": "Tags",
+			"tagsHelp": "Kéo tag từ Công cụ cung cấp tag và thả vào vùng dưới đây:",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"width": "Rộng"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt ảnh",
+			"activateSuccess": "Ảnh đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt ảnh",
+			"deactivateSuccess": "Ảnh đã được hủy kích hoạt thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa ảnh có tiêu đề <b>%s</b>?",
+			"notFound": "Xin lỗi, không thể tìm thấy ảnh",
+			"success": "Ảnh đã được xóa thành công",
+			"title": "Xóa ảnh"
+		},
+		"download": {
+			"title": "Tải ảnh xuống"
+		},
+		"edit": {
+			"cropAction": "Crop",
+			"cropHelp": "Nhấp đúp chuột vào vùng đã chọn để crop ảnh",
+			"cropSize": "Bạn đang chỉnh sửa ảnh có kích thước <b>crop</b> so với ảnh gốc",
+			"flipHorizontalAction": "Quay ảnh ngang",
+			"flipVerticalAction": "Quay ảnh dọc",
+			"imageEditor": "Trình sửa ảnh",
+			"largeSize": "Bạn đang chỉnh sửa ảnh có kích thước <b>lớn</b> so với ảnh gốc",
+			"maintainAspectRatio": "Giữ tỉ lệ kích thước",
+			"mediumSize": "Bạn đang chỉnh sửa ảnh có kích thước <b>trung bình</b> so với ảnh gốc",
+			"originalSize": "Bạn đang chỉnh sửa ảnh gốc",
+			"resizeAction": "Thay đổi kích thước",
+			"resizeBy": "Theo",
+			"resizeByPercentage": "Phần trăm",
+			"resizeByPixels": "Pixel",
+			"rotateAction": "Quay",
+			"rotateLeftAction": "Quay trái",
+			"rotateRightAction": "Quay phải",
+			"smallSize": "Bạn đang chỉnh sửa ảnh có kích thước <b>nhỏ</b> so với ảnh gốc",
+			"squareSize": "Bạn đang chỉnh sửa ảnh có kích thước <b>vuông</b> so với ảnh gốc",
+			"thumbnailSize": "Bạn đang chỉnh sửa ảnh có kích thước <b>thu nhỏ</b> so với ảnh gốc",
+			"title": "Trình sửa ảnh"
+		},
+		"list": {
+			"searchPhotoHelp": "Tiêu đề ảnh",
+			"title": "Quản lý ảnh",
+			"total": "Ảnh %s"
+		},
+		"order": {
+			"success": "Thứ tự của các ảnh đã được lưu thành công",
+			"title": "Xếp thứ tự các ảnh trong tập ảnh"
+		},
+		"remove": {
+			"removeAction": "Xóa ảnh khỏi tập ảnh",
+			"success": "Ảnh đã được xóa khỏi tập ảnh thành công",
+			"title": "Xóa ảnh khỏi tập ảnh"
+		},
+		"rename": {
+			"success": "Tiêu đề của ảnh đã được cập nhật thành công"
+		},
+		"replace": {
+			"error": "Xin lỗi, không thể thay thế ảnh đã chọn",
+			"success": "Ảnh đã được thay thế thành công",
+			"title": "Thay thế ảnh"
+		},
+		"search": {
+			"title": "Tìm kiếm ảnh"
+		},
+		"tag": {
+			"pager": "Xem ảnh theo một thẻ nào đó (phân trang)",
+			"title": "Xem ảnh theo một thẻ nào đó"
+		},
+		"update": {
+			"success": "Thông tin của ảnh đã được cập nhật thành công",
+			"title": "Cập nhật thông tin"
+		},
+		"upload": {
+			"addWatermark": "Đánh dấu ảnh",
+			"album": "Tập ảnh",
+			"createAlbumHelp": "Hoặc tạo tập ảnh mới",
+			"selectPhotos": "Ảnh",
+			"title": "Tải ảnh"
+		},
+		"view": {
+			"inAlbumTitle": "Xem ảnh trong tập ảnh",
+			"title": "Xem ảnh"
+		}
+	},
+	"playlist": {
+		"_share": {
+			"language": "Ngôn ngữ",
+			"setPosterAction": "Thiết lập video đại diện cho playlist",
+			"slug": "Tiêu đề rút gọn",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt playlist",
+			"activateSuccess": "Playlist đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt playlist",
+			"deactivateSuccess": "Playlist đã được hủy kích hoạt thành công"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể tạo playlist",
+			"success": "Playlist đã được tạo thành công",
+			"title": "Thêm playlist mới"
+		},
+		"cover": {
+			"error": "Xin lỗi, không thể cập nhật video đại diện cho playlist",
+			"success": "Video đại diện cho playlist đã được cập nhật thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa playlist tiêu đề <b>%s</b>?",
+			"notFound": "Xin lỗi, không tìm thấy playlist",
+			"success": "Playlist đã được xóa thành công",
+			"title": "Xóa playlist"
+		},
+		"list": {
+			"newPlaylistButton": "Thêm playlist mới",
+			"notFound": "Không tìm thấy playlist nào",
+			"searchHelp": "Tiêu đề playlist",
+			"title": "Quản lý playlist",
+			"total": "Playlist %s",
+			"viewAll": "Xem tất cả"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể đổi tên playlist",
+			"notFound": "Xin lỗi, không thể tìm thấy playlist với Id là <b>%s</b>",
+			"success": "Tên của playlist đã được cập nhật thành công",
+			"title": "Đổi tên playlist"
+		},
+		"view": {
+			"pager": "Xem playlist (phân trang)",
+			"title": "Xem playlist"
+		}
+	},
+	"video": {
+		"_share": {
+			"credit": "Tác giả",
+			"description": "Mô tả",
+			"duration": "Độ dài",
+			"durationHelp": "hh:mm:ss",
+			"durationRequired": "Độ dài là bắt buộc",
+			"embedCode": "Mã nhúng",
+			"language": "Ngôn ngữ",
+			"notFound": "Không tìm thấy video nào",
+			"playAction": "Chơi video",
+			"playlist": "Playlist",
+			"poster": "Ảnh đại diện",
+			"posterHelp": "Sử dụng <b>Trình tải ảnh</b> để tải ảnh đại diện,<br /> sau đó gắp và thả vào vùng dưới đây:",
+			"properties": "Thuộc tính",
+			"removeAction": "Xóa video khỏi playlist",
+			"slug": "Tiêu đề rút gọn",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc",
+			"tags": "Tags",
+			"tagsHelp": "Kéo tag từ Công cụ cung cấp tag và thả vào vùng dưới đây:",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"url": "URL"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích video",
+			"activateSuccess": "Video đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt video",
+			"deactivateSuccess": "Video đã được hủy kích hoạt thành công"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm video mới",
+			"success": "Video đã được thêm thành công",	
+			"title": "Thêm video mới"
+		},
+		"cover": {
+			"error": "Xin lỗi, không thể cập nhật ảnh đại diện cho video",
+			"success": "Ảnh đại diện cho video đã được cập nhật thành công",
+			"title": "Thiết lập ảnh đại diện"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa video có tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa video",
+			"notFound": "Xin lỗi, không tìm thấy video với Id là <b>%s</b>",
+			"success": "Video đã được xóa thành công",
+			"title": "Xóa video"
+		},
+		"index": {
+			"pager": "Xem danh sách các video (phân trang)",
+			"title": "Xem danh sách các video"
+		},
+		"list": {
+			"addVideoAction": "Thêm video mới",
+			"searchHelp": "Tiêu đề video",
+			"title": "Quản lý video",
+			"total": "Video %s"
+		},
+		"order": {
+			"error": "Xin lỗi, không thể cập nhật thứ tự của các video trong playlist",
+			"success": "Thứ tự của các video trong playlist đã được cập nhật thành công",
+			"title": "Xếp thứ tự các video trong playlist"
+		},
+		"remove": {
+			"error": "Xin lỗi, không thể xóa video khỏi playlist",
+			"success": "Video đã được xóa khỏi playlist thành công",
+			"title": "Xóa video khỏi playlist"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể đổi tên video",
+			"notFound": "Xin lỗi, không thể tìm thấy video với Id là <b>%s</b>",
+			"success": "Tên của video đã được cập nhật thành công",
+			"title": "Đổi tên video"
+		},
+		"search": {
+			"title": "Tìm kiếm video"
+		},
+		"tag": {
+			"pager": "Xem video theo một thẻ nào đó (phân trang)",
+			"title": "Xem video theo một thẻ nào đó"
+		},
+		"update": {
+			"error": "Xin lỗi, không thể cập nhật video",
+			"notFound": "Xin lỗi, không thể tìm thấy video với Id là <b>%s</b>",
+			"success": "Video đã được cập nhật thành công",
+			"title": "Cập nhật video"
+		},
+		"view": {
+			"inPlaylistTitle": "Xem video trong một playlist",
+			"title": "Xem video"
+		}
+	}
+}

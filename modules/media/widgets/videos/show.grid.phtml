@@ -1,0 +1,35 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numVideos > 0) : ?>
+<div class="mediaWidgetsVideosGrid">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<ul>
+		<?php foreach ($this->videos as $video) : ?>
+		<li>
+			<p>
+				<a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($video->title); ?>"><img src="<?php echo $video->getPoster('square'); ?>" title="<?php echo addslashes($video->title); ?>" height="75" width="75" /></a>
+				<span><?php echo $video->duration; ?></span>
+			</p>
+			<span><?php echo sprintf($this->translator()->_('show.numViews'), $video->num_views); ?></span>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

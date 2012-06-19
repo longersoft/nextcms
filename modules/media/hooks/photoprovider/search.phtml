@@ -1,0 +1,56 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-03-10
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Photos -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'padding: 8px'">
+		<div class="mediaHooksPhotoProviderPhotoItemsContainer" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+			<?php if (!$this->photos || count($this->photos) == 0) : ?>
+			<?php echo $this->translator()->_('show.notFound'); ?>
+			<?php else : ?>
+			
+			<?php foreach ($this->photos as $photo) : ?>
+			<div id="mediaHooksPhotoProviderPhotoItem_<?php echo $photo->photo_id; ?>" class="mediaHooksPhotoProviderPhotoItem dojoDndItem" dndtype="mediaPhotoDndItem,appDndImage"
+				data-app-entity-class="Media_Models_Photo"
+				data-app-entity-props="<?php echo $this->encoder()->encode($photo); ?>"
+				data-app-dndthumbnails=<?php echo Zend_Json::encode($photo->getThumbnails()); ?>>
+				<img src="<?php echo $photo->getThumbnail($this->viewSize); ?>" title="<?php echo addslashes($photo->title); ?>" />
+				<br />
+				<?php echo $photo->title; ?>
+			</div>
+			<?php endforeach; ?>
+			
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /Photos -->
+	
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/media/hooks/photoprovider/search/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojo.dnd.Source");
+</script>

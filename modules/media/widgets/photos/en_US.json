@@ -1,0 +1,32 @@
+{
+	"_about": {
+		"description": "Show photos",
+		"title": "Photos"
+	},
+	"config": {
+		"album": "Album",
+		"albumDeterminedAutomatically": "Determined automatically",
+		"basic": "Basic",
+		"dataSource": "Data source",
+		"dragDropHelp": "Drag and drop photos here",
+		"keyword": "Keyword",
+		"language": "Language",
+		"latestPhotos": "Latest photos",
+		"mostCommentedPhotos": "Most commented photos",
+		"mostDownloadedPhotos": "Most downloaded photos",
+		"mostViewedPhotos": "Most viewed photos",
+		"numberOfPhotos": "The number of photos",
+		"removeAction": "Remove",
+		"selectAlbum": "Select album",
+		"setOfPhotos": "Set of photos",
+		"theme": "Theme"
+	},
+	"show": {
+		"by": "By %s",
+		"dateFormat": "Y-m-d",
+		"numComments": "%s comments",
+		"numDownloads": "%s downloads",
+		"numViews": "%s views",
+		"viewAlbum": "View album"
+	}
+}

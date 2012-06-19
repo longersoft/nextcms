@@ -1,0 +1,91 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-01
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('playlist.list.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, class: 'appContentPane'">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('playlist.list.total'), '<span class="mediaPlaylistListCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+
+		<?php if ($this->total == 0) : ?>
+		<?php echo $this->translator()->_('playlist.list.notFound'); ?>
+		<?php else : ?>
+
+		<ul class="mediaPlaylistItemsContainer">
+			<li <?php if (!$this->criteria['active_playlist_id']) : ?>class="mediaPlaylistItemSelected" <?php endif; ?>style="padding-bottom: 8px">
+				<a class="mediaPlaylistTitle" id="mediaPlaylistListFilterAll" href="javascript: void(0);">
+					<?php echo $this->translator()->_('playlist.list.viewAll'); ?>
+				</a>
+			</li>
+			
+			<!-- Playlists -->
+			<?php foreach ($this->playlists as $playlist) : ?>
+			
+			<li id="mediaPlaylistItem_<?php echo $playlist->playlist_id; ?>"
+				class="mediaPlaylistItem mediaPlaylistItemListView<?php if ($playlist->playlist_id == $this->criteria['active_playlist_id']) : ?> mediaPlaylistItemSelected<?php endif; ?>"
+				data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																		'playlist_id' => $playlist->playlist_id, 
+																		'title'		  => $playlist->title,
+																		'short_title' => $this->stringFormatter()->sub($playlist->title, 20),
+																		'status'	  => $playlist->status,
+																		'num_videos'  => $playlist->num_videos,
+																		'poster'	  => $playlist->poster,
+																		'view_type'   => $this->criteria['view_type'],
+																	)); ?>">
+				<div class="mediaPlaylistPosterContainer">
+					<img class="mediaPlaylistPoster" src="<?php if ($playlist->image_square) : ?><?php echo $this->APP_ROOT_URL . $playlist->image_square; ?><?php else : ?><?php echo $this->APP_ROOT_URL; ?>/modules/media/images/defaultPlaylistPoster.png<?php endif; ?>" />
+				</div>
+				
+				<a class="mediaPlaylistTitle" href="javascript: void(0);"><?php echo $playlist->title; ?></a>
+				
+				<span class="mediaPlaylistVideoCounter"><?php echo $playlist->num_videos; ?></span>
+			</li>
+			
+			<?php endforeach; ?>
+			<!-- /Playlists -->
+
+			<?php endif; ?>
+		</ul>
+	</div>
+
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+		<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/media/playlist/list/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+
+dojo.addOnLoad(function() {
+	if (dojo.byId("mediaPlaylistListFilterAll")) {
+		dojo.connect(dojo.byId("mediaPlaylistListFilterAll"), "onclick", function() {
+			dojo.publish("/app/media/playlist/list/onViewAll", [ this.parentNode ]);
+		});
+	}
+});
+</script>

@@ -1,0 +1,42 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numAlbums > 0) : ?>
+<div class="mediaWidgetsAlbumsList">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<ul>
+		<?php foreach ($this->albums as $album) : ?>
+		<li>
+			<p>
+				<a href="<?php echo $this->url($album->getProperties(), 'media_album_view'); ?>" title="<?php echo addslashes($album->title); ?>"><img src="<?php echo $album->getCover('square'); ?>" title="<?php echo addslashes($album->title); ?>" height="75" width="75" /></a>
+			</p>
+			<div>
+				<h3><a href="<?php echo $this->url($album->getProperties(), 'media_album_view'); ?>"><?php echo $album->title; ?></a></h3>
+				<span>
+					<?php echo sprintf($this->translator()->_('show.numPhotos'), $album->num_photos); ?><br />
+					<?php echo sprintf($this->translator()->_('show.numViews'), $album->num_views); ?><br />
+					<?php echo date($this->translator()->_('show.dateFormat', 'Y-m-d'), strtotime($album->activated_date)); ?><br />
+					<?php echo sprintf($this->translator()->_('show.by'), $album->getAuthor()); ?>
+				</span>
+			</div>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

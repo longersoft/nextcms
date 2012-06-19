@@ -1,0 +1,74 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-16
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('photo.list.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'padding: 8px'">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('photo.list.total'), '<span class="mediaPhotoListCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+
+		<?php if ($this->total == 0) : ?>
+		<?php echo $this->translator()->_('photo._share.notFound'); ?>
+		<?php else : ?>
+
+		<div class="mediaPhotoItemsContainer">
+			<?php foreach ($this->photos as $index => $photo) : ?>
+			<div class="mediaPhotoItem dojoDndItem" id="mediaPhotoItem_<?php echo $photo->photo_id; ?>" 
+				<?php if ($this->accessor()->route('media_photo_copy')) : ?>dndtype="mediaPhotoItemDnd" <?php endif; ?>
+				data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																			'view_size' => $this->criteria['view_size'],
+																			'photo_id'  => $photo->photo_id,
+																			'status'	=> $photo->status,
+																			'title'		=> $photo->title,
+																			'square'	=> $photo->getThumbnail('square'),
+																			'thumbnail' => $photo->getThumbnail('thumbnail'),
+																			'small'		=> $photo->getThumbnail('small'),
+																			'crop'		=> $photo->getThumbnail('crop'),
+																			'medium'	=> $photo->getThumbnail('medium'),
+																			'large'		=> $photo->getThumbnail('large'),
+																		)); ?>">
+				<img class="mediaPhotoImage"
+					src="<?php echo $photo->getThumbnail($this->criteria['view_size']); ?>"
+					title="<?php echo addslashes($photo->title); ?>" />
+				<br />
+				
+				<div class="mediaPhotoItemTitle"><?php echo $photo->title; ?></div>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		
+		<?php endif; ?>
+	</div>
+
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+		<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/media/photo/list/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+</script>

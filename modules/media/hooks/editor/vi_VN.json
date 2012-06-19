@@ -1,0 +1,45 @@
+{
+	"_about": {
+		"description": "Cung cấp công cụ tải và chỉnh sửa ảnh",
+		"title": "Sửa ảnh"
+	},
+	"menu": {
+		"label": "Trình sửa ảnh"
+	},
+	"show": {
+		"addWatermark": "Đánh dấu ảnh",
+		"browseFilesAction": "Chọn ảnh và Tải lên ...",
+		"cancelAction": "Hủy",
+		"cropAction": "Crop",
+		"cropHelp": "Nhấp đúp chuột vào vùng đã chọn để crop ảnh",
+		"editTab": "Sửa",
+		"flipHorizontalAction": "Quay ảnh ngang",
+		"flipVerticalAction": "Quay ảnh dọc",
+		"generateThumbnails": "Tạo các ảnh thu nhỏ",
+		"height": "Cao",
+		"maintainAspectRatio": "Giữ tỉ lệ kích thước",
+		"notAllowed": "Bạn không có quyền tải ảnh",
+		"redoAction": "Làm lại",
+		"resizeAction": "Thay đổi kích thước",
+		"resizeBy": "Theo",
+		"resizeByPercentage": "Phần trăm",
+		"resizeByPixels": "Pixel",
+		"rotateAction": "Quay",
+		"rotateLeftAction": "Quay trái",
+		"rotateRightAction": "Quay phải",
+		"selectEditSize": "Lựa chọn kích thước để chỉnh sửa:",
+		"saveAction": "Lưu",
+		"saveSuccess": "Ảnh đã được cập nhật thành công",
+		"title": "Ảnh",
+		"undoAction": "Hủy bỏ",
+		"uploadTab": "Tải lên",
+		"width": "Rộng",
+		"cropSize": "Crop",
+		"largeSize": "Lớn",
+		"mediumSize": "Trung bình",
+		"originalSize": "Gốc",
+		"smallSize": "Nhỏ",
+		"squareSize": "Vuông",
+		"thumbnailSize": "Thu nhỏ"
+	}
+}

@@ -1,0 +1,70 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-25
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numPhotos > 0) : ?>
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.monte.js');
+?>
+<div class="mediaWidgetsPhotosFull">
+	<?php foreach ($this->photos as $photo) : ?>
+	<div class="content">
+		<img src="<?php echo $photo->getThumbnail('large'); ?>" title="<?php echo addslashes($photo->title); ?>" />
+		<div>
+			<p>
+				<label><a href="<?php echo $this->url($photo->getProperties(), 'media_photo_view'); ?>"><?php echo $photo->title; ?></a></label>
+				<span>
+					<?php echo sprintf($this->translator()->_('show.numViews'), $photo->num_views); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numComments'), $photo->num_comments); ?> <span>|</span> <?php echo date($this->translator()->_('show.dateFormat'), strtotime($photo->activated_date)); ?>
+				</span>
+			</p>
+		</div>
+	</div>
+	<?php endforeach; ?>
+</div>
+
+<?php $this->script()->captureStartOnce('mediaWidgetsPhotosFull'); ?>
+$(document).ready(function() {
+	var documentWidth = $(document).width();
+	$(".mediaWidgetsPhotosFull").each(function() {
+		// Place the widget at the center
+		$(this).css({
+			width: documentWidth + "px",
+			// 980 is width of the main layout container
+			"margin-left": -parseInt((documentWidth - 980) / 2) + "px" 
+		});
+		$(this).find("div div").css({ opacity: 0 }).eq(0).css({ opacity: 0.8 });
+		$.monte($(this), {
+			height: false,
+			width: false,
+			scale: 1,
+			speed: 1000,
+			delay: 3500,
+			auto: true,
+			buttons: true,
+			callback: false,
+			callbackIn: function () {
+				$(this[0]).find("div").animate({ opacity: 0.8 }, 450);
+			},
+			callbackAway: function () {
+				$(this[0]).find("div").animate({ opacity: 0 }, 450);
+			}
+		});
+	});
+});
+<?php $this->script()->captureEndOnce('mediaWidgetsPhotosFull'); ?>
+<?php endif; ?>

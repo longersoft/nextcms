@@ -1,0 +1,28 @@
+{
+	"_about": {
+		"description": "Tìm kiếm ảnh và cho phép gắp, thả ảnh vào các vùng chứa khác",
+		"title": "Tìm kiếm ảnh"
+	},
+	"menu": {
+		"label": "Tìm kiếm ảnh"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"show": {
+		"keywordHelp": "Tiêu đề của ảnh",
+		"notFound": "Không tìm thấy ảnh nào",
+		"searchAction": "Tìm",
+		"searchHelp": "Nhấp vào biểu tượng Tìm kiếm để xem danh sách các ảnh",
+		"title": "Ảnh",
+		"cropSize": "Crop",
+		"largeSize": "Lớn",
+		"mediumSize": "Trung bình",
+		"originalSize": "Gốc",
+		"smallSize": "Nhỏ",
+		"squareSize": "Vuông",
+		"thumbnailSize": "Thu nhỏ"
+	}
+}

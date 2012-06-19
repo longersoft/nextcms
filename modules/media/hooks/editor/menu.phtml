@@ -1,0 +1,34 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2011-10-23
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dijit.MenuItem">
+	<span><img src="<?php echo $this->APP_STATIC_URL . '/modules/media/hooks/editor/editor16.png'; ?>" style="vertical-align: middle" /> <?php echo $this->translator()->_('menu.label'); ?></span>
+	<script type="dojo/connect" data-dojo-event="onClick">
+	dojo.publish("/app/global/onSelectToolbox", [ "mediaHooksEditorContainer" ]);
+	</script>
+	<script type="dojo/connect">
+	dojo.subscribe("/app/core/hook/uninstall/media_editor", this, function(data) {
+		dojo.publish("/app/global/onRemoveToolbox", [ ["mediaHooksEditorContainer", "mediaHooksEditorEditContainer"] ]);
+		this.destroyRecursive();
+	});
+	</script>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.MenuItem");
+</script>

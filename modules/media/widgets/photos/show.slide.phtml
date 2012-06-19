@@ -1,0 +1,53 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numPhotos > 0) : ?>
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.tinycarousel.min.js');
+?>
+
+<div class="mediaWidgetsPhotosSlide">
+	<a class="button prev">Prev</a>
+	<div class="viewport">
+		<ul class="overview">
+			<?php foreach ($this->photos as $photo) : ?>
+			<li>
+				<p class="thumb"><a href="<?php echo $this->url($photo->getProperties(), 'media_photo_view'); ?>" title="<?php echo addslashes($photo->title); ?>"><img src="<?php echo $photo->getThumbnail('small'); ?>" title="<?php echo addslashes($photo->title); ?>" /></a></p>
+				<h2><a href="<?php echo $this->url($photo->getProperties(), 'media_photo_view'); ?>" title="<?php echo addslashes($photo->title); ?>"><?php echo $photo->title; ?></a></h2>
+				<p class="meta">
+					<?php echo sprintf($this->translator()->_('show.numComments'), $photo->num_comments); ?> <span>|</span> <?php echo sprintf($this->translator()->_('show.numViews'), $photo->num_views); ?>
+				</p>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<a class="button next">Next</a>
+</div>
+
+<?php $this->script()->captureStartOnce('mediaWidgetsPhotosSlide'); ?>
+$(document).ready(function() {
+	$(".mediaWidgetsPhotosSlide").tinycarousel({
+		interval: true,
+		display: 1,
+		intervaltime: 3000,
+		duration: 1000
+	});
+});
+<?php $this->script()->captureEndOnce('mediaWidgetsPhotosSlide'); ?>
+<?php endif; ?>

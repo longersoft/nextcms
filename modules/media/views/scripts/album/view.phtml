@@ -1,0 +1,53 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-15
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->album) : ?>
+
+<?php $this->headTitle()->append($this->album->title); ?>
+<div class="mediaAlbumView">
+	<h1><?php echo $this->album->title; ?></h1>
+	
+	<div class="meta">
+		<?php echo date($this->translator()->_('global._share.dateFormat', 'Y-m-d'), strtotime($this->album->activated_date)); ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numViews'), $this->album->num_views); ?>
+	</div>
+	
+	<div class="toolbar"></div>
+	
+	<?php if ($this->photos) : ?>
+	<ul>
+		<?php foreach ($this->photos as $photo) : ?>
+		<li>
+			<p class="thumb">
+				<a href="<?php echo $this->url(array_merge(array('album_id' => $this->album->album_id), $photo->getProperties()), 'media_photo_album_view'); ?>" title="<?php echo addslashes($photo->title); ?>">
+					<img src="<?php echo $photo->getThumbnail('small'); ?>" title="<?php echo addslashes($photo->title); ?>" />
+				</a>
+			</p>
+			<h2><a href="<?php echo $this->url(array_merge(array('album_id' => $this->album->album_id), $photo->getProperties()), 'media_photo_album_view'); ?>"><?php echo $photo->title; ?></a></h2>
+			<p class="meta">
+				<?php echo date($this->translator()->_('global._share.dateFormat', 'Y-m-d'), strtotime($photo->activated_date)); ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numViews'), $photo->num_views); ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numComments'), $photo->num_comments); ?> 
+			</p>
+			<div class="desc"><?php echo $photo->description; ?></div>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	
+	<?php echo $this->paginator; ?>
+	<?php endif; ?>
+</div>
+
+<?php endif; ?>

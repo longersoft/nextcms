@@ -1,0 +1,108 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('video.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/media/css/admin/default/styles.css");
+</script>
+
+<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/swfobject/swfobject.js"></script>
+
+<div id="mediaVideoListRootContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%;'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, region: 'leading', minSize: 200, splitter: true, style: 'margin: 0; padding: 0; width: 25%'">
+		<!-- PlaylistToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaVideoListPlaylistToolbar"></div>
+		</div>
+		<!-- /PlaylistToolbar -->
+	
+		<!-- Playlists -->
+		<div id="mediaVideoListPlaylistsContainer" class="mediaPlaylistList" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+		<?php echo $this->action('list', 'playlist', 'media', array('q' => rawurlencode(base64_encode(Zend_Json::encode(array('language' => $this->criteria['language'], 'active_playlist_id' => $this->criteria['playlist_id'])))))); ?>
+		</div>
+		<!-- /Playlists -->
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- VideoToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="mediaVideoListVideoToolbar"></div>
+		</div>
+		<!-- /VideoToolbar -->
+		
+		<!-- Videos -->
+		<div id="mediaVideoListVideosContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->render('video/list.ajax.phtml'); ?>
+		</div>
+		<!-- /Videos -->
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/media/languages')->_('video.list.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+
+dojo.registerModulePath("media", "<?php echo $this->APP_STATIC_URL; ?>/modules/media");
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("media.js.controllers.VideoController");
+dojo.require("media.js.views.PlaylistContextMenu");
+dojo.require("media.js.views.PlaylistListView");
+dojo.require("media.js.views.PlaylistToolbar");
+dojo.require("media.js.views.VideoContextMenu");
+dojo.require("media.js.views.VideoListView");
+dojo.require("media.js.views.VideoToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'media_playlist_activate', 'media_playlist_add', 'media_playlist_cover', 'media_playlist_delete', 'media_playlist_list',
+					'media_playlist_rename',
+					'media_video_activate', 'media_video_add', 'media_video_copy', 'media_video_cover', 'media_video_delete',
+					'media_video_download', 'media_video_list', 'media_video_order', 'media_video_remove', 'media_video_rename',
+					'media_video_update',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	var photoController = new media.js.controllers.VideoController("mediaVideoListRootContainer");
+	photoController.setPlaylistContextMenu(new media.js.views.PlaylistContextMenu())
+				   .setPlaylistListView(new media.js.views.PlaylistListView("mediaVideoListPlaylistsContainer"))
+				   .setPlaylistToolbar(new media.js.views.PlaylistToolbar("mediaVideoListPlaylistToolbar"))
+				   .setVideoContextMenu(new media.js.views.VideoContextMenu())
+				   .setVideoListView(new media.js.views.VideoListView("mediaVideoListVideosContainer"))
+				   .setVideoToolbar(new media.js.views.VideoToolbar("mediaVideoListVideoToolbar"))
+				   .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>);
+});
+</script>

@@ -1,0 +1,30 @@
+{
+	"_about": {
+		"description": "Hiển thị video",
+		"title": "Video"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"dataSource": "Nguồn dữ liệu",
+		"dragDropHelp": "Gắp và thả video ở đây",
+		"keyword": "Từ khóa",
+		"language": "Ngôn ngữ",
+		"latestVideos": "Video mới nhất",
+		"mostCommentedVideos": "Video nhiều bình luận nhất",
+		"mostViewedVideos": "Video xem nhiều nhất",
+		"numberOfVideos": "Số video",
+		"playlist": "Playlist",
+		"playlistDeterminedAutomatically": "Tự động xác định playlist",
+		"removeAction": "Xóa",
+		"selectPlaylist": "Chọn playlist",
+		"setOfVideos": "Tập các video",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"by": "Bởi %s",
+		"numComments": "%s bình luận",
+		"numViews": "%s lượt xem",
+		"viewAll": "Xem tất cả",
+		"viewMore": "Xem thêm"
+	}
+}

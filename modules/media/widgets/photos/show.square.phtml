@@ -1,0 +1,37 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numPhotos > 0) : ?>
+<div class="mediaWidgetsPhotosSquare">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<ul>
+		<?php foreach ($this->photos as $photo) : ?>
+		<li>
+			<a href="<?php if ($this->album) : ?><?php echo $this->url(array_merge(array('album_id' => $this->album->album_id), $photo->getProperties()), 'media_photo_album_view'); ?><?php else : ?><?php echo $this->url($photo->getProperties(), 'media_photo_view'); ?><?php endif; ?>" title="<?php echo addslashes($photo->title); ?>">
+				<img src="<?php echo $photo->getThumbnail('square'); ?>" title="<?php echo addslashes($photo->title); ?>" height="75" width="75" />
+			</a>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	
+	<?php if ($this->album) : ?>
+	<div><a href="<?php echo $this->url($this->album->getProperties(), 'media_album_view'); ?>"><?php echo $this->translator()->_('show.viewAlbum'); ?></a></div>
+	<?php endif; ?>
+</div>
+<?php endif; ?>

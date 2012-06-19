@@ -1,0 +1,212 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		media
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-05
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('video.update.title'));
+?>
+
+<div id="mediaVideoUpdateContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<?php if ($this->video) : ?>
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			if (dijit.byId("mediaVideoUpdateForm").validate()) {
+				dojo.publish("/app/media/video/update/onStart");
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'media_video_update'); ?>",
+					content: dojo.formToObject("mediaVideoUpdateForm"),
+					handleAs: "json",
+					load: function(data) {
+						dojo.publish("/app/media/video/update/onComplete", [ data ]);
+					}
+				});
+			}
+			</script>
+		</button>
+		<?php endif; ?>
+
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			core.js.base.controllers.Subscriber.unsubscribe("/app/media/video/update", "/app/global/dnd/onDropLink");
+			dojo.publish("/app/media/video/update/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+
+	<!-- UpdateVideoForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('video.update.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<?php if (!$this->video) : ?>
+			<?php echo sprintf($this->translator()->_('video.update.notFound'), $this->videoId); ?>
+		<?php else : ?>
+			
+			<form id="mediaVideoUpdateForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('video._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="slug"><?php echo $this->translator()->_('video._share.language'); ?>:</label>
+						<select id="mediaVideoUpdateLanguage" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', value: '<?php echo $this->video->language; ?>'">
+						<?php foreach ($this->languages as $language => $name) : ?>
+							<option value="<?php echo $language; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+				
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('video._share.title'); ?>:</label>
+						<div id="mediaVideoUpdateTitleBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php echo addslashes($this->video->title); ?>', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('video._share.titleRequired'); ?>'">
+							<script type="dojo/connect">
+							new core.js.views.CharacterCounter(this);
+							</script>
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_helper_slug'); ?>",
+								content: {
+									locale: dijit.byId("mediaVideoUpdateLanguage").get("value"),
+									input: value
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("mediaVideoUpdateSlugTextBox").set("value", data.output);
+								}
+							});
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="slug"><?php echo $this->translator()->_('video._share.slug'); ?>:</label>
+						<input id="mediaVideoUpdateSlugTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'slug', value: '<?php echo addslashes($this->video->slug); ?>', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('video._share.slugRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('video._share.description'); ?>:</label>
+						<div id="mediaVideoUpdateDescriptionBox" data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'description', style: 'width: 300px; height: 100px'"><?php if ($this->video->description) : ?><?php echo $this->video->description; ?><?php endif; ?><script type="dojo/connect">new core.js.views.CharacterCounter(this);</script></div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="poster"><?php echo $this->translator()->_('video._share.poster'); ?>:</label>
+						<div class="appLeft">
+							<div style="padding-bottom: 8px"><?php echo $this->translator()->_('video._share.posterHelp'); ?></div>
+							
+							<div class="appBorderContainer" style="height: 225px; width: 300px" data-dojo-type="dojo.dnd.Target" data-dojo-props="accept: ['appDndImage']">
+								<script type="dojo/method" data-dojo-event="onDropExternal" data-dojo-args="source, nodes, copy">
+								var thumbnails = dojo.attr(nodes[0], "data-app-dndthumbnails");
+								if (thumbnails) {
+									dojo.attr("mediaVideoUpdatePoster", "value", thumbnails);
+									dojo.query("img", this.node).orphan();
+									dojo.create("img", {
+										src: core.js.Constant.ROOT_URL + dojo.fromJson(thumbnails).crop
+									}, this.node);
+								}
+								</script>
+								<?php if ($this->video->image_crop) : ?>
+								<img src="<?php echo $this->APP_ROOT_URL . $this->video->image_crop; ?>" />
+								<?php endif; ?>
+							</div>
+							<input type="hidden" id="mediaVideoUpdatePoster" name="poster" value=<?php echo (Zend_Json::encode($this->video->getPosterThumbnails())); ?> />
+						</div>
+						<div style="clear: both"></div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="url"><?php echo $this->translator()->_('video._share.url'); ?>:</label>
+						<div data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'url', value: '<?php if ($this->video->url) : ?><?php echo addslashes($this->video->url); ?><?php endif; ?>', style: 'width: 300px'">
+							<script type="dojo/connect">
+							core.js.base.controllers.Subscriber.subscribe("/app/media/video/update", "/app/global/dnd/onDropLink", this, function(data) {
+								if (dojo.attr(data.target, "id") == this.id) {
+									dijit.byId("mediaVideoUpdateTitleBox").set("value", data.title);
+								}
+							});
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="embed_code"><?php echo $this->translator()->_('video._share.embedCode'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'embed_code', value: '<?php if ($this->video->embed_code) : ?><?php echo addslashes($this->video->embed_code); ?><?php endif; ?>', style: 'width: 300px; height: 100px'"></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('video._share.duration'); ?>:</label>
+						<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'duration', value: '<?php echo $this->video->duration; ?>', style: 'width: 100px', required: true, placeHolder: '<?php echo $this->translator(true)->_('video._share.durationHelp'); ?>', missingMessage: '<?php echo $this->translator(true)->_('video._share.durationRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="credit"><?php echo $this->translator()->_('video._share.credit'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'credit', value: '<?php if ($this->video->credit) : ?><?php echo addslashes($this->video->credit); ?><?php endif; ?>', style: 'width: 200px'">
+					</div>
+					
+					<input type="hidden" name="format" value="json" />
+					<input type="hidden" name="video_id" value="<?php echo $this->video->video_id; ?>" />
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Tags -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('video._share.tags'); ?>', class: 'appContentPane'">
+					<div style="padding-bottom: 8px"><?php echo $this->translator()->_('video._share.tagsHelp'); ?></div>
+					
+					<?php echo $this->helperLoader('tag')->tagCollector('mediaVideoUpdateTagsContainer', 'tags[]', $this->tags); ?>
+				</div>
+				<!-- /Tags -->
+			</div>
+			</form>
+			
+		<?php endif; ?>
+		</div>
+	</div>
+	<!-- /UpdateVideoForm -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojo.NodeList-traverse");
+
+dojo.require("core.js.base.controllers.Subscriber");
+dojo.require("core.js.Constant");
+dojo.require("core.js.views.CharacterCounter");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/media_video_update", function() {
+		// Tag suggestions
+		tag.views.helpers.TagCollector.getContent = function() {
+			return dijit.byId("mediaVideoUpdateTitleBox").get("value") + " " + dijit.byId("mediaVideoUpdateDescriptionBox").get("value");
+		};
+
+		dojo.unsubscribe(handler);
+	});
+});
+</script>
