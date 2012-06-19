@@ -1,0 +1,118 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('config._share.title'));
+?>
+
+<div id="tagConfigConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			if (dijit.byId("tagConfigConfigForm").validate()) {
+				var params = dojo.formToObject("tagConfigConfigForm");
+
+				// Ask user to select at least one tag suggestions service if enabled
+				if (params.suggestion_enabled == "on" && params.opencalais_enabled != "on" && params.yql_enabled != "on") {
+					dojo.publish("/app/global/notification", [{
+						message: "<?php echo $this->translator()->_('config.config.tagSuggestionsServiceRequired'); ?>",
+						type: "error"
+					}]);
+					return;
+				}
+
+				dijit.byId("tagConfigConfigStandby").show();
+				_this.set("disabled", true);
+
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'tag_config_config'); ?>",
+					content: params,
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dijit.byId("tagConfigConfigStandby").hide();
+						dojo.publish("/app/global/notification", [{
+							message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('config.config.success'); ?>" : "<?php echo $this->translator()->_('config.config.error'); ?>",
+							type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+						}]);
+					}
+				});
+			}
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- ConfigForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'" class="appContentPane">
+		<form id="tagConfigConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.title'); ?></span></h2>
+			
+			<div class="appFormRow">
+				<div id="tagConfigConfigTagSuggestionsEnabled" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'suggestion_enabled', value: 1, checked: <?php if ($this->suggestionsEnabled) : ?>true<?php else : ?>false<?php endif; ?>">
+					<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+					dijit.byId("tagConfigConfigOpenCalaisEnabled").set("disabled", !value);
+					dijit.byId("tagConfigConfigYqlEnabled").set("disabled", !value);
+					if (!value) {
+						dijit.byId("tagConfigConfigOpenCalaisEnabled").set("checked", false);
+						dijit.byId("tagConfigConfigYqlEnabled").set("checked", false);
+					}
+					</script>
+				</div>
+				<?php echo $this->translator()->_('config.config.tagSuggestionsEnabled'); ?>
+			</div>
+			
+			<div class="appFormRow">
+				<div id="tagConfigConfigOpenCalaisEnabled" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'opencalais_enabled', value: 1, checked: <?php if ($this->suggestionsEnabled && $this->openCalaisEnabled) : ?>true<?php else : ?>false<?php endif; ?>">
+					<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+					dijit.byId("tagConfigConfigOpenCalaisApiKey").set("disabled", !value);
+					</script>
+				</div>
+				<?php echo stripslashes($this->translator()->_('config.config.tagSuggestionsOpenCalaisService')); ?>
+				<input id="tagConfigConfigOpenCalaisApiKey" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'opencalais_api_key', value: '<?php echo addslashes($this->config('tag', 'opencalais_api_key', '')); ?>', disabled: <?php if ($this->suggestionsEnabled && $this->openCalaisEnabled) : ?>false<?php else : ?>true<?php endif; ?>, style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.tagSuggestionsOpenCalaisApiKeyRequired'); ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<input id="tagConfigConfigYqlEnabled" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'yql_enabled', value: 1, checked: <?php if ($this->suggestionsEnabled && $this->yqlEnabled) : ?>true<?php else : ?>false<?php endif; ?>" />
+				<?php echo stripslashes($this->translator()->_('config.config.tagSuggestionsYahooQueryLanguageService')); ?>
+			</div>
+			
+			<input type="hidden" name="format" value="json" />
+		</form>
+	</div>
+	<!-- /ConfigForm -->
+</div>
+
+<div id="tagConfigConfigStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'tagConfigConfigContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/tag/languages')->_('config.config.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+</script>

@@ -1,0 +1,24 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/* Icons */
+.tagHooksTagProviderIcon { background-image: url(tagprovider16.png); }
+.tagHooksTagProviderTagItem { background: #CFE5FA; float: left; margin-right: 15px; margin-bottom: 15px; padding: 5px; }
+.tagHooksTagProviderTagItem:hover { background: #E2EBF2; color: #FFF; }
+
+/* Dnd */
+.tagHooksTagProviderTagsContainer .dojoDndItem { padding: 5px; }
+.tagHooksTagProviderTagsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.tagHooksTagProviderTagsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.tagHooksTagProviderTagsContainer .dojoDndContainerOver { background: #CFE5FA; }

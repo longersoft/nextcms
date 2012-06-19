@@ -1,0 +1,96 @@
+{
+	"_about": {
+		"description": "Quản lý thẻ",
+		"title": "Thẻ"
+	},
+	"_menu": {
+		"config": {
+			"config": "Cấu hình module"
+		},
+		"tag": {
+			"list": "Quản lý thẻ"
+		}
+	},
+	"_permission": {
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		},
+		"tag": {
+			"description": "Quản lý thẻ",
+			"actions": {
+				"add": "Thêm thẻ mới",
+				"delete": "Xóa thẻ",
+				"edit": "Sửa thẻ",
+				"list": "Xem danh sách thẻ"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"cancelAction": "Hủy",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"loadingAction": "Đang tải ...",
+			"refreshAction": "Tải lại",
+			"saveAction": "Lưu",
+			"searchAction": "Tìm",
+			"suggestAction": "Gợi ý",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"config": {
+		"config": {
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"tagSuggestionsEnabled": "Gợi ý tag sử dụng các dịch vụ sau đây",
+			"tagSuggestionsOpenCalaisApiKeyRequired": "Mã API cung cấp bởi OpenCalais là bắt buộc",
+			"tagSuggestionsOpenCalaisService": "Cung cấp bởi <a href='http://www.opencalais.com' target='_blank'>OpenCalais</a> với mã API:",
+			"tagSuggestionsServiceRequired": "Bạn phải lựa chọn ít nhất một dịch vụ gợi ý tag",
+			"tagSuggestionsYahooQueryLanguageService": "Cung cấp bởi <a href='http://developer.yahoo.com/yql/' target='_blank'>Yahoo! Query Language</a>",
+			"title": "Cấu hình module Tag"
+		}
+	},
+	"tag": {
+		"_share": {
+			"language": "Ngôn ngữ",
+			"slug": "Tiêu đề rút gọn",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc",
+			"slugValidator": "Slug đã tồn tại. Xin hãy thử lại với slug khác",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm thẻ mới",
+			"success": "Thẻ đã được tạo thành công",
+			"title": "Thêm thẻ mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa thẻ tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa thẻ",
+			"notFound": "Xin lỗi, không thể tìm thấy thẻ",
+			"success": "Thẻ đã được xóa thành công",
+			"title": "Xóa thẻ"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật thẻ",
+			"notFound": "Xin lỗi, không thể tìm thấy thẻ có Id là <b>%s</b>",
+			"success": "Thẻ đã được cập nhật thành công",
+			"title": "Cập nhật thẻ"
+		},
+		"list": {
+			"notFound": "Không tìm thấy thẻ nào",
+			"searchHelp": "Tiêu đề thẻ",
+			"tags": "Thẻ %s",
+			"title": "Quản lý thẻ"
+		},
+		"suggest": {
+			"contentRequired": "Bạn phải nhập nội dung để được gợi ý thẻ"
+		}
+	}
+}

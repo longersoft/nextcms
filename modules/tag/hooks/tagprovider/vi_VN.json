@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Cung cấp tag cho nội dung",
+		"title": "Tìm kiếm tag"
+	},
+	"menu": {
+		"label": "Tìm kiếm tag"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"show": {
+		"allLanguages": "Tất cả ngôn ngữ",
+		"keywordHelp": "Tiêu đề tag",
+		"notFound": "Không tìm thấy tag nào",
+		"searchAction": "Tìm kiếm",
+		"searchHelp": "Nhấp biểu tượng Tìm kiếm để xem danh sách các tag",
+		"tags": "Tag"
+	}
+}

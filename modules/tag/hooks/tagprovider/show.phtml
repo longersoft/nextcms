@@ -1,0 +1,119 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div id="tagHooksTagProviderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, iconClass: 'appIcon tagHooksTagProviderIcon', title: '<?php echo $this->translator(true)->_('show.tags'); ?>'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+		<div data-dojo-type="dijit.Toolbar">
+			<input id="tagHooksTagProviderSearchBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', placeHolder: '<?php echo $this->translator(true)->_('show.keywordHelp'); ?>', style: 'width: 150px'" />
+			
+			<?php if ($this->languages) : ?>
+			<div id="tagHooksTagProviderLanguageDropDown" data-dojo-type="dijit.form.DropDownButton" data-dojo-props="label: '<?php echo $this->translator(true)->_('show.allLanguages'); ?>'">
+				<div data-dojo-type="dijit.Menu">
+					<div data-dojo-type="dijit.MenuItem" data-dojo-props="label: '<?php echo $this->translator(true)->_('show.allLanguages'); ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						dijit.byId("tagHooksTagProviderLanguageDropDown").set("label", this.label);
+						dijit.byId("tagHooksTagProviderLanguageDropDown").set("iconClass", null);
+						tag.hooks.tagprovider.TagController._criteria.language = null;
+						</script>
+					</div>
+					<div data-dojo-type="dijit.MenuSeparator"></div>
+					<?php foreach ($this->languages as $language => $name) : ?>
+					<div data-dojo-type="dijit.MenuItem" data-dojo-props="appLanguage: '<?php echo $language; ?>', label: '<?php echo $name; ?>', iconClass: 'appIcon appFlag_<?php echo $language; ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						dijit.byId("tagHooksTagProviderLanguageDropDown").set("label", this.label);
+						dijit.byId("tagHooksTagProviderLanguageDropDown").set("iconClass", "appIcon appFlag_" + this.get("appLanguage"));
+						tag.hooks.tagprovider.TagController._criteria.language = this.get("appLanguage");
+						</script>
+					</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+			
+			<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appSearchIcon', label: '<?php echo $this->translator(true)->_('show.searchAction'); ?>'">
+				<script type="dojo/connect" data-dojo-event="onClick">
+				var keyword = dijit.byId("tagHooksTagProviderSearchBox").get("value");
+				tag.hooks.tagprovider.TagController.searchTags({
+					keyword: keyword,
+					page: 1
+				});
+				</script>
+			</button>
+		</div>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- TagsPane -->
+	<div id="tagHooksTagProviderTagsContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'height: 100%; width: 100%'">
+		<div class="appCenter">
+			<div><?php echo $this->translator()->_('show.searchHelp'); ?></div>
+		</div>
+	</div>
+	<!-- /TagsPane -->
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* tag.hooks.tagprovider */
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.DropDownButton");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuItem");
+dojo.require("dijit.MenuSeparator");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Encoder");
+dojo.provide("tag.hooks.tagprovider.TagController");
+
+tag.hooks.tagprovider.TagController._criteria = {
+	keyword: null,
+	language: null,
+	page: 1,
+	per_page: 50
+};
+
+tag.hooks.tagprovider.TagController.searchTags = function(/*Object*/ criteria) {
+	// summary:
+	//		Searches for banners
+	dojo.mixin(tag.hooks.tagprovider.TagController._criteria, criteria);
+	var q = core.js.base.Encoder.encode(tag.hooks.tagprovider.TagController._criteria);
+
+	var params = {
+		_type: "hook",
+		_mod: "tag",
+		_name: "tagprovider",
+		_method: "search",
+		q: q
+	};
+	dijit.byId("tagHooksTagProviderTagsContainer")
+		 .set("href", "<?php echo $this->url(array(), 'core_extension_render'); ?>" + "?" + dojo.objectToQuery(params));
+};
+
+dojo.subscribe("/app/tag/hooks/tagprovider/search/onGotoPage", function(/*Integer*/ page) {
+	// summary:
+	//		Paging handler
+	tag.hooks.tagprovider.TagController.searchTags({
+		page: page
+	});
+});
+<?php $this->script()->captureEnd(); ?>

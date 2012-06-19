@@ -1,0 +1,96 @@
+{
+	"_about": {
+		"description": "Tagging the content",
+		"title": "Tag"
+	},
+	"_menu": {
+		"config": {
+			"config": "Configure module"
+		},
+		"tag": {
+			"list": "Manage tags"
+		}
+	},
+	"_permission": {
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		},
+		"tag": {
+			"description": "Manage tags",
+			"actions": {
+				"add": "Add new tag",
+				"delete": "Delete a tag",
+				"edit": "Edit a tag",
+				"list": "List tags"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"allLanguages": "All languages",
+			"cancelAction": "Cancel",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"loadingAction": "Loading ...",
+			"refreshAction": "Refresh",
+			"saveAction": "Save",
+			"searchAction": "Search",
+			"suggestAction": "Suggest",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"config": {
+		"config": {
+			"error": "Sorry, cannot update the module's settings",
+			"success": "The module's settings are updated successfully",
+			"tagSuggestionsEnabled": "Enable tag suggestions using the following services",
+			"tagSuggestionsOpenCalaisApiKeyRequired": "The API key provided by OpenCalais is required",
+			"tagSuggestionsOpenCalaisService": "<a href='http://www.opencalais.com' target='_blank'>OpenCalais</a> service with the API key:",
+			"tagSuggestionsServiceRequired": "You have to choose at least one of tag suggestions services",
+			"tagSuggestionsYahooQueryLanguageService": "<a href='http://developer.yahoo.com/yql/' target='_blank'>Yahoo! Query Language</a> service",
+			"title": "Configure the Tag module"
+		}
+	},
+	"tag": {
+		"_share": {
+			"language": "Language",
+			"slug": "Slug",
+			"slugRequired": "The slug is required",
+			"slugValidator": "The slug already exists. Please try another slug",
+			"title": "Title",
+			"titleRequired": "The title is required"
+		},
+		"add": {
+			"error": "Sorry, cannot add new tag",
+			"success": "The tag is created successfully",
+			"title": "Add new tag"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the tag titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the tag",
+			"notFound": "Sorry, cannot find the tag",
+			"success": "The tag is deleted successfully",
+			"title": "Delete the tag"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the tag",
+			"notFound": "Sorry, cannot find the tag with Id of <b>%s</b>",
+			"success": "The tag is updated successfully",
+			"title": "Edit the tag"
+		},
+		"list": {
+			"notFound": "Not found any tags",
+			"searchHelp": "Tag's title",
+			"tags": "Tags %s",
+			"title": "Manage tags"
+		},
+		"suggest": {
+			"contentRequired": "You have to put the content for suggestions"
+		}
+	}
+}

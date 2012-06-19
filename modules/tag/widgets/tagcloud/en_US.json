@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Show tag cloud",
+		"title": "Tag cloud"
+	},
+	"config": {
+		"basic": "Basic",
+		"entityClass": "Entity's class",
+		"entityClassRequired": "Entity's class is required",
+		"language": "Language",
+		"numberOfTags": "Number of tags",
+		"routeName": "Route's name",
+		"routeNameRequired": "Route's name is required",
+		"theme": "Theme"
+	}
+}

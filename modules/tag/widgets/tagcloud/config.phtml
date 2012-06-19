@@ -1,0 +1,69 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-23
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appForm">
+	<div class="appFormRow" style="width: 100%">
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%; width: 100%', closable: true, doLayout: false">
+			<!-- Basic -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="selected: true, title: '<?php echo $this->translator(true)->_('config.basic'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<label class="appTopLabel" for="lang"><?php echo $this->translator()->_('config.language'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', value: '<?php echo $this->language; ?>', class: 'appWidgetInput'">
+						<?php if ($this->languages) : ?>
+						<?php foreach ($this->languages as $language => $name) : ?>
+						<option value="<?php echo $language; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel" for="entity_class"><?php echo $this->translator()->_('config.entityClass'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'entity_class', class: 'appWidgetInput', style: 'width: 98%', missingMessage: '<?php echo $this->translator(true)->_('config.entityClassRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel" for="route_name"><?php echo $this->translator()->_('config.routeName'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'route_name', class: 'appWidgetInput', style: 'width: 98%', missingMessage: '<?php echo $this->translator(true)->_('config.routeNameRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel" for="limit"><?php echo $this->translator()->_('config.numberOfTags'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'limit', class: 'appWidgetInput', style: 'width: 100px'" />
+				</div>
+			</div>
+			<!-- /Basic -->
+			
+			<!-- Theme -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.theme'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'theme', class: 'appWidgetInput'" />
+				</div>
+			</div>
+			<!-- /Theme -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+</script>

@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Hiển thị mây từ khóa",
+		"title": "Mây từ khóa"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"entityClass": "Lớp đối tượng",
+		"entityClassRequired": "Lớp đối tượng là bắt buộc",
+		"language": "Ngôn ngữ",
+		"numberOfTags": "Số từ khóa",
+		"routeName": "Tên route",
+		"routeNameRequired": "Tên route là bắt buộc",
+		"theme": "Mẫu giao diện"
+	}
+}

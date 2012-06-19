@@ -1,0 +1,129 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-23
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('tag.add.title'));
+?>
+
+<form id="tagTagAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<script type="dojo/method" data-dojo-event="onSubmit" data-dojo-args="e">
+	e.preventDefault();
+	var _this = this;
+	if (_this.validate()) {
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'tag_tag_add'); ?>",
+			content: dojo.formToObject("tagTagAddForm"),
+			handleAs: "json",
+			load: function(data) {
+				_this.reset();
+				dijit.byId("tagTagAddSubmitButton").set("disabled", true);
+				dojo.publish("/app/tag/tag/add/onComplete", [ data ]);
+			}
+		});
+	}
+	</script>
+	
+	<div class="appFormRow">
+		<label for="slug" class="appTopLabel"><?php echo $this->translator()->_('tag._share.language'); ?>:</label>
+		<select id="tagTagAddLanguage" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', value: '<?php echo $this->language; ?>'">
+		<?php foreach ($this->languages as $language => $name) : ?>
+			<option value="<?php echo $language; ?>"><?php echo $name; ?></option>
+		<?php endforeach; ?>
+		</select>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="title" class="appTopLabel"><?php echo $this->translator()->_('tag._share.title'); ?>:</label>
+		<div id="tagTagAddTitleTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php echo addslashes($this->title); ?>', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('tag._share.titleRequired'); ?>'">
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_helper_slug'); ?>",
+				content: {
+					locale: dijit.byId("tagTagAddLanguage").get("value"),
+					input: value
+				},
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("tagTagAddSlugTextBox").set("value", data.output);
+				}
+			});
+			</script>
+		</div>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="slug" class="appTopLabel"><?php echo $this->translator()->_('tag._share.slug'); ?>:</label>
+		<div id="tagTagAddSlugTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'slug', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('tag._share.slugRequired'); ?>'">
+			<script type="dojo/connect">
+			this.generateSlug = function(value) {
+				if (value == "") {
+					return;
+				}
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'tag_tag_validate'); ?>",
+					content: {
+						language: dijit.byId("tagTagAddLanguage").get("value"),
+						slug: value
+					},
+					handleAs: "json",
+					load: function(data) {
+						if (data.result == true) {
+							dijit.byId("tagTagAddSubmitButton").set("disabled", false);
+						} else {
+							dijit.byId("tagTagAddSubmitButton").set("disabled", true);
+							dojo.publish("/app/global/notification", [{
+								message: "<?php echo $this->translator()->_('tag._share.slugValidator'); ?>",
+								type: "error"
+							}]);
+						}
+					}
+				});
+			};
+			var title = dijit.byId("tagTagAddTitleTextBox").get("value");
+			if (title) {
+				dijit.byId("tagTagAddTitleTextBox").onChange(title);
+			}
+			</script>
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			this.generateSlug(value);
+			</script>
+		</div>
+	</div>
+
+	<div class="dijitDialogPaneActionBar">
+		<button id="tagTagAddSubmitButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', disabled: true">
+			<?php echo $this->translator()->_('global._share.addAction'); ?>
+		</button>
+
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/tag/tag/add/onCancel");
+			</script>
+		</button>
+	</div>
+
+	<input type="hidden" name="format" value="json" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Provide tags for content",
+		"title": "Tag Provider"
+	},
+	"menu": {
+		"label": "Tag Provider"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"show": {
+		"allLanguages": "All languages",
+		"keywordHelp": "Tag's title",
+		"notFound": "Not found any tags",
+		"searchAction": "Search",
+		"searchHelp": "Click the Search icon to view the list of tags",
+		"tags": "Tags"
+	}
+}

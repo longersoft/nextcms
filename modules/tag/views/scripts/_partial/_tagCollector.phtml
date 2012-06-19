@@ -1,0 +1,140 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/tag/css/admin/default/styles.css");
+</script>
+
+<div id="<?php echo $this->tagContainer; ?>" style="height: 100px; width: 100%"></div>
+
+<!-- TagSuggestions -->
+<?php if ($this->config('tag', 'suggestion_enabled', 'false') == 'true') : ?>
+<div style="padding: 8px 0">
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', appCanAddTag: <?php if ($this->accessor()->route('tag_tag_add')) : ?>true<?php else : ?>false<?php endif; ?>">
+		<?php echo $this->translator()->_('global._share.suggestAction'); ?>
+		<script type="dojo/connect" data-dojo-event="onClick">
+		// I have to create a function to get the content for suggestions
+		var content	= tag.views.helpers.TagCollector.getContent();
+		if (!content) {
+			dojo.publish("/app/global/notification", [{
+				message: "<?php echo $this->translator(true)->_('tag.suggest.contentRequired'); ?>"
+			}]);
+			return;
+		}
+		var canAddTag = this.get("appCanAddTag");
+		dojo.query(".tagTagCollectionItem", "tagPartialTagCollector").orphan();
+		dojo.style("tagPartialTagCollectorLoading", "display", "block");
+
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'tag_tag_suggest'); ?>",
+			content: {
+				text: content
+			},
+			handleAs: "json",
+			load: function(data) {
+				dojo.style("tagPartialTagCollectorLoading", "display", "none");
+
+				dojo.forEach(data, function(item) {
+					var div = dojo.create("div", {
+						className: "tagTagCollectionItem"
+					}, "tagPartialTagCollector");
+					var span = dojo.create("span", {
+						innerHTML: item.title
+					}, div);
+
+					if (item.tag_id) {
+						// Tag already exists in the database
+						dojo.addClass(div, "tagTagCollectionExistingItem");
+						dojo.attr(div, "data-app-tag", core.js.base.Encoder.encode(item));
+					}
+
+					dojo.connect(span, "onclick", function() {
+						var tagItem = dojo.attr(div, "data-app-tag");
+						if (tagItem) {
+							tag.views.helpers.TagCollector.getCollectorView().addTag(core.js.base.Encoder.decode(tagItem));
+						} else if (canAddTag) {
+							// Show a dialog to add new tag
+							var dialog = new dojox.widget.DialogSimple({
+								loadingMessage: "<div style='text-align: center'><span class='dijitContentPaneLoading'><?php echo $this->translator()->_('global._share.loadingAction'); ?></span></div>",
+								title: "<?php echo $this->translator()->_('tag.add.title'); ?>",
+								style: "width: 250px",
+								refreshOnShow: true
+							});
+							dialog.set("href", "<?php echo $this->url(array(), 'tag_tag_add'); ?>?title=" + item.title);
+							dialog.show();
+							var onCancelHandler = dojo.subscribe("/app/tag/tag/add/onCancel", function() {
+								dialog.destroyRecursive();
+								dojo.unsubscribe(onCancelHandler);
+							});
+							var onCompleteHandler = dojo.subscribe("/app/tag/tag/add/onComplete", function(result) {
+								if (result.result == "APP_RESULT_OK") {
+									tagItem = {
+										tag_id: result.tag_id,
+										title: result.title,
+										slug: result.slug
+									};
+									tag.views.helpers.TagCollector.getCollectorView().addTag(tagItem);
+									dojo.addClass(div, "tagTagCollectionExistingItem");
+									dojo.attr(div, "data-app-tag", core.js.base.Encoder.encode(tagItem));
+								}
+								dialog.destroyRecursive();
+								dojo.unsubscribe(onCompleteHandler);
+							});
+						}
+					});
+				});
+			}
+		});
+		</script>
+	</button>
+</div>
+
+<div class="tagTagCollectionItemsContainer" style="height: 100px; width: 100%; position: relative" id="tagPartialTagCollector">
+	<div class="appCenter" id="tagPartialTagCollectorLoading" style="display: none">
+		<div>
+			<span class="dijitContentPaneLoading"><?php echo $this->translator()->_('global._share.loadingAction'); ?></span>
+		</div>
+	</div>
+</div>
+<?php endif; ?>
+<!-- /TagSuggestions -->
+
+<script type="text/javascript">
+dojo.registerModulePath("tag", "<?php echo $this->APP_STATIC_URL; ?>/modules/tag");
+
+dojo.require("dijit.form.Button");
+dojo.require("dojox.widget.DialogSimple");
+
+dojo.require("core.js.base.Encoder");
+dojo.require("tag.js.views.TagCollectionView");
+dojo.provide("tag.views.helpers.TagCollector");
+
+dojo.addOnLoad(function() {
+	tag.views.helpers.TagCollector._tagCollectionView = new tag.js.views.TagCollectionView("<?php echo $this->tagContainer; ?>", "<?php echo $this->tagInputName; ?>");
+	
+	// Get the instance of tag collection view
+	tag.views.helpers.TagCollector.getCollectorView = function() {
+		return tag.views.helpers.TagCollector._tagCollectionView;
+	};
+	
+	<?php foreach ($this->tags as $tag) : ?>
+	tag.views.helpers.TagCollector.getCollectorView().addTag(core.js.base.Encoder.decode("<?php echo $this->encoder()->encode($tag); ?>"));
+	<?php endforeach; ?>
+});
+</script>

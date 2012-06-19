@@ -1,0 +1,80 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		tag
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('tag.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/tag/css/admin/default/styles.css");
+</script>
+
+<div id="tagTagListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, style: 'padding: 0; height: 100%; width: 100%'">
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, class: 'appBorderContainer'">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="tagTagListToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- Tags -->
+		<div id="tagTagListTagsContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->render('tag/list.ajax.phtml'); ?>
+		</div>
+		<!-- /Tags -->
+	</div>
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/tag/languages')->_('tag.list.title'); ?>";
+
+dojo.registerModulePath("tag", "<?php echo $this->APP_STATIC_URL; ?>/modules/tag");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("tag.js.controllers.TagController");
+dojo.require("tag.js.views.TagContextMenu");
+dojo.require("tag.js.views.TagListView");
+dojo.require("tag.js.views.TagToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'tag_tag_add', 'tag_tag_delete', 'tag_tag_edit', 'tag_tag_list',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});
+	<?php endforeach; ?>
+
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	// Create new controller
+	var tagController = new tag.js.controllers.TagController("tagTagListContainer");
+	tagController.setTagToolbar(new tag.js.views.TagToolbar("tagTagListToolbar"))
+				 .setTagListView(new tag.js.views.TagListView("tagTagListTagsContainer"))
+				 .setTagContextMenu(new tag.js.views.TagContextMenu())
+				 .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>);
+});
+</script>
