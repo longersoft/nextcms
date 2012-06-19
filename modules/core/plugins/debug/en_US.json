@@ -1,0 +1,67 @@
+{
+	"_about": {
+		"description": "Show useful information for debugging",
+		"title": "Debug"
+	},
+	"_permission": {
+		"description": "Debug: Show useful information for debugging",
+		"actions": {
+			"config": "Show the setting form",
+			"debug": "Show the debugging data",
+			"save": "Save the settings"
+		}
+	},
+	"menu": {
+		"label": "Debug toolbox"
+	},
+	"config": {
+		"help": "Select the plugins:",
+		"plugins": {
+			"database": "Database: Shows database queries",
+			"file": "File: Shows included files, paths",
+			"memory": "Memory: Shows memory usage",
+			"registry": "Registry: Shows registried variables",
+			"system": "System: Show system information",
+			"variable": "Variable: Shows variables"
+		}
+	},
+	"debug": {
+		"database": {
+			"statistic": "Executed <b>%s</b> queries in <b>%s</b>",
+			"title": "Database"
+		},
+		"file": {
+			"includedAppFiles": "From the application directory (%s):",
+			"includedFiles": "Included files (%s files)",
+			"includedLibFiles": "From the include path <b>%s</b> (%s):",
+			"includedPaths": "Included paths",
+			"size": "Size: <b>%s</b>",
+			"title": "Files"
+		},
+		"memory": {
+			"controller": "Controller usage: <b>%s</b> KB",
+			"title": "Memory",
+			"usage": "Usage <b>%s</b> of <b>%s</b>"
+		},
+		"registry": {
+			"title": "Registry"
+		},
+		"system": {
+			"app": "App verion: <b>%s</b>",
+			"db": "Database <b>%s</b> using <b>%s</b> adapter",
+			"help": "Below are the information about the system:",
+			"php": "PHP version <b>%s</b> with the following extensions: %s",
+			"server": "Web server: <b>%s</b>",
+			"title": "System",
+			"zf": "Zend Framework version <b>%s</b>"
+		},
+		"title": "Debug",
+		"variable": {
+			"cookieVariables": "Cookie variables",
+			"postVariables": "POST variables",
+			"requestParams": "Request params",
+			"title": "Variables",
+			"viewVariables": "View variables"
+		}
+	}
+}

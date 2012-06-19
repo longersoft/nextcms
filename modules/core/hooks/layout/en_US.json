@@ -1,0 +1,24 @@
+{
+	"_about": {
+		"description": "Provide a visual tool to edit the layout of page",
+		"title": "Layout"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"menu": {
+		"label": "Layout editor"
+	},
+	"show": {
+		"dndHelp": "Click on the area that you want to layout, then drag the entire rectange and drop it to the desired target:",
+		"layout": "Layout",
+		"selectModule": "Select a module",
+		"title": "Layout",
+		"widget": "Widgets"
+	},
+	"widget": {
+		"notFound": "Not found any installed widgets"
+	}
+}

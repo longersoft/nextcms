@@ -1,0 +1,79 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-12-24
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('page.property.title'));
+?>
+
+<form id="corePagePropertyForm" data-dojo-type="dijit.form.Form" data-dojo-props="class: 'appForm'">
+	<div class="appFormRow">
+		<label for="title"><?php echo $this->translator()->_('page.property.containerTitle'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php echo $this->properties['title']; ?>', style: 'width: 200px'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="id"><?php echo $this->translator()->_('page.property.id'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'id', value: '<?php echo $this->properties['id']; ?>', style: 'width: 200px'" />
+	</div>
+
+	<div class="appFormRow">
+		<label for="css_class"><?php echo $this->translator()->_('page.property.cssClass'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'css_class', value: '<?php echo $this->properties['css_class']; ?>', style: 'width: 200px'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="css_style"><?php echo $this->translator()->_('page.property.cssStyle'); ?>:</label>
+		<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'css_style', style: 'height: 100px; width: 200px'"><?php echo $this->properties['css_style']; ?></textarea>
+	</div>
+	
+	<?php if ($this->cls == 'core.js.views.LayoutPortlet') : ?>
+	<div class="appFormRow">
+		<label for="cache_lifetime"><?php echo $this->translator()->_('page.property.cacheLifetime'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'cache_lifetime', value: '<?php echo $this->properties['cache_lifetime']; ?>', style: 'width: 50px'" /> (<?php echo $this->translator()->_('page.property.seconds'); ?>) 
+	</div>
+	<?php endif; ?>
+	
+	<div class="dijitDialogPaneActionBar">
+		<!-- SaveButton -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/page/property/onSave", [ dojo.formToObject("corePagePropertyForm") ]);
+			</script>
+		</button>
+		<!-- /SaveButton -->
+		
+		<!-- CancelButton -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/page/property/onCancel");
+			</script>
+		</button>
+		<!-- /CancelButton -->
+	</div>
+	
+	<input type="hidden" name="container_id" value="<?php echo $this->container_id; ?>" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+</script>

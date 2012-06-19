@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Đẩy các email vào hàng đợi và gửi chúng theo lịch",
+		"title": "Mail Queueing"
+	},
+	"_permission": {
+		"description": "Gửi email theo lịch",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"maxAttempts": "Số lần gửi lại mail tối đa (nếu gửi không thành công)",
+		"maxMails": "Số mail có thể gửi cùng một thời điểm"
+	}
+}

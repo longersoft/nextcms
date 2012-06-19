@@ -1,0 +1,79 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/core/plugins/debug/styles.css");
+</script>
+
+<div id="corePluginsDebugContainer" class="corePluginsDebugContainer" data-app-selected="<?php echo $this->selected; ?>" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', iconClass: 'appIcon corePluginsDebugIcon', title: '<?php echo $this->translator(true)->_('debug.title'); ?>'">
+	<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: true, nested: true, title: '<?php echo $this->translator(true)->_('debug.title'); ?>'">
+		<?php if ($this->plugins) : ?>
+		<?php foreach ($this->plugins as $plugin) : ?>
+			<?php echo $this->partial('_' . $plugin . '.phtml', array('selected' => $plugin == $this->selected, 'data' => isset($this->data[$plugin]) ? $this->data[$plugin] : null)); ?>
+		<?php endforeach; ?>
+		<?php endif; ?>
+		<script type="dojo/connect" data-dojo-event="selectChild" data-dojo-args="child">
+		var plugin = dojo.attr(child.domNode, "data-app-plugin");
+		dojo.attr(dijit.byId("corePluginsDebugContainer").domNode, "data-app-selected", plugin);
+		</script>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.addOnLoad(function() {
+	var codePluginsDebugIoHanlder = dojo.subscribe("/dojo/io/load", function(dfd, response) {
+		var pluginRenderUrl = "<?php echo $this->url(array(), 'core_extension_render'); ?>";
+		var url = dfd.ioArgs.url;
+		if (url != pluginRenderUrl) {
+			var selected = dojo.attr(dijit.byId("corePluginsDebugContainer").domNode, "data-app-selected");
+			dojo.xhrPost({
+				url: pluginRenderUrl,
+				content: {
+					_type: "plugin",
+					_mod: "core",
+					_name: "debug",
+					_method: "debug",
+					selected: selected
+				},
+				load: function(data) {
+					if (dijit.byId("corePluginsDebugContainer")) {
+						var div	 = dojo.create("div", {
+							innerHTML: data,
+							style: "display: 'none'"
+						}, dojo.body());
+						var node = dojo.query(".corePluginsDebugContainer", div)[0];
+						var html = node.innerHTML;
+						dojo.destroy(div);
+						dijit.byId("corePluginsDebugContainer").setContent(html);
+					}
+				}
+			});
+		}
+	});
+
+	// Remove the debug tab from the toolbox after uninstalling the plugin 
+	dojo.subscribe("/app/core/plugin/uninstall/core_debug", function(data) {
+		dojo.publish("/app/global/onRemoveToolbox", [ "corePluginsDebugContainer" ]);
+		dojo.unsubscribe(codePluginsDebugIoHanlder);
+	});	
+});
+</script>

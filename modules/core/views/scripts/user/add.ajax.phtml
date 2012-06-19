@@ -1,0 +1,29 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-26
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->user) : ?>
+<div id="coreUserItem_<?php echo $this->user->user_id; ?>" class="coreUserItem dojoDndItem"
+	<?php if ($this->accessor()->route('core_user_move')) : ?>dndtype="coreUserItemDnd"<?php endif; ?>
+	data-app-entity-props="<?php echo $this->encoder()->encode($this->user, array('user_id', 'user_name', 'status', 'role_id')); ?>">
+	<div class="coreUserItemAvatar">
+		<?php echo $this->avatar($this->user); ?>
+	</div>
+	
+	<?php echo $this->user->user_name; ?>
+</div>
+<?php endif; ?>

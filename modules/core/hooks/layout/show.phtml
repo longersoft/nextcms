@@ -1,0 +1,118 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div id="coreHooksLayoutContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', gutters: false, iconClass: 'appIcon coreHooksLayoutIcon', title: '<?php echo $this->translator(true)->_('show.title'); ?>'">
+	<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: false, nested: true">
+		<!-- Layout -->
+		<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('show.layout'); ?>', class: 'appContentPane'">
+			<div style="padding-bottom: 8px"><?php echo $this->translator()->_('show.dndHelp'); ?></div>
+			
+			<div id="coreHooksLayoutRegionContainer" data-app-dndtype="layout"
+				data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																			'top'	 => 'height: 20%',
+																			'left'	 => 'width: 20%',
+																			'center' => 'width: 60%',
+																			'right'  => 'width: 20%',
+																			'bottom' => 'height: 20%',
+																		)); ?>"
+				data-dojo-type="dojo.dnd.Source" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+				<div id="coreHooksLayoutSelectedRegions" class="dojoDndItem" dndtype="coreHooksLayoutItemDnd" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: true, style: 'height: 200px; width: 200px'">
+					<div class="coreHooksLayoutRegion coreHooksLayoutRegionSelected" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'top', splitter: false, style: 'height: 20%'">
+					</div>
+					<div class="coreHooksLayoutRegion coreHooksLayoutRegionSelected" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'left', splitter: false, style: 'width: 20%'">
+					</div>
+					<div class="coreHooksLayoutRegion coreHooksLayoutRegionSelected" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'width: 60%'">
+					</div>
+					<div class="coreHooksLayoutRegion coreHooksLayoutRegionSelected" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'right', splitter: false, style: 'width: 20%'">
+					</div>
+					<div class="coreHooksLayoutRegion coreHooksLayoutRegionSelected" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'height: 20%'">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Layout -->
+		
+		<!-- Widgets -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.widget'); ?>', class: 'appContentPane'">
+			<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding-bottom: 8px'">
+				<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'mod', maxHeight: '200px'">
+					<option value=""><?php echo $this->translator()->_('show.selectModule'); ?></option>
+					<option type="separator"></option>
+					<?php if ($this->modules) : ?>
+					<?php foreach ($this->modules as $module) : ?>
+					<option value="<?php echo $module->name; ?>"><?php echo $this->extensionTranslator()->translateTitle($module); ?></option>
+					<?php endforeach; ?>
+					<?php endif; ?>
+					<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+					if (value != "") {
+						var params = {
+							_type: "hook",
+							_mod: "core",
+							_name: "layout",
+							_method: "widget",
+							selected_module: value
+						};
+						dijit.byId("coreHooksLayoutWidgetPane").set("href", "<?php echo $this->url(array(), 'core_extension_render'); ?>" + "?" + dojo.objectToQuery(params));
+					}
+					</script>
+				</select>
+			</div>
+			
+			<div id="coreHooksLayoutWidgetPane" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+			</div>
+		</div>
+		<!-- /Widgets -->
+	</div>
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* core.hooks.layout */
+dojo.require("dijit.form.Select");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Encoder");
+
+dojo.addOnLoad(function() {
+	var regions = core.js.base.Encoder.decode(dojo.attr("coreHooksLayoutRegionContainer", "data-app-entity-props"));
+	
+	dojo.query(".coreHooksLayoutRegion", "coreHooksLayoutRegionContainer").forEach(function(node, index) {
+		dojo.connect(node, "onclick", function() {
+			var props  = dojo.fromJson("{" + dojo.attr(node, "data-dojo-props") + "}");
+			var region = props.region;
+			if (region == "center") {
+				return;
+			}
+			dojo.toggleClass(node, "coreHooksLayoutRegionSelected");
+
+			if (regions[region]) {
+				delete regions[region];
+			} else {
+				regions[region] = props.style;
+			}
+
+			var data = core.js.base.Encoder.encode(regions);
+			dojo.attr("coreHooksLayoutRegionContainer", "data-app-entity-props", data);
+			dojo.attr("coreHooksLayoutSelectedRegions", "data-app-entity-props", data); 
+		});
+	});
+});
+<?php $this->script()->captureEnd(); ?>

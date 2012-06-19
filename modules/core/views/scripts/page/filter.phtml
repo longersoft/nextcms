@@ -1,0 +1,99 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('page.filter.title'));
+?>
+
+<form id="corePageFilterForm" data-dojo-type="dijit.form.Form" data-dojo-props="class: 'appForm'">
+	<!-- Filters -->
+	<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, region: 'center', style: 'height: 300px'">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('page.filter.availableFilters'); ?>'">
+			<?php if (!$this->filters && count($this->filters) == 0) : ?>
+				<?php echo $this->translator()->_('page.filter.notFound'); ?>
+			<?php else : ?>
+			
+			<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, style: 'padding: 0'">
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'margin: 8px 0px'">
+					<?php echo $this->translator()->_('page.filter.filterDndHelp'); ?>
+				</div>
+			
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appBorderContainer'">
+					<div data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: ['corePageFilterDnd'], selfAccept: true" class="appContentPane">
+						<?php foreach ($this->filters as $filter) : ?>
+						<div style="padding-bottom: 8px" class="dojoDndItem" dndtype="corePageFilterDnd">
+							<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'filters[]', value: '<?php echo $filter->clazz; ?>', checked: <?php if ($filter->used) : ?>true<?php else : ?>false<?php endif; ?>" />
+							<?php echo $this->extensionTranslator()->translateTitle($filter); ?>: <?php echo $this->extensionTranslator()->translateDescription($filter); ?>
+						</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+			
+			<?php endif; ?>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('page.filter.additionalFilters'); ?>'">
+			<div style="margin: 8px 0px">
+				<?php echo $this->translator()->_('page.filter.setClassesHelp'); ?>:
+			</div>
+			<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'classes', style: 'height: 100px; width: 95%'"><?php echo $this->classes; ?></textarea>	
+		</div>
+	</div>
+	<!-- /Filters -->
+		
+	<div class="dijitDialogPaneActionBar">
+		<!-- SaveButton -->
+		<?php if ($this->filters && count($this->filters) > 0) : ?>
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var data = dojo.formToObject("corePageFilterForm");
+			dojo.publish("/app/core/page/filter/onSave", [{
+				container_id: data.container_id,
+				filters: data["filters[]"],
+				classes: data.classes
+			}]);
+			</script>
+		</button>
+		<?php endif; ?>
+		<!-- /SaveButton -->
+		
+		<!-- CancelButton -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/page/filter/onCancel");
+			</script>
+		</button>
+		<!-- /CancelButton -->
+	</div>
+	
+	<input type="hidden" name="container_id" value="<?php echo $this->container_id; ?>" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojo.dnd.Source");
+</script>

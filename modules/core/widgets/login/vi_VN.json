@@ -1,0 +1,31 @@
+{
+	"_about": {
+		"description": "Hiển thị form đăng nhập",
+		"title": "Đăng nhập"
+	},
+	"config": {
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"cancelOpenIdLogin": "Hủy đăng nhập dùng OpenId",
+		"error": "Không thể đăng nhập",
+		"forgotPassword": "Quên mật khẩu",
+		"loginButton": "Đăng nhập",
+		"loginUsingOpenId": "Đăng nhập dùng OpenId",
+		"logout": "Thoát",
+		"notFoundUser": "Không tìm thấy người dùng",
+		"openIdUrl": "Địa chỉ OpenID",
+		"openIdUrlRequired": "Địa chỉ OpenID là bắt buộc",
+		"openIdUrlValidator": "Địa chỉ OpenID không hợp lệ",
+		"password": "Mật khẩu",
+		"passwordRequired": "Mật khẩu là bắt buộc",
+		"registration": "Đăng ký",
+		"title": "Đăng nhập",
+		"username": "Tên đăng nhập",
+		"usernameRequired": "Tên đăng nhập là bắt buộc",
+		"usernameValidator": "Tên đăng nhập không hợp lệ",
+		"userNotActivated": "Người dùng chưa được kích hoạt",
+		"welcome": "Xin chào %s",
+		"wrongPassword": "Sai mật khẩu"
+	}
+}

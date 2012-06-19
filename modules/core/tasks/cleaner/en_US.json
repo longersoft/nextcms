@@ -1,0 +1,24 @@
+{
+	"_about": {
+		"description": "Clean the system, such as deleting the access logs, errors",
+		"title": "Cleaner"
+	},
+	"_permission": {
+		"description": "Clean the system",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"all": "All",
+		"keepAccessLogHelp": "Keep the access logs in the number of days",
+		"keepErrorLogHelp": "Keep the error logs in the number of days",
+		"lastOneDay": "Last 1 day",
+		"lastOneMonth": "Last 1 month",
+		"lastOneWeek": "Last 1 week",
+		"lastOneYear": "Last 1 year",
+		"lastSixMonths": "Last 6 months",
+		"lastThreeMonths": "Last 3 months"
+	}
+}

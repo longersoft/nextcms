@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Set your website to the offline mode",
+		"title": "Offline"
+	},
+	"_permission": {
+		"description": "Set your website to the offline mode",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"default": "The website is maintained. Please come back later!",
+		"message": "The offline message"
+	}
+}

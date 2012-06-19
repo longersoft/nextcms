@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Thiết lập website ở chế độ ngoại tuyến",
+		"title": "Ngoại tuyến"
+	},
+	"_permission": {
+		"description": "Thiết lập website ở chế độ ngoại tuyến",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"default": "Website đang được bảo trì. Xin hãy quay lại sau!",
+		"message": "Tin nhắn"
+	}
+}

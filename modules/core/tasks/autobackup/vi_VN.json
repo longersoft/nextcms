@@ -1,0 +1,31 @@
+{
+	"_about": {
+		"description": "Tự động sao lưu dữ liệu MySQL",
+		"title": "Sao lưu dữ liệu"
+	},
+	"_permission": {
+		"description": "Tự động sao lưu dữ liệu MySQL",
+		"actions": {
+			"delete": "Xóa tệp SQL",
+			"download": "Tải về tệp SQL",
+			"view": "Xem các tệp SQL"
+		}
+	},
+	"_share": {
+		"cancelAction": "Hủy",
+		"deleteAction": "Xóa",
+		"downloadAction": "Tải về",
+		"lastModified": "Cập nhật lần cuối",
+		"loadingAction": "Đang tải ...",
+		"name": "Tên",
+		"refreshAction": "Tải lại"
+	},
+	"delete": {
+		"error": "Xin lỗi, không thể xóa tệp SQL",
+		"success": "Tệp SQL đã được xóa thành công"
+	},
+	"view": {
+		"files": "Tệp",
+		"help": "Dưới đây là các tệp SQL chứa cơ sở dữ liệu của website"
+	}
+}

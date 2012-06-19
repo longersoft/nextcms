@@ -1,0 +1,6 @@
+{
+	"_about": {
+		"description": "Chỉ tải ảnh khi người dùng kéo chuột tới vị trí chứa ảnh tương ứng",
+		"title": "Lazyload"
+	}
+}

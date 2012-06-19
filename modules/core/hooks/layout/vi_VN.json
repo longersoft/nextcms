@@ -1,0 +1,24 @@
+{
+	"_about": {
+		"description": "Cung cấp công cụ để chỉnh sửa bố cục của trang",
+		"title": "Bố cục"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"menu": {
+		"label": "Chỉnh sửa bố cục"
+	},
+	"show": {
+		"dndHelp": "Nhấp chuột vào vị trí bạn muốn có trong bố cục (đỉnh, đáy, trái, phải), sau đó kéo toàn bộ hình chữ nhật và thả vào vùng chứa bạn muốn bố cục",
+		"layout": "Bố cục",
+		"selectModule": "Chọn module",
+		"title": "Bố cục",
+		"widget": "Widget"
+	},
+	"widget": {
+		"notFound": "Không tìm thấy widget đã được cài đặt nào"
+	}
+}

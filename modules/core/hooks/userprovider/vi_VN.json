@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Tìm kiếm người dùng và cho phép gắp, thả người dùng vào các vùng chứa khác",
+		"title": "Tìm kiếm người dùng"
+	},
+	"menu": {
+		"label": "Tìm kiếm người dùng"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"show": {
+		"notFound": "Không tìm thấy người dùng nào",
+		"keywordHelp": "Tên tài khoản hoặc địa chỉ email",
+		"searchAction": "Tìm kiếm",
+		"searchHelp": "Nhấp biểu tượng Tìm kiếm để xem danh sách người dùng",
+		"title": "Người dùng"
+	}
+}

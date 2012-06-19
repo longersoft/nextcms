@@ -1,0 +1,101 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('rule.user.title'));
+?>
+
+<form id="coreRuleUserForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+<div id="coreRuleUserContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this  = this;
+			dijit.byId("coreRuleUserStandby").show();
+			dojo.publish("/app/global/notification", [{
+				message: "<?php echo $this->translator()->_('global._share.savingAction'); ?>",
+				type: "message"
+			}]);
+			
+			_this.set("disabled", true);
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_rule_user'); ?>",
+				content: dojo.formToObject("coreRuleUserForm"),
+				handleAs: "json",
+				load: function(data) {
+					_this.set("disabled", false);
+					dijit.byId("coreRuleUserStandby").hide();
+					dojo.publish("/app/core/rule/user/onComplete", [ data ]);
+				}
+			});
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/rule/user/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- PermissionForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('rule.user.title'); ?></span></h2>
+			
+			<?php if (!$this->user) : ?>
+				<?php echo $this->translator()->_('rule.user.notFound'); ?>
+			<?php elseif ($this->user->isRootUser()) : ?>
+				<?php echo $this->translator()->_('rule.user.unableSetRootUser'); ?>
+			<?php else : ?>
+				<?php echo sprintf($this->translator()->_('rule.user.settingHelp'), $this->user->user_name); ?>
+			<?php endif; ?>
+		</div>
+		
+		<?php if ($this->user && !$this->user->isRootUser()) : ?>
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: true, nested: true, class: 'appContentPane'">
+			<?php foreach ($this->modules as $index => $module) : ?>
+			<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->extensionTranslator()->translateTitle($module); ?>', href: '<?php echo $this->url(array(), 'core_rule_user'); ?>?format=html&user_id=<?php echo $this->user->user_id; ?>&mod=<?php echo $module->name; ?>', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'margin-top: 8px'">
+			</div>
+			<?php endforeach; ?>
+		</div>
+		<?php endif; ?>
+	</div>
+	<!-- /PermissionForm -->
+	
+	<input type="hidden" name="format" value="json" />
+	<input type="hidden" name="user_id" value="<?php echo $this->user->user_id; ?>" />
+</div>
+</form>
+
+<div id="coreRuleUserStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'coreRuleUserContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.widget.Standby");
+</script>

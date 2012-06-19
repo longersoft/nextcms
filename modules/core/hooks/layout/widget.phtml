@@ -1,0 +1,54 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2011-10-26
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/core/hooks/layout/styles.css");
+</script>
+
+<div id="coreHooksLayoutWidgetContainer" class="coreHooksLayoutWidgetContainer">
+<?php if (!$this->widgets || count($this->widgets) == 0) : ?>
+	<?php echo $this->translator()->_('widget.notFound'); ?>
+<?php else : ?>
+	<?php foreach ($this->widgets as $widget) : ?>
+	<div class="coreHooksLayoutWidget">
+		<div class="coreHooksLayoutWidgetThumbnail" data-app-dndtype="widget" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+			<div class="dojoDndItem" dndtype="coreHooksLayoutWidgetDnd"
+				data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																			'module' => $widget->module,
+																			'name'	 => $widget->name,
+																			'title'	 => $this->extensionTranslator()->translateTitle($widget),
+																		)); ?>">
+				<img src="<?php echo $this->APP_ROOT_URL . '/' . ltrim($widget->thumbnail, '/'); ?>" />
+			</div>
+		</div>
+		
+		<div class="coreHooksLayoutWidgetDescription">
+			<h3><?php echo $this->extensionTranslator()->translateTitle($widget); ?></h3>
+			<div style="padding-bottom: 8px"><?php echo $this->extensionTranslator()->translateDescription($widget); ?></div>
+		</div>
+		
+		<div style="clear: both"></div>
+	</div>
+	<?php endforeach; ?>
+<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+dojo.require("dojo.dnd.Source");
+</script>

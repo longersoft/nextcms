@@ -1,0 +1,234 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('template.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/core/css/admin/default/styles.css");
+</script>
+
+<div id="coreTemplateListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, region: 'leading', minSize: 200, splitter: true, style: 'height: 100%; padding: 0; width: 25%'">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div class="appTitleBar" style="border-left: none; border-right: none; border-top: none">
+				<?php echo $this->translator()->_('template.list.templates'); ?>
+			</div>
+		</div>
+		
+		<!-- Templates -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+			<div class="coreTemplateItemsContainer">
+			<?php foreach ($this->templates as $template) : ?>
+				<div class="coreTemplateItem" style="height: 30px">
+					<div class="appLeft">
+						<a href="javascript: void(0);" class="coreTemplateItemName" data-app-template="<?php echo $template; ?>"><?php echo $template; ?></a>
+					</div>
+					
+					<?php if (!in_array($template, $this->notActivableTemplates)) : ?>
+					<div class="appRight">
+						<!-- InstallButton -->
+						<?php if ($this->accessor()->route('core_template_install')) : ?>
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', _template: '<?php echo $template; ?>', class: 'appLeft', style: 'margin: 0 5px'">
+							<?php echo $this->translator()->_('global._share.installAction'); ?>
+							<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+							var _this = this;
+							_this.set("disabled", true);
+							var template = this.get("_template");
+							dijit.byId("coreTemplateListStandby").show();
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_template_install'); ?>",
+								content: {
+									template: template
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("coreTemplateListStandby").hide();
+									_this.set("disabled", false);
+									dojo.publish("/app/global/notification", [{
+										message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('template.install.success'); ?>" : "<?php echo $this->translator()->_('template.install.error'); ?>",
+										type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+									}]);
+								}
+							});
+							</script>
+						</button>
+						<?php endif; ?>
+						<!-- /InstallButton -->
+						
+						<!-- UninstallButton -->
+						<?php if ($this->accessor()->route('core_template_uninstall')) : ?>
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', _template: '<?php echo $template; ?>', class: 'appLeft', style: 'margin: 0 5px'">
+							<?php echo $this->translator()->_('global._share.uninstallAction'); ?>
+							<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+							var _this = this;
+							_this.set("disabled", true);
+							var template = this.get("_template");
+							dijit.byId("coreTemplateListStandby").show();
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_template_uninstall'); ?>",
+								content: {
+									template: template
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("coreTemplateListStandby").hide();
+									_this.set("disabled", false);
+									dojo.publish("/app/global/notification", [{
+										message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('template.uninstall.success'); ?>" : "<?php echo $this->translator()->_('template.uninstall.error'); ?>",
+										type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+									}]);
+								}
+							});
+							</script>
+						</button>
+						<?php endif; ?>
+						<!-- /UninstallButton -->
+					
+						<!-- ActivateButton -->
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="class: 'coreTemplateActivateButton', type: 'button', disabled: <?php if ($this->currentTemplate == $template || !$this->accessor()->route('core_template_activate')) : ?>true<?php else : ?>false<?php endif; ?>, _template: '<?php echo $template; ?>', class: 'appLeft', style: 'margin: 0 5px'">
+							<?php echo $this->translator()->_('global._share.activateAction'); ?>
+							<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+							var _this = this;
+							_this.set("disabled", true);
+							var template = this.get("_template");
+							dijit.byId("coreTemplateListStandby").show();
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_template_activate'); ?>",
+								content: {
+									template: template
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("coreTemplateListStandby").hide();
+									dojo.publish("/app/global/notification", [{
+										message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('template.activate.success'); ?>" : "<?php echo $this->translator()->_('template.activate.error'); ?>",
+										type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+									}]);
+
+									if (data.result == "APP_RESULT_OK") {
+										// Enable the activate buttons associcating with other templates
+										dojo.query(".coreTemplateActivateButton").forEach(function(node) {
+											var button = dijit.byNode(node);
+											if (button) {
+												button.set("disabled", false);
+											}
+										});
+										_this.set("disabled", true);
+									} else {
+										_this.set("disabled", false);
+									}
+								}
+							});
+							</script>
+						</button>
+						<!-- /ActivateButton -->
+					</div>
+					<?php endif; ?>
+					
+					<div style="clear: both"></div>
+				</div>
+			<?php endforeach; ?>
+			</div>
+		</div>
+		<!-- /Templates -->
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div id="coreTemplateListCenterContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true">
+		<div id="coreTemplateListLayoutsPane" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', style: 'padding: 0', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+			<div class="appCenter">
+				<div><?php echo $this->translator()->_('template.list.layoutsHelp'); ?></div>
+			</div>
+		</div>
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<div id="coreTemplateListStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'coreTemplateListContainer'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('template.list.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.widget.Standby");
+
+dojo.require("core.js.base.views.Helper");
+
+dojo.addOnLoad(function() {
+	// Load layouts when selecting a template
+	dojo.query(".coreTemplateItemName").forEach(function(node, index) {
+		dojo.connect(node, "onclick", function() {
+			dojo.query(".coreTemplateItem").removeClass("coreTemplateSelectedItem");
+			dojo.query(node).closest(".coreTemplateItem").addClass("coreTemplateSelectedItem");
+			
+			var params = {
+				format: "html",
+				template: dojo.attr(node, "data-app-template")
+			};
+			dijit.byId("coreTemplateListLayoutsPane").set("href", "<?php echo $this->url(array(), 'core_template_list'); ?>" + "?" + dojo.objectToQuery(params));
+		}); 
+	});
+
+	
+
+	// Create new helper instance
+	var helper = new core.js.base.views.Helper("coreTemplateListCenterContainer");
+	helper.setModule("core");
+	
+	// Edit layout script handler
+	dojo.subscribe("/app/core/layout/edit/onLoadForm", function(data) {
+		var url = "<?php echo $this->url(array(), 'core_layout_edit'); ?>" + "?" + dojo.objectToQuery(data);
+		helper.showPane(url, {
+			region: "bottom",
+			style: "height: 75%; width: 100%"
+		});
+	});
+	dojo.subscribe("/app/core/layout/edit/onCancel", helper, "removePane");
+
+	// Edit skin handler
+	dojo.subscribe("/app/core/skin/edit/onLoadForm", function(data) {
+		var url = "<?php echo $this->url(array(), 'core_skin_edit'); ?>" + "?" + dojo.objectToQuery(data);
+		helper.showPane(url, {
+			region: "bottom",
+			style: "height: 75%; width: 100%"
+		});
+	});
+	dojo.subscribe("/app/core/skin/edit/onCancel", helper, "removePane");
+
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_template_list", function() {
+		// Auto show buttons when hover the template container
+		dojo.query(".coreTemplateItem").forEach(function(node, index) {
+			dojo.query(".dijitButton", node).style("display", "none");
+			dojo.connect(node, "onmouseover", function() {
+				dojo.query(".dijitButton", node).style("display", "block");
+			});
+			dojo.connect(node, "onmouseout", function() {
+				dojo.query(".dijitButton", node).style("display", "none");
+			});
+		});
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

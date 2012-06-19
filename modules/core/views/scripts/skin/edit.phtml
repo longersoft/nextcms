@@ -1,0 +1,85 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-02-14
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('skin.edit.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			this.set("disabled", true);
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_skin_edit'); ?>",
+				content: dojo.formToObject("coreSkinEditForm"),
+				handleAs: "json",
+				load: function(data) {
+					_this.set("disabled", false);
+					var message = (data.result == "APP_RESULT_OK")
+								? "<?php echo $this->translator()->_('skin.edit.success'); ?>"
+								: "<?php echo $this->translator()->_('skin.edit.error'); ?>";
+					dojo.publish("/app/global/notification", [{
+						message: message,
+						type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+					}]);
+				}
+			});
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/layout/edit/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- EditLayoutForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<?php echo sprintf($this->translator()->_('skin.edit.help'), $this->path); ?>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<form id="coreSkinEditForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'content', region: 'center', style: 'height: 100%; width: 100%'"><?php echo $this->content; ?></textarea>
+			
+			<input type="hidden" name="format" value="json" />
+			<input type="hidden" name="template" value="<?php echo $this->template; ?>" />
+			<input type="hidden" name="skin" value="<?php echo $this->skin; ?>" />
+			<input type="hidden" name="file" value="<?php echo $this->file; ?>" />
+		</form>
+		</div>
+	</div>
+	<!-- /EditLayoutForm -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+</script>

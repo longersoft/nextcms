@@ -1,0 +1,37 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->showAsNotification && $this->messages) : ?>
+
+	<script type="text/javascript">
+	dojo.addOnLoad(function() {
+		<?php foreach ($this->messages as $message) : ?>
+		dojo.publish("/app/global/notification", [{ message: "<?php echo $message; ?>" }]);
+		<?php endforeach; ?>
+	});
+	</script>
+
+<?php elseif (!$this->showAsNotification && $this->messages) : ?>
+
+	<ul class="appFlashMessagesContainer">
+		<?php foreach ($this->messages as $message) : ?>
+		<li><?php echo $message; ?></li>
+		<?php endforeach; ?>
+	</ul>
+
+<?php endif; ?>

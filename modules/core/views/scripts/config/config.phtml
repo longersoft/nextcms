@@ -1,0 +1,808 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-21
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('config.config.title'));
+?>
+
+<form id="coreConfigConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+<div id="coreConfigConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			if (dijit.byId("coreConfigConfigForm").validate()) {
+				dijit.byId("coreConfigConfigStandby").show();
+				_this.set("disabled", true);
+
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'core_config_config'); ?>",
+					content: dojo.formToObject("coreConfigConfigForm"),
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dijit.byId("coreConfigConfigStandby").hide();
+
+						// Update notification settings
+						dojo.publish("/app/global/updateNotificationSettings", [{
+							position: data.notification_position,
+							duration: data.notification_duration * 1000
+						}]);
+
+						dojo.publish("/app/global/notification", [{
+							message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('config.config.success'); ?>" : "<?php echo $this->translator()->_('config.config.error'); ?>",
+							type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+						}]);
+
+						if (data.redirectTo) {
+							window.location = data.redirectTo;
+						} else if (data.reload) {
+							window.location.reload();
+						}
+					}
+				});
+			}
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- ConfigForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('config.config.title'); ?></span></h2>
+		</div>
+		
+		<!-- TabContainer -->
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: true, nested: true, class: 'appContentPane'">
+			<!-- General -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.config.general'); ?>', class: 'appContentPane'">
+				<!-- WebsiteSettings -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.website'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="site_name"><?php echo $this->translator()->_('config.config.siteName'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'site_name', style: 'width: 300px', value: '<?php echo addslashes($this->config('core', 'site_name', '')); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label for="site_title"><?php echo $this->translator()->_('config.config.siteTitle'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'site_title', style: 'width: 300px', value: '<?php echo addslashes($this->config('core', 'site_title', '')); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label for="meta_keyword"><?php echo $this->translator()->_('config.config.metaKeywordTag'); ?>:</label>
+					<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'meta_keyword', style: 'width: 400px; height: 150px'"><?php echo $this->config('core', 'meta_keyword', ''); ?></textarea>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="meta_description"><?php echo $this->translator()->_('config.config.metaDescriptionTag'); ?>:</label>
+					<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'meta_description', style: 'width: 400px; height: 150px'"><?php echo $this->config('core', 'meta_description', ''); ?></textarea>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="charset"><?php echo $this->translator()->_('config.config.charset'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'charset', maxHeight: 200, value: '<?php echo $this->APP_CHARSET; ?>'">
+						<?php if ($this->charsets) : ?>
+						<?php foreach ($this->charsets as $charset => $name) : ?>
+						<option value="<?php echo $charset; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="datetime_timezone"><?php echo $this->translator()->_('config.config.timeZone'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'datetime_timezone', maxHeight: 200, value: '<?php echo $this->config('core', 'datetime_timezone', date_default_timezone_get()); ?>'">
+						<?php if ($this->timeZones) : ?>
+						<?php foreach ($this->timeZones as $timeZone => $name) : ?>
+						<option value="<?php echo $timeZone; ?>"><?php echo $timeZone; ?> (<?php echo $name; ?>)</option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.staticServer'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.staticServerHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="url_static">&nbsp;</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'url_static', value: '<?php echo addslashes($this->config('core', 'url_static')); ?>', style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.staticServerRequired'); ?>'" />
+				</div>
+				<!-- /WebsiteSettings -->
+				
+				<!-- Notification -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.notification'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.notificationPosition'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'notification_position', value: '<?php echo $this->config('core', 'notification_position', 'tr-down'); ?>', maxHeight: 200">
+						<option value="br-up"><?php echo $this->translator()->_('config.config.notificationPositionBottomRightUp'); ?></option>
+						<option value="br-left"><?php echo $this->translator()->_('config.config.notificationPositionBottomRightLeft'); ?></option>
+						<option value="bl-up"><?php echo $this->translator()->_('config.config.notificationPositionBottomLeftUp'); ?></option>
+						<option value="bl-right"><?php echo $this->translator()->_('config.config.notificationPositionBottomLeftRight'); ?></option>
+						<option value="tr-down"><?php echo $this->translator()->_('config.config.notificationPositionTopRightDown'); ?></option>
+						<option value="tr-left"><?php echo $this->translator()->_('config.config.notificationPositionTopRightLeft'); ?></option>
+						<option value="tl-down"><?php echo $this->translator()->_('config.config.notificationPositionTopLeftDown'); ?></option>
+						<option value="tl-right"><?php echo $this->translator()->_('config.config.notificationPositionTopLeftRight'); ?></option>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.notificationDuration'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'notification_duration', style: 'width: 100px', value: '<?php echo addslashes($this->config('core', 'notification_duration', 2)); ?>'" /> (<?php echo $this->translator()->_('config._share.seconds'); ?>)
+				</div>
+				<!-- /Notification -->
+				
+				<!-- Language -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.language'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.language'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.languageHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="language_code">&nbsp;</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language_code', value: '<?php echo $this->language; ?>', maxHeight: 200">
+						<?php foreach ($this->languages as $locale => $name) : ?>
+						<option value="<?php echo $locale; ?>"><?php echo $name['native']; ?> (<?php echo $name['english']; ?>)</option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="language_direction"><?php echo $this->translator()->_('config.config.languageDirection'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language_direction', value: '<?php echo $this->APP_LANGUAGE_DIR; ?>'">
+						<option value="rtl"><?php echo $this->translator()->_('config.config.languageDirectionRtl'); ?></option>
+						<option value="ltr"><?php echo $this->translator()->_('config.config.languageDirectionLtr'); ?></option>
+					</select>
+				</div>
+				<!-- /Language -->
+				
+				<!-- Localization -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.localization'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.localizationDefaultLanguage'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.localizationHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="localization_default_language">&nbsp;</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'localization_default_language', value: '<?php if ($localizationDefaultLanguage = $this->config('core', 'localization_default_language', 'en_US')) : ?><?php echo $localizationDefaultLanguage; ?><?php endif; ?>', maxHeight: 200">
+						<?php if ($this->localizationLanguages) : ?>
+						<?php foreach ($this->localizationLanguages as $locale => $name) : ?>
+						<option value="<?php echo $locale; ?>"><?php echo $name['native']; ?> (<?php echo $name['english']; ?>)</option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+						
+						<script type="dojo/connect">
+						if (value = this.get("value")) {
+							this.set("appLocale", value);
+						}
+						</script>
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="locale">
+						if (currLocale = this.get("appLocale")) {
+							dijit.byId("coreConfigConfigLocalizationCheckBox_" + currLocale).set("readOnly", false);
+						}
+						
+						dijit.byId("coreConfigConfigLocalizationCheckBox_" + locale).set("checked", true);
+						dijit.byId("coreConfigConfigLocalizationCheckBox_" + locale).set("readOnly", true);
+						this.set("appLocale", locale);
+						</script>
+					</select>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="localization_languages"><?php echo $this->translator()->_('config.config.localizationOtherLanguages'); ?>:</label>
+					<div class="appLeft">
+						<?php if ($this->localizationLanguages) : ?>
+						<?php foreach ($this->localizationLanguages as $locale => $name) : ?>
+						<div style="padding-bottom: 4px">
+							<input id="coreConfigConfigLocalizationCheckBox_<?php echo $locale; ?>" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'localization_languages[]', value: '<?php echo $this->encoder()->encode(array('locale' => $locale, 'name' => $name['native'])); ?>', checked: <?php if ($this->selectedLocalizationLanguages && in_array($locale, array_keys($this->selectedLocalizationLanguages))) : ?>true<?php else : ?>false<?php endif; ?>, readOnly: <?php if ($localizationDefaultLanguage == $locale) : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $name['native']; ?> (<?php echo $name['english']; ?>)
+						</div>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</div>
+					
+					<div class="appClear"></div>
+				</div>
+				<!-- /Localization -->
+			</div>
+			<!-- /General -->
+			
+			<!-- Advanced -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.config.advanced'); ?>', class: 'appContentPane'">
+				<!-- RSS -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.feed'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="feed_limit"><?php echo $this->translator()->_('config.config.feedLimit'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'feed_limit', value: '<?php echo $this->config('core', 'feed_limit', 20); ?>', style: 'width: 100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.feedLimitRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label for="feed_title"><?php echo $this->translator()->_('config.config.feedTitle'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'feed_title', value: '<?php echo $this->config('core', 'feed_title', ''); ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.feedTitleRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label for="feed_description"><?php echo $this->translator()->_('config.config.feedDescription'); ?>:</label>
+					<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'feed_description', style: 'height: 100px; width: 300px'"><?php echo $this->config('core', 'feed_description', ''); ?></textarea>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="feed_copyright"><?php echo $this->translator()->_('config.config.feedCopyright'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'feed_copyright', value: '<?php echo $this->config('core', 'feed_copyright', ''); ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.feedCopyrightRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label for="feed_generator"><?php echo $this->translator()->_('config.config.feedGenerator'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'feed_generator', value: '<?php echo $this->config('core', 'feed_generator', Core_Services_Version::getVersion()); ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.feedGeneratorRequired'); ?>'" />
+				</div>
+				<!-- /RSS -->
+			
+				<!-- Session -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.session'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="session_cookie_domain"><?php echo $this->translator()->_('config.config.cookieDomain'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'session_cookie_domain', style: 'width: 300px', value: '<?php echo addslashes($this->config('core', 'session_cookie_domain', '')); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label for="session_cookie_lifetime"><?php echo $this->translator()->_('config.config.sessionLifetime'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'session_cookie_lifetime', style: 'width: 100px', value: '<?php echo addslashes($this->config('core', 'session_cookie_lifetime', 3600)); ?>'" /> (<?php echo $this->translator()->_('config._share.seconds'); ?>)
+				</div>
+				
+				<div class="appFormRow">
+					<label for="session_handler"><?php echo $this->translator()->_('config.config.sessionHandler'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'session_handler', maxHeight: 200, value: '<?php echo $this->config('core', 'session_handler', 'db'); ?>'">
+						<option value="db"><?php echo $this->translator()->_('config.config.sessionDbHandler'); ?></option>
+						<option value="file"><?php echo $this->translator()->_('config.config.sessionFileHandler'); ?></option>
+						<?php if (extension_loaded('memcache')) : ?>
+						<option value="memcache"><?php echo $this->translator()->_('config.config.sessionMemcacheHandler'); ?></option>
+						<?php endif; ?>
+						
+						<script type="dojo/connect">
+						dojo.style("coreConfigConfigSessionMemcacheContainer", "display", this.attr("value") == "memcache" ? "block" : "none");
+						</script>
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.style("coreConfigConfigSessionMemcacheContainer", "display", value == "memcache" ? "block" : "none");
+						</script>
+					</select>
+				</div>
+				
+				<div id="coreConfigConfigSessionMemcacheContainer">
+					<div class="appFormRow">
+						<label for="session_memcache_lifetime"><?php echo $this->translator()->_('config.config.cacheLifetime'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'session_memcache_lifetime', value: '<?php echo $this->config('core', 'session_memcache_lifetime', ''); ?>', style: 'width: 100px'" /> (<?php echo $this->translator()->_('config._share.seconds'); ?>)
+					</div>
+					
+					<div class="appFormRow">
+						<label for="session_memcache_id_prefix"><?php echo $this->translator()->_('config.config.cacheIdPrefix'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'session_memcache_id_prefix', value: '<?php echo $this->config('core', 'session_memcache_id_prefix', ''); ?>', style: 'width: 200px'" />
+					</div>
+				
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('config.config.cacheServer'); ?>:</label>
+						<a href="javascript: void(0);" id="coreConfigConfigAddSessionMemcacheServer"><?php echo $this->translator()->_('global._share.addAction'); ?></a> 
+					</div>
+					
+					<?php if ($this->sessionMemcacheServers) : ?>
+					<?php foreach ($this->sessionMemcacheServers as $key => $value) : ?>
+					<div class="appFormRow">
+						<label>&nbsp;</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'session_memcache_servers[]', value: '<?php echo $value['host']; ?>', style: 'width: 200px'" /> 
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'session_memcache_ports[]', value: '<?php echo $value['port']; ?>', style: 'margin: 0 10px; width: 50px'" />
+						<a href="javascript: void(0);" onclick="javascript: dojo.query(this).closest('.appFormRow').orphan();"><?php echo $this->translator()->_('global._share.deleteAction'); ?></a>						
+					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
+				<!-- /Session -->
+				
+				<!-- Security -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.security'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="admin_prefix"><?php echo $this->translator()->_('config.config.adminPrefixUrl'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'admin_prefix', value: '<?php echo addslashes($this->config('core', 'admin_prefix', 'admin')); ?>', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.adminPrefixUrlRequired'); ?>'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label for="secret_key"><?php echo $this->translator()->_('config.config.secretKey'); ?>:</label>
+					<input id="coreConfigConfigSecretKeyTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'secret_key', value: '<?php echo addslashes($this->config('core', 'secret_key', md5(Core_Base_String::generateRandomString()))); ?>', style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.secretKeyRequired'); ?>'" />
+					<a href="javascript: void(0);" style="padding: 0 10px" id="coreConfigConfigGenerateSecretKey"><?php echo $this->translator()->_('config.config.generateKeyAction'); ?></a>
+				</div>
+			
+				<div class="appFormRow">
+					<label for="accesslog_enabled">&nbsp;</label>
+					<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'accesslog_enabled', checked: <?php if ($this->config('core', 'accesslog_enabled', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('config.config.logAccess'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="captcha_adapter"><?php echo $this->translator()->_('config.config.captcha'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'captcha_adapter', value: '<?php echo $this->captchaAdapter; ?>'">
+						<option value="image"><?php echo $this->translator()->_('config.config.captchaImage'); ?></option>
+						<option value="recaptcha"><?php echo $this->translator()->_('config.config.captchaReCaptcha'); ?></option>
+						
+						<script type="dojo/connect">
+						dojo.style("coreConfigConfigReCaptchaKeys", "display", this.attr("value") == "image" ? "none" : "block");
+						</script>
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.style("coreConfigConfigReCaptchaKeys", "display", value == "image" ? "none" : "block");
+						dijit.byId("coreConfigConfigReCaptchaPublicKey").set("disabled", value == "image");
+						dijit.byId("coreConfigConfigReCaptchaPrivateKey").set("disabled", value == "image");
+						</script>
+					</select>
+				</div>
+				
+				<div id="coreConfigConfigReCaptchaKeys">
+					<div class="appFormRow">
+						<label for="recaptcha_public_key"><?php echo $this->translator()->_('config.config.captchaReCaptchaPublicKey'); ?>:</label>
+						<input id="coreConfigConfigReCaptchaPublicKey" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'recaptcha_public_key', disabled: <?php if ($this->captchaAdapter == 'image') : ?>true<?php else : ?>false<?php endif; ?>, value: '<?php echo $this->captchaOptions['recaptcha_public_key']; ?>', style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.captchaReCaptchaPublicKeyRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="recaptcha_private_key"><?php echo $this->translator()->_('config.config.captchaReCaptchaPrivateKey'); ?>:</label>
+						<input id="coreConfigConfigReCaptchaPrivateKey" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'recaptcha_private_key', disabled: <?php if ($this->captchaAdapter == 'image') : ?>true<?php else : ?>false<?php endif; ?>, value: '<?php echo $this->captchaOptions['recaptcha_private_key']; ?>', style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config.config.captchaReCaptchaPrivateKeyRequired'); ?>'" />
+					</div>
+				</div>
+				<!-- /Security -->
+				
+				<!-- Performance -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.performance'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="crontask_disabled">&nbsp;</label>
+					<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'crontask_disabled', checked: <?php if ($this->crontaskEnabled) : ?>false<?php else : ?>true<?php endif; ?>" /> <?php echo $this->translator()->_('config.config.disableCronTasks'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="compress_css">&nbsp;</label>
+					<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="class: 'appLeft', name: 'compress_css', checked: <?php if ($this->config('core', 'compress_css', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>" /> <span class="appLeft" style="padding: 0 4px"><?php echo $this->translator()->_('config.config.compressCss'); ?></span>
+					
+					<?php if ($this->accessor()->route('core_cache_clean')) : ?>
+					<a class="appLeft" style="padding: 0 10px" href="javascript: void(0);" onClick="javascript: coreConfigConfigCleanCache('css');"><?php echo $this->translator()->_('config.config.cleanCacheAction'); ?></a>
+					<span class="appClear">&nbsp;</span>
+					<?php endif; ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="compress_js">&nbsp;</label>
+					<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="class: 'appLeft', name: 'compress_js', checked: <?php if ($this->config('core', 'compress_js', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>" /> <span class="appLeft" style="padding: 0 4px"><?php echo $this->translator()->_('config.config.compressJavascript'); ?></span>
+					
+					<?php if ($this->accessor()->route('core_cache_clean')) : ?>
+					<a class="appLeft" style="padding: 0 10px" href="javascript: void(0);" onClick="javascript: coreConfigConfigCleanCache('js');"><?php echo $this->translator()->_('config.config.cleanCacheAction'); ?></a>
+					<span class="appClear">&nbsp;</span>
+					<?php endif; ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="cache_system"><?php echo $this->translator()->_('config.config.cacheSystem'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'cache_system', value: '<?php echo $this->config('core', 'cache_system', ''); ?>', class: 'appLeft'">
+						<option value=""><?php echo $this->translator()->_('config.config.cacheNone'); ?></option>
+						<option type="separator"></option>
+						<option value="file"><?php echo $this->translator()->_('config.config.cacheFile'); ?></option>
+						<?php if (extension_loaded('memcache')) : ?>
+						<option value="memcache"><?php echo $this->translator()->_('config.config.cacheMemcache'); ?></option>
+						<?php endif; ?>
+						
+						<script type="dojo/connect">
+						dojo.style("coreConfigConfigMemcacheContainer", "display", this.attr("value") == "memcache" ? "block" : "none");
+						dojo.style("coreConfigConfigCacheContainer", "display", this.attr("value") == "" ? "none" : "block");
+						dojo.style("coreConfigConfigCleanDataCache", "display", this.attr("value") == "" ? "none" : "block");
+						</script>
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.style("coreConfigConfigMemcacheContainer", "display", value == "memcache" ? "block" : "none");
+						dojo.style("coreConfigConfigCacheContainer", "display", value == "" ? "none" : "block");
+						dojo.style("coreConfigConfigCleanDataCache", "display", value == "" ? "none" : "block");
+						</script>
+					</select>
+					
+					<?php if ($this->accessor()->route('core_cache_clean')) : ?>
+					<a class="appLeft" style="height: 20px; line-height: 20px; padding: 0 10px" id="coreConfigConfigCleanDataCache" href="javascript: void(0);" onClick="javascript: coreConfigConfigCleanCache('data');"><?php echo $this->translator()->_('config.config.cleanCacheAction'); ?></a>
+					<?php endif; ?>
+				</div>
+				
+				<div id="coreConfigConfigCacheContainer">
+					<div class="appFormRow">
+						<label for="cache_lifetime"><?php echo $this->translator()->_('config.config.cacheLifetime'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'cache_lifetime', value: '<?php echo $this->config('core', 'cache_lifetime', ''); ?>', style: 'width: 100px'" /> (<?php echo $this->translator()->_('config._share.seconds'); ?>)
+					</div>
+					
+					<div class="appFormRow">
+						<label for="cache_id_prefix"><?php echo $this->translator()->_('config.config.cacheIdPrefix'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'cache_id_prefix', value: '<?php echo $this->config('core', 'cache_id_prefix', ''); ?>', style: 'width: 200px'" />
+					</div>
+				</div>
+				
+				<div id="coreConfigConfigMemcacheContainer">
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('config.config.cacheServer'); ?>:</label>
+						<a href="javascript: void(0);" id="coreConfigConfigAddMemcacheServer"><?php echo $this->translator()->_('global._share.addAction'); ?></a> 
+					</div>
+					
+					<?php if ($this->memcacheServers) : ?>
+					<?php foreach ($this->memcacheServers as $key => $value) : ?>
+					<div class="appFormRow">
+						<label>&nbsp;</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'cache_servers[]', value: '<?php echo $value['host']; ?>', style: 'width: 200px'" /> 
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'cache_ports[]', value: '<?php echo $value['port']; ?>', style: 'margin: 0 10px; width: 50px'" />
+						<a href="javascript: void(0);" onclick="javascript: dojo.query(this).closest('.appFormRow').orphan();"><?php echo $this->translator()->_('global._share.deleteAction'); ?></a>						
+					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
+				<!-- /Performance -->
+			
+				<!-- Email -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.mail'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="mail_protocol"><?php echo $this->translator()->_('config.config.protocol'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'mail_protocol', value: '<?php echo $this->mailOptions['protocol']; ?>', style: 'width: 200px'">
+						<option value="mail"><?php echo $this->translator()->_('config.config.phpMail'); ?></option>
+						<option value="smtp"><?php echo $this->translator()->_('config.config.smtp'); ?></option>
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.style("coreConfigConfigMailContainer", "display", (value == "mail") ? "none" : "block");
+						</script>
+					</select>
+				</div>
+				
+				<div id="coreConfigConfigMailContainer" style="display: <?php if ($this->mailOptions['protocol'] == 'mail') : ?>none<?php else : ?>block<?php endif; ?>">
+					<div class="appFormRow">
+						<label for="mail_host"><?php echo $this->translator()->_('config.config.host'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'mail_host', style: 'width: 200px', value: '<?php echo $this->mailOptions['host']; ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="mail_port"><?php echo $this->translator()->_('config.config.port'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'mail_port', style: 'width: 50px', value: '<?php echo $this->mailOptions['port']; ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="mail_username"><?php echo $this->translator()->_('config.config.username'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'mail_username', style: 'width: 200px', value: '<?php echo $this->mailOptions['username']; ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="mail_password"><?php echo $this->translator()->_('config.config.password'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'password', name: 'mail_password', style: 'width: 200px', value: '<?php echo $this->mailOptions['password']; ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="mail_security"><?php echo $this->translator()->_('config.config.security'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'mail_security', value: '<?php echo $this->mailOptions['ssl']; ?>', style: 'width: 100px'">
+							<option value=""><?php echo $this->translator()->_('config.config.notSecurity'); ?></option>
+							<option value="tls"><?php echo $this->translator()->_('config.config.tls'); ?></option>
+							<option value="ssl"><?php echo $this->translator()->_('config.config.ssl'); ?></option>
+						</select>
+					</div>
+				</div>
+				<!-- /Email -->
+			</div>
+			<!-- /Advanced -->
+		
+			<!-- Authentication -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.config.authentication'); ?>', class: 'appContentPane'">
+				<!-- Authentication -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.authentication'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<?php echo $this->translator()->_('config.config.maximumLoginAttempts'); ?>: <input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'num_login_attempts', required: true, regExp: '[\\d]+', value: '<?php echo $this->config('core', 'num_login_attempts', 3); ?>', style: 'width: 50px', missingMessage: '<?php echo $this->translator(true)->_('config.config.maximumLoginAttemptsRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('config.config.maximumLoginAttemptsValidator'); ?>'" />
+				</div>
+				<!-- /Authentication -->
+				
+				<!-- Registration -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.registration'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="register_enabled">&nbsp;</label>
+					<div id="coreConfigConfigRegistrationEnabled" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'register_enabled', checked: <?php if ($this->registerEnabled) : ?>true<?php else : ?>false<?php endif; ?>">
+						<script type="dojo/connect">
+						dojo.style("coreConfigConfigRegistrationContainer", "display", this.get("checked") ? "block" : "none");
+						</script>
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						dojo.style("coreConfigConfigRegistrationContainer", "display", value ? "block" : "none");
+						dijit.byId("coreConfigConfigRegistrationDefaultRole").set("readOnly", value == false);
+						dijit.byId("coreConfigConfigBlockUsernames").set("readOnly", value == false);
+						dijit.byId("coreConfigConfigAutoActiveRegistration").set("readOnly", value == false);
+						dijit.byId("coreConfigConfigEmailActivateRegistration").set("readOnly", value == false);
+						dijit.byId("coreConfigConfigOpenIdRegistration").set("readOnly", value == false);
+						if (value == false) {
+							dijit.byId("coreConfigConfigOpenIdRegistration").set("checked", false);
+							dojo.style("coreConfigConfigEmailActivateTemplate", "display", "none");
+							dijit.byId("coreConfigConfigAutoActiveRegistration").set("checked", false);
+							dijit.byId("coreConfigConfigEmailActivateRegistration").set("checked", false);
+						}
+						</script>
+					</div>
+					<?php echo $this->translator()->_('config.config.enableRegistration'); ?>
+				</div>
+				
+				<div id="coreConfigConfigRegistrationContainer">
+					<div class="appFormRow">
+						<label for="register_openid_enabled">&nbsp;</label>
+						<div id="coreConfigConfigOpenIdRegistration"data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'register_openid_enabled', checked: <?php if ($this->registerEnabled && $this->config('core', 'register_openid_enabled', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>">
+							<script type="dojo/connect">
+							this.set("readOnly", !this.attr("checked"));
+							</script>
+						</div>
+						<?php echo $this->translator()->_('config.config.enableOpenIdRegistration'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="register_default_role"><?php echo $this->translator()->_('config.config.registrationDefaultRole'); ?>:</label>
+						<select id="coreConfigConfigRegistrationDefaultRole" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'register_default_role', value: '<?php echo $this->config('core', 'register_default_role', ''); ?>', maxHeight: '200px'">
+							<option value=""><?php echo $this->translator()->_('config.config.registrationSelectDefaultRole'); ?></option>
+							<option type="separator"></option>
+							<option value="file"><?php echo $this->translator()->_('config.config.cacheFile'); ?></option>
+							<?php if ($this->roles) : ?>
+							<?php foreach ($this->roles as $role) : ?>
+							<option value="<?php echo $role->role_id; ?>"><?php echo $role->description; ?></option>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							
+							<script type="dojo/connect">
+							this.set("readOnly", dijit.byId("coreConfigConfigRegistrationEnabled").get("value") == false);
+							</script>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('config.config.blockedUsernames'); ?>:</label>
+						<?php echo $this->translator()->_('config.config.blockedUsernamesHelp'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="register_blocked_usernames">&nbsp;</label>
+						<textarea id="coreConfigConfigBlockUsernames" data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'register_blocked_usernames', readOnly: <?php if ($this->registerEnabled) : ?>false<?php else : ?>true<?php endif; ?>, style: 'width: 400px; height: 150px'"><?php echo $this->config('core', 'register_blocked_usernames', ''); ?></textarea>
+					</div>
+					
+					<div class="appFormRow" style="padding: 4px 0">
+						<label for="register_auto_activate">&nbsp;</label>
+						<div id="coreConfigConfigAutoActiveRegistration" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'register_auto_activate', checked: <?php if ($this->config('core', 'register_auto_activate', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>, readOnly: <?php if ($this->registerEnabled) : ?>false<?php else : ?>true<?php endif; ?>">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							if (value == true) {
+								dijit.byId("coreConfigConfigEmailActivateRegistration").set("checked", false);
+								dojo.style("coreConfigConfigEmailActivateTemplate", "display", "none");
+							}
+							</script>
+						</div>
+						<?php echo $this->translator()->_('config.config.autoActivateRegistration'); ?>
+					</div>
+					
+					<div class="appFormRow" style="padding: 4px 0">
+						<label for="register_email_activate">&nbsp;</label>
+						<div id="coreConfigConfigEmailActivateRegistration" data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'register_email_activate', checked: <?php if ($this->config('core', 'register_email_activate', 'false') == 'true') : ?>true<?php else : ?>false<?php endif; ?>, readOnly: <?php if ($this->registerEnabled) : ?>false<?php else : ?>true<?php endif; ?>">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.style("coreConfigConfigEmailActivateTemplate", "display", value == true ? "block" : "none");
+							if (value == true) {
+								dijit.byId("coreConfigConfigAutoActiveRegistration").set("checked", false);
+							}
+							</script>
+						</div>
+						<?php echo $this->translator()->_('config.config.emailActivateRegistration'); ?>
+					</div>
+					
+					<div id="coreConfigConfigEmailActivateTemplate" style="display: <?php if ($this->registerEnabled && $this->config('core', 'register_email_activate') == 'true') : ?>block<?php else : ?>none<?php endif; ?>">
+						<!-- ActivatingAccountMailTemplate -->
+						<div class="appFormRow">
+							<label for="activating_account_from_name"><?php echo $this->translator()->_('config.config.sendFromName'); ?>:</label>
+							<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'activating_account_from_name', style: 'width: 200px', value: '<?php echo addslashes($this->activatingAccountMailTemplate['from_name']); ?>'">
+						</div>
+						
+						<div class="appFormRow">
+							<label for="activating_account_from_email"><?php echo $this->translator()->_('config.config.sendFromEmail'); ?>:</label>
+							<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'activating_account_from_email', style: 'width: 200px', value: '<?php echo addslashes($this->activatingAccountMailTemplate['from_email']); ?>'">
+						</div>
+						
+						<div class="appFormRow">
+							<label><?php echo $this->translator()->_('config.config.subject'); ?>:</label>
+							<?php echo $this->translator()->_('config.config.activatingAccountSubjectHelp'); ?>
+						</div>
+						
+						<div class="appFormRow">
+							<label for="activating_account_subject">&nbsp;</label>
+							<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'activating_account_subject', value: '<?php echo $this->activatingAccountMailTemplate['subject']; ?>', style: 'width: 400px'" />
+						</div>
+						
+						<div class="appFormRow">
+							<label><?php echo $this->translator()->_('config.config.content'); ?>:</label>
+							<?php echo $this->translator()->_('config.config.activatingAccountContentHelp'); ?>
+						</div>
+						
+						<div class="appFormRow">
+							<label for="activating_account_content">&nbsp;</label>
+							<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'activating_account_content', style: 'width: 400px; height: 150px'"><?php echo $this->activatingAccountMailTemplate['content']; ?></textarea>
+						</div>
+						<!-- /ActivatingAccountMailTemplate -->
+						
+						<div style="clear: both; padding: 4px 0"></div>
+					</div>
+				</div>
+				<!-- /Registration -->
+				
+				<!-- SendingPasswordMailTemplate -->
+				<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.sendingPasswordTemplate'); ?></span></h2>
+				
+				<div class="appFormRow">
+					<label for="sending_password_from_name"><?php echo $this->translator()->_('config.config.sendFromName'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sending_password_from_name', style: 'width: 200px', value: '<?php echo addslashes($this->sendingPasswordMailTemplate['from_name']); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label for="sending_password_from_email"><?php echo $this->translator()->_('config.config.sendFromEmail'); ?>:</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sending_password_from_email', style: 'width: 200px', value: '<?php echo addslashes($this->sendingPasswordMailTemplate['from_email']); ?>'">
+				</div>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.subject'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.sendingPasswordSubjectHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="sending_password_subject">&nbsp;</label>
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'sending_password_subject', value: '<?php echo $this->sendingPasswordMailTemplate['subject']; ?>', style: 'width: 400px'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label><?php echo $this->translator()->_('config.config.content'); ?>:</label>
+					<?php echo $this->translator()->_('config.config.sendingPasswordContentHelp'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<label for="sending_password_content">&nbsp;</label>
+					<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'sending_password_content', style: 'width: 400px; height: 150px'"><?php echo $this->sendingPasswordMailTemplate['content']; ?></textarea>
+				</div>
+				<!-- /SendingPasswordMailTemplate -->
+			</div>
+			<!-- /Authentication -->
+		</div>
+		<!-- /TabContainer -->
+	</div>
+	<!-- /ConfigForm -->
+	
+	<input type="hidden" name="format" value="json" />
+</div>
+</form>
+
+<div id="coreConfigConfigStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'coreConfigConfigContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('config.config.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.NodeList-traverse");
+dojo.require("dojox.widget.Standby");
+
+//Clean cache
+function coreConfigConfigCleanCache(/*String*/ type) {
+	// type:
+	//		Can be "data", "css", "js"
+	dojo.xhrPost({
+		url: "<?php echo $this->url(array(), 'core_cache_clean'); ?>",
+		content: {
+			type: type
+		},
+		handleAs: "json",
+		load: function(data) {
+			dojo.publish("/app/global/notification", [{
+				message: (data.result == "APP_RESULT_OK")
+						 ? "<?php echo $this->translator()->_('cache.clean.success'); ?>"
+						 : "<?php echo $this->translator()->_('cache.clean.error'); ?>",
+				type: (data.result == "APP_RESULT_OK") ? "message" : "error" 
+			}]);
+		}
+	});
+};
+
+dojo.addOnLoad(function() {
+	// Generate secret key
+	dojo.connect(dojo.byId("coreConfigConfigGenerateSecretKey"), "onclick", function() {
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'core_password_generate'); ?>",
+			content: {
+				hash: true,
+				length: 32
+			},
+			handleAs: "json",
+			load: function(data) {
+				dijit.byId("coreConfigConfigSecretKeyTextBox").set("value", data.password);
+			}
+		});
+	});
+
+	// Add session memcache server handler
+	dojo.connect(dojo.byId("coreConfigConfigAddSessionMemcacheServer"), "onclick", function() {
+		var div = dojo.create("div", {
+			className: "appFormRow"
+		}, "coreConfigConfigSessionMemcacheContainer");
+		dojo.create("label", {
+			innerHTML: "&nbsp;"
+		}, div);
+		
+		new dijit.form.TextBox({
+			name: "session_memcache_servers[]",
+			style: "width: 200px",
+			placeHolder: "<?php echo $this->translator()->_('config.config.cacheServer'); ?>"
+		}).placeAt(div);
+
+		new dijit.form.TextBox({
+			name: "session_memcache_ports[]",
+			style: "width: 50px; margin: 0 10px",
+			placeHolder: "<?php echo $this->translator()->_('config.config.cachePort'); ?>"
+		}).placeAt(div);
+
+		var a = dojo.create("a", {
+			href: "javascript: void(0);",
+			innerHTML: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>"
+		}, div);
+		dojo.connect(a, "onclick", function() {
+			dojo.destroy(div);
+		});
+	});
+
+	// Add cache server handler
+	dojo.connect(dojo.byId("coreConfigConfigAddMemcacheServer"), "onclick", function() {
+		var div = dojo.create("div", {
+			className: "appFormRow"
+		}, "coreConfigConfigMemcacheContainer");
+		dojo.create("label", {
+			innerHTML: "&nbsp;"
+		}, div);
+		
+		new dijit.form.TextBox({
+			name: "cache_servers[]",
+			style: "width: 200px",
+			placeHolder: "<?php echo $this->translator()->_('config.config.cacheServer'); ?>"
+		}).placeAt(div);
+
+		new dijit.form.TextBox({
+			name: "cache_ports[]",
+			style: "width: 50px; margin: 0 10px",
+			placeHolder: "<?php echo $this->translator()->_('config.config.cachePort'); ?>"
+		}).placeAt(div);
+
+		var a = dojo.create("a", {
+			href: "javascript: void(0);",
+			innerHTML: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>"
+		}, div);
+		dojo.connect(a, "onclick", function() {
+			dojo.destroy(div);
+		});
+	});
+});
+</script>

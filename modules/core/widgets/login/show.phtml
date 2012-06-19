@@ -1,0 +1,116 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="coreWidgetsLogin">
+	<?php if (!$this->user) : ?>
+		<form data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'core_auth_login'); ?>', method: 'POST'">
+			<script type="dojo/method" data-dojo-event="onSubmit">
+			return (this.validate());
+			</script>
+		
+			<div class="coreWidgetLoginTitle"><?php echo $this->translator()->_('show.title'); ?></div>
+			
+			<!-- DefaultAuthentication -->
+			<div style="padding-bottom: 8px" id="coreWidgetsLoginDefaultContainer">
+				<div style="padding-bottom: 4px">
+					<input id="coreWidgetsLoginUsername" data-dojo-type="dijit.form.ValidationTextBox"
+						data-dojo-props="type: 'text', name: 'username', style: 'width: 150px', regExp: '[\\w]+', required: true, placeHolder: '<?php echo $this->translator(true)->_('show.username'); ?>', missingMessage: '<?php echo $this->translator(true)->_('show.usernameRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('show.usernameValidator'); ?>'" />
+				</div>
+				<div style="padding-bottom: 4px">
+					<input id="coreWidgetsLoginPassword" data-dojo-type="dijit.form.ValidationTextBox"
+						data-dojo-props="type: 'password', name: 'password', style: 'width: 150px', required: true, placeHolder: '<?php echo $this->translator(true)->_('show.password'); ?>', missingMessage: '<?php echo $this->translator(true)->_('show.passwordRequired'); ?>'" />
+				</div>
+				<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+					<?php echo $this->translator()->_('show.loginButton'); ?>
+				</button>
+			</div>
+			<!-- /DefaultAuthentication -->
+			
+			<!-- OpenIdAuthentication -->
+			<?php if ($this->openIdEnabled) : ?>
+			<div style="display: none; padding-bottom: 8px" id="coreWidgetsLoginOpenIdContainer">
+				<div style="padding-bottom: 4px">
+					<input id="coreWidgetsLoginOpenIdUrl" data-dojo-type="dijit.form.ValidationTextBox"
+						data-dojo-props="type: 'text', name: 'openid_url', style: 'width: 300px', disabled: true, required: true, placeHolder: '<?php echo $this->translator(true)->_('show.openIdUrl'); ?>', missingMessage: '<?php echo $this->translator(true)->_('show.openIdUrlRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('show.openIdUrlValidator'); ?>'" />
+				</div>
+				<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+					<?php echo $this->translator()->_('show.loginButton'); ?>
+				</button>
+			</div>
+			<?php endif; ?>
+			<!-- /OpenIdAuthentication -->
+			
+			<div style="padding-bottom: 16px">
+				<?php if ($this->openIdEnabled) : ?><a href="javascript: void(0);" id="coreWidgetsLoginOpenId" data-app-login="openid"><?php echo $this->translator()->_('show.loginUsingOpenId'); ?></a> | <?php endif; ?><a href="<?php echo $this->url(array(), 'core_password_send'); ?>"><?php echo $this->translator()->_('show.forgotPassword'); ?></a>
+				<?php if ($this->config('core', 'register_enabled') == 'true') : ?> | <a href="<?php echo $this->url(array(), 'core_registration_register'); ?>"><?php echo $this->translator()->_('show.registration'); ?></a><?php endif; ?>
+			</div>
+			
+			<input type="hidden" name="return" value="<?php echo $this->returnUrl; ?>" />
+		</form>
+	<?php else : ?>
+		<div class="coreWidgetsLoginWelcome"><?php echo sprintf($this->translator()->_('show.welcome', $this->user->user_name)); ?></div>
+		<div class="coreWidgetsLoginLogout">
+			<a href="<?php echo $this->url(array(), 'core_auth_logout'); ?>"><?php echo $this->translator()->_('show.logout'); ?></a>
+		</div>
+	<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dojo.cookie");
+
+<?php if ($this->openIdEnabled) : ?>
+dojo.addOnLoad(function() {
+	dojo.connect(dojo.byId("coreWidgetsLoginOpenId"), "onclick", function() {
+		var type = dojo.attr(this, "data-app-login");
+		dojo.cookie("coreWidgetsLoginType", type, {
+			expires: 1
+		}); 
+		
+		switch (type) {
+			case "openid":
+				dojo.style("coreWidgetsLoginDefaultContainer", "display", "none");
+				dojo.style("coreWidgetsLoginOpenIdContainer", "display", "block");
+				dijit.byId("coreWidgetsLoginUsername").set("disabled", true);
+				dijit.byId("coreWidgetsLoginPassword").set("disabled", true);
+				dijit.byId("coreWidgetsLoginOpenIdUrl").set("disabled", false);
+				
+				dojo.attr(this, {
+					"innerHTML": "<?php echo $this->translator()->_('show.cancelOpenIdLogin'); ?>",
+					"data-app-login": "default"
+				});
+				break;
+			case "default":
+				dojo.style("coreWidgetsLoginDefaultContainer", "display", "block");
+				dojo.style("coreWidgetsLoginOpenIdContainer", "display", "none");
+				dijit.byId("coreWidgetsLoginUsername").set("disabled", false);
+				dijit.byId("coreWidgetsLoginPassword").set("disabled", false);
+				dijit.byId("coreWidgetsLoginOpenIdUrl").set("disabled", true);
+				
+				dojo.attr(this, {
+					"innerHTML": "<?php echo $this->translator()->_('show.loginUsingOpenId'); ?>",
+					"data-app-login": "openid"
+				});
+				break;
+		}
+	});
+});
+<?php endif; ?>
+</script>

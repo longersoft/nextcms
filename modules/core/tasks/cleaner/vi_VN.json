@@ -1,0 +1,24 @@
+{
+	"_about": {
+		"description": "Thực hiện các thao tác dọn dẹp hệ thống, ví dụ như xóa lịch sử truy cập, lỗi",
+		"title": "Dọn dẹp hệ thống"
+	},
+	"_permission": {
+		"description": "Dọn dẹp hệ thống",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"all": "Tất cả",
+		"keepAccessLogHelp": "Lưu lịch sử truy cập trong số ngày",
+		"keepErrorLogHelp": "Lưu các lỗi trong số ngày",
+		"lastOneDay": "1 ngày gần nhất",
+		"lastOneMonth": "1 tháng gần nhất",
+		"lastOneWeek": "1 tuần gần nhất",
+		"lastOneYear": "1 năm gần nhất",
+		"lastSixMonths": "6 tháng gần nhất",
+		"lastThreeMonths": "3 tháng gần nhất"
+	}
+}

@@ -1,0 +1,36 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-26
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+// The classes coreRoleItem and coreRoleLabel will be used to query the associated elements later.
+// The data-app-role is used to get the properties of the associated role.
+// See /modules/core/js/views/RoleItemView.js
+?> 
+<li id="coreRoleItem_<?php echo $this->role->role_id; ?>" class="coreRoleItem<?php if ($this->role->role_id == $this->criteria['active_role_id']) : ?> coreRoleItemSelected<?php endif; ?>"
+	data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																'role_id'	=> $this->role->role_id,
+																'name'		=> $this->role->name,
+																'locked'	=> ($this->role->locked == '1') ? true : false,
+																'num_users' => $this->role->num_users,
+															)); ?>">
+	<a class="coreRoleLabel" href="javascript: void(0);">
+		<?php echo $this->role->description; ?>
+	</a>
+	
+	<span class="coreRoleUserCounter"><?php echo $this->role->num_users; ?></span>
+</li>

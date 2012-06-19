@@ -1,0 +1,57 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-12-31
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('privilege.list.title'));
+?>
+
+<?php if ($privileges = $this->privilegeLoader($this->module)) : ?>
+<?php foreach (array('module', 'hook', 'plugin', 'task', 'widget') as $type) : ?>
+
+<?php if ($privileges[$type] && count($privileges[$type]) > 0) : ?>
+	<h2 class="appHeadline" style="margin-top: 0">
+		<span><?php echo $this->translator()->_('privilege._share.' . $type); ?></span>
+	</h2>
+	
+	<?php foreach ($privileges[$type] as $index => $item) : ?>
+	
+	<div class="appLeft" style="width: 25%">
+		<div data-dojo-type="dijit.TitlePane" data-dojo-props="title: '<?php echo $item['resource']->description; ?>', class: 'corePrivilegeListContainer'">
+			<ul class="corePrivilegeList">
+			<?php foreach ($item['privileges'] as $priv) : ?>
+				<li><?php echo stripslashes($priv->description); ?></li>
+			<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	
+	<?php if ($index % 4 == 3) : ?>
+	<div class="appClear"></div>
+	<?php endif; ?>
+	
+	<?php endforeach; ?>
+	
+	<div class="appClear"></div>
+<?php endif; ?>
+
+<?php endforeach; ?>
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.TitlePane");
+</script>

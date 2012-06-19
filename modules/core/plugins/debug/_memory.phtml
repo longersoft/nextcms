@@ -1,0 +1,26 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dojox.layout.ContentPane" data-app-plugin="memory" data-dojo-props="title: '<?php echo $this->translator(true)->_('debug.memory.title'); ?>', selected: <?php if ($this->selected) : ?>true<?php else : ?>false<?php endif; ?>, class: 'appContentPane'">
+	<?php if ($this->data) : ?>
+	<ul class="corePluginsDebugList">
+		<li><?php echo sprintf($this->translator()->_('debug.memory.usage'), $this->helper()->formatSize($this->data['usage']), $this->data['limit']); ?></li>
+		<li><?php echo sprintf($this->translator()->_('debug.memory.controller'), $this->data['controller']); ?></li>
+	</ul>
+	<?php endif; ?>
+</div>

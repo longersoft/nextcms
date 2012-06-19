@@ -1,0 +1,25 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/********** LAYOUT **********/
+.coreHooksLayoutRegionSelected { background-color: #CFE5FA !important; }
+.coreHooksLayoutIcon { background-image: url(layout16.png); }
+
+/********** WIDGETS **********/
+.coreHooksLayoutWidget { border-bottom: 1px solid #ededed; clear: both; padding: 8px; }
+.coreHooksLayoutWidgetContainer .coreExtensionItem:last-child { border-bottom: none; }
+.coreHooksLayoutWidget h3 { margin-top: 0; }
+.coreHooksLayoutWidgetThumbnail { float: left; padding-right: 8px; }
+.coreHooksLayoutWidgetDescription { float: left; width: 80%; }
+.coreHooksLayoutWidgetDescription h3:first-child { color: #999; font-weight: bold; }

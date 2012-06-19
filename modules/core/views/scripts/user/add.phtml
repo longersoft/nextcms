@@ -1,0 +1,294 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('user.add.title'));
+?>
+
+<div id="coreUserAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this			= this;
+			var form			= dijit.byId("coreUserAddForm");
+			var isValidUsername = dijit.byId("coreUserAddUsernameTextbox").get("isValidUsername");
+			var isValidEmail	= dijit.byId("coreUserAddEmailTextbox").get("isValidEmail");
+			if (isValidUsername && isValidEmail && form.validate()) {
+				dojo.publish("/app/global/notification", [{
+					message: "<?php echo $this->translator()->_('user.add.adding'); ?>",
+					type: "message"
+				}]);
+				dijit.byId("coreUserAddStandby").show();
+			
+				// Disable button
+				_this.set("disabled", true);
+
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'core_user_add'); ?>",
+					content: dojo.formToObject("coreUserAddForm"),
+					handleAs: "json",
+					load: function(data) {
+						form.reset();
+						_this.set("disabled", false);
+						dijit.byId("coreUserAddStandby").hide();
+						dojo.publish("/app/core/user/add/onComplete", [ data ]);
+					}
+				});
+			}
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/user/add/onCancel");
+			</script>
+		</button>	
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- AddingUserForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<form id="coreUserAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('user.add.title'); ?></span></h2>
+		
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: true, nested: true, style: 'height: 100%'">
+				<!-- AccountTab -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('user._share.accountInfo'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="user_name"><?php echo $this->translator()->_('user._share.username'); ?>:</label>
+						<!-- 
+						DOJO LESSON: I have to use DIV tag for this Dojo textbox element, because I need to add 
+						the handler for onChange event. The INPUT tag does not have the close tag, so I can not
+						put the dojo/connect section inside the INPUT tag 
+						FIXME: Create the widget for username and email
+						-->
+						<div id="coreUserAddUsernameTextbox" data-dojo-type="dijit.form.ValidationTextBox"
+							data-dojo-props="isValidUsername: true, type: 'text', name: 'user_name', width: '100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.usernameRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.usernameValidator'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							var _this = this;
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_user_checkusername'); ?>",
+								handleAs: "json",
+								content: {
+									user_name: value
+								},
+								load: function(data) {
+									var isValid = (data.result + "" == "true");
+									_this.set("isValidUsername", isValid);
+									if (!isValid) {
+										// FIXME: How to show the error message and set the status as "error".
+										// The following hack (because state is readonly property) does not 
+										// always prevent user to submit form:
+										// 		_this.state = "Error";
+										// 		dijit.byId("coreUserAddForm").state = "Error";
+										_this.displayMessage(_this.invalidMessage);
+									}
+								}
+							});
+							</script>
+				   		</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="password"><?php echo $this->translator()->_('user._share.password'); ?>:</label>
+						<input id="coreUserAddPasswordTextbox" data-dojo-type="dijit.form.ValidationTextBox" 
+							data-dojo-props="type: 'password', name: 'password', width: '100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.passwordRequired'); ?>', class: 'appLeft'" />
+							
+						<!-- PasswordStrengthMeter -->
+						<div class="appLeft" id="coreUserAddPasswordStrengthMeter"></div>
+						<!-- /PasswordStrengthMeter -->
+						
+						<div class="appClear"></div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="role_id"><?php echo $this->translator()->_('user._share.role'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'role_id'">
+						<?php if ($this->roles) : ?>
+							<?php foreach ($this->roles as $role) : ?>
+							<option value="<?php echo $role->role_id; ?>"><?php echo $role->description; ?></option>
+							<?php endforeach; ?>
+						<?php endif; ?>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="email"><?php echo $this->translator()->_('user._share.email'); ?>:</label>
+						<div id="coreUserAddEmailTextbox" data-dojo-type="dijit.form.ValidationTextBox" 
+							data-dojo-props="isValidEmail: true, type: 'text', name: 'email', width: '100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.emailRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.emailValidator'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							var _this = this;
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_user_checkemail'); ?>",
+								handleAs: "json",
+								content: {
+									email: value
+								},
+								load: function(data) {
+									var isValid = (data.result + "" == "true");
+									_this.set("isValidEmail", isValid);
+									if (!isValid) {
+										_this.displayMessage(_this.invalidMessage);
+									}
+								}
+							});
+							</script>
+						</div>
+					</div>
+				</div>
+				<!-- /AccountTab -->
+				
+				<!-- PersonalTab -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('user._share.personalInfo'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="full_name"><?php echo $this->translator()->_('user._share.fullName'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'full_name', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="avatar"><?php echo $this->translator()->_('user._share.avatar'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'avatar', style: 'width: 300px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="dob"><?php echo $this->translator()->_('user._share.dob'); ?>:</label>
+						<input data-dojo-type="dijit.form.DateTextBox" data-dojo-props="type: 'text', name: 'dob'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="gender"><?php echo $this->translator()->_('user._share.gender'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'gender'">
+							<option value="f"><?php echo $this->translator()->_('user._share.genderFemale'); ?></option>
+							<option value="m"><?php echo $this->translator()->_('user._share.genderMale'); ?></option>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="website"><?php echo $this->translator()->_('user._share.website'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'website', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="bio"><?php echo $this->translator()->_('user._share.bio'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'bio', style: 'width: 350px; height: 100px'"></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="signature"><?php echo $this->translator()->_('user._share.signature'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'signature', style: 'width: 350px; height: 100px'"></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="twitter"><?php echo $this->translator()->_('user._share.twitter'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'twitter', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="facebook"><?php echo $this->translator()->_('user._share.facebook'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'facebook', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="flickr"><?php echo $this->translator()->_('user._share.flickr'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'flickr', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="youtube"><?php echo $this->translator()->_('user._share.youtube'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'youtube', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="linkedin"><?php echo $this->translator()->_('user._share.linkedin'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'linkedin', style: 'width: 200px'">
+					</div>
+					
+					<div class="appFormRow">
+						<label for="country"><?php echo $this->translator()->_('user._share.country'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'country', maxHeight: 200, style: 'width: 350px'">
+						<?php foreach ($this->countries as $code => $name) : ?>
+							<option value="<?php echo $code; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="language"><?php echo $this->translator()->_('user._share.language'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', maxHeight: 200, style: 'width: 350px'">
+						<?php foreach ($this->languages as $code => $language) : ?>
+							<option value="<?php echo $code; ?>"><?php echo $language; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="timezone"><?php echo $this->translator()->_('user._share.timezone'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'timezone', maxHeight: 200, style: 'width: 350px'">
+						<?php foreach ($this->timeZones as $timeZone => $name) : ?>
+							<option value="<?php echo $timeZone; ?>"<?php if ($timeZone == $this->currentTimeZone): ?> selected="selected"<?php endif; ?>><?php echo $timeZone; ?> (<?php echo $name; ?>)</option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+				</div>
+				<!-- /PersonalTab -->
+				
+				<input type="hidden" name="format" value="json" />
+			</div>
+		</form>
+	</div>
+	<!-- /AddingUserForm -->
+</div>
+
+<div id="coreUserAddStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'coreUserAddContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+
+dojo.require("core.js.views.PasswordStrengthMeter");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_user_add", function() {
+		// Create new password strength meter instance
+		var passwordStrengthMeter = new core.js.views.PasswordStrengthMeter("coreUserAddPasswordStrengthMeter");
+		passwordStrengthMeter.setUsername(dijit.byId("coreUserAddUsernameTextbox").get("value"));
+		
+		dojo.connect(dijit.byId("coreUserAddUsernameTextbox"), "onKeyUp", function() {
+			passwordStrengthMeter.setUsername(dijit.byId("coreUserAddUsernameTextbox").get("value"));
+		});
+		dojo.connect(dijit.byId("coreUserAddPasswordTextbox"), "onKeyUp", function() {
+			passwordStrengthMeter.checkPassword(dijit.byId("coreUserAddPasswordTextbox").get("value"));
+		});
+		
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

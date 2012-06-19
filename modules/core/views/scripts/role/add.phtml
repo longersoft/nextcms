@@ -1,0 +1,68 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('role.add.title'));
+?>
+
+<form id="coreRoleAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<script type="dojo/method" data-dojo-event="onSubmit" data-dojo-args="e">
+	e.preventDefault();
+	var _this = this;
+	if (_this.validate()) {
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'core_role_add'); ?>",
+			content: dojo.formToObject("coreRoleAddForm"),
+			handleAs: "json",
+			load: function(data) {
+				// Reset form
+				_this.reset();
+
+				// Publish the channel
+				dojo.publish("/app/core/role/add/onComplete", [ data ]);
+			}
+		});
+	}
+	</script>
+	
+	<div class="appFormRow">
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'name', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('role._share.nameRequired'); ?>', placeHolder: '<?php echo $this->translator(true)->_('role._share.nameHelp'); ?>'" />
+	</div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('global._share.addAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/role/add/onCancel");
+			</script>
+		</button>
+	</div>
+	
+	<input type="hidden" name="format" value="json" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

@@ -1,0 +1,164 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->setLanguageDir('/modules/core/languages')->_('permalink.config.title'));
+?>
+
+<form id="corePermalinkConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="region: 'center', action: '', method: 'POST', class: 'appForm'">
+<div id="corePermalinkConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dijit.byId("corePermalinkConfigStandby").show();
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_permalink_config'); ?>",
+				content: dojo.mixin(dojo.formToObject("corePermalinkConfigForm"), { format: "json" }),
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("corePermalinkConfigStandby").hide();
+					dojo.publish("/app/global/notification", [{
+						message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('permalink.config.success'); ?>" : "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('permalink.config.error'); ?>",
+						type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+					}]);
+				}
+			});
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.resetAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.query(".corePermalinkConfigDefaultLink", "corePermalinkConfigContainer").forEach(function(node) {
+				var checkbox = dijit.byNode(node);
+				if (checkbox) {
+					checkbox.set("checked", true);
+				}
+			});
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- Permalinks -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('permalink.config.help'); ?>
+		</div>
+		
+		<?php if (count($this->permalinkModules) > 0) : ?>
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: true, nested: true, class: 'appContentPane'">
+			<?php foreach ($this->permalinkModules as $module => $links) : ?>
+			<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', style: 'margin-top: 8px', title: '<?php echo $this->extensionTranslator()->translateTitle(new Core_Models_Module(array('name' => $module))); ?>'">
+				<?php foreach ($links as $index => $link) : ?>
+				<div style="padding-bottom: 8px" class="corePermalinkConfigSection">
+					<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $link['description']; ?></span></h2>
+				
+					<!-- Parameters -->
+					<div class="appFormRow">
+						<label for="params"><?php echo $this->translator()->_('permalink.config.params'); ?>:</label>
+						<?php foreach ($link['params'] as $name => $props) : ?><?php echo $name; ?><?php if ($props['required']) : ?><sup>*</sup><?php endif; ?>, <?php endforeach; ?>
+					</div>
+					<!-- /Parameters -->
+				
+					<!-- DefaultUrl -->
+					<div class="appFormRow">
+						<label for="type"><?php echo $this->translator()->_('permalink.config.defaultUrl'); ?>:</label>
+						<input data-dojo-type="dijit.form.RadioButton" data-dojo-props="class: 'corePermalinkConfigDefaultLink', value: 'default', name: 'type[<?php echo $link['route']; ?>]', checked: <?php if (!isset($this->currLinks[$link['route']]) || (isset($this->currLinks[$link['route']]) && $this->currLinks[$link['route']]['url'] == $link['default'])) : ?>true<?php else : ?>false<?php endif; ?>" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'url[<?php echo $link['route']; ?>][]', value: '<?php echo addslashes($link['default']); ?>', style: 'width: 500px', readOnly: true, disabled: <?php if (!isset($this->currLinks[$link['route']]) || (isset($this->currLinks[$link['route']]) && $this->currLinks[$link['route']]['url'] == $link['default'])) : ?>false<?php else : ?>true<?php endif; ?>" />
+					</div>
+					<!-- /DefaultUrl -->
+					
+					<!-- PredefinedUrls -->
+					<?php if (isset($link['predefined']) && count($link['predefined']) > 0) : ?>
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('permalink.config.predefinedUrls'); ?>:</label>
+					</div>
+					
+					<?php foreach ($link['predefined'] as $url) : ?>
+					<div class="appFormRow">
+						<label for="type">&nbsp;</label>
+						<input data-dojo-type="dijit.form.RadioButton" data-dojo-props="value: 'predefined', name: 'type[<?php echo $link['route']; ?>]', checked: <?php if (isset($this->currLinks[$link['route']]) && $this->currLinks[$link['route']]['url'] == $url) : ?>true<?php else : ?>false<?php endif; ?>" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'url[<?php echo $link['route']; ?>][]', value: '<?php echo addslashes($url); ?>', style: 'width: 500px', readOnly: true, disabled: <?php if (isset($this->currLinks[$link['route']]) && $this->currLinks[$link['route']]['url'] == $url) : ?>false<?php else : ?>true<?php endif; ?>" />
+					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
+					<!-- /PredefinedUrls -->
+					
+					<!-- CustomUrl -->
+					<div class="appFormRow">
+						<label for="type"><?php echo $this->translator()->_('permalink.config.customUrl'); ?>:</label>
+						<input data-dojo-type="dijit.form.RadioButton" data-dojo-props="value: 'custom', name: 'type[<?php echo $link['route']; ?>]', checked: <?php if (isset($this->currLinks[$link['route']]) && 'custom' == $this->currLinks[$link['route']]['type']) : ?>true<?php else : ?>false<?php endif; ?>" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'url[<?php echo $link['route']; ?>][]', <?php if (isset($this->currLinks[$link['route']]) && 'custom' == $this->currLinks[$link['route']]['type']) : ?>value: '<?php echo addslashes($this->currLinks[$link['route']]['url']); ?>', disabled: false<?php else : ?>value: '', disabled: true<?php endif; ?>, style: 'width: 500px'" />
+						
+						<input type="hidden" name="routes[]" value="<?php echo $link['route']; ?>" />
+					</div>
+					<!-- /CustomUrl -->
+				</div>
+				<?php endforeach; ?>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		<?php endif; ?>
+	</div>
+	<!-- /Permalinks -->
+</div>
+</form>
+
+<div id="corePermalinkConfigStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'corePermalinkConfigContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('permalink.config.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.RadioButton");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.widget.Standby");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_permalink_config", function() {
+		dojo.query(".dijitRadio", "corePermalinkConfigForm").forEach(function(node) {
+			var radio = dijit.byNode(node);
+			if (radio) {
+				dojo.connect(radio, "onClick", function() {
+					// Disable all text boxes
+					var section = dojo.query(radio.domNode).closest(".corePermalinkConfigSection")[0];
+					dojo.query(".dijitTextBox", section).forEach(function(textbox) {
+						dijit.byNode(textbox).set("disabled", true);
+					});
+
+					// Enable the text box associating with the radio button
+					var formRow = dojo.query(radio.domNode).closest(".appFormRow")[0];
+					dojo.query(".dijitTextBox", formRow).forEach(function(textbox) {
+						dijit.byNode(textbox).set("disabled", false);
+					});
+				});
+			}
+		});
+		
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

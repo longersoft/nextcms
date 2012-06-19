@@ -1,0 +1,56 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-03-10
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Users -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'padding: 8px'">
+		<div class="coreHooksUserProviderUserItemsContainer" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+			<?php if (!$this->users || count($this->users) == 0) : ?>
+			<?php echo $this->translator()->_('show.notFound'); ?>
+			<?php else : ?>
+			
+			<?php foreach ($this->users as $user) : ?>
+			<div id="coreHookUserProviderItem_<?php echo $user->user_id; ?>" class="coreHooksUserProviderUserItem dojoDndItem" dndtype="coreUserItemDnd"
+				data-app-entity-props="<?php echo $this->encoder()->encode($user, array('user_id', 'user_name', 'status', 'role_id')); ?>">
+				<div class="coreUserItemAvatar">
+					<?php echo $this->avatar($user); ?>
+				</div>
+				
+				<?php echo $user->user_name; ?>
+			</div>
+			<?php endforeach; ?>
+			
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /Users -->
+	
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/core/hooks/userprovider/search/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojo.dnd.Source");
+</script>

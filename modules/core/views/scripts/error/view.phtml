@@ -1,0 +1,101 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('error.view.title'));
+?>
+
+<div id="coreErrorViewContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/error/view/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('error.view.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appForm'">
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.id'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 100px', value: '<?php echo $this->error->error_id; ?>'" />
+			</div>
+		
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.uri'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 400px', value: '<?php echo $this->error->uri; ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.module'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 100px', value: '<?php echo $this->error->module; ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.controller'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 100px', value: '<?php echo $this->error->controller; ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.action'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 100px', value: '<?php echo $this->error->action; ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.file'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 400px', value: '<?php echo addslashes($this->error->file); ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.line'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 100px', value: '<?php echo $this->error->line; ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.createdDate'); ?>:</label>
+				<input data-dojo-type="dijit.form.TextBox" data-dojo-props="readOnly: true, style: 'width: 200px', value: '<?php echo $this->error->created_date; ?>'" />
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.message'); ?>:</label>
+				<textarea data-dojo-type="dijit.form.Textarea" data-dojo-props="readOnly: true, style: 'height: 100px; width: 500px'"><?php echo $this->error->message; ?></textarea>
+			</div>
+			
+			<div class="appFormRow">
+				<label><?php echo $this->translator()->_('error._share.trace'); ?>:</label>
+				<textarea data-dojo-type="dijit.form.Textarea" data-dojo-props="readOnly: true, style: 'height: 500px; width: 500px'"><?php echo $this->error->trace; ?></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Textarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+</script>

@@ -1,0 +1,23 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+.coreHooksUserProviderUserItemsContainer .coreHooksUserProviderUserItem { float: left; list-style-type: none; margin-bottom: 20px; margin-right: 15px; padding: 5px; }
+.coreHooksUserProviderUserItemsContainer .coreHooksUserProviderUserItem img { height: 60px; width: 60px; }
+.coreHooksUserProviderIcon { background-image: url(userprovider16.png); }
+
+/* Dnd */
+.coreHooksUserProviderUserItemsContainer .dojoDndItem { padding: 5px; }
+.coreHooksUserProviderUserItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.coreHooksUserProviderUserItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.coreHooksUserProviderUserItemsContainer .dojoDndContainerOver { background: #CFE5FA; }

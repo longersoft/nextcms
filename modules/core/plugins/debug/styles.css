@@ -1,0 +1,18 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+.corePluginsDebugIcon { background-image: url(debug16.png); }
+.corePluginsDebugVariable { margin: 0 0 0 15px; }
+.corePluginsDebugList { margin: 0; padding: 0; }
+.corePluginsDebugList li { background: url(images/bullet.png) left top no-repeat; list-style-type: none; margin-bottom: 5px; padding-left: 15px; }

@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Search for users and allows to drag and drop the users to other target",
+		"title": "User Provider"
+	},
+	"menu": {
+		"label": "User Provider"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"show": {
+		"notFound": "Not found any users",
+		"keywordHelp": "Username or email",
+		"searchAction": "Search",
+		"searchHelp": "Click the Search icon to view the list of users",
+		"title": "Users"
+	}
+}

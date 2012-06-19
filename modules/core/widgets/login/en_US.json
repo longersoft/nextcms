@@ -1,0 +1,31 @@
+{
+	"_about": {
+		"description": "Show a login box",
+		"title": "Login"
+	},
+	"config": {
+		"theme": "Theme"
+	},
+	"show": {
+		"cancelOpenIdLogin": "Cancel OpenId login",
+		"error": "Login failed",
+		"forgotPassword": "Forgot password",
+		"loginButton": "Login",
+		"loginUsingOpenId": "Login using OpenId",
+		"logout": "Logout",
+		"notFoundUser": "Not found user",
+		"openIdUrl": "OpenID URL",
+		"openIdUrlRequired": "The OpenID URL is required",
+		"openIdUrlValidator": "The OpenID URL is invalid",
+		"password": "Password",
+		"passwordRequired": "Password is required",
+		"registration": "Registration",
+		"title": "Login",
+		"username": "Username",
+		"usernameRequired": "Username is required",
+		"usernameValidator": "Username is invalid",
+		"userNotActivated": "User have not been activated",
+		"welcome": "Welcome %s",
+		"wrongPassword": "Wrong password"
+	}
+}

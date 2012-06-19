@@ -1,0 +1,186 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('registration.register.title'));
+?>
+
+<?php echo $this->flashMessenger(false); ?>
+
+<h1><?php echo $this->translator()->_('registration.register.title'); ?></h1>
+
+<?php if (!$this->registerEnabled) : ?>
+	<div style="padding: 8px"><?php echo $this->translator()->_('registration.register.registrationNotEnabled'); ?></div>
+<?php else : ?>
+
+<form id="coreRegistrationRegisterForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'core_registration_register'); ?>', method: 'POST', class: 'appForm'">
+	<div class="appFormRow">
+		<label for="user_name"><?php echo $this->translator()->_('user._share.username'); ?>:</label>
+		<div id="coreRegistrationRegisterUsernameTextbox" data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="isValidUsername: true, type: 'text', name: 'user_name', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.usernameRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.usernameValidator'); ?>'">
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			var _this = this;
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_user_checkusername'); ?>",
+				handleAs: "json",
+				content: {
+					user_name: value
+				},
+				load: function(data) {
+					var isValid = (data.result + "" == "true");
+					_this.set("isValidUsername", isValid);
+					if (!isValid) {
+						_this.displayMessage(_this.invalidMessage);
+					}
+				}
+			});
+			</script>
+		</div>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="password"><?php echo $this->translator()->_('user._share.password'); ?>:</label>
+		<input id="coreRegistrationRegisterPassword" data-dojo-type="dijit.form.ValidationTextBox" 
+			data-dojo-props="type: 'password', name: 'password', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.passwordRequired'); ?>', class: 'appLeft'" />
+		
+		<!-- PasswordStrengthMeter -->
+		<div class="appLeft" id="coreRegistrationRegisterPasswordStrengthMeter"></div>
+		<!-- /PasswordStrengthMeter -->
+		
+		<div class="appClear"></div>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="password"><?php echo $this->translator()->_('user._share.confirmPassword'); ?>:</label>
+		<input id="coreRegistrationRegisterConfirmPassword" data-dojo-type="dijit.form.ValidationTextBox" 
+			data-dojo-props="type: 'password', name: 'confirm_password', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.confirmPasswordRequired'); ?>'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="email"><?php echo $this->translator()->_('user._share.email'); ?>:</label>
+		<div id="coreRegistrationRegisterEmailTextbox" data-dojo-type="dijit.form.ValidationTextBox" 
+			data-dojo-props="isValidEmail: true, type: 'text', name: 'email', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.emailRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.emailValidator'); ?>'">
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			var _this = this;
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_user_checkemail'); ?>",
+				handleAs: "json",
+				content: {
+					email: value
+				},
+				load: function(data) {
+					var isValid = (data.result + "" == "true");
+					_this.set("isValidEmail", isValid);
+					if (!isValid) {
+						_this.displayMessage(_this.invalidMessage);
+					}
+				}
+			});
+			</script>
+		</div>
+	</div>
+	
+	<?php if ($this->openIdEnabled) : ?>
+	<div class="appFormRow">
+		<label for="">&nbsp;</label>
+		<div data-dojo-type="dijit.form.CheckBox" data-dojo-props="checked: false, disabled: <?php if ($this->openIdUrl) : ?>true<?php else : ?>false<?php endif; ?>">
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			dijit.byId("coreRegistrationRegisterOpenIdTextBox").set("disabled", value == false);
+			dojo.attr("coreRegistrationRegisterStep", "value", value == false ? "register": "verify");
+			dijit.byId("coreRegistrationRegisterUsernameTextbox").set("disabled", value == true);
+			dijit.byId("coreRegistrationRegisterPassword").set("disabled", value == true);
+			dijit.byId("coreRegistrationRegisterConfirmPassword").set("disabled", value == true);
+			dijit.byId("coreRegistrationRegisterEmailTextbox").set("disabled", value == true);
+			</script>
+		</div>
+		<?php echo $this->translator()->_('registration.register.connectOpenIdHelp'); ?>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="openid_url"><?php echo $this->translator()->_('user._share.openIdUrl'); ?>:</label>
+		<input id="coreRegistrationRegisterOpenIdTextBox" data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'openid_url', style: 'width: 400px', disabled: <?php if ($this->openIdUrl) : ?>false<?php else : ?>true<?php endif; ?>, readOnly: <?php if ($this->openIdUrl) : ?>true<?php else : ?>false<?php endif; ?>, value: '<?php if ($this->openIdUrl) : ?><?php echo addslashes($this->openIdUrl); ?><?php endif; ?>', required: true, promptMessage: '<?php echo $this->translator(true)->_('user._share.openIdUrlHelp'); ?>', missingMessage: '<?php echo $this->translator(true)->_('user._share.openIdUrlRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.openIdUrlValidator'); ?>'" />
+	</div>
+	<?php endif; ?>
+	
+	<!-- Captcha -->
+	<div class="appFormRow">
+		<label for="captcha"><?php echo $this->translator()->_('global._share.captcha'); ?>:</label>
+		<div class="appLeft">
+			<div style="padding-bottom: 8px"><?php echo $this->captcha->render($this); ?></div>
+			
+			<?php if ($this->captcha instanceof Zend_Captcha_Image) : ?>
+			<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: '<?php echo $this->captcha->getName(); ?>', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('global._share.captchaRequired'); ?>'" />
+			<?php endif; ?>
+		</div>
+		<div class="appClear"></div>
+	</div>
+	<!-- /Captcha -->
+	
+	<div class="appFormRow">
+		<label>&nbsp;</label>
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('registration.register.signupAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this			= this;
+			var form			= dijit.byId("coreRegistrationRegisterForm");
+			var isValidUsername = dijit.byId("coreRegistrationRegisterUsernameTextbox").get("isValidUsername");
+			var isValidEmail	= dijit.byId("coreRegistrationRegisterEmailTextbox").get("isValidEmail");
+			var passwordMatch   = dijit.byId("coreRegistrationRegisterPassword").get("value") == dijit.byId("coreRegistrationRegisterConfirmPassword").get("value");
+
+			if (form.validate() && isValidUsername && isValidEmail && passwordMatch) {
+				// Submit form
+				dojo.byId("coreRegistrationRegisterForm").submit();
+			} else {
+				return false;
+			}
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'reset'">
+			<?php echo $this->translator()->_('global._share.resetAction'); ?>
+		</button>
+	</div>
+	
+	<input id="coreRegistrationRegisterStep" type="hidden" name="step" value="register" /> 
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+
+dojo.require("core.js.views.PasswordStrengthMeter");
+
+dojo.addOnLoad(function() {
+	// Create new password strength meter instance
+	var passwordStrengthMeter = new core.js.views.PasswordStrengthMeter("coreRegistrationRegisterPasswordStrengthMeter");
+	passwordStrengthMeter.setUsername(dijit.byId("coreRegistrationRegisterUsernameTextbox").get("value"));
+	
+	dojo.connect(dijit.byId("coreRegistrationRegisterUsernameTextbox"), "onKeyUp", function() {
+		passwordStrengthMeter.setUsername(dijit.byId("coreRegistrationRegisterUsernameTextbox").get("value"));
+	});
+	dojo.connect(dijit.byId("coreRegistrationRegisterPassword"), "onKeyUp", function() {
+		passwordStrengthMeter.checkPassword(dijit.byId("coreRegistrationRegisterPassword").get("value"));
+	});
+});
+</script>
+
+<?php endif; ?>

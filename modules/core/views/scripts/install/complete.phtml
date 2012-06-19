@@ -1,0 +1,93 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!-- 
+DO NOT REMOVE THE ID ATTRIBUTE OF THE FORM. It is used to identify the form in the main layout view script
+(/template/admin/layouts/install.phtml)
+ -->
+<form id="coreInstallCompleteForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<!-- AdminSettings -->
+	<h2><?php echo $this->translator()->_('install.complete.admin'); ?></h2>
+	
+	<div class="appFormRow">
+		<label for="prefix"><?php echo $this->translator()->_('install.complete.adminPrefixUrl'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', value: 'admin', name: 'prefix', width: '200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.complete.adminPrefixUrlRequired'); ?>'" />
+	</div>
+
+	<div class="appFormRow">
+		<label for="username"><?php echo $this->translator()->_('install.complete.adminUsername'); ?>:</label>
+		<input id="coreInstallCompleteUsernameTextBox" data-dojo-type="dijit.form.TextBox"
+			data-dojo-props="type: 'text', value: 'admin', name: 'username', width: '200px', required: true, disabled: true" />
+	</div>
+
+	<div class="appFormRow">
+		<label for="password"><?php echo $this->translator()->_('install.complete.adminPassword'); ?>:</label>
+		<input id="coreInstallCompletePasswordTextbox" data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', value: '<?php echo $this->password; ?>', name: 'password', width: '200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.complete.adminPasswordRequired'); ?>', class: 'appLeft'" />
+			
+		<!-- PasswordStrengthMeter -->
+		<div class="appLeft" id="coreInstallCompletePasswordStrengthMeter"></div>
+		<!-- /PasswordStrengthMeter -->
+		
+		<div class="appClear"></div>
+	</div>
+	
+	<div class="appFormRow">
+		<label>&nbsp;</label>
+		<a href="javascript: void(0);" id="coreInstallCompleteGeneratePassword"><?php echo $this->translator()->_('install.complete.generatePasswordAction'); ?></a>
+	</div>
+
+	<div class="appFormRow">
+		<label for="email"><?php echo $this->translator()->_('install.complete.adminEmail'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'email', width: '200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.complete.adminEmailRequired'); ?>'" />
+	</div>
+	<!-- /AdminSettings -->
+</form>
+
+<script type="text/javascript">
+dojo.require("core.js.views.PasswordStrengthMeter");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_install_complete", function() {
+		var passwordStrengthMeter = new core.js.views.PasswordStrengthMeter("coreInstallCompletePasswordStrengthMeter");
+		passwordStrengthMeter.setUsername(dijit.byId("coreInstallCompleteUsernameTextBox").get("value"));
+	
+		dojo.connect(dijit.byId("coreInstallCompletePasswordTextbox"), "onKeyUp", function() {
+			passwordStrengthMeter.checkPassword(dijit.byId("coreInstallCompletePasswordTextbox").get("value"));
+		});
+
+		// Generate password handler
+		dojo.connect(dojo.byId("coreInstallCompleteGeneratePassword"), "onclick", function() {
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_password_generate'); ?>",
+				content: {
+					hash: false,
+					length: 10
+				},
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("coreInstallCompletePasswordTextbox").set("value", data.password);
+					passwordStrengthMeter.checkPassword(data.password);
+				}
+			});
+		});
+	});
+});
+</script>

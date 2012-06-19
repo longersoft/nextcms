@@ -1,0 +1,31 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div style="padding-bottom: 8px">
+	<?php echo $this->translator()->_('config.help'); ?>
+</div>
+
+<?php foreach ($this->plugins as $name => $plugin) : ?>
+<div style="padding-bottom: 8px">
+	<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'plugins[]', value: '<?php echo $name; ?>', checked: <?php if ($plugin['is_active']) : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('config.plugins.' . $name); ?>
+</div>
+<?php endforeach; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.form.CheckBox");
+</script>

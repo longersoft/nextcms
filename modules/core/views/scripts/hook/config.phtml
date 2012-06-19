@@ -1,0 +1,85 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-02-14
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('hook.config.title'));
+?>
+
+<div id="coreHookConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			_this.set("disabled", true);
+			dojo.publish("/app/core/hook/config/onStart");
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_hook_config'); ?>",
+				content: dojo.formToObject("coreHookConfigForm"),
+				handleAs: "json",
+				load: function(data) {
+					_this.set("disabled", false);
+					var message = (data.result == "APP_RESULT_OK") 
+								? dojox.string.sprintf("<?php echo $this->translator()->_('hook.config.success'); ?>", "<?php echo $this->name; ?>") 
+								: dojox.string.sprintf("<?php echo $this->translator()->_('hook.config.error'); ?>", "<?php echo $this->name; ?>");
+					dojo.publish("/app/global/notification", [{
+						message: message,
+						type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+					}]);
+				}
+			});
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/hook/config/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- HookConfigForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('hook.config.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<form id="coreHookConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<?php echo $this->configBody; ?>
+	
+			<input type="hidden" name="mod" value="<?php echo $this->module; ?>" />
+			<input type="hidden" name="name" value="<?php echo $this->name; ?>" />
+			<input type="hidden" name="format" value="json" />
+		</form>
+		</div>
+	</div>
+	<!-- /HookConfigForm -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.string.sprintf");
+</script>

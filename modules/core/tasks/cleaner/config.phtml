@@ -1,0 +1,47 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	tasks
+ * @since		1.0
+ * @version		2011-10-31
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label class="appTopLabel"><?php echo $this->translator()->_('config.keepAccessLogHelp'); ?></label>
+	<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'accesslog_days', value: '<?php echo $this->accessLogDays; ?>', maxHeight: 200">
+		<option value="-1"><?php echo $this->translator()->_('config.all'); ?></option>
+		<option value="1"><?php echo $this->translator()->_('config.lastOneDay'); ?></option>
+		<option value="7"><?php echo $this->translator()->_('config.lastOneWeek'); ?></option>
+		<option value="30"><?php echo $this->translator()->_('config.lastOneMonth'); ?></option>
+		<option value="90"><?php echo $this->translator()->_('config.lastThreeMonths'); ?></option>
+		<option value="180"><?php echo $this->translator()->_('config.lastSixMonths'); ?></option>
+		<option value="365"><?php echo $this->translator()->_('config.lastOneYear'); ?></option>
+	</select>
+</div>
+
+<div class="appFormRow">
+	<label class="appTopLabel"><?php echo $this->translator()->_('config.keepErrorLogHelp'); ?></label>
+	<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'error_days', value: '<?php echo $this->errorDays; ?>', maxHeight: 200">
+		<option value="-1"><?php echo $this->translator()->_('config.all'); ?></option>
+		<option value="1"><?php echo $this->translator()->_('config.lastOneDay'); ?></option>
+		<option value="7"><?php echo $this->translator()->_('config.lastOneWeek'); ?></option>
+		<option value="30"><?php echo $this->translator()->_('config.lastOneMonth'); ?></option>
+		<option value="90"><?php echo $this->translator()->_('config.lastThreeMonths'); ?></option>
+		<option value="180"><?php echo $this->translator()->_('config.lastSixMonths'); ?></option>
+		<option value="365"><?php echo $this->translator()->_('config.lastOneYear'); ?></option>
+	</select>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+</script>

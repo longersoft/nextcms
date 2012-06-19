@@ -1,0 +1,31 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dojox.layout.ContentPane" data-app-plugin="file" data-dojo-props="title: '<?php echo $this->translator(true)->_('debug.database.title'); ?>', selected: <?php if ($this->selected) : ?>true<?php else : ?>false<?php endif; ?>, class: 'appContentPane'">
+	<?php if ($this->data) : ?>
+	<div style="padding-bottom: 8px">
+		<?php echo sprintf($this->translator()->_('debug.database.statistic'), $this->data['num_queries'], round($this->data['total_time'] * 1000, 2) . ' ms'); ?>
+	</div>
+	
+	<ul class="corePluginsDebugList">
+	<?php foreach ($this->data['queries'] as $item) : ?>
+		<li><b><?php echo round($item['time'] * 1000, 2); ?> ms:</b> <?php echo $item['query']; ?></li>	
+	<?php endforeach; ?>
+	</ul>
+	<?php endif; ?>
+</div>

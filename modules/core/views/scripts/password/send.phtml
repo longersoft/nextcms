@@ -1,0 +1,67 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('password.send.title'));
+?>
+
+<?php echo $this->flashMessenger(false); ?>
+
+<h1><?php echo $this->translator()->_('password.send.title'); ?></h1>
+
+<?php if ($this->sent === true) : ?>
+	<div style="padding-bottom: 8px"><?php echo $this->translator()->_('password.send.success'); ?></div>
+	<div style="padding-bottom: 8px"><a href="<?php echo $this->url(array(), 'core_auth_login'); ?>"><?php echo $this->translator()->_('password.send.gotoLoginPage'); ?></a></div>
+<?php elseif ($this->sent === false) : ?>
+	<div style="padding-bottom: 8px"><?php echo $this->translator()->_('password.send.error'); ?></div>
+	<div style="padding-bottom: 8px"><a href="<?php echo $this->url(array(), 'core_auth_login'); ?>"><?php echo $this->translator()->_('password.send.gotoLoginPage'); ?></a></div>
+<?php else : ?>
+
+<form id="corePasswordSendForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'core_password_send'); ?>', method: 'POST', class: 'appForm'">
+	<div class="appFormRow">
+		<label for="user_name"><?php echo $this->translator()->_('user._share.username'); ?>:</label>
+		<input id="corePasswordSendUsernameTextbox" data-dojo-type="dijit.form.ValidationTextBox" 
+			data-dojo-props="isValidUsername: true, type: 'text', name: 'user_name', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.usernameRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.usernameValidator'); ?>'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="email"><?php echo $this->translator()->_('user._share.email'); ?>:</label>
+		<input id="corePasswordSendEmailTextbox" data-dojo-type="dijit.form.ValidationTextBox" 
+			data-dojo-props="isValidEmail: true, type: 'text', name: 'email', style: 'width: 200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('user._share.emailRequired'); ?>', invalidMessage: '<?php echo $this->translator(true)->_('user._share.emailValidator'); ?>'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label>&nbsp;</label>
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('global._share.sendAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'reset'">
+			<?php echo $this->translator()->_('global._share.resetAction'); ?>
+		</button>
+	</div>
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+</script>
+
+<?php endif; ?>

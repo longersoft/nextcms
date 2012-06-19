@@ -1,0 +1,145 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('user.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/core/css/admin/default/styles.css");
+</script>
+
+<div id="coreUserListRootContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- LeftPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, region: 'leading', minSize: 200, splitter: true, style: 'height: 100%; padding: 0; width: 20%'">
+		<!-- RoleFilter -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div class="appTitleBar" style="border-left: none; border-right: none; border-top: none">
+					<?php echo $this->translator()->_('user.list.roles'); ?>
+				</div>
+			</div>
+			
+			<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+				<!-- RoleToolbar -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+					<div id="coreUserListRoleToolbar"></div>
+				</div>
+				<!-- /RoleToolbar -->
+				
+				<!-- Roles -->
+				<div id="coreUserListRolesContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+					<?php echo $this->action('list', 'role', 'core', array('q' => !$this->criteria['role_id'] ? '' : rawurlencode(base64_encode(Zend_Json::encode(array('active_role_id' => $this->criteria['role_id'])))))); ?>
+				</div>
+				<!-- /Roles -->
+			</div>
+		</div>
+		<!-- /RoleFilter -->
+		
+		<!-- StatusFilter -->
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'bottom', gutters: false, style: 'height: 30%'">
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div class="appTitleBar" style="border-left: none; border-right: none">
+					<?php echo $this->translator()->_('user.list.status'); ?>
+				</div>
+			</div>
+			
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+				<ul id="coreUserListStatusContainer" class="coreStatusItemsContainer">
+					<li<?php if (!$this->criteria['status']) : ?> class="coreStatusItemSelected"<?php endif; ?>>
+						<a data-app-status="" class="coreStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('user.list.viewAll'); ?></a>
+						<span class="coreStatusUserCounter"><?php echo $this->user()->count(array('status' => null)); ?></span>
+					</li>
+					<li<?php if ($this->criteria['status'] == Core_Models_User::STATUS_ACTIVATED) : ?> class="coreStatusItemSelected"<?php endif; ?>>
+						<a data-app-status="<?php echo Core_Models_User::STATUS_ACTIVATED; ?>" class="coreStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('user.list.statusActivated'); ?></a>
+						<span class="coreStatusUserCounter"><?php echo $this->user()->count(array('status' => Core_Models_User::STATUS_ACTIVATED)); ?></span>
+					</li>
+					<li<?php if ($this->criteria['status'] == Core_Models_User::STATUS_NOT_ACTIVATED) : ?> class="coreStatusItemSelected"<?php endif; ?>>
+						<a data-app-status="<?php echo Core_Models_User::STATUS_NOT_ACTIVATED; ?>" class="coreStatusLabel" href="javascript: void(0);"><?php echo $this->translator()->_('user.list.statusNotActivated'); ?></a>
+						<span class="coreStatusUserCounter"><?php echo $this->user()->count(array('status' => Core_Models_User::STATUS_NOT_ACTIVATED)); ?></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /StatusFilter -->	
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- UserToolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="coreUserListUserToolbar"></div>
+		</div>
+		<!-- /UserToolbar -->
+	
+		<!-- Users -->
+		<div id="coreUserListUsersContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->render('user/list.ajax.phtml', array('users' => $this->users)); ?>
+		</div>
+		<!-- /Users -->
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('user.list.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("core.js.controllers.UserController");
+dojo.require("core.js.views.UserContextMenu");
+dojo.require("core.js.views.UserListView");
+dojo.require("core.js.views.UserStatusListView");
+dojo.require("core.js.views.UserToolbar");
+dojo.require("core.js.views.RoleContextMenu");
+dojo.require("core.js.views.RoleListView");
+dojo.require("core.js.views.RoleToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'core_role_add', 'core_role_delete', 'core_role_list', 'core_role_lock', 'core_role_rename',
+					'core_rule_role', 'core_rule_user',
+					'core_user_activate', 'core_user_add', 'core_user_avatar', 'core_user_delete', 'core_user_edit',
+					'core_user_list', 'core_user_move',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+	
+	// Create controller
+	var userController = new core.js.controllers.UserController("coreUserListRootContainer");
+
+	// Set UI components for controller
+	userController.setRoleContextMenu(new core.js.views.RoleContextMenu())
+				  .setRoleListView(new core.js.views.RoleListView("coreUserListRolesContainer"))
+				  .setRoleToolbar(new core.js.views.RoleToolbar("coreUserListRoleToolbar"))
+				  .setUserContextMenu(new core.js.views.UserContextMenu())
+				  .setUserListView(new core.js.views.UserListView("coreUserListUsersContainer"))
+				  .setUserToolbar(new core.js.views.UserToolbar("coreUserListUserToolbar"))
+				  .setStatusListView(new core.js.views.UserStatusListView("coreUserListStatusContainer"))
+				  .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>);
+});
+</script>

@@ -1,0 +1,37 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('module.list.extensions'));
+?>
+
+<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: true, nested: true">
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('plugin.list.plugins'); ?>', href: '<?php echo $this->url(array(), 'core_plugin_list'); ?>?mod=<?php echo $this->module; ?>', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+	</div>
+	
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('hook.list.hooks'); ?>', href: '<?php echo $this->url(array(), 'core_hook_list'); ?>?mod=<?php echo $this->module; ?>', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+	</div>
+	
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('widget.list.widgets'); ?>', href: '<?php echo $this->url(array(), 'core_widget_list'); ?>?mod=<?php echo $this->module; ?>', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>'">
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojox.layout.ContentPane");
+</script>

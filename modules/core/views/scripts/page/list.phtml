@@ -1,0 +1,95 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('page.list.title'));
+?>
+
+<script type="text/javascript">
+// DOJO LESSON: I have to use Javascript to add the grid styles. If not, the TabContainer below will not be shown
+dojo.create("link", {
+				href: "<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css",
+				media: "screen",
+				rel: "stylesheet",
+				type: "text/css"
+			}, dojo.query("head")[0]);
+</script>
+
+<div id="corePageListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: true, style: 'height: 100%; padding: 0; width: 100%'">
+	<div id="corePageListTabContainer" data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: false, region: 'center'">
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, style: 'margin: 8px', class: 'appBorderContainer', title: '<?php echo $this->translator(true)->_('page.list.pages'); ?>'">
+			<!-- Toolbar -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div id="corePageListToolbar"></div>
+			</div>
+			<!-- /Toolbar -->
+			
+			<!-- Pages -->
+			<div id="corePageListGridContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			</div>
+			<!-- /Pages -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('page.list.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("core.js.controllers.PageController");
+dojo.require("core.js.views.PageGrid");
+dojo.require("core.js.views.PageToolbar");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'core_cache_page', 'core_cache_remove',
+					'core_page_add', 'core_page_delete', 'core_page_edit', 'core_page_export', 'core_page_import',
+					'core_page_layout', 'core_page_list', 'core_page_order',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+
+	// Caching option
+	core.js.base.Config.set("core", "caching", <?php if (Core_Services_Cache::getInstance()) : ?>true<?php else : ?>false<?php endif; ?>);
+	
+	// Create new toolbar
+	var pageToolbar = new core.js.views.PageToolbar("corePageListToolbar");
+	pageToolbar.setTemplates(<?php echo $this->templates; ?>);
+	pageToolbar.show();
+	
+	// Create new controller
+	var pageController = new core.js.controllers.PageController("corePageListContainer", "corePageListTabContainer");
+	pageController.setPageToolbar(pageToolbar)
+				  .setPageGrid(new core.js.views.PageGrid("corePageListGridContainer"))
+			  	  .initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>)
+				  .searchPages();
+});
+</script>

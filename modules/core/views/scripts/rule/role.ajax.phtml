@@ -1,0 +1,70 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('rule.role.title'));
+?>
+
+<?php if ($resources = $this->ruleLoader()->getResources($this->module)) : ?>
+<?php foreach (array('module', 'hook', 'plugin', 'task', 'widget') as $type) : ?>
+
+<?php if ($resources[$type] && count($resources[$type]) > 0) : ?>
+	<h2 class="appHeadline" style="margin-top: 0">
+		<span><?php echo $this->translator()->_('privilege._share.' . $type); ?></span>
+	</h2>
+
+	<?php foreach ($resources[$type] as $resource) : ?>
+	
+	<div data-dojo-type="dijit.TitlePane" data-dojo-props="open: false, title: '<?php echo addslashes($this->ruleTranslator()->translateResource($resource)); ?>', style: 'padding-bottom: 8px'">
+		<?php if ($privileges = $this->ruleLoader()->getByRole($resource, $this->role)) : ?>
+		
+		<div style="padding-bottom: 5px">
+			<a href="javascript: void(0);" onclick="javascript: coreRuleRoleSelectAll(dojo.query(this).closest('.dijitTitlePane')[0], true);"><?php echo $this->translator()->_('global._share.selectAllAction'); ?></a> | <a href="javascript: void(0);" onclick="javascript: coreRuleRoleSelectAll(dojo.query(this).closest('.dijitTitlePane')[0], false);"><?php echo $this->translator()->_('global._share.unselectAllAction'); ?></a>	
+		</div>
+		
+		<?php foreach ($privileges as $priv) : ?>
+		<div style="padding-bottom: 5px">
+			<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'privileges[]', value: '<?php echo $priv->action_name; ?>_<?php echo $resource->controller_name; ?>_<?php echo $resource->module_name; ?>_<?php echo $resource->extension_type; ?>', checked: <?php if ($priv->allow == null || $priv->allow == 0) : ?>false<?php else : ?>true<?php endif; ?>" /> <?php echo stripslashes($this->ruleTranslator()->translatePrivilege($priv)); ?>
+		</div>
+		<?php endforeach; ?>
+		
+		<?php endif; ?>
+	</div>
+	
+	<?php endforeach; ?>
+<?php endif; ?>
+
+<?php endforeach; ?>
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.TitlePane");
+dojo.require("dojo.NodeList-traverse");
+
+function coreRuleRoleSelectAll(/*DomNode*/ titlePaneNode, /*Boolean*/ select) {
+	// summary:
+	//		Selects or unselects all checkboxes that belong to the same title pane
+	var checkbox;
+	dojo.query(".dijitCheckBox", titlePaneNode).forEach(function(node) {
+		if (checkbox = dijit.byNode(node)) {
+			checkbox.set("checked", select);
+		}
+	}); 
+};
+</script>

@@ -1,0 +1,165 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	tasks
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+</script>
+
+<div id="coreTaskConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('_share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/task/config/onCancelAction");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('view.files'); ?></span></h2>
+			<?php echo $this->translator()->_('view.help'); ?>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<!-- FilesGrid -->
+			<table id="coreTasksAutobackupViewGrid_<?php echo $this->uniqueId; ?>" data-dojo-type="dojox.grid.EnhancedGrid" data-dojo-props="plugins: {menus: {cellMenu: 'coreTasksAutobackupViewGridMenu_<?php echo $this->uniqueId; ?>'}}, loadingMessage: '<span class=dojoxGridLoading><?php echo $this->translator()->_('_share.loadingAction'); ?></span>'">
+				<thead>
+					<tr>
+						<th field="name" width="400px"><?php echo $this->translator()->_('_share.name'); ?></th>
+						<th field="last_modified" width="200px"><?php echo $this->translator()->_('_share.lastModified'); ?></th>
+					</tr>
+				</thead>
+			</table>
+			<!-- /FilesGrid -->
+			
+			<!-- ContextMenu -->
+			<div data-dojo-type="dijit.Menu" id="coreTasksAutobackupViewGridMenu_<?php echo $this->uniqueId; ?>" style="display: none">
+				<!-- RefreshItem -->
+			 	<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appRefreshIcon'">
+			 		<?php echo $this->translator()->_('_share.refreshAction'); ?>
+			 		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					var grid   = dijit.byId("coreTasksAutobackupViewGrid_<?php echo $this->uniqueId; ?>");
+					var	params = {
+						_type: "task",
+						_mod: "core",
+						_name: "autobackup",
+						_method: "view",
+						_format: "json",
+						noRenderScript: true
+					};
+					grid.setStore(new dojo.data.ItemFileReadStore({
+						url: core.js.base.controllers.ActionProvider.get("core_extension_render").url + "?" + dojo.objectToQuery(params)
+					}));
+					</script>
+				</div>
+				<!-- /RefreshItem -->
+			
+				<!-- DeleteItem -->
+			 	<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appDeleteIcon'">
+			 		<?php echo $this->translator()->_('_share.deleteAction'); ?>
+			 		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					var grid	 = dijit.byId("coreTasksAutobackupViewGrid_<?php echo $this->uniqueId; ?>");
+					var rowIndex = grid.selection.selectedIndex;
+					var item	 = grid.getItem(rowIndex);
+					if (item) {
+						dojo.xhrPost({
+							url: core.js.base.controllers.ActionProvider.get("core_extension_render").url,
+							method: "GET",
+							content: {
+								_type: "task",
+								_mod: "core",
+								_name: "autobackup",
+								_method: "delete",
+								_format: "json",
+								noRenderScript: true,
+								name: item.name[0]
+							},
+							handleAs: "json",
+							load: function(data) {
+								var message = (data.result == "APP_RESULT_OK")
+											? "<?php echo $this->translator()->_('delete.success'); ?>" 
+											: "<?php echo $this->translator()->_('delete.error'); ?>";
+								dojo.publish("/app/global/notification", [{
+									message: message,
+									type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+								}]);
+							}
+						});
+					}
+					</script>
+				</div>
+				<!-- /DeleteItem -->
+			
+				<!-- DownloadItem -->
+			 	<div data-dojo-type="dijit.MenuItem" data-dojo-props="iconClass: 'appIcon appDownloadIcon'">
+			 		<?php echo $this->translator()->_('_share.downloadAction'); ?>
+			 		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+					var grid	 = dijit.byId("coreTasksAutobackupViewGrid_<?php echo $this->uniqueId; ?>");
+					var rowIndex = grid.selection.selectedIndex;
+					var item	 = grid.getItem(rowIndex);
+					if (item) {
+						dojo.io.iframe.send({
+							url: core.js.base.controllers.ActionProvider.get("core_extension_render").url,
+							method: "GET",
+							content: {
+								_type: "task",
+								_mod: "core",
+								_name: "autobackup",
+								_method: "download",
+								name: item.name[0]
+							}
+						});
+					}
+					</script>
+			 	</div>
+			 	<!-- /DownloadItem -->
+			</div>
+			<!-- /ContextMenu -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuItem");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.data.ItemFileReadStore");
+dojo.require("dojo.io.iframe");
+dojo.require("dojox.grid.EnhancedGrid");
+dojo.require("dojox.grid.enhanced.plugins.Menu");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_extension_render", function() {
+		dijit.byId("coreTasksAutobackupViewGrid_<?php echo $this->uniqueId; ?>").setStore(new dojo.data.ItemFileReadStore({
+			data: {
+				identifier: "name",
+				items: <?php echo Zend_Json::encode($this->files); ?>
+			}
+		}));
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

@@ -1,0 +1,1142 @@
+{
+	"_about": {
+		"description": "Module Hệ thống. Module này sẽ được cài đặt khi bạn tiến hành cài đặt website.",
+		"title": "Hệ thống"
+	},
+	"_menu": {
+		"accesslog": {
+			"list": "Quản lý lịch sử truy cập"
+		},
+		"config": {
+			"config": "Cấu hình module"
+		},
+		"error": {
+			"list": "Quản lý lỗi"
+		},
+		"language": {
+			"view": "Quản lý tệp ngôn ngữ"
+		},
+		"module": {
+			"list": "Quản lý phần mở rộng"
+		},
+		"page": {
+			"list": "Quản lý trang"
+		},
+		"permalink": {
+			"config": "Tùy biến liên kết"
+		},
+		"privilege": {
+			"list": "Quản lý quyền truy cập"
+		},
+		"task": {
+			"list": "Quản lý ứng dụng cron"
+		},
+		"template": {
+			"list": "Quản lý mẫu website"
+		},
+		"user": {
+			"list": "Quản lý người dùng"
+		}
+	},
+	"_permission": {
+		"accesslog": {
+			"description": "Quản lý lịch sử truy cập",
+			"actions": {
+				"delete": "Xóa lịch sử truy cập",
+				"list": "Xem danh sách lịch sử truy cập",
+				"view": "Xem chi tiết lượt truy cập"
+			}
+		},
+		"cache": {
+			"description": "Quản lý cache",
+			"actions": {
+				"clean": "Xóa tất cả dữ liệu cache",
+				"page": "Thiết lập thời gian cache cho trang",
+				"remove": "Xóa cache trang"
+			}
+		},
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		},
+		"error": {
+			"description": "Quản lý lỗi",
+			"actions": {
+				"delete": "Xóa lỗi",
+				"list": "Xem danh sách lỗi",
+				"view": "Xem chi tiết lỗi"
+			}
+		},
+		"hook": {
+			"description": "Quản lý hook",
+			"actions": {
+				"config": "Cấu hình hook",
+				"install": "Cài đặt hook",
+				"list": "Xem danh sách các hook",
+				"uninstall": "Gỡ bỏ hook"
+			}
+		},
+		"language": {
+			"description": "Quản lý tệp ngôn ngữ",
+			"actions": {
+				"add": "Thêm phần tử ngôn ngữ",
+				"delete": "Xóa phần tử ngôn ngữ",
+				"edit": "Cập nhật phần tử ngôn ngữ",
+				"list": "Xem các tệp ngôn ngữ"
+			}
+		},
+		"layout": {
+			"description": "Quản lý bố cục",
+			"actions": {
+				"edit": "Chỉnh sửa bố cục",
+				"list": "Xem danh sách các bố cục"
+			}
+		},
+		"module": {
+			"description": "Quản lý module",
+			"actions": {
+				"install": "Cài đặt module",
+				"list": "Xem danh sách các module",
+				"uninstall": "Gỡ bỏ module"
+			}
+		},
+		"page": {
+			"description": "Quản lý trang",
+			"actions": {
+				"add": "Thêm trang mới",
+				"delete": "Xóa trang",
+				"edit": "Sửa trang",
+				"export": "Xuất bố cục của trang ra tệp",
+				"import": "Nhập bố cục của trang từ tệp",
+				"layout": "Bố cục trang",
+				"list": "Xem danh sách các trang",
+				"order": "Sắp xếp thứ tự trang"
+			}
+		},
+		"permalink": {
+			"description": "Tùy biến liên kết",
+			"actions": {
+				"config": "Tùy biến liên kết"
+			}
+		},
+		"plugin": {
+			"description": "Quản lý plugin",
+			"actions": {
+				"config": "Cấu hình plugin",
+				"disable": "Vô hiệu plugin",
+				"enable": "Kích hoạt plugin",
+				"install": "Cài đặt plugin",
+				"list": "Xem danh sách plugin",
+				"uninstall": "Gỡ bỏ plugin"
+			}
+		},
+		"privilege": {
+			"description": "Quản lý tài nguyên",
+			"actions": {
+				"list": "Liệt kê tài nguyên"
+			}
+		},
+		"role": {
+			"description": "Quản lý nhóm",
+			"actions": {
+				"add": "Thêm nhóm",
+				"delete": "Xóa nhóm",
+				"list": "Liệt kê nhóm",
+				"lock": "Khóa/Mở khóa nhóm",
+				"rename": "Đổi tên nhóm"
+			}
+		},
+		"rule": {
+			"description": "Quản lý quyền",
+			"actions": {
+				"role": "Thiết lập quyền cho nhóm",
+				"user": "Thiết lập quyền cho người dùng"
+			}
+		},
+		"skin": {
+			"description": "Quản lý skin",
+			"actions": {
+				"activate": "Kích hoạt skin",
+				"edit": "Chỉnh sửa tệp CSS",
+				"list": "Xem danh sách skin"
+			}
+		},
+		"task": {
+			"description": "Quản lý ứng dụng cron",
+			"actions": {
+				"config": "Cấu hình ứng dụng",
+				"install": "Cài đặt ứng dụng",
+				"list": "Xem danh sách các ứng dụng",
+				"run": "Chạy ứng dụng",
+				"schedule": "Đặt lịch chạy ứng dụng",
+				"uninstall": "Gỡ bỏ ứng dụng"
+			}
+		},
+		"template": {
+			"description": "Quản lý mẫu website",
+			"actions": {
+				"activate": "Kích hoạt mẫu website",
+				"install": "Cài đặt mẫu website",
+				"list": "Xem danh sách các mẫu website",
+				"uninstall": "Gỡ bỏ mẫu website"
+			}
+		},
+		"user": {
+			"description": "Quản lý người dùng",
+			"actions": {
+				"activate": "Kích hoạt/Hủy kích hoạt người dùng",
+				"add": "Thêm người dùng",
+				"avatar": "Cập nhật ảnh đại diện của bất kỳ người dùng nào",
+				"delete": "Xóa người dùng",
+				"edit": "Sửa thông tin người dùng",
+				"list": "Xem danh sách người dùng",
+				"move": "Chuyển người dùng sang nhóm khác"
+			}
+		},
+		"widget": {
+			"description": "Quản lý widget",
+			"actions": {
+				"install": "Cài đặt widget",
+				"list": "Xem danh sách widget",
+				"uninstall": "Gỡ bỏ widget"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Kích hoạt",
+			"addAction": "Thêm",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"browseFilesUploadAction": "Chọn tệp và Tải lên ...",
+			"cancelAction": "Hủy",
+			"captcha": "Mã bảo vệ",
+			"captchaRequired": "Mã bảo vệ là bắt buộc",
+			"captchaValidator": "Mã bảo vệ không hợp lệ",
+			"characters": "%s ký tự",
+			"closeAction": "Đóng",
+			"configureAction": "Cấu hình",
+			"deactivateAction": "Hủy kích hoạt",
+			"deleteAction": "Xóa",
+			"deleteForeverAction": "Xóa mãi mãi",
+			"editAction": "Sửa",
+			"enableAction": "Kích hoạt",
+			"error404": "Không tìm thấy trang bạn đang tìm kiếm",
+			"insertAction": "Chèn",
+			"installAction": "Cài đặt",
+			"loadingAction": "Đang tải ...",
+			"localizeAction": "Địa phương hóa",
+			"lockAction": "Khóa",
+			"refreshAction": "Tải lại",
+			"renameAction": "Đổi tên",
+			"resetAction": "Làm lại",
+			"runAction": "Chạy",
+			"saveAction": "Lưu",
+			"saveOrderAction": "Lưu thứ tự",
+			"savingAction": "Đang lưu ...",
+			"scheduleAction": "Đặt lịch",
+			"searchAction": "Tìm",
+			"selectAllAction": "Chọn tất cả",
+			"sendAction": "Gửi",
+			"uninstallAction": "Gỡ bỏ",
+			"unlockAction": "Mở khóa",
+			"unselectAllAction": "Hủy chọn tất cả",
+			"uploadAction": "Tải lên",
+			"viewAction": "Xem",
+			"firstPage": "Đầu",
+			"lastPage": "Trước",
+			"nextPage": "Tiếp",
+			"previousPage": "Cuối",
+			"noMessage": "Có",
+			"yesMessage": "Không"
+		},
+		"layout": {
+			"dashboard": "Dashboard",
+			"fileToolbox": "Tệp",
+			"imageToolbox": "Ảnh",
+			"homepage": "Trang chủ",
+			"linkToolbox": "Liên kết",
+			"login": "Đăng nhập",
+			"logout": "Thoát",
+			"modules": "Module",
+			"openIdIdentities": "Xác thực OpenID",
+			"profile": "Tài khoản cá nhân",
+			"register": "Đăng ký",
+			"toolbox": "Công cụ",
+			"videoToolbox": "Video",
+			"welcome": "Chào bạn %s"
+		}
+	},
+	"accesslog": {
+		"_share": {
+			"accessedDate": "Ngày truy cập",
+			"id": "Id",
+			"ip": "Địa chỉ IP",
+			"module": "Module",
+			"params": "Tham số",
+			"title": "Tiêu đề",
+			"url": "Đường dẫn"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa lượt truy cập tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa lượt truy cập",
+			"notFound": "Xin lỗi, không thể tìm thấy lượt truy cập",
+			"success": "Lượt truy cập đã được xóa thành công",
+			"title": "Xóa lượt truy cập"
+		},
+		"list": {
+			"allModules": "Tất cả module",
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"filterByIpAction": "Lọc bởi địa chỉ IP",
+			"fromDate": "Từ ngày",
+			"notFound": "Không tìm thấy lỗi nào",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý lịch sử truy cập",
+			"toDate": "Đến ngày"
+		},
+		"view": {
+			"title": "Xem chi tiết lượt truy cập"
+		}
+	},
+	"auth": {
+		"deny": {
+			"notAllowed": "Bạn không có quyền truy cập phần này",
+			"title": "Từ chối truy cập"
+		},
+		"login": {
+			"cancelOpenIdLogin": "Hủy đăng nhập dùng OpenId",
+			"error": "Không thể đăng nhập",
+			"forgotPassword": "Quên mật khẩu",
+			"loginButton": "Đăng nhập",
+			"notFoundUser": "Không tìm thấy người dùng",
+			"openIdLogin": "Đăng nhập dùng OpenId",
+			"registration": "Đăng ký",
+			"title": "Đăng nhập",
+			"userNotActivated": "Người dùng chưa được kích hoạt",
+			"wrongPassword": "Sai mật khẩu"
+		}
+	},
+	"cache": {
+		"clean": {
+			"error": "Xin lỗi, không thể xóa tất cả dữ liệu cache",
+			"success": "Tất cả dữ liệu cache đã được xóa thành công",
+			"title": "Xóa tất cả dữ liệu cache"
+		},
+		"page": {
+			"error": "Xin lỗi, không thể thiết lập thời gian cache cho trang",
+			"success": "Trang đã được thiết lập thời gian cache thành công",
+			"title": "Thiết lập cache trang"
+		},
+		"remove": {
+			"error": "Xin lỗi, không thể xóa dữ liệu cache của trang",
+			"success": "Dữ liệu cache của trang đã được xóa thành công",
+			"title": "Xóa dữ liệu cache của trang"
+		}
+	},
+	"config": {
+		"_share": {
+			"seconds": "giây"
+		},
+		"config": {
+			"activatingAccountContentHelp": "Bạn có thể sử dụng ###username### và ###link### trong nội dung. Các chuỗi này sẽ được thay thế bằng tên truy cập, và liên kết để kích hoạt tài khoản",
+			"activatingAccountSubjectHelp": "Bạn có thể sử dụng ###username### trong tiêu đề. Chuỗi này sẽ được thay thế bằng tên truy cập của người dùng",
+			"adminPrefixUrl": "Tiền tố đường dẫn quản trị",
+			"adminPrefixUrlRequired": "Tiền tố đường dẫn phần quản trị là bắt buộc",
+			"advanced": "Nâng cao",
+			"authentication": "Đăng xuất",
+		    "autoActivateRegistration": "Các tài khoản mới sẽ được kích hoạt ngay",
+		    "blockedUsernames": "Khóa các tên tài khoản",
+		    "blockedUsernamesHelp": "Người dùng không thể đăng ký một trong các tên tài khoản sau (ngăn cách bởi dấu phẩy)",
+		    "cacheFile": "Tệp",
+		    "cacheIdPrefix": "Tiếp đầu ngữ của cache Id",
+		    "cacheLifetime": "Thời gian",
+		    "cacheMemcache": "Memcache",
+		    "cacheNone": "Không sử dụng",
+		    "cachePort": "Cổng",
+		    "cacheServer": "Máy chủ",
+		    "cacheSystem": "Hệ thống cache",
+		    "captcha": "Captcha",
+		    "captchaImage": "Ảnh",
+		    "captchaReCaptcha": "ReCaptcha",
+		    "captchaReCaptchaPrivateKey": "Mã riêng tư cấp bởi ReCaptcha",
+		    "captchaReCaptchaPrivateKeyRequired": "Mã riêng tư cấp bởi ReCaptcha là bắt buộc",
+		    "captchaReCaptchaPublicKey": "Mã công khai cấp bởi ReCaptcha",
+		    "captchaReCaptchaPublicKeyRequired": "Mã công khai cấp bởi ReCaptcha là bắt buộc",
+		    "charset": "Tập ký tự",
+		    "cleanCacheAction": "Xóa cache",
+		    "compressCss": "Nén và cache các tệp CSS",
+		    "compressJavascript": "Nén và cache các tệp và các đoạn mã Javascript",
+		    "content": "Nội dung",
+		    "cookieDomain": "Tên miền lưu giữ cookie",
+		    "disableCronTasks": "Vô hiệu hóa các ứng dụng chạy theo lịch (bạn vẫn có thể chạy các ứng dụng này ở chế độ dòng lệnh)",
+		    "emailActivateRegistration": "Gửi mail kích hoạt đến tài khoản đăng ký",
+		    "enableOpenIdRegistration": "Cho phép đăng ký và đăng nhập bằng tài khoản OpenId",
+			"enableRegistration": "Cho phép đăng ký tài khoản",
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"feed": "Kênh RSS/Atom",
+			"feedCopyright": "Bản quyền",
+			"feedCopyrightRequired": "Thông tin bản quyền là bắt buộc",
+			"feedDescription": "Mô tả",
+			"feedGenerator": "Tạo bởi",
+			"feedGeneratorRequired": "Thông tin phần mềm tạo kênh RSS/Atom là bắt buộc",
+			"feedLimit": "Giới hạn số phần tử",
+			"feedLimitRequired": "Số phần tử giới hạn là bắt buộc",
+			"feedTitle": "Tiêu đề",
+			"feedTitleRequired": "Tiêu đề là bắt buộc",
+			"general": "Thông thường",
+			"generateKeyAction": "Sinh mã",
+			"host": "Máy chủ",
+			"language": "Ngôn ngữ",
+			"languageDirection": "Hướng ngôn ngữ",
+			"languageDirectionLtr": "Trái qua phải (LTR)",
+			"languageDirectionRtl": "Phải qua trái (RTL)",
+			"languageHelp": "Nếu ngôn ngữ của bạn không được liệt kê ở đây, hãy thêm nó vào tệp <b>/data/i18n.php</b>, và tải lại trang này",
+			"localization": "Địa phương hóa",
+			"localizationDefaultLanguage": "Ngôn ngữ mặc định",
+			"localizationHelp": "Nếu ngôn ngữ của bạn không được liệt kê ở đây, hãy thêm nó vào tệp <b>/data/l10n.php</b>, và tải lại trang này",
+			"localizationOtherLanguages": "Các ngôn ngữ khác",
+			"logAccess": "Lưu lịch sử truy cập",
+			"mail": "Mail",
+			"maximumLoginAttempts": "Nếu số lần đăng nhập không thành công vượt quá con số sau đây, người dùng sẽ được yêu cầu nhập mã bảo vệ tại trang đăng nhập",
+			"maximumLoginAttemptsRequired": "Số lần đăng nhập không thành công tối đa là bắt buộc",
+			"maximumLoginAttemptsValidator": "Số lần đăng nhập không thành công tối đa không hợp lệ",
+			"metaDescriptionTag": "Thẻ mô tả (meta description)",
+			"metaKeywordTag": "Thẻ từ khóa (meta keyword)",
+			"notification": "Thông báo",
+			"notificationDuration": "Thời gian",
+			"notificationPosition": "Vị trí",
+			"notificationPositionBottomLeftRight": "Góc dưới-trái, hướng sang phải",
+			"notificationPositionBottomLeftUp": "Góc dưới-trái, hướng lên trên",
+			"notificationPositionBottomRightLeft": "Góc dưới-phải, hướng sang trái",
+			"notificationPositionBottomRightUp": "Góc dưới-phải, hướng lên trên",
+			"notificationPositionTopLeftDown": "Góc trên-trái, hướng xuống dưới",
+			"notificationPositionTopLeftRight": "Góc trên-trái, hướng sang phải",
+			"notificationPositionTopRightDown": "Góc trên-phải, hướng xuống dưới",
+			"notificationPositionTopRightLeft": "Góc trên-phải, hướng sang trái",
+			"notSecurity": "Không bảo mật",
+			"password": "Mật khẩu",
+			"performance": "Hiệu năng",
+			"phpMail": "Sử dụng hàm mail() của PHP",
+			"port": "Cổng",
+			"protocol": "Giao thức",
+			"registration": "Đăng ký",
+			"registrationDefaultRole": "Nhóm mặc định cho người dùng mới",
+			"registrationSelectDefaultRole": "Lựa chọn nhóm",
+			"replyToEmail": "Trả lời vào địa chỉ email",
+			"replyToName": "Trả lời vào tên",
+			"secretKey": "Mã bí mật",
+			"secretKeyRequired": "Mã bí mật là bắt buộc",
+			"security": "Bảo mật",
+			"sendFromEmail": "Gửi từ email",
+			"sendFromName": "Gửi từ tên",
+			"sendingPasswordContentHelp": "Bạn có thể sử dụng ###username###, ###password###, ###link### trong nội dung. Các chuỗi này sẽ được thay thế bằng tên truy cập, mật khẩu mới của người dùng, và liên kết đến website",
+			"sendingPasswordSubjectHelp": "Bạn có thể sử dụng ###username### trong tiêu đề. Chuỗi này sẽ được thay thế bằng tên truy cập của người dùng",
+			"sendingPasswordTemplate": "Mẫu thư cung cấp mật khẩu mới",
+			"session": "Phiên làm việc",
+			"sessionDbHandler": "Cơ sở dữ liệu",
+			"sessionFileHandler": "Tệp",
+			"sessionHandler": "Lưu giữ phiên làm việc (session)",
+			"sessionLifetime": "Thời gian của mỗi phiên làm việc",
+			"sessionMemcacheHandler": "Memcache",
+			"siteName": "Tên website",
+			"siteTitle": "Tiêu đề website",
+			"smtp": "SMTP",
+			"ssl": "SSL",
+			"staticServer": "Máy chủ tài nguyên",
+			"staticServerHelp": "Địa chỉ của máy chủ lưu giữ tài nguyên tĩnh (các tệp CSS và Javascript)",
+			"staticServerRequired": "Địa chỉ của máy chủ tài nguyên là bắt buộc",
+			"subject": "Chủ đề",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"timeZone": "Khung thời gian",
+			"title": "Cấu hình module Hệ thống",
+			"tls": "TLS",
+			"username": "Tên truy cập",
+			"website": "Website"
+		}
+	},
+	"dashboard": {
+		"index": {
+			"error": "Xin lỗi, không thể cập nhật bố cục",
+			"success": "Bố cục đã được cập nhật thành công",
+			"title": "Dashboard"
+		}
+	},
+	"error": {
+		"_share": {
+			"action": "Action",
+			"controller": "Controller",
+			"createdDate": "Ngày tạo",
+			"file": "Tệp",
+			"id": "Id",
+			"line": "Dòng",
+			"message": "Nội dung",
+			"module": "Module",
+			"trace": "Vết",
+			"uri": "Đường dẫn"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa lỗi <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa lỗi",
+			"notFound": "Xin lỗi, không thể tìm thấy lỗi",
+			"success": "Lỗi đã được xóa thành công",
+			"title": "Xóa lỗi"
+		},
+		"list": {
+			"allModules": "Tất cả module",
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"fromDate": "Từ ngày",
+			"notFound": "Không tìm thấy lỗi nào",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Danh sách lỗi",
+			"toDate": "Đến ngày"
+		},
+		"view": {
+			"title": "Chi tiết lỗi"
+		}
+	},
+	"hook": {
+		"config": {
+			"error": "Xin lỗi, không thể lưu cấu hình của hook <b>%s</b>",
+			"success": "Cấu hình của hook <b>%s</b> đã được cập nhật thành công",
+			"title": "Cấu hình hook"
+		},
+		"install": {
+			"error": "Xin lỗi, không thể cài đặt hook <b>%s</b>",
+			"success": "Hook <b>%s</b> đã được cài đặt thành công"
+		},
+		"list": {
+			"hooks": "Hook",
+			"notFound": "Không tìm thấy hook nào",
+			"title": "Quản lý hook"
+		},
+		"uninstall": {
+			"error": "Xin lỗi, không thể gỡ bỏ hook <b>%s</b>",
+			"success": "Hook <b>%s</b> đã được gỡ bỏ thành công"
+		}
+	},
+	"index": {
+		"index": {
+			"title": "Trang chủ"
+		}
+	},
+	"install": {
+		"_share": {
+			"alreadyInstalled": "Website đã được cài đặt. Nếu bạn là chủ của website, bạn nên xóa file này (<b>install.php</b>) khỏi thư mục chứa website của bạn.",
+			"doneButton": "Hoàn thành",
+			"nextButton": "Bước tiếp theo",
+			"wizard": "Trình cài đặt"
+		},
+		"check": {
+			"extensions": "Các phần mở rộng bắt buộc",
+			"extensionsDesc": "Các phần mở rộng của PHP sau đây phải được cài trên máy chủ:",
+			"title": "Bước 1/3: Kiểm tra các yêu cầu",
+			"writableFiles": "Các thư mục/tệp có thể ghi được",
+			"writableFilesDesc": "Các thư mục sau đây phải có quyền ghi:"
+		},
+		"complete": {
+			"admin": "Thiết lập quản trị",
+			"adminPrefixUrl": "Tiền tố đường dẫn quản trị",
+			"adminPrefixUrlRequired": "Tiền tố đường dẫn là bắt buộc",
+			"adminUsername": "Tên truy cập",
+			"adminPassword": "Mật khẩu",
+			"adminPasswordRequired": "Mật khẩu là bắt buộc",
+			"adminEmail": "Email",
+			"adminEmailRequired": "Email là bắt buộc",
+			"creatingUser": "Đang tạo người dùng ...",
+			"generatePasswordAction": "Sinh mật khẩu",
+			"title": "Bước 3/3: Hoàn thành"
+		},
+		"config": {
+			"db": "Thiết lập Cơ sở dữ liệu",
+			"dbType": "Kiểu",
+			"dbServer": "Máy chủ",
+			"dbServerRequired": "Địa chỉ máy chủ là bắt buộc",
+			"dbPort": "Cổng",
+			"dbPortRequired": "Thông tin cổng là bắt buộc",
+			"dbName": "Tên cơ sở dữ liệu",
+			"dbNameHelp": "Nhấp chuột vào nút <b>Kiểm tra kết nối</b> để kiểm tra việc kết nối và lựa chọn các cơ sơ dữ liệu có sẵn",
+			"dbNameManuallyHelp": "Hoặc nhập vào ở đây",
+			"dbPrefix": "Tiền tố",
+			"dbUsername": "Tên truy cập",
+			"dbUsernameRequired": "Tên truy cập là bắt buộc",
+			"dbPassword": "Mật khẩu",
+			"dbPasswordRequired": "Mật khẩu là bắt buộc",
+			"dbTestConn": "Kiểm tra kết nối",
+			"dbConnecting": "Đang kết nối ...",
+			"dbConnError": "Không thể kết nối",
+			"dbConnSuccess": "Đã kết nối thành công",
+			"saving": "Đang lưu cấu hình ...",
+			"title": "Bước 2/3: Cấu hình"
+		}
+	},
+	"language": {
+		"_share": {
+			"key": "Khóa",
+			"keyRequired": "Khóa là bắt buộc",
+			"path": "Đường dẫn",
+			"root": "Gốc",
+			"text": "Giá trị",
+			"textRequired": "Giá trị là bắt buộc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm phần tử ngôn ngữ mới",
+			"success": "Phần tử ngôn ngữ mới đã được thêm thành công",
+			"title": "Thêm phần tử ngôn ngữ mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn muốn xóa phần tử <b>%s</b> khỏi tệp ngôn ngữ?",
+			"error": "Xin lỗi, không thể xóa phần tử ngôn ngữ",
+			"notFound": "Xin lỗi, không thể tìm thấy tệp ngôn ngữ",
+			"success": "Phần tử ngôn ngữ đã được xóa thành công",
+			"title": "Xóa phần tử ngôn ngữ"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật phần tử ngôn ngữ",
+			"success": "Phần tử ngôn ngữ mới đã được cập nhật thành công",
+			"title": "Cập nhật phần tử ngôn ngữ"
+		},
+		"list": {
+			"help": "Lựa chọn module, phần mở rộng và tệp ngôn ngữ để mở tệp ngôn ngữ",
+			"hooks": "Danh sách hook",
+			"plugins": "Danh sách plugin",
+			"selectExtension": "Lựa chọn phần mở rộng",
+			"selectLanguage": "Lựa chọn ngôn ngữ",
+			"selectModule": "Lựa chọn module",
+			"tasks": "Danh sách ứng dụng theo lịch",
+			"title": "Quản lý tệp ngôn ngữ",
+			"widgets": "Danh sách widget"
+		}
+	},
+	"layout": {
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật bố cục",
+			"help": "Bạn đang chỉnh sửa bố cục <b>%s</b> của mẫu <b>%s</b>:",
+			"success": "Bố cục đã được cập nhật thành công",
+			"title": "Chỉnh sửa bố cục"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"help": "Dưới đây là danh sách các bố cục của mẫu <b>%s</b>:",
+			"lastModified": "Cập nhật lần cuối",
+			"name": "Tên",
+			"notFound": "Không tìm thấy bố cục nào",
+			"title": "Danh sách các bố cục của template"
+		}
+	},
+	"module": {
+		"install": {
+			"error": "Xin lỗi, không thể cài đặt module <b>%s</b>",
+			"success": "Module <b>%s</b> đã được cài đặt thành công"
+		},
+		"list": {
+			"extensions": "Phần mở rộng",
+			"extensionsHelp": "Nhấp chuột vào tên module để xem danh sách các phần mở rộng",
+			"modules": "Các module",
+			"title": "Quản lý module"
+		},
+		"uninstall": {
+			"confirm": "Bạn có chắc chắn muốn gỡ bỏ module <b>%s</b> không<br />(tất cả dữ liệu của module sẽ đồng thời bị xóa)?",
+			"error": "Xin lỗi, không thể gỡ bỏ module <b>%s</b>",
+			"success": "Module <b>%s</b> đã được gỡ bỏ thành công",
+			"title": "Gỡ bỏ module"
+		}
+	},
+	"openid": {
+		"add": {
+			"error": "Xin lỗi, không thể thêm địa chỉ OpenID",
+			"success": "Địa chỉ OpenID đã được thêm thành công",
+			"title": "Thêm địa chỉ OpenID"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn muốn xóa địa chỉ OpenID <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa địa chỉ OpenID",
+			"notFound": "Xin lỗi, không tìm thấy địa chỉ OpenID <b>%s</b>",
+			"success": "Địa chỉ OpenID đã được xóa thành công",
+			"title": "Xóa địa chỉ OpenID"
+		},
+		"list": {
+			"help": "Dưới đây là danh sách các địa chỉ OpenID đã được đăng ký với tài khoản của bạn",
+			"notFound": "Không tìm thấy địa chỉ OpenID nào",
+			"title": "Quản lý địa chỉ OpenID"
+		}
+	},
+	"page": {
+		"_share": {
+			"activateTabContainer": "Kích hoạt vùng chứa tab",
+			"borderContainerTitleTemplate": "Vùng chứa bao #%s [%s]",
+			"bottom": "Đáy",
+			"bottomRegion": "Tại đáy",
+			"cacheLifetime": "Thời gian cache (giây)",
+			"center": "Giữa",
+			"collapseAllWidgets": "Đóng tất cả widget",
+			"columnTitleTemplate": "Cột %s",
+			"deleteBorderContainer": "Xóa vùng chứa bao",
+			"deleteGridContainer": "Xóa vùng chứa lưới",
+			"deleteMainContentPane": "Xóa vùng chứa nội dung chính",
+			"deleteTabContainer": "Xóa vùng chứa tab",
+			"deleteWidget": "Xóa widget",
+			"editAction": "Sửa bố cục",
+			"expandAllWidgets": "Mở tất cả widget",
+			"exportLayoutAction": "Xuất bố cục ra XML",
+			"gridContainerTitleTemplate": "Vùng chứa lưới #%s",
+			"headline": "Headline",
+			"importLayoutAction": "Nhập bố cục từ XML",
+			"insertBorderContainer": "Chèn vùng chứa bao",
+			"insertGridContainer": "Chèn vùng chứa lưới",
+			"insertMainContentPane": "Chèn vùng chứa nội dung chính",
+			"insertTabContainer": "Chèn vùng chứa tab",
+			"language": "Ngôn ngữ",
+			"layout": "Bố cục",
+			"left": "Trái",
+			"leftRegion": "Bên trái",
+			"localization": "Địa phương hóa",
+			"localizationHelp": "Gắp bản sao của trang trong các ngôn ngữ khác từ bảng danh sách trang<br />và thả vào đây",
+			"locateAction": "Định vị",
+			"mainContent": "Nội dung chính",
+			"name": "Tên",
+			"nameRequired": "Tên là bắt buộc",
+			"ordering": "Thứ tự",
+			"properties": "Thuộc tính",
+			"removeCacheAction": "Xóa cache",
+			"right": "Phải",
+			"rightRegion": "Bên phải",
+			"rootContainer": "Gốc",
+			"route": "Route",
+			"selectRoute": "Chọn route",
+			"setFilters": "Thiết lập bộ lọc",
+			"setGridColumns": "Thiết lập số cột cho lưới",
+			"sidebar": "Sidebar",
+			"tabContainerTitleTemplate": "Vùng chứa tab #%s",
+			"template": "Mẫu",
+			"title": "Tiêu đề",
+			"top": "Đỉnh",
+			"topRegion": "Tại đỉnh",
+			"url": "Đường dẫn"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm trang",
+			"success": "Trang mới đã được tạo thành công",
+			"title": "Thêm trang mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa trang tên là <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa trang",
+			"notFound": "Xin lỗi, không thể tìm thấy trang",
+			"success": "Trang đã được xóa thành công",
+			"title": "Xóa trang"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật trang",
+			"notFound": "Xin lỗi, không thể tìm thấy trang có Id là <b>%s</b>",
+			"success": "Trang đã được cập nhật thành công",
+			"title": "Cập nhật trang"
+		},
+		"filter": {
+			"additionalFilters": "Bộ lọc khác",
+			"availableFilters": "Bộ lọc có sẵn",
+			"filterDndHelp": "Bạn có thể thay đổi thứ tự bộ lọc bằng cách gắp và thả bộ lọc tới vị trí mong muốn",
+			"notFound": "Không tìm thấy bộ lọc nào",
+			"setClassesHelp": "Bạn có thể nhập vào danh sách tên lớp các bộ lọc (ngăn cách bởi dấu phẩy)",
+			"title": "Thiết lập bộ lọc"
+		},
+		"import": {
+			"success": "Bố cục đã được cập nhật thành công",
+			"title": "Nhập bố cục trang"
+		},
+		"layout": {
+			"error": "Xin lỗi, không thể cập nhật bố cục của trang",
+			"properties": "Thuộc tính",
+			"success": "Bố cục của trang đã được cập nhật thành công",
+			"title": "Bố cục trang %s"
+		},
+		"list": {
+			"allTemplates": "Tất cả các mẫu",
+			"copyLayoutAction": "Chép bố cục",
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"layoutAction": "Bố cục",
+			"notFound": "Không tìm thấy lỗi nào",
+			"pages": "Trang",
+			"pasteLayoutAction": "Dán bố cục",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý trang"
+		},
+		"order": {
+			"error": "Xin lỗi, không thể cập nhật thứ tự của trang",
+			"success": "Thứ tự của trang đã được lưu thành công",
+			"title": "Cập nhật thứ tự của trang"
+		},
+		"property": {
+			"cacheLifetime": "Thời gian cache",
+			"containerTitle": "Tiêu đề",
+			"cssClass": "Lớp CSS",
+			"cssStyle": "Kiểu CSS",
+			"id": "Id",
+			"seconds": "giây",
+			"title": "Thiết lập thuộc tính"
+		}
+	},
+	"password": {
+		"send": {
+			"error": "Xin lỗi, không thể gửi mật khẩu mới tới địa chỉ email của bạn",
+			"gotoLoginPage": "Đến trang đăng nhập",
+			"notFoundUser": "Xin lỗi, không thể tìm thấy người dùng với tên đăng nhập và địa chỉ email như bạn đã nhập",
+			"success": "Mật khẩu mới đã được gửi đến địa chỉ email của bạn. Hãy kiểm tra hộp thư của bạn (kể cả thư mục Thư rác)",
+			"title": "Gửi mật khẩu mới"
+		}
+	},
+	"permalink": {
+		"config": {
+			"customUrl": "Tùy biến liên kết",
+			"defaultUrl": "Liên kết mặc định",
+			"error": "Xin lỗi, không thể tùy biến liên kết",
+			"help": "Bạn có thể sử dụng liên kết mặc định, hoặc một trong các liên kết đã được định nghĩa sẵn, hoặc tạo một định dạng mới. Trong liên kết, bạn có thể sử dụng các tham số có sẵn. Tham số được đánh dấu (*) là bắt buộc.",
+			"params": "Tham số",
+			"predefinedUrls": "Liên kết được định nghĩa sẵn",
+			"success": "Liên kết đã được tùy biến thành công",
+			"title": "Tùy biến liên kết"
+		}
+	},
+	"plugin": {
+		"config": {
+			"error": "Xin lỗi, không thể lưu cấu hình của plugin <b>%s</b>",
+			"success": "Cấu hình của plugin <b>%s</b> đã được cập nhật thành công",
+			"title": "Cấu hình plugin"
+		},
+		"disable": {
+			"error": "Xin lỗi, không thể vô hiệu plugin <b>%s</b>",
+			"success": "Plugin <b>%s</b> đã được vô hiệu thành công"
+		},
+		"enable": {
+			"error": "Xin lỗi, không thể kích hoạt plugin <b>%s</b>",
+			"success": "Plugin <b>%s</b> đã được kích hoạt thành công"
+		},
+		"install": {
+			"error": "Xin lỗi, không thể cài đặt plugin <b>%s</b>",
+			"success": "Plugin <b>%s</b> đã được cài đặt thành công"
+		},
+		"list": {
+			"notFound": "Không tìm thấy plugin nào",
+			"plugins": "Plugin",
+			"title": "Quản lý plugin"
+		},
+		"uninstall": {
+			"error": "Xin lỗi, không thể gỡ bỏ plugin <b>%s</b>",
+			"success": "Plugin <b>%s</b> đã được gỡ bỏ thành công"
+		}
+	},
+	"privilege": {
+		"_share": {
+			"hook": "Hook",
+			"module": "Module",
+			"plugin": "Plugin",
+			"task": "Ứng dụng chạy theo lịch",
+			"widget": "Widget"
+		},
+		"list": {
+			"error": "Xin lỗi, không thể cập nhật tài nguyên",
+			"help": "Nhấp chuột vào tên module để xem danh sách các tài nguyên. Nhấp chuột vào nút <b>Lưu</b> để thêm tài nguyên và các quyền tương ứng, đồng thời xóa các quyền không còn dùng đến.",
+			"success": "Đã cập nhật tài nguyên và quyền thành công",
+			"title": "Quản lý tài nguyên"
+		}
+	},
+	"profile": {
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật thông tin cá nhân của bạn",
+			"success": "Thông tin cá nhân của bạn đã được cập nhật thành công",
+			"title": "Sửa thông tin cá nhân"
+		}
+	},
+	"registration": {
+		"activate": {
+			"invalidActivationKey": "Mã kích hoạt không hợp lệ",
+			"notFoundActivationKey": "Không tìm thấy mã kích hoạt",
+			"success": "Tài khoản của bạn đã được kích hoạt thành công. Bây giờ bạn có thể <a href='%s'>đăng nhập</a> vào hệ thống",
+			"title": "Kích hoạt tài khoản"
+		},
+		"register": {
+			"activationEmailSentError": "Xin lỗi, không thể gửi mail kích hoạt tới địa chỉ email của bạn",
+			"activationEmailSentSuccess": "Mail kích hoạt đã được gửi đến địa chỉ email của bạn. Hãy kiểm tra hộp thư của bạn (kể cả thư mục Thư rác)",
+			"connectOpenIdHelp": "Kết nối tài khoản của bạn với một tài khoản OpenID",
+		    "error": "Xin lỗi, không thể tạo tài khoản",
+		    "registrationNotEnabled": "Xin lỗi, bạn không thể đăng ký tài khoản mới. Người quản trị không cho phép đăng ký tài khoản mới trên website.",
+		    "signupAction": "Đăng ký",
+		    "success": "Tài khoản đã được tạo thành công",
+			"title": "Đăng ký tài khoản"
+		}
+	},
+	"role": {
+		"_share": {
+			"name": "Tên",
+			"nameHelp": "Tên nhóm",
+			"nameRequired": "Tên nhóm là bắt buộc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm nhóm mới",
+			"success": "Đã thêm nhóm mới thành công",
+			"title": "Thêm nhóm mới"
+		},
+		"delete": {
+			"cannotDeleteLockedRole": "Bạn không thể xóa nhóm đã khóa",
+			"cannotDeleteRootRole": "Bạn không thể xóa nhóm Gốc (nhóm có quyền cao nhất)",
+			"cannotDeleteRoleHavingUsers": "Bạn không thể xóa nhóm đang có người dùng",
+			"confirm": "Bạn có chắc chắn muốn xóa nhóm <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa nhóm",
+			"notFound": "Xin lỗi, không tìm thấy nhóm",
+			"success": "Đã xóa nhóm thành công",
+			"title": "Xóa nhóm"
+		},
+		"list": {
+			"addRoleButton": "Thêm nhóm mới",
+			"searchRoleHelp": "Tên nhóm",
+			"title": "Quản lý nhóm",
+			"viewAll": "Xem tất cả"
+		},
+		"lock": {
+			"lockError": "Xin lỗi, không thể khóa nhóm",
+			"lockSuccess": "Đã khóa nhóm thành công",
+			"unlockError": "Xin lỗi, không thể mở khóa nhóm",
+			"unlockSuccess": "Đã mở khóa nhóm thành công"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể cập nhật tên mới cho nhóm",
+			"success": "Đã đổi tên nhóm thành công"
+		}
+	},
+	"rule": {
+		"_share": {
+			"permissionAction": "Quản lý quyền"
+		},
+		"role": {
+			"cannotSetLockedRole": "Bạn không thể thiết lập quyền cho nhóm đã bị khóa",
+			"cannotSetRootRole": "Bạn không thể thiết lập quyền cho nhóm Gốc",
+			"error": "Xin lỗi, không thể thiết lập quyền cho nhóm",
+			"notFound": "Không tìm thấy nhóm",
+			"settingHelp": "Bạn đang thiết lập quyền cho nhóm <b>%s</b>",
+			"success": "Đã thiết lập quyền cho nhóm thành công",
+			"title": "Thiết lập quyền cho nhóm"
+		},
+		"user": {
+			"cannotSetRootUser": "Bạn không thể thiết lập quyền cho người dùng Gốc",
+			"error": "Xin lỗi, không thể thiết lập quyền cho người dùng",
+			"notFound": "Không tìm thấy người dùng",
+			"settingHelp": "Bạn đang thiết lập quyền cho người dùng <b>%s</b>. Trong hầu hết các trường hợp, bạn nên thiết lập quyền cho nhóm của người dùng này.",
+			"success": "Đã thiết lập quyền cho người dùng thành công",
+			"title": "Thiết lập quyền cho người dùng"
+		}
+	},
+	"skin": {
+		"activate": {
+			"error": "Xin lỗi, không thể kích hoạt skin",
+			"success": "Skin đã được kích hoạt thành công"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật nội dung của tệp CSS",
+			"help": "Bạn đang chỉnh sửa tệp <b>%s</b>:",
+			"success": "Nội dung tệp đã được cập nhật thành công",
+			"title": "Chỉnh sửa tệp CSS"
+		},
+		"list": {
+			"cssFiles": "Các tệp CSS",
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"help": "Dưới đây là danh sách các skin của mẫu <b>%s</b>:",
+			"name": "Tên",
+			"notFound": "Không tìm thấy skin nào",
+			"title": "Danh sách các skin"
+		}
+	},
+	"task": {
+		"_share": {
+			"description": "Mô tả",
+			"lastRun": "Thời điểm chạy gần đây",
+			"name": "Tên",
+			"nextRun": "Thời điểm chạy tiếp theo",
+			"title": "Tiêu đề"
+		},
+		"config": {
+			"error": "Xin lỗi, không thể cập nhật các thiết lập của ứng dụng <b>%s</b>",
+			"success": "Các thiết lập của ứng dụng <b>%s</b> đã được cập nhật thành công",
+			"title": "Cấu hình ứng dụng"
+		},
+		"install": {
+			"error": "Xin lỗi, không thể cài đặt ứng dụng <b>%s</b>",
+			"success": "Ứng dụng <b>%s</b> đã được cài đặt thành công"
+		},
+		"list": {
+			"allModules": "Tất cả module",
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"notFound": "Không tìm thấy ứng dụng nào",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý ứng dụng cron"
+		},
+		"run": {
+			"error": "Xin lỗi, không thể chạy ứng dụng <b>%s</b>",
+			"success": "Ứng dụng <b>%s</b> đã được thực thi thành công",
+			"title": "Chạy ứng dụng"
+		},
+		"schedule": {
+			"april": "Tháng Tư",
+			"august": "Tháng Tám",
+			"day": "Ngày",
+			"december": "Tháng Mười Hai",
+			"error": "Xin lỗi, không thể thiết lập lịch cho ứng dụng",
+			"everyDay": "Tất cả mọi ngày",
+			"everyHour": "Tất cả mọi giờ",
+			"everyMinute": "Tất cả mọi phút",
+			"everyMonth": "Tất cả mọi tháng",
+			"everyWeekday": "Tất cả các thứ",
+			"february": "Tháng Hai",
+			"friday": "Thứ Sáu",
+			"hour": "Giờ",
+			"january": "Tháng Một",
+			"june": "Tháng Sáu",
+			"july": "Tháng Bảy",
+			"march": "Tháng Ba",
+			"may": "Tháng Năm",
+			"minute": "Phút",
+			"monday": "Thứ Hai",
+			"month": "Tháng",
+			"november": "Tháng Mười Một",
+			"october": "Tháng Mười",
+			"saturday": "Thứ Bảy",
+			"september": "Tháng Chín",
+			"success": "Ứng dụng đã được đặt lịch thành công",
+			"sunday": "Chủ Nhật",
+			"thursday": "Thứ Năm",
+			"title": "Đặt lịch chạy ứng dụng",
+			"tuesday": "Thứ Ba",
+			"weekday": "Thứ",
+			"wednesday": "Thứ Tư"
+		},
+		"uninstall": {
+			"error": "Xin lỗi, không thể gỡ bỏ ứng dụng <b>%s</b>",
+			"success": "Ứng dụng <b>%s</b> đã được gỡ bỏ thành công"
+		}
+	},
+	"template": {
+		"activate": {
+			"error": "Xin lỗi, không thể kích hoạt mẫu website",
+			"success": "Mẫy website đã được kích hoạt thành công"
+		},
+		"install": {
+			"error": "Xin lỗi, không thể cài đặt mẫu website",
+			"success": "Mẫy website đã được cài đặt thành công"
+		},
+		"list": {
+			"layouts": "Bố cục",
+			"layoutsHelp": "Nhấp vào tên của mẫu website để xem danh sách các bố cục, và skin",
+			"skins": "Skin",
+			"templates": "Mẫu website",
+			"title": "Quản lý mẫu website"
+		},
+		"uninstall": {
+			"error": "Xin lỗi, không thể gỡ bỏ mẫu website",
+			"success": "Mẫy website đã được gỡ bỏ thành công"
+		}
+	},
+	"user": {
+		"_share": {
+			"accountInfo": "Tài khoản",
+			"avatar": "Ảnh đại diện",
+			"badPassword": "Kém",
+			"bio": "Giới thiệu",
+			"confirmPassword": "Gõ lại mật khẩu",
+			"confirmPasswordRequired": "Bạn phải gõ lại mật khẩu",
+			"country": "Quốc gia",
+			"dob": "Ngày sinh",
+			"email": "Email",
+			"emailRequired": "Email là bắt buộc",
+			"emailValidator": "Email không hợp lệ",
+			"facebook": "Facebook",
+			"flickr": "Flickr",
+			"fullName": "Tên đầy đủ",
+			"gender": "Giới tính",
+			"genderFemale": "Nữ",
+			"genderMale": "Nam",
+			"goodPassword": "Tốt",
+			"language": "Ngôn ngữ",
+			"linkedin": "LinkedIn",
+			"openIdUrl": "Địa chỉ OpenID",
+			"openIdUrlHelp": "Địa chỉ OpenID",
+			"openIdUrlInUse": "Địa chỉ OpenId đã được sử dụng",
+			"openIdUrlRequired": "Địa chỉ OpenID là bắt buộc",
+			"openIdUrlValidator": "Địa chỉ OpenID không hợp lệ",
+			"password": "Mật khẩu",
+			"passwordHelp": "Mật khẩu",
+			"passwordRequired": "Mật khẩu là bắt buộc",
+			"passwordUnchangedHelp": "Để trống ô này nếu bạn không muốn thay đổi mật khẩu",
+			"personalInfo": "Cá nhân",
+			"role": "Nhóm",
+			"signature": "Chữ ký",
+			"strongPassword": "Mạnh",
+			"timezone": "Mốc thời gian",
+			"twitter": "Twitter",
+			"username": "Tên đăng nhập",
+			"usernameHelp": "Tên đăng nhập",
+			"usernameRequired": "Tên đăng nhập là bắt buộc",
+			"usernameValidator": "Tên đăng nhập không hợp lệ",
+			"website": "Trang web",
+			"youtube": "YouTube"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt người dùng",
+			"activateSuccess": "Đã kích hoạt người dùng thành công",
+			"deactivateError": "Xin lỗi, không thể hủy việc kích hoạt người dùng",
+			"deactivateSuccess": "Đã hủy việc kích hoạt người dùng thành công"
+		},
+		"add": {
+			"adding": "Đang lưu ...",
+			"error": "Xin lỗi, không thể thêm người dùng",
+			"newUserButton": "Thêm người dùng",
+			"success": "Đã thêm người dùng thành công",
+			"title": "Thêm người dùng"
+		},
+		"avatar": {
+			"error": "Xin lỗi, không thể cập nhật ảnh đại diện của người dùng",
+			"success": "Ảnh đại diện của người dùng đã được cập nhật thành công"
+		},
+		"delete": {
+			"cannotDeleteRootUser": "Bạn không thể xóa người dùng Gốc (người dùng có quyền cao nhất)",
+			"confirm": "Bạn có chắc chắn muốn xóa người dùng <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa người dùng",
+			"notFound": "Xin lỗi, không tìm thấy người dùng",
+			"success": "Đã xóa người dùng thành công",
+			"title": "Xóa người dùng"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật thông tin người dùng",
+			"saving": "Đang lưu ...",
+			"success": "Đã cập nhật thông tin người dùng thành công",
+			"title": "Sửa thông tin người dùng"
+		},
+		"list": {
+			"notFound": "Không tìm thấy người dùng",
+			"roles": "Nhóm",
+			"searchUserHelp": "Tên đăng nhập hoặc email",
+			"status": "Trạng thái",
+			"statusActivated": "Đã kích hoạt",
+			"statusNotActivated": "Chưa kích hoạt",
+			"title": "Quản lý người dùng",
+			"users": "Người dùng (%s)",
+			"viewAll": "Xem tất cả"
+		},
+		"move": {
+			"success": "Đã chuyển người dùng <b>%s</b> sang nhóm <b>%s</b> thành công"
+		}
+	},
+	"widget": {
+		"install": {
+			"error": "Xin lỗi, không thể cài đặt widget <b>%s</b>",
+			"success": "Widget <b>%s</b> đã được cài đặt thành công"
+		},
+		"list": {
+			"notFound": "Không tìm thấy widget nào",
+			"title": "Quản lý widget",
+			"widgets": "Widget"
+		},
+		"uninstall": {
+			"error": "Xin lỗi, không thể gỡ bỏ widget <b>%s</b>",
+			"success": "Widget <b>%s</b> đã được gỡ bỏ thành công"
+		}
+	}
+}

@@ -1,0 +1,67 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-01
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->APP_CHARSET; ?>" />
+	<style type="text/css">
+	body { background-color: #000000; color: #FFFFFF; font: 12px georgia, sans-serif; height: 100%; margin: 0; overflow: hidden; width: 100%; }
+	</style>
+	<?php 
+	$this->headLink()
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/strobemediaplayback/jquery.strobemediaplayback.css');
+	echo $this->headLink();
+	?>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/dojo.js" data-dojo-config="parseOnLoad: true, isDebug: false, ioPublish: true"></script>
+	<?php
+	$this->script()
+		 ->appendFile($this->APP_STATIC_URL . '/static/js/swfobject/swfobject.js')
+		 ->appendFile($this->APP_STATIC_URL . '/static/js/jquery/' . APP_JQUERY_VER . '/jquery.min.js')
+		 ->appendFile($this->APP_STATIC_URL . '/static/js/strobemediaplayback/jquery.strobemediaplayback.min.js');
+	?>
+	<script type="text/javascript">
+	dojo.registerModulePath("core", "<?php echo $this->APP_STATIC_URL; ?>/modules/core");
+	dojo.require("core.js.base.I18N");
+	dojo.require("core.js.Constant");
+	core.js.base.I18N.setLocale("<?php echo $this->APP_LANGUAGE; ?>");
+	core.js.Constant.ROOT_URL = "<?php echo $this->APP_ROOT_URL; ?>";
+	</script>
+</head>
+<body>
+	<div id="coreHelperPlayContainer"></div>
+
+<?php echo $this->script()->captureStart(); ?>
+$(document).ready(function() {
+	var options = {}, queryString = window.location.search;
+	if (queryString) {
+		queryString = queryString.substring(1);
+		options = $.fn.strobemediaplayback.parseQueryString(queryString);
+	}
+	options		   = $.fn.adaptiveexperienceconfigurator.adapt(options);
+	options.swf    = "<?php echo $this->APP_STATIC_URL; ?>/static/js/strobemediaplayback/StrobeMediaPlayback.swf";
+	options.width  = $(window).width();
+	options.height = $(window).height();
+	$("#coreHelperPlayContainer").strobemediaplayback(options);
+});
+<?php echo $this->script()->captureEnd(); ?>
+<?php
+echo $this->script();
+?>
+</body>
+</html>

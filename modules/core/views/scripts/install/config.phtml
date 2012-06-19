@@ -1,0 +1,147 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<form id="coreInstallConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<!-- DBSettings -->
+	<h2><?php echo $this->translator()->_('install.config.db'); ?></h2>
+	
+	<div class="appFormRow">
+		<label for="type"><?php echo $this->translator()->_('install.config.dbType'); ?>:</label>
+		<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'type', style: 'width: 200px'">
+			<?php foreach ($this->databases as $db => $info) : ?>
+			<option value="<?php echo $db; ?>"<?php if (isset($info['disabled']) && $info['disabled'] == true) : ?> disabled="disabled"<?php endif; ?>>
+				<?php echo $info['name']; ?>
+			</option>
+			<?php endforeach; ?>
+			<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+			var jsonDatabases = <?php echo $this->jsonDatabases; ?>;
+			dijit.byId("coreInstallConfigPortTextbox").set("value", jsonDatabases[value].port);
+			</script>
+		</select>
+	</div>
+
+	<div class="appFormRow">
+		<label for="server"><?php echo $this->translator()->_('install.config.dbServer'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', value: 'localhost', name: 'server', width: '200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.config.dbServerRequired'); ?>'" />
+	</div>
+
+	<div class="appFormRow">
+		<label for="port"><?php echo $this->translator()->_('install.config.dbPort'); ?>:</label>
+		<input id="coreInstallConfigPortTextbox"
+			data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', value: 3306, name: 'port', style: 'width: 100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.config.dbPortRequired'); ?>'">
+	</div>
+
+	<div class="appFormRow">
+		<label for="dbNameSelect"><?php echo $this->translator()->_('install.config.dbName'); ?>:</label>
+		<select id="coreInstallConfigDbSelect"
+			data-dojo-type="dijit.form.Select"
+			data-dojo-props="name: 'dbNameSelect', style: 'width: 200px'">
+			<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+			if (value != "") {
+				dijit.byId("coreInstallConfigDbNameTextBox").set("value", value);
+			}
+			</script>
+		</select>
+		<?php echo $this->translator()->_('install.config.dbNameHelp'); ?>
+	</div>
+
+	<div class="appFormRow">
+		<label for="dbName">&nbsp;</label> <input
+			id="coreInstallConfigDbNameTextBox"
+			data-dojo-type="dijit.form.TextBox"
+			data-dojo-props="type: 'text', name: 'dbName', width: '200px', placeHolder: '<?php echo $this->translator(true)->_('install.config.dbNameManuallyHelp'); ?>'" />
+	</div>
+
+	<div class="appFormRow">
+		<label for="prefix"><?php echo $this->translator()->_('install.config.dbPrefix'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox"
+			data-dojo-props="type: 'text', name: 'prefix', style: 'width: 100px'">
+	</div>
+
+	<div class="appFormRow">
+		<label for="username"><?php echo $this->translator()->_('install.config.dbUsername'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'username', width: '200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.config.dbUsernameRequired'); ?>'" />
+	</div>
+
+	<div class="appFormRow">
+		<label for="password"><?php echo $this->translator()->_('install.config.dbPassword'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'password', name: 'password', width: '200px', required: true, missingMessage: '<?php echo $this->translator(true)->_('install.config.dbPasswordRequired'); ?>'" />
+	</div>
+
+	<div class="appFormRow">
+		<label>&nbsp;</label> <a href="javascript: void(0);" onClick="javascript: testDbConnection();"><?php echo $this->translator()->_('install.config.dbTestConn'); ?></a>
+	</div>
+	<!-- /DBSettings -->
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dojox.widget.Standby");
+
+function testDbConnection() {
+	var form = dijit.byId("coreInstallConfigForm");
+	if (!form.validate()) {
+		return;
+	}
+
+	var appInstallConfigStandBy = new dojox.widget.Standby({
+		target: "coreInstallConfigForm",
+		imageText: "<?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('install.config.dbConnecting'); ?>"
+	});
+	document.body.appendChild(appInstallConfigStandBy.domNode);
+	appInstallConfigStandBy.startup();
+	appInstallConfigStandBy.show();
+	
+	dojo.xhrPost({
+		url: "<?php echo $this->url(array(), 'core_install_testdb'); ?>",
+		content: form.attr("value"),
+		handleAs: "json",
+		load: function(data) {
+			appInstallConfigStandBy.hide();
+			
+			if (data.result == "APP_RESULT_ERROR") {
+				dojo.publish("/app/global/installNotification", [{ message: "<?php echo $this->translator()->_('install.config.dbConnError'); ?>", type: "error", duration: 1000 }]);
+			} else {
+				dojo.publish("/app/global/installNotification", [{ message: "<?php echo $this->translator()->_('install.config.dbConnSuccess'); ?>", duration: 1000 }]);
+
+				// Show the list of available databases
+				var options = dijit.byId("coreInstallConfigDbSelect").getOptions();
+				dojo.forEach(options, function(option, index) {
+					dijit.byId("coreInstallConfigDbSelect").removeOption(option);
+				});
+				var dbName = dijit.byId("coreInstallConfigDbNameTextBox").get("value");
+				dijit.byId("coreInstallConfigDbNameTextBox").reset();
+				for (var i in data.databases) {
+					dijit.byId("coreInstallConfigDbSelect").addOption({
+						value: data.databases[i],
+						label: data.databases[i],
+						selected: (data.databases[i] == dbName)
+					});
+				}
+			}
+		}
+	});
+};
+</script>

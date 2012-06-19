@@ -1,0 +1,101 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-06-01
+ */
+
+/********** INSTALL WIZARD **********/
+.coreInstallList { list-style-type: none; padding: 0; }
+.coreInstallList li { padding-bottom: 10px; }
+.coreInstallOk { background: url(images/ok.png) no-repeat; padding-left: 20px; }
+.coreInstallError { background: url(images/error.png) no-repeat; color: red; font-weight: bold; padding-left: 20px; }
+
+/********** LAYOUT EDITOR **********/
+.coreLayoutActivatedTabTitle { font-weight: bold; }
+
+/********** MANAGE EXTENSIONS **********/
+.coreExtensionItem { border-bottom: 1px solid #B5BCC7; clear: both; padding: 8px; }
+.coreExtensionItemsContainer .coreExtensionItem:last-child { border-bottom: none; }
+.coreExtensionItem h3 { margin-top: 0; }
+.coreExtensionItemThumbnail { float: left; padding-right: 8px; }
+.coreExtensionItemDescription { float: left; width: 80%; }
+.coreExtensionItemDescription h3:first-child,
+.coreExtensionItemDescription h3:first-child a,
+.coreExtensionItemDescription h3:first-child a:visited { color: #999; font-weight: bold; text-decoration: none; }
+.coreExtensionSelectedItem { background-color: #CFE5FA; }
+
+/********** MANAGE SKINS **********/
+.coreSkinActivated { background: url(images/activate.png) top left no-repeat; padding-left: 20px; }
+
+/********** MANAGE TASKS **********/
+.coreTaskScheduleIcon { background-image: url(images/schedule.png); }
+
+/********** MANAGE TEMPLATES **********/
+.coreTemplateItem { border-bottom: 1px solid #B5BCC7; clear: both; padding: 8px; }
+.coreTemplateSelectedItem { background-color: #CFE5FA; }
+
+/********** MANAGE PRIVILEGES **********/
+.corePrivilegeListContainer { display: inline-block; margin-bottom: 10px; margin-right: 10px; width: 300px; }
+.corePrivilegeList { margin: 0; padding: 0; }
+.corePrivilegeList li { background: url(images/bullet.png) left center no-repeat; list-style-type: none; margin-bottom: 5px; padding-left: 15px; }
+
+/********** MANAGE ROLES **********/
+.coreRoleItemsContainer { margin: 0; padding: 8px; }
+.coreRoleItemsContainer li { clear: both; cursor: pointer; display: block; list-style-type: none; padding-top: 3px; padding-bottom: 3px; }
+.coreRoleItem .coreRoleLabel { background-color: #FFF; color: blue; }
+.coreRoleItemSelected .coreRoleLabel { background-color: #769DC0; color: #FFF; }
+.coreRoleLabel { float: left; padding: 4px; text-decoration: none; }
+.coreRoleLabel:hover { background-color: #B5C9D7; color: #FFF; }
+.coreRoleUserCounter { background: #CFE5FA; border-radius: 2px; float: right; padding: 2px; -moz-border-radius: 2px; }
+.coreRoleItemsContainer .dijitInline { float: left; width: 80%; }
+
+/* Icons */
+.coreAddRoleIcon { background-image: url(images/addRole.png); }
+
+/* Dnd */
+.coreRoleItemsContainer .dojoDndContainerOver .coreRoleLabel { background: #CFE5FA; }
+
+/********** MANAGE USERS **********/
+.coreUserItemsContainer .coreUserItem { float: left; list-style-type: none; margin-bottom: 20px; margin-right: 15px; padding: 5px; }
+.coreUserItemsContainer .coreUserItem img { height: 75px; }
+.coreUserItemAvatar img { height: 75px; width: 75px; }
+
+/* Counter */
+.coreUserListCounter { background: #CFE5FA !important; border-radius: 2px; font-size: 11px; padding: 4px !important; }
+
+/* Icons */
+.coreAddUserIcon { background-image: url(images/addUser.png); }
+.coreEditUserIcon { background-image: url(images/editUser.png); }
+
+/* Dnd */
+.coreUserItemsContainer .dojoDndItem { padding: 5px; }
+.coreUserItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.coreUserItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.coreUserItemsContainer .dojoDndContainerOver { background: #CFE5FA; }
+
+/********** STATUS FILTER **********/
+.coreStatusItemsContainer { margin: 0; padding: 8px; }
+.coreStatusItemsContainer li { clear: both; cursor: pointer; display: block; list-style-type: none; padding-bottom: 3px; padding-top: 3px; }
+.coreStatusItemsContainer .coreStatusLabel { background-color: #FFF; color: blue; }
+.coreStatusItemSelected .coreStatusLabel { background-color: #769DC0; color: #fff; }
+.coreStatusLabel { float: left; padding: 4px; text-decoration: none; }
+.coreStatusLabel:hover { background-color: #B5C9D7; color: #FFF; }
+.coreStatusUserCounter { background: #CFE5FA; border-radius: 2px; float: right; padding: 2px; -moz-border-radius: 2px; }
+
+/* Dnd */
+.coreStatusItemsContainer .dojoDndContainerOver .coreStatusLabel { background: #CFE5FA; }
+
+/********** MISC **********/
+/* core.js.views.UserCollectionView */
+.coreUserCollectionItemsContainer { border: 1px solid #B5BCC7; min-height: 20px; }
+.coreUserCollectionItem { float: left; padding: 4px; }
+.coreUserCollectionItem:hover { background-color: #B5C9D7; color: #FFF; }
+.coreUserCollectionItem span { text-decoration: underline; }

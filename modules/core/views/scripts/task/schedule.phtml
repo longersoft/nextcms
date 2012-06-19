@@ -1,0 +1,136 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('task.schedule.title'));
+?>
+
+<div id="coreTaskScheduleContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			_this.set("disabled", true);
+			dojo.publish("/app/core/task/schedule/onStart");
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_task_schedule'); ?>",
+				content: dojo.formToObject("coreTaskScheduleForm"),
+				handleAs: "json",
+				load: function(data) {
+					_this.set("disabled", false);
+					dojo.publish("/app/core/task/schedule/onComplete", [ data ]);
+				}
+			});
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/task/schedule/onCancel");
+			</script>
+		</button>	
+	</div>
+	<!-- Toolbar -->
+	
+	<!-- ScheduleForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+		<form id="coreTaskScheduleForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('task.schedule.title'); ?></span></h2>
+			
+			<div class="appFormRow">
+				<label for="minute"><?php echo $this->translator()->_('task.schedule.minute'); ?>:</label>
+				<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'minute', value: '<?php echo $this->timeMask['minute']; ?>', maxHeight: 200, style: 'width: 200px'">
+					<option value="*"><?php echo $this->translator()->_('task.schedule.everyMinute'); ?></option>
+					<?php for ($i = 0; $i < 60; $i++) : ?>
+					<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+					<?php endfor; ?>
+				</select>
+			</div>
+			
+			<div class="appFormRow">
+				<label for="hour"><?php echo $this->translator()->_('task.schedule.hour'); ?>:</label>
+				<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'hour', value: '<?php echo $this->timeMask['hour']; ?>', maxHeight: 200, style: 'width: 200px'">
+					<option value="*"><?php echo $this->translator()->_('task.schedule.everyHour'); ?></option>
+					<?php for ($i = 0; $i < 24; $i++) : ?>
+					<option value="<?php echo $i; ?>"><?php echo $i; ?> = <?php echo ($i < 13) ? $i . ' AM' : ($i - 12) . ' PM' ?></option>
+					<?php endfor; ?>
+				</select>
+			</div>
+			
+			<div class="appFormRow">
+				<label for="day"><?php echo $this->translator()->_('task.schedule.day'); ?>:</label>
+				<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'day', value: '<?php echo $this->timeMask['day']; ?>', maxHeight: 200, style: 'width: 200px'">
+					<option value="*"><?php echo $this->translator()->_('task.schedule.everyDay'); ?></option>
+					<?php for ($i = 1; $i < 32; $i++) : ?>
+					<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+					<?php endfor; ?>
+				</select>
+			</div>
+			
+			<div class="appFormRow">
+				<label for="weekday"><?php echo $this->translator()->_('task.schedule.weekday'); ?>:</label>
+				<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'weekday', value: '<?php echo $this->timeMask['weekday']; ?>', maxHeight: 200, style: 'width: 200px'">
+					<option value="*"><?php echo $this->translator()->_('task.schedule.everyWeekday'); ?></option>
+					<option value="0"><?php echo $this->translator()->_('task.schedule.sunday'); ?></option>
+					<option value="1"><?php echo $this->translator()->_('task.schedule.monday'); ?></option>
+					<option value="2"><?php echo $this->translator()->_('task.schedule.tuesday'); ?></option>
+					<option value="3"><?php echo $this->translator()->_('task.schedule.wednesday'); ?></option>
+					<option value="4"><?php echo $this->translator()->_('task.schedule.thursday'); ?></option>
+					<option value="5"><?php echo $this->translator()->_('task.schedule.friday'); ?></option>
+					<option value="6"><?php echo $this->translator()->_('task.schedule.saturday'); ?></option>
+				</select>
+			</div>
+			
+			<div class="appFormRow">
+				<label for="month"><?php echo $this->translator()->_('task.schedule.month'); ?>:</label>
+				<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'month', value: '<?php echo $this->timeMask['month']; ?>', maxHeight: 200, style: 'width: 200px'">
+					<option value="*"><?php echo $this->translator()->_('task.schedule.everyMonth'); ?></option>
+					<option value="1"><?php echo $this->translator()->_('task.schedule.january'); ?></option>
+					<option value="2"><?php echo $this->translator()->_('task.schedule.february'); ?></option>
+					<option value="3"><?php echo $this->translator()->_('task.schedule.march'); ?></option>
+					<option value="4"><?php echo $this->translator()->_('task.schedule.april'); ?></option>
+					<option value="5"><?php echo $this->translator()->_('task.schedule.may'); ?></option>
+					<option value="6"><?php echo $this->translator()->_('task.schedule.june'); ?></option>
+					<option value="7"><?php echo $this->translator()->_('task.schedule.july'); ?></option>
+					<option value="8"><?php echo $this->translator()->_('task.schedule.august'); ?></option>
+					<option value="9"><?php echo $this->translator()->_('task.schedule.september'); ?></option>
+					<option value="10"><?php echo $this->translator()->_('task.schedule.october'); ?></option>
+					<option value="11"><?php echo $this->translator()->_('task.schedule.november'); ?></option>
+					<option value="12"><?php echo $this->translator()->_('task.schedule.december'); ?></option>
+				</select>
+			</div>
+			
+			<input type="hidden" name="mod" value="<?php echo $this->task->module; ?>" />
+			<input type="hidden" name="name" value="<?php echo $this->task->name; ?>" />
+			<input type="hidden" name="format" value="json" />
+		</form>
+	</div>
+	<!-- /ScheduleForm -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+</script>

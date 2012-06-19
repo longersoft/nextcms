@@ -1,0 +1,73 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('language.edit.title'));
+?>
+
+<form id="coreLanguageEditForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<script type="dojo/method" data-dojo-event="onSubmit" data-dojo-args="e">
+	e.preventDefault();
+	var _this = this;
+	if (_this.validate()) {
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'core_language_edit'); ?>",
+			content: dojo.formToObject("coreLanguageEditForm"),
+			handleAs: "json",
+			load: function(data) {
+				_this.reset();
+				dojo.publish("/app/core/language/edit/onComplete", [ data ]);
+			}
+		});
+	}
+	</script>
+	
+	<div class="appFormRow">
+		<label for="path"><?php echo $this->translator()->_('language._share.path'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'path', style: 'width: 250px', readOnly: true, value: '<?php echo addslashes($this->path); ?>'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="text"><?php echo $this->translator()->_('language._share.text'); ?>:</label>
+		<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="type: 'text', name: 'text', style: 'width: 250px; height: 50px'"><?php echo $this->text; ?></textarea>
+	</div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/core/language/edit/onCancel");
+			</script>
+		</button>
+	</div>
+	
+	<input type="hidden" name="format" value="json" />
+	<input type="hidden" name="file" value="<?php echo addslashes($this->file); ?>" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

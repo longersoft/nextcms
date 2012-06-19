@@ -1,0 +1,63 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dojox.layout.ContentPane" data-app-plugin="file" data-dojo-props="title: '<?php echo $this->translator(true)->_('debug.file.title'); ?>', selected: <?php if ($this->selected) : ?>true<?php else : ?>false<?php endif; ?>, class: 'appContentPane'">
+	<?php if ($this->data) : ?>
+	<!-- IncludedFiles -->
+	<h2 class="appHeadline" style="margin-top: 0">
+		<span><?php echo sprintf($this->translator()->_('debug.file.includedFiles'), $this->data['total']); ?></span>
+	</h2>
+	<div style="padding-bottom: 8px">
+		<?php echo sprintf($this->translator()->_('debug.file.size'), $this->helper()->formatSize($this->data['size'])); ?>
+	</div>
+	
+	<div style="padding-bottom: 8px">
+		<?php echo sprintf($this->translator()->_('debug.file.includedAppFiles'), count($this->data['files']['app'])); ?>
+	</div>
+	<ul class="corePluginsDebugList">
+		<?php foreach ($this->data['files']['app'] as $file) : ?>
+		<li><?php echo $file; ?></li>
+		<?php endforeach; ?>
+	</ul>
+	
+	<?php foreach ($this->data['files']['lib'] as $path => $files) : ?>
+	<div style="padding: 8px 0">
+		<?php echo sprintf($this->translator()->_('debug.file.includedLibFiles'), $path, count($files)); ?>
+	</div>
+	<ul class="corePluginsDebugList">
+		<?php foreach ($files as $file) : ?>
+		<li><?php echo $file; ?></li>
+		<?php endforeach; ?>
+	</ul>
+	<?php endforeach; ?>
+	<!-- /IncludedFiles -->
+	
+	<!-- IncludedPaths -->
+	<h2 class="appHeadline" style="margin-top: 8px">
+		<span><?php echo $this->translator()->_('debug.file.includedPaths'); ?></span>
+	</h2>
+	<ul class="corePluginsDebugList">
+		<?php foreach ($this->data['paths'] as $path) : ?>
+		<?php if ($path != '.') : ?>
+		<li><?php echo $path; ?></li>
+		<?php endif; ?>
+		<?php endforeach; ?>
+	</ul>
+	<!-- /IncludedPaths -->
+	<?php endif; ?>
+</div>

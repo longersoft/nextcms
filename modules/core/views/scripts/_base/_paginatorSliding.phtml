@@ -1,0 +1,104 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+// This partial script is used to render the paginator.
+// (http://framework.zend.com/manual/1.11/en/learning.paginator.control.html)
+// Below are the list of properties that I can get from $this:
+// - pageCount
+// - itemCountPerPage
+// - first
+// - current
+// - last
+// - next
+// - pagesInRange: array of page indexes
+// - firstPageInRange
+// - lastPageInRange
+// - currentItemCount
+// - totalItemCount
+// - firstItemNumber
+// - lastItemNumber
+?>
+
+<?php if ($this->pageCount > 1) : ?>
+
+<div class="appPaginatorContainer">
+	<div class="appPaginator">
+		<!-- FirstPage -->
+		<?php if (isset($this->previous)): ?>
+		<span class="first">
+			<?php echo $this->paginator('sliding')->renderItem($this->first, $this->translator()->_('global._share.firstPage'), $this->path); ?>
+		</span>
+		<?php else: ?>
+		<span class="first disabled">
+			<a><?php echo $this->translator()->_('global._share.firstPage'); ?></a>
+		</span>
+		<?php endif; ?>
+		<!-- /FirstPage -->
+	
+		<!-- PrevPage -->
+		<?php if (isset($this->previous)): ?>
+		<span class="prev">
+			<?php echo $this->paginator('sliding')->renderItem($this->previous, $this->translator()->_('global._share.previousPage'), $this->path); ?>
+		</span>
+		<?php else: ?>
+		<span class="prev disabled">
+			<a><?php echo $this->translator()->_('global._share.previousPage'); ?></a>
+		</span>
+		<?php endif; ?>
+		<!-- /PrevPage -->
+	
+		<!-- PagesRange -->
+		<?php foreach ($this->pagesInRange as $page): ?>
+		<?php if ($page != $this->current): ?>
+		<span class="page">
+			<?php echo $this->paginator('sliding')->renderItem($page, $page, $this->path); ?>
+		</span>
+		<?php else: ?>
+		<span class="active"><a><?php echo $page; ?></a></span>
+		<?php endif; ?>
+		<?php endforeach; ?>
+		<!-- /PagesRange -->
+	
+		<!-- NextPage -->
+		<?php if (isset($this->next)): ?>
+		<span class="next">
+			<?php echo $this->paginator('sliding')->renderItem($this->next, $this->translator()->_('global._share.nextPage'), $this->path); ?>
+		</span>
+		<?php else: ?>
+		<span class="next disabled">
+			<a><?php echo $this->translator()->_('global._share.nextPage'); ?></a>
+		</span>
+		<?php endif; ?>
+		<!-- /NextPage -->
+	
+		<!-- LastPage -->
+		<?php if (isset($this->next)): ?>
+		<span class="last">
+			<?php echo $this->paginator('sliding')->renderItem($this->last, $this->translator()->_('global._share.lastPage'), $this->path); ?>
+		</span>
+		<?php else: ?>
+		<span class="last disabled">
+			<a><?php echo $this->translator()->_('global._share.lastPage'); ?></a>
+		</span>
+		<?php endif; ?>
+		<!-- /LastPage -->
+	</div>
+</div>
+
+<?php endif; ?>

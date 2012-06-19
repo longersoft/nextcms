@@ -1,0 +1,47 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dojox.layout.ContentPane" data-app-plugin="variable" data-dojo-props="title: '<?php echo $this->translator(true)->_('debug.variable.title'); ?>', selected: <?php if ($this->selected) : ?>true<?php else : ?>false<?php endif; ?>, class: 'appContentPane'">
+	<h2 class="appHeadline" style="margin-top: 0">
+		<span><?php echo $this->translator()->_('debug.variable.viewVariables'); ?></span>
+	</h2>
+	<?php if ($this->data['view']) : ?>
+		<?php echo $this->helper()->formatVars($this->data['view'], 'corePluginsDebugVariable'); ?>
+	<?php endif; ?>
+	
+	<h2 class="appHeadline" style="margin-top: 8px">
+		<span><?php echo $this->translator()->_('debug.variable.cookieVariables'); ?></span>
+	</h2>
+	<?php if ($this->data['cookie']) : ?>
+		<?php echo $this->helper()->formatVars($this->data['cookie'], 'corePluginsDebugVariable'); ?>
+	<?php endif; ?>
+	
+	<h2 class="appHeadline" style="margin-top: 8px">
+		<span><?php echo $this->translator()->_('debug.variable.requestParams'); ?></span>
+	</h2>
+	<?php if ($this->data['request']) : ?>
+		<?php echo $this->helper()->formatVars($this->data['request'], 'corePluginsDebugVariable'); ?>
+	<?php endif; ?>
+	
+	<h2 class="appHeadline" style="margin-top: 8px">
+		<span><?php echo $this->translator()->_('debug.variable.postVariables'); ?></span>
+	</h2>
+	<?php if ($this->data['post']) : ?>
+		<?php echo $this->helper()->formatVars($this->data['post'], 'corePluginsDebugVariable'); ?>
+	<?php endif; ?>
+</div>

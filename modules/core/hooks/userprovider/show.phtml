@@ -1,0 +1,88 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div id="coreHooksUserProviderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, iconClass: 'appIcon coreHooksUserProviderIcon', title: '<?php echo $this->translator(true)->_('show.title'); ?>'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+		<div data-dojo-type="dijit.Toolbar">
+			<input id="coreHooksUserProviderSearchBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', placeHolder: '<?php echo $this->translator(true)->_('show.keywordHelp'); ?>', style: 'width: 150px'" />
+			<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appSearchIcon', label: '<?php echo $this->translator(true)->_('show.searchAction'); ?>'">
+				<script type="dojo/connect" data-dojo-event="onClick">
+				var keyword = dijit.byId("coreHooksUserProviderSearchBox").get("value");
+				core.hooks.userprovider.UserController.searchUsers({
+					keyword: keyword
+				});
+				</script>
+			</button>
+		</div>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- UsersPane -->
+	<div id="coreHooksUserProviderUsersContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'height: 100%; width: 100%'">
+		<div class="appCenter">
+			<div><?php echo $this->translator()->_('show.searchHelp'); ?></div>
+		</div>
+	</div>
+	<!-- /UsersPane -->
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* core.hooks.userprovider */
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Encoder");
+dojo.provide("core.hooks.userprovider.UserController");
+
+core.hooks.userprovider.UserController._criteria = {
+	keyword: null,
+	page: 1,
+	per_page: 20
+};
+
+core.hooks.userprovider.UserController.searchUsers = function(/*Object*/ criteria) {
+	// summary:
+	//		Searches for users
+	dojo.mixin(core.hooks.userprovider.UserController._criteria, criteria);
+	var q = core.js.base.Encoder.encode(core.hooks.userprovider.UserController._criteria);
+
+	var params = {
+		_type: "hook",
+		_mod: "core",
+		_name: "userprovider",
+		_method: "search",
+		q: q
+	};
+	dijit.byId("coreHooksUserProviderUsersContainer")
+		 .set("href", "<?php echo $this->url(array(), 'core_extension_render'); ?>" + "?" + dojo.objectToQuery(params));
+};
+
+dojo.subscribe("/app/core/hooks/userprovider/search/onGotoPage", function(/*Integer*/ page) {
+	// summary:
+	//		Paging handler
+	core.hooks.userprovider.UserController.searchUsers({
+		page: page
+	});
+});
+<?php $this->script()->captureEnd(); ?>

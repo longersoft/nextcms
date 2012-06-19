@@ -1,0 +1,26 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2011-10-31
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label class="appTopLabel"><?php echo $this->translator()->_('config.message'); ?>:</label>
+	<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'message', style: 'height: 150px; width: 350px'"><?php if ($this->options && isset($this->options['message'])) : ?><?php echo $this->options['message']; ?><?php else : ?><?php echo $this->translator()->_('config.default'); ?><?php endif; ?></textarea>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.SimpleTextarea");
+</script>

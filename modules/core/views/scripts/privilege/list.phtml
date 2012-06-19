@@ -1,0 +1,104 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('privilege.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.create("link", {
+				href: "<?php echo $this->APP_STATIC_URL; ?>/modules/core/css/admin/default/styles.css",
+				media: "screen",
+				rel: "stylesheet",
+				type: "text/css"
+			}, dojo.query("head")[0]);
+</script>
+
+<form id="corePrivilegeListForm" data-dojo-type="dijit.form.Form" data-dojo-props="region: 'center', action: '', method: 'POST'">
+<div id="corePrivilegeListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dijit.byId("corePrivilegeListStandby").show();
+			var _this = this;
+			this.set("disabled", true);
+			
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'core_privilege_list'); ?>",
+				content: dojo.formToObject("corePrivilegeListForm"),
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("corePrivilegeListStandby").hide();
+					_this.set("disabled", false);
+					dojo.publish("/app/global/notification", [{
+						message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('privilege.list.success'); ?>" : "<?php echo $this->translator()->_('privilege.list.error'); ?>",
+						type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+					}]);
+
+					if (data.result == "APP_RESULT_OK") {
+						// Reload the current page
+						window.location.reload();
+					}
+				}
+			});
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+
+	<!-- Privileges -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<?php echo $this->translator()->_('privilege.list.help'); ?>
+		</div>
+	
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', closable: true, nested: true, class: 'appContentPane'">
+			<?php if ($this->modules) : ?>
+			<?php foreach ($this->modules as $index => $module) : ?>
+			<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', style: 'margin-top: 8px', title: '<?php echo $this->extensionTranslator()->translateTitle($module); ?>', href: '<?php echo $this->url(array(), 'core_privilege_list'); ?>?format=html&mod=<?php echo $module->name; ?>', loadingMessage: '<?php echo '<div class=appCenter><div><span class=dijitContentPaneLoading>' . $this->translator()->_('global._share.loadingAction') . '</span></div></div>'; ?>'">
+			</div>
+			<?php endforeach; ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /Privileges -->
+	
+	<?php if ($this->modules) : ?>
+	<?php foreach ($this->modules as $index => $module) : ?>
+	<input type="hidden" name="modules[]" value="<?php echo $module->name; ?>" />
+	<?php endforeach; ?>
+	<?php endif; ?>
+	<input type="hidden" name="format" value="json" />
+</div>
+</form>
+
+<div id="corePrivilegeListStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'corePrivilegeListContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/core/languages')->_('privilege.list.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+</script>

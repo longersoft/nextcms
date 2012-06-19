@@ -1,0 +1,95 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('layout.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+</script>
+
+<style type="text/css">
+.dojoxGrid table { margin: 0; }
+</style>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: true, style: 'width: 100%; padding: 0; height: 100%'">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'border: none; margin: 4px 8px'">
+		<?php echo sprintf($this->translator()->_('layout.list.help'), $this->template); ?>
+	</div>
+	
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', style: 'border: none; margin: 4px 8px'">
+		<!-- LayoutGrid -->
+		<table id="coreLayoutListGrid" data-dojo-type="dojox.grid.EnhancedGrid" data-dojo-props="plugins: {menus: {cellMenu: 'coreLayoutListGridCellMenu_<?php echo $this->uniqueId; ?>'}}, style: 'width: 100%; height: 100%', loadingMessage: '<span class=dojoxGridLoading><?php echo $this->translator()->_('global._share.loadingAction'); ?></span>', errorMessage: '<span class=dojoxGridError><?php echo $this->translator()->_('layout.list.error'); ?></span>', noDataMessage: '<span class=dojoxGridNoData><?php echo $this->translator()->_('layout.list.notFound'); ?></span>'">
+			<thead>
+				<tr>
+					<th field="name" width="200px"><?php echo $this->translator()->_('layout.list.name'); ?></th>
+					<th field="last_modified" width="400px"><?php echo $this->translator()->_('layout.list.lastModified'); ?></th>
+				</tr>
+			</thead>
+		</table>
+		<!-- /LayoutGrid -->
+		
+		<!-- LayoutGridMenu -->
+		<div data-dojo-type="dijit.Menu" id="coreLayoutListGridCellMenu_<?php echo $this->uniqueId; ?>" style="display: none">
+			<!-- EditMenuItem -->
+        	<div data-dojo-type="dijit.MenuItem" data-dojo-props="label: '<?php echo $this->translator(true)->_('global._share.editAction'); ?>', disabled: <?php if ($this->accessor()->route('core_layout_edit')) : ?>false<?php else : ?>true<?php endif; ?>">
+        		<script type="dojo/connect" data-dojo-event="onClick">
+				var layoutGrid = dijit.byId("coreLayoutListGrid");
+				var rowIndex   = layoutGrid.selection.selectedIndex;
+				var item	   = layoutGrid.getItem(rowIndex);
+				if (item) {
+					var params = {
+						template: item.template[0],
+						layout: item.name[0]
+					};
+					dojo.publish("/app/core/layout/edit/onLoadForm", [ params ]);
+				}
+				</script>
+        	</div>
+        	<!-- /EditMenuItem -->
+        </div>
+		<!-- /LayoutGridMenu -->
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuItem");
+dojo.require("dojo.data.ItemFileReadStore");
+dojo.require("dojox.grid.EnhancedGrid");
+dojo.require("dojox.grid.enhanced.plugins.Menu");
+
+dojo.addOnLoad(function() {
+	// I cannot set the data store for the grid declaratively as follow:
+	//		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+	//			<span jsId="coreLayoutListStore" data-dojo-type="dojo.data.ItemFileReadStore" data-dojo-props="url: ..."></span>
+	//			<table id="coreLayoutListGrid" data-dojo-type="dojox.grid.EnhancedGrid" store="coreLayoutListStore">...</table>
+	//		</div>
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_layout_list", function() {
+		dijit.byId("coreLayoutListGrid").setStore(new dojo.data.ItemFileReadStore({
+			url: "<?php echo $this->url(array(), 'core_layout_list'); ?>?format=json&template=<?php echo $this->template; ?>"
+		}));
+		
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

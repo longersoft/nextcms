@@ -1,0 +1,56 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-10
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('role.list.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false">
+		<ul class="coreRoleItemsContainer">
+			<li class="<?php if (!$this->criteria['active_role_id']) : ?>coreRoleItemSelected<?php endif; ?>" style="padding-bottom: 8px">
+				<a class="coreRoleLabel" id="coreRoleListFilterAll" href="javascript: void(0);" onclick="javascript: dojo.publish('/app/core/role/list/onViewAll', [ this.parentNode ]);">
+					<?php echo $this->translator()->_('role.list.viewAll'); ?>
+				</a>
+			</li>
+			
+			<?php foreach ($this->roles as $role) : ?>
+			<?php
+			// Re-use the partial script that will be rendered when adding new role.
+			// With the usage of Partial view helper, we just need to change the role/add.phtml
+			// whenever the UI of this view script need to be modified
+			echo $this->partial('role/add.ajax.phtml', array('role' => $role, 'criteria' => $this->criteria));
+			?>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+		<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/core/role/list/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+</script>

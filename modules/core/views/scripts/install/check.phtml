@@ -1,0 +1,52 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('install.check.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/core/css/admin/default/styles.css");
+</script>
+
+<!-- Extensions -->
+<h2 class="appHeadline" style="margin: 8px 0"><span><?php echo $this->translator()->_('install.check.extensions'); ?></span></h2>
+<div><?php echo $this->translator()->_('install.check.extensionsDesc'); ?></div>
+
+<ul class="coreInstallList">
+	<?php foreach ($this->extensions as $ext => $installed) : ?>
+	<li class="<?php echo $installed ? 'coreInstallOk' : 'coreInstallError'; ?>"><?php echo $ext; ?></li>
+	<?php endforeach; ?>
+</ul>
+<!-- /Extensions -->
+
+<!-- Files -->
+<h2 class="appHeadline" style="margin: 8px 0"><span><?php echo $this->translator()->_('install.check.writableFiles'); ?></span></h2>
+<div><?php echo $this->translator()->_('install.check.writableFilesDesc'); ?></div>
+
+<ul class="coreInstallList">
+	<?php foreach ($this->files as $file => $writable) : ?>
+	<li class="<?php echo $writable ? 'coreInstallOk' : 'coreInstallError'; ?>"><?php echo $file; ?></li>	
+	<?php endforeach; ?>
+</ul>
+<!-- /Files -->
+
+<script type="text/javascript">
+dijit.byId("appInstallNextButton").attr("disabled", <?php echo $this->pass ? "false" : "true"; ?>);
+</script>

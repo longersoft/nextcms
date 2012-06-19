@@ -1,0 +1,67 @@
+{
+	"_about": {
+		"description": "Hiển thị các thông tin hữu ích để gỡ lỗi",
+		"title": "Gỡ lỗi"
+	},
+	"_permission": {
+		"description": "Gỡ lỗi: Hiển thị các thông tin hữu ích để gỡ lỗi",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"debug": "Xem thông tin gỡ lỗi",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"menu": {
+		"label": "Công cụ gỡ lỗi"
+	},
+	"config": {
+		"help": "Lựa chọn plugin:",
+		"plugins": {
+			"database": "Cơ sở dữ liệu: Hiển thị các câu truy vấn",
+			"file": "Tệp: Hiển thị các tệp và đường dẫn được gọi",
+			"memory": "Bộ nhớ: Hiển thị dung lượng bộ nhớ đã sử dụng",
+			"registry": "Đăng ký: Hiển thị các biến được đăng ký",
+			"system": "Hệ thống: Hiển thị thông tin hệ thống",
+			"variable": "Biến: Hiển thị các biến"
+		}
+	},
+	"debug": {
+		"database": {
+			"statistic": "Thực thi <b>%s</b> câu truy vấn với tổng thời gian <b>%s</b>",
+			"title": "Cơ sở dữ liệu"
+		},
+		"file": {
+			"includedAppFiles": "Từ các thư mục của ứng dụng (%s):",
+			"includedFiles": "Các tệp được gọi (%s tệp)",
+			"includedLibFiles": "Từ các đường dẫn được gọi <b>%s</b> (%s):",
+			"includedPaths": "Các đường dẫn được gọi",
+			"size": "Dung lượng: <b>%s</b>",
+			"title": "Tệp"
+		},
+		"memory": {
+			"controller": "Dành cho các controller: <b>%s</b> KB",
+			"title": "Bộ nhớ",
+			"usage": "Sử dụng <b>%s</b> trên <b>%s</b>"
+		},
+		"registry": {
+			"title": "Đăng ký"
+		},
+		"system": {
+			"app": "Phiên bản ứng dụng: <b>%s</b>",
+			"db": "Cơ sở dữ liệu <b>%s</b> sử dụng kết nối <b>%s</b>",
+			"help": "Dưới đây là thông tin về hệ thống:",
+			"php": "PHP phiên bản <b>%s</b> với các phần mở rộng: %s",
+			"server": "Máy chủ web: <b>%s</b>",
+			"title": "Hệ thống",
+			"zf": "Zend Framework phiên bản <b>%s</b>"
+		},
+		"title": "Gỡ lỗi",
+		"variable": {
+			"cookieVariables": "Các biến cookie",
+			"postVariables": "Các biến POST",
+			"requestParams": "Các tham số từ request",
+			"title": "Biến",
+			"viewVariables": "Các biến view"
+		}
+	}
+}

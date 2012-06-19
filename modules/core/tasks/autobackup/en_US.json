@@ -1,0 +1,31 @@
+{
+	"_about": {
+		"description": "Backup the MySQL database automatically",
+		"title": "Auto Backup"
+	},
+	"_permission": {
+		"description": "Backup the MySQL database automatically",
+		"actions": {
+			"delete": "Delete a SQL file",
+			"download": "Download a SQL file",
+			"view": "View SQL files"
+		}
+	},
+	"_share": {
+		"cancelAction": "Cancel",
+		"deleteAction": "Delete",
+		"downloadAction": "Download",
+		"lastModified": "Last modified",
+		"loadingAction": "Loading ...",
+		"name": "Name",
+		"refreshAction": "Refresh"
+	},
+	"delete": {
+		"error": "Sorry, cannot delete the SQL file",
+		"success": "The SQL file is deleted successfully"
+	},
+	"view": {
+		"files": "Files",
+		"help": "Below are the list of SQL files that contain the database of website"
+	}
+}

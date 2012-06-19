@@ -1,0 +1,31 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	tasks
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label for="max_mails" style="width: 400px"><?php echo $this->translator()->_('config.maxMails'); ?>:</label>
+	<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'max_mails', style: 'width: 100px', value: '<?php echo $this->maxMails; ?>'" />
+</div>
+
+<div class="appFormRow">
+	<label for="max_attempts" style="width: 400px"><?php echo $this->translator()->_('config.maxAttempts'); ?>:</label>
+	<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'max_attempts', style: 'width: 100px', value: '<?php echo $this->maxAttempts; ?>'" />
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.TextBox");
+</script>

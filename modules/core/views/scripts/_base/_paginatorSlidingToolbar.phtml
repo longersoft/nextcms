@@ -1,0 +1,71 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dijit.Toolbar" data-dojo-props="class: 'appBottomToolbar'">
+	<!-- FirstPage -->
+	<button data-dojo-type="dijit.form.Button"
+		data-dojo-props="showLabel: false, label: '<?php echo $this->translator(true)->_('global._share.firstPage'); ?>', iconClass: 'appIcon appPaginatorFirstIcon', disabled: <?php if (isset($this->previous)) : ?>false<?php else : ?>true<?php endif; ?>">
+		<?php if (isset($this->previous)): ?>
+		<?php echo $this->paginator('slidingToolbar')->renderItem($this->first, $this->translator()->_('global._share.firstPage'), $this->path); ?>
+		<?php endif; ?>
+	</button>
+	<!-- /FirstPage -->
+	
+	<!-- PrevPage -->
+	<button data-dojo-type="dijit.form.Button"
+		data-dojo-props="showLabel: false, label: '<?php echo $this->translator(true)->_('global._share.previousPage'); ?>', iconClass: 'appIcon appPaginatorPreviousIcon', disabled: <?php if (isset($this->previous)) : ?>false<?php else : ?>true<?php endif; ?>">
+		<?php if (isset($this->previous)): ?>
+		<?php echo $this->paginator('slidingToolbar')->renderItem($this->previous, $this->translator()->_('global._share.previousPage'), $this->path); ?>
+		<?php endif; ?>
+	</button>
+	<!-- /PrevPage -->
+	
+	<!-- PagesRange -->
+	<?php foreach ($this->pagesInRange as $page): ?>
+	<button data-dojo-type="dijit.form.Button"
+		data-dojo-props="showLabel: true, label: '<?php echo $page; ?>'<?php if ($page == $this->current): ?>, class: 'appPaginatorActivated'<?php endif; ?>">
+		<?php if ($page != $this->current): ?>
+		<?php echo $this->paginator('slidingToolbar')->renderItem($page, $page, $this->path); ?>
+		<?php endif; ?>
+	</button>
+	<?php endforeach; ?>
+	<!-- /PagesRange -->
+	
+	<!-- NextPage -->
+	<button data-dojo-type="dijit.form.Button"
+		data-dojo-props="showLabel: false, label: '<?php echo $this->translator(true)->_('global._share.nextPage'); ?>', iconClass: 'appIcon appPaginatorNextIcon', disabled: <?php if (isset($this->next)) : ?>false<?php else : ?>true<?php endif; ?>">
+		<?php if (isset($this->next)): ?>
+		<?php echo $this->paginator('slidingToolbar')->renderItem($this->next, $this->translator()->_('global._share.nextPage'), $this->path); ?>
+		<?php endif; ?>
+	</button>
+	<!-- /NextPage -->
+	
+	<!-- LastPage -->
+	<button data-dojo-type="dijit.form.Button"
+		data-dojo-props="showLabel: false, label: '<?php echo $this->translator(true)->_('global._share.lastPage'); ?>', iconClass: 'appIcon appPaginatorLastIcon', disabled: <?php if (isset($this->next)) : ?>false<?php else : ?>true<?php endif; ?>">
+		<?php if (isset($this->next)): ?>
+		<?php echo $this->paginator('slidingToolbar')->renderItem($this->last, $this->translator()->_('global._share.lastPage'), $this->path); ?>
+		<?php endif; ?>
+	</button>
+	<!-- /LastPage -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.Toolbar");
+</script>

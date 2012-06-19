@@ -1,0 +1,177 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		core
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('skin.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/core/css/admin/default/styles.css");
+</script>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'width: 100%; height: 100%;'">
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'margin: 4px 8px'">
+		<?php echo sprintf($this->translator()->_('skin.list.help'), $this->template); ?>
+	</div>
+	
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', style: 'margin: 4px 8px'">
+		<!-- SkinGrid -->
+		<table id="coreSkinListGrid" data-dojo-type="dojox.grid.EnhancedGrid" data-dojo-props="plugins: {menus: {cellMenu: 'coreSkinListGridCellMenu_<?php echo $this->uniqueId; ?>'}}, style: 'width: 100%; height: 100%', loadingMessage: '<span class=dojoxGridLoading><?php echo $this->translator()->_('global._share.loadingAction'); ?></span>', errorMessage: '<span class=dojoxGridError><?php echo $this->translator()->_('skin.list.error'); ?></span>', noDataMessage: '<span class=dojoxGridNoData><?php echo $this->translator()->_('skin.list.notFound'); ?></span>'">
+			<thead>
+				<tr>
+					<th field="name" width="200px" formatter="core.views.scripts.skin.list.formatSkinColumn"><?php echo $this->translator()->_('skin.list.name'); ?></th>
+					<th field="css_files" width="400px" formatter="core.views.scripts.skin.list.formatCssFilesColumn"><?php echo $this->translator()->_('skin.list.cssFiles'); ?></th>
+				</tr>
+			</thead>
+		</table>
+		<!-- /SkinGrid -->
+		
+		<!-- SkinGridMenu -->
+		<div data-dojo-type="dijit.Menu" id="coreSkinListGridCellMenu_<?php echo $this->uniqueId; ?>" style="display: none">
+			<!-- ActivateMenuItem -->
+        	<div data-dojo-type="dijit.MenuItem" data-dojo-props="label: '<?php echo $this->translator(true)->_('global._share.activateAction'); ?>', disabled: <?php if ($this->template == $this->currentTemplate && $this->accessor()->route('core_skin_activate')) : ?>false<?php else : ?>true<?php endif; ?>">
+        		<script type="dojo/connect" data-dojo-event="onClick">
+				var skinGrid = dijit.byId("coreSkinListGrid");
+				var rowIndex = skinGrid.selection.selectedIndex;
+				var item	 = skinGrid.getItem(rowIndex);
+				if (item) {
+					dojo.xhrPost({
+						url: "<?php echo $this->url(array(), 'core_skin_activate'); ?>",
+						content: {
+							template: item.template[0],
+							skin: item.name[0]
+						},
+						handleAs: "json",
+						load: function(data) {
+							var message = (data.result == "APP_RESULT_OK")
+											? "<?php echo $this->translator()->_('skin.activate.success'); ?>" 
+											: "<?php echo $this->translator()->_('skin.activate.error'); ?>";
+							dojo.publish("/app/global/notification", [{
+								message: message,
+								type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+							}]);
+
+							// Reload the grid to update the row showing activated skin
+							var storeParams = {
+								format: "json",
+								template: item.template[0]
+							};
+							skinGrid.setStore(new dojo.data.ItemFileReadStore({
+								url: "<?php echo $this->url(array(), 'core_skin_list'); ?>" + "?" + dojo.objectToQuery(storeParams)
+							}));
+						}
+					});
+				}
+				</script>
+			</div>
+			<!-- /ActivateMenuItem -->
+		</div>
+		<!-- /SkinGridMenu -->
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuItem");
+dojo.require("dojo.data.ItemFileReadStore");
+dojo.require("dojox.grid.EnhancedGrid");
+dojo.require("dojox.grid.enhanced.plugins.Menu");
+
+dojo.provide("core.views.scripts.skin.list");
+
+core.views.scripts.skin.list._template	  = "<?php echo $this->template; ?>";
+//Check if user can edit the CSS file or not
+core.views.scripts.skin.list._canEditSkin = <?php if ($this->accessor()->route('core_skin_edit')) : ?>true<?php else : ?>false<?php endif; ?>;
+
+core.views.scripts.skin.list.formatSkinColumn = function(/*String*/ skinName) {
+	// summary:
+	//		Formats skin's name to show in the grid
+	return "<span>" + skinName + "</span>";		// String
+};
+
+core.views.scripts.skin.list.formatCssFilesColumn = function(/*String*/ cssFiles) {
+	// summary:
+	//		Lists CSS files found in each skin directory.
+	// description:
+	//		Clicking on each CSS file will popup a dialog for updating the file's content
+	// cssFiles:
+	//		A string combined by skin's name and list of CSS files, separated by a comma
+	var files = cssFiles.split(",");
+
+	// Get the skin name
+	var skin = files[0];
+	
+	files.splice(0, 1);
+	var output = [];
+	dojo.forEach(files, function(file, index) {
+		if (index > 0) {
+			output.push('<span style="padding: 0 10px">|</span>');
+		}
+		output.push('<a href="javascript: void(0);" onClick="javascript: core.views.scripts.skin.list.editCssFile(\'' + skin + '\', \'' + file + '\');">', file, '</a>');
+	});
+	return output.join("");	// String
+};
+
+core.views.scripts.skin.list.editCssFile = function(/*String*/ skin, /*String*/ cssFile) {
+	// summary:
+	//		Edits CSS file
+	if (!core.views.scripts.skin.list._canEditSkin) {
+		return;
+	}
+	var params = {
+		template: core.views.scripts.skin.list._template,
+		skin: skin,
+		file: cssFile
+	};
+	dojo.publish("/app/core/skin/edit/onLoadForm", [ params ]);
+};
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/core_skin_list", function() {
+		var coreSkinListGrid = dijit.byId("coreSkinListGrid");
+
+		// Load data for the skin grid
+		var storeParams = {
+			format: "json",
+			template: "<?php echo $this->template; ?>"
+		};
+		coreSkinListGrid.setStore(new dojo.data.ItemFileReadStore({
+			url: "<?php echo $this->url(array(), 'core_skin_list'); ?>" + "?" + dojo.objectToQuery(storeParams)
+		}));
+
+		dojo.connect(coreSkinListGrid, "onStyleRow", function(row) {
+			var item = this.getItem(row.index);
+			if (item) {
+				// Find the cell showing the skin's name
+				var skinNameNode = dojo.query('.dojoxGridCell[idx="0"] span', row.node);
+
+				// Add an icon to indicate the current skin
+				if (item.is_active[0] == true) {
+					skinNameNode.addClass("coreSkinActivated");
+				}
+			}
+		});
+		
+		dojo.unsubscribe(handler);
+	});
+});
+</script>

@@ -1,0 +1,1142 @@
+{
+	"_about": {
+		"description": "Provides most important tasks such as managing users, permissions, configurations, etc.",
+		"title": "Core"
+	},
+	"_menu": {
+		"accesslog": {
+			"list": "Manage access logs"
+		},
+		"config": {
+			"config": "Configure module"
+		},
+		"error": {
+			"list": "Manage errors"
+		},
+		"language": {
+			"view": "Manage language files"
+		},
+		"module": {
+			"list": "Manage extensions"
+		},
+		"page": {
+			"list": "Manage pages"
+		},
+		"permalink": {
+			"config": "Configure permalinks"
+		},
+		"privilege": {
+			"list": "Manage privileges"
+		},
+		"task": {
+			"list": "Manage cron tasks"
+		},
+		"template": {
+			"list": "Manage templates"
+		},
+		"user": {
+			"list": "Manage users"
+		}
+	},
+	"_permission": {
+		"accesslog": {
+			"description": "Manage access logs",
+			"actions": {
+				"delete": "Delete access log",
+				"list": "List access logs",
+				"view": "View access log"
+			}
+		},
+		"cache": {
+			"description": "Manage cache",
+			"actions": {
+				"clean": "Clean all cached data",
+				"page": "Set page cache lifetime",
+				"remove": "Remove page cache"
+			}
+		},
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		},
+		"error": {
+			"description": "Manage errors",
+			"actions": {
+				"delete": "Delete error",
+				"list": "List errors",
+				"view": "View error"
+			}
+		},
+		"hook": {
+			"description": "Manage hooks",
+			"actions": {
+				"config": "Configure hook",
+				"install": "Install hook",
+				"list": "List hooks",
+				"uninstall": "Uninstall hook"
+			}
+		},
+		"language": {
+			"description": "Manage language files",
+			"actions": {
+				"add": "Add language item",
+				"delete": "Delete language item",
+				"edit": "Edit language item",
+				"list": "List language files"
+			}
+		},
+		"layout": {
+			"description": "Manage layouts",
+			"actions": {
+				"edit": "Edit layout script",
+				"list": "List layouts"
+			}
+		},
+		"module": {
+			"description": "Manage modules",
+			"actions": {
+				"install": "Install module",
+				"list": "List modules",
+				"uninstall": "Uninstall module"
+			}
+		},
+		"page": {
+			"description": "Manage pages",
+			"actions": {
+				"add": "Add new page",
+				"delete": "Delete page",
+				"edit": "Edit page",
+				"export": "Export layout of page",
+				"import": "Import layout of page",
+				"layout": "Layout page",
+				"list": "List pages",
+				"order": "Order pages"
+			}
+		},
+		"permalink": {
+			"description": "Configure permalinks",
+			"actions": {
+				"config": "Configure permalinks"
+			}
+		},
+		"plugin": {
+			"description": "Manage plugins",
+			"actions": {
+				"config": "Configure plugin",
+				"disable": "Disable plugin",
+				"enable": "Enable plugin",
+				"install": "Install plugin",
+				"list": "List plugins",
+				"uninstall": "Uninstall plugin"
+			}
+		},
+		"privilege": {
+			"description": "Manage privileges",
+			"actions": {
+				"list": "List privileges"
+			}
+		},
+		"role": {
+			"description": "Manage roles",
+			"actions": {
+				"add": "Add new role",
+				"delete": "Delete role",
+				"list": "List roles",
+				"lock": "Lock/unlock role",
+				"rename": "Rename role"
+			}
+		},
+		"rule": {
+			"description": "Manage permissions",
+			"actions": {
+				"role": "Manage role's permissions",
+				"user": "Manage user's permissions"
+			}
+		},
+		"skin": {
+			"description": "Manage skins",
+			"actions": {
+				"activate": "Activate skin",
+				"edit": "Edit CSS file",
+				"list": "List skins"
+			}
+		},
+		"task": {
+			"description": "Manage cron tasks",
+			"actions": {
+				"config": "Configure task",
+				"install": "Install task",
+				"list": "List tasks",
+				"run": "Run task",
+				"schedule": "Schedule task",
+				"uninstall": "Uninstall task"
+			}
+		},
+		"template": {
+			"description": "Manage templates",
+			"actions": {
+				"activate": "Activate template",
+				"install": "Install template",
+				"list": "List templates",
+				"uninstall": "Uninstall template"
+			}
+		},
+		"user": {
+			"description": "Manage users",
+			"actions": {
+				"activate": "Activate/deactivate user",
+				"add": "Add new user",
+				"avatar": "Change avatar of any user",
+				"delete": "Delete user",
+				"edit": "Edit user",
+				"list": "List users",
+				"move": "Move user to other group"
+			}
+		},
+		"widget": {
+			"description": "Manage widgets",
+			"actions": {
+				"install": "Install widget",
+				"list": "List widgets",
+				"uninstall": "Uninstall widget"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Activate",
+			"addAction": "Add",
+			"allLanguages": "All languages",
+			"browseFilesUploadAction": "Browse files and Upload ...",
+			"cancelAction": "Cancel",
+			"captcha": "Captcha",
+			"captchaRequired": "The captcha is required",
+			"captchaValidator": "The captcha is invalid",
+			"characters": "%s characters",
+			"closeAction": "Close",
+			"configureAction": "Configure",
+			"deactivateAction": "Deactivate",
+			"deleteAction": "Delete",
+			"deleteForeverAction": "Delete forever",
+			"editAction": "Edit",
+			"enableAction": "Enable",
+			"error404": "The page you are looking for is not found",
+			"insertAction": "Insert",
+			"installAction": "Install",
+			"loadingAction": "Loading ...",
+			"localizeAction": "Localize",
+			"lockAction": "Lock",
+			"refreshAction": "Refresh",
+			"renameAction": "Rename",
+			"resetAction": "Reset",
+			"runAction": "Run",
+			"saveAction": "Save",
+			"saveOrderAction": "Save order",
+			"savingAction": "Saving ...",
+			"scheduleAction": "Schedule",
+			"searchAction": "Search",
+			"selectAllAction": "Select all",
+			"sendAction": "Send",
+			"uninstallAction": "Uninstall",
+			"unlockAction": "Unlock",
+			"unselectAllAction": "Unselect all",
+			"uploadAction": "Upload",
+			"viewAction": "View",
+			"firstPage": "First",
+			"lastPage": "Last",
+			"nextPage": "Next",
+			"previousPage": "Prev",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		},
+		"layout": {
+			"dashboard": "Dashboard",
+			"fileToolbox": "File",
+			"homepage": "Homepage",
+			"imageToolbox": "Image",
+			"linkToolbox": "Link",
+			"login": "Login",
+			"logout": "Logout",
+			"modules": "Modules",
+			"openIdIdentities": "OpenID identities",
+			"profile": "Profile",
+			"register": "Register",
+			"toolbox": "Toolbox",
+			"videoToolbox": "Video",
+			"welcome": "Welcome %s"
+		}
+	},
+	"accesslog": {
+		"_share": {
+			"accessedDate": "Accessed date",
+			"id": "Id",
+			"ip": "IP address",
+			"module": "Module",
+			"params": "Params",
+			"title": "Title",
+			"url": "URl"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the access log titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the access log",
+			"notFound": "Sorry, cannot find the access log",
+			"success": "The access log is deleted successfully",
+			"title": "Delete access log"
+		},
+		"list": {
+			"allModules": "All modules",
+			"error": "Sorry, there is an error",
+			"filterByIpAction": "Filter by IP address",
+			"fromDate": "From date",
+			"notFound": "Not found any access logs",
+			"showColumns": "Show columns:",
+			"title": "Manager access logs",
+			"toDate": "To date"
+		},
+		"view": {
+			"title": "View the access log"
+		}
+	},
+	"auth": {
+		"deny": {
+			"notAllowed": "You are not allowed to access this section",
+			"title": "Access denied"
+		},
+		"login": {
+			"cancelOpenIdLogin": "Cancel OpenId login",
+			"error": "Login failed",
+			"forgotPassword": "Forgot password",
+			"loginButton": "Login",
+			"notFoundUser": "Not found user",
+			"openIdLogin": "Login using OpenId",
+			"registration": "Registration",
+			"title": "Login",
+			"userNotActivated": "User have not been activated",
+			"wrongPassword": "Wrong password"
+		}
+	},
+	"cache": {
+		"clean": {
+			"error": "Sorry, cannot clean the cache",
+			"success": "The cached data is cleaned successfully",
+			"title": "Clean the cache"
+		},
+		"page": {
+			"error": "Sorry, cannot set cache lifetime to the page",
+			"success": "The page cache lifetime is set successfully",
+			"title": "Set cache lifetime to page"
+		},
+		"remove": {
+			"error": "Sorry, cannot remove cached data of the selected page",
+			"success": "The cached data of selected page is removed successfully",
+			"title": "Remove cached data of page"
+		}
+	},
+	"config": {
+		"_share": {
+			"seconds": "seconds"
+		},
+		"config": {
+			"activatingAccountContentHelp": "You can use ###username###, and ###link### in the content. They will be replaced with the username, and the link to activate the account",
+			"activatingAccountSubjectHelp": "You can use ###username### in the subject. It will be replaced with the username",
+			"adminPrefixUrl": "Admin URL prefix",
+			"adminPrefixUrlRequired": "The prefix of admin URL is required",
+			"advanced": "Advanced",
+			"authentication": "Authentication",
+		    "autoActivateRegistration": "Activate registrations automatically",
+		    "blockedUsernames": "Blocked user names",
+		    "blockedUsernamesHelp": "Visitor cannot register with one of the following user names (separated by a comma)",
+		    "cacheFile": "File",
+		    "cacheIdPrefix": "Id prefix",
+		    "cacheLifetime": "Lifetime",
+		    "cacheMemcache": "Memcache",
+		    "cacheNone": "None",
+		    "cachePort": "Port",
+		    "cacheServer": "Server",
+		    "cacheSystem": "Cache system",
+		    "captcha": "Captcha",
+		    "captchaImage": "Image",
+		    "captchaReCaptcha": "ReCaptcha",
+		    "captchaReCaptchaPrivateKey": "ReCaptcha private key",
+		    "captchaReCaptchaPrivateKeyRequired": "ReCaptcha private key is required",
+		    "captchaReCaptchaPublicKey": "ReCaptcha public key",
+		    "captchaReCaptchaPublicKeyRequired": "ReCaptcha public key is required",
+		    "charset": "Charset",
+		    "cleanCacheAction": "Clean cache",
+		    "compressCss": "Compress and cache CSS files",
+		    "compressJavascript": "Compress and cache Javascript files and inline scripts",
+		    "content": "Content",
+		    "cookieDomain": "Cookie domain",
+		    "disableCronTasks": "Disable cron tasks (but it is still possible to run the cron tasks in command line mode)",
+		    "emailActivateRegistration": "Send activation email to user",
+		    "enableOpenIdRegistration": "Enable OpenId registration and authentication",
+			"enableRegistration": "Enable registration",
+			"error": "Sorry, cannot update the module's settings",
+			"feed": "Feed",
+			"feedCopyright": "Copyright",
+			"feedCopyrightRequired": "The copyright is required",
+			"feedDescription": "Description",
+			"feedGenerator": "Generator",
+			"feedGeneratorRequired": "The generator is required",
+			"feedLimit": "Limit number of items",
+			"feedLimitRequired": "The limit value is required",
+			"feedTitle": "Title",
+			"feedTitleRequired": "The title is required",
+			"general": "General",
+			"generateKeyAction": "Generate key",
+			"host": "Host",
+			"language": "Language",
+			"languageDirection": "Language direction",
+			"languageDirectionLtr": "Left to right (LTR)",
+			"languageDirectionRtl": "Right to left (RTL)",
+			"languageHelp": "If your language is not listed here, please add the language to the <b>/data/i18n.php</b> file, then reload this page",
+			"localization": "Localization",
+			"localizationDefaultLanguage": "Default language",
+			"localizationHelp": "If your language is not listed here, please add the language to the <b>/data/l10n.php</b> file, then reload this page",
+			"localizationOtherLanguages": "Other languages",
+			"logAccess": "Log access",
+			"mail": "Mail",
+			"maximumLoginAttempts": "If the number of login attempts exceeds the following number, the user will be requested to enter a captcha at the login page",
+			"maximumLoginAttemptsRequired": "The maximum number of login attempts is required",
+			"maximumLoginAttemptsValidator": "The maximum number of login attempts is invalid",
+			"metaDescriptionTag": "Meta description tag",
+			"metaKeywordTag": "Meta keyword tag",
+			"notification": "Notification",
+			"notificationDuration": "Duration",
+			"notificationPosition": "Position",
+			"notificationPositionBottomLeftRight": "Bottom-left Right",
+			"notificationPositionBottomLeftUp": "Bottom-left Up",
+			"notificationPositionBottomRightLeft": "Bottom-right Left",
+			"notificationPositionBottomRightUp": "Bottom-right Up",
+			"notificationPositionTopLeftDown": "Top-left Down",
+			"notificationPositionTopLeftRight": "Top-left Right",
+			"notificationPositionTopRightDown": "Top-right Down",
+			"notificationPositionTopRightLeft": "Top-right Left",
+			"notSecurity": "Not secured",
+			"password": "Password",
+			"performance": "Performance",
+			"phpMail": "PHP mail() function",
+			"port": "Port",
+			"protocol": "Protocol",
+			"registration": "Registration",
+			"registrationDefaultRole": "Default role for registered user",
+			"registrationSelectDefaultRole": "Select a role",
+			"replyToEmail": "Reply to email",
+			"replyToName": "Reply to name",
+			"secretKey": "Secret key",
+			"secretKeyRequired": "The secret key is required",
+			"security": "Security",
+			"sendFromEmail": "Send from email",
+			"sendFromName": "Send from name",
+			"sendingPasswordContentHelp": "You can use ###username###, ###password###, and ###link### in the content. They will be replaced with the username, new password, and the link to website",
+			"sendingPasswordSubjectHelp": "You can use ###username### in the subject. It will be replaced with the username",
+			"sendingPasswordTemplate": "Sending password email template",
+			"session": "Session",
+			"sessionDbHandler": "Database",
+			"sessionFileHandler": "File",
+			"sessionHandler": "Session handler",
+			"sessionLifetime": "Session lifetime",
+			"sessionMemcacheHandler": "Memcache",
+			"siteName": "Site name",
+			"siteTitle": "Site title",
+			"smtp": "SMTP",
+			"ssl": "SSL",
+			"staticServer": "Static server",
+			"staticServerHelp": "The address of server served static resources (CSS and Javascript files)",
+			"staticServerRequired": "The address of static server is required",
+			"subject": "Subject",
+			"success": "The module's settings are updated successfully",
+			"timeZone": "Time zone",
+			"title": "Configure the Core module",
+			"tls": "TLS",
+			"username": "Username",
+			"website": "Website"
+		}
+	},
+	"dashboard": {
+		"index": {
+			"error": "Sorry, cannot update the layout",
+			"success": "The layout is updated successfully",
+			"title": "Dashboard"
+		}
+	},
+	"error": {
+		"_share": {
+			"action": "Action",
+			"controller": "Controller",
+			"createdDate": "Created date",
+			"file": "File",
+			"id": "Id",
+			"line": "Line",
+			"message": "Message",
+			"module": "Module",
+			"trace": "Trace",
+			"uri": "URI"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the error <b>%s</b>?",
+			"error": "Sorry, cannot delete the error",
+			"notFound": "Sorry, cannot find the error",
+			"success": "The error is deleted successfully",
+			"title": "Delete error"
+		},
+		"list": {
+			"allModules": "All modules",
+			"error": "Sorry, there is an error",
+			"fromDate": "From date",
+			"notFound": "Not found any errors",
+			"showColumns": "Show columns:",
+			"title": "Manage errors",
+			"toDate": "To date"
+		},
+		"view": {
+			"title": "View the error"
+		}
+	},
+	"hook": {
+		"config": {
+			"error": "Sorry, cannot save the settings of <b>%s</b> hook",
+			"success": "The settings of <b>%s</b> hook is updated successfully",
+			"title": "Configure the hook"
+		},
+		"install": {
+			"error": "Sorry, cannot install the <b>%s</b> hook",
+			"success": "The <b>%s</b> hook is installed successfully"
+		},
+		"list": {
+			"hooks": "Hooks",
+			"notFound": "Not found any hooks",
+			"title": "Manage hooks"
+		},
+		"uninstall": {
+			"error": "Sorry, cannot uninstall the <b>%s</b> hook",
+			"success": "The <b>%s</b> hook is uninstalled successfully"
+		}
+	},
+	"index": {
+		"index": {
+			"title": "Homepage"
+		}
+	},
+	"install": {
+		"_share": {
+			"alreadyInstalled": "The website is already installed. If you are owner of the website, you should delete this file (<b>install.php</b>) from your website directory.",
+			"doneButton": "Done",
+			"nextButton": "Next Step",
+			"wizard": "Install Wizard"
+		},
+		"check": {
+			"extensions": "Required Extensions",
+			"extensionsDesc": "The following PHP extensions have to be installed on the server:",
+			"title": "Step 1/3: Check Requirements",
+			"writableFiles": "Required Writable Folders",
+			"writableFilesDesc": "The following folders have to be writable:"
+		},
+		"complete": {
+			"admin": "Administration Settings",
+			"adminPrefixUrl": "Admin Prefix URL",
+			"adminPrefixUrlRequired": "The prefix URL is required",
+			"adminUsername": "Username",
+			"adminPassword": "Password",
+			"adminPasswordRequired": "The password is required",
+			"adminEmail": "Email",
+			"adminEmailRequired": "The email is required",
+			"creatingUser": "Creating User ...",
+			"generatePasswordAction": "Generate password",
+			"title": "Step 3/3: Complete"
+		},
+		"config": {
+			"db": "Database Settings",
+			"dbType": "Type",
+			"dbServer": "Server",
+			"dbServerRequired": "The server is required",
+			"dbPort": "Port",
+			"dbPortRequired": "The port is required",
+			"dbName": "Database Name",
+			"dbNameHelp": "Click on the Test Connection button below to test the connection and get the available database(s)",
+			"dbNameManuallyHelp": "Or put it here manually",
+			"dbPrefix": "Database Prefix",
+			"dbUsername": "User Name",
+			"dbUsernameRequired": "The username is required",
+			"dbPassword": "Password",
+			"dbPasswordRequired": "The password is required",
+			"dbTestConn": "Test Connection",
+			"dbConnecting": "Connecting ...",
+			"dbConnError": "Unable to connect",
+			"dbConnSuccess": "Connected successful",
+			"saving": "Saving Settings ...",
+			"title": "Step 2/3: Configure"
+		}
+	},
+	"language": {
+		"_share": {
+			"key": "Key",
+			"keyRequired": "The key is required",
+			"path": "Path",
+			"root": "Root",
+			"text": "Text",
+			"textRequired": "The text is required"
+		},
+		"add": {
+			"error": "Sorry, cannot add new language item",
+			"success": "The language item is added successfully",
+			"title": "Add new language item"
+		},
+		"delete": {
+			"confirm": "Are you sure that you really want to delete the <b>%s</b> item from the language file?",
+			"error": "Sorry, cannot delete the language item",
+			"notFound": "Sorry, cannot find the language file",
+			"success": "The language item is deleted successfully",
+			"title": "Delete a language item"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the language item",
+			"success": "The language item is updated successfully",
+			"title": "Edit a language item"
+		},
+		"list": {
+			"help": "Select a module, extension and the language file to open the language file",
+			"hooks": "Hooks",
+			"plugins": "Plugins",
+			"selectExtension": "Select an extension",
+			"selectLanguage": "Select a language",
+			"selectModule": "Select a module",
+			"tasks": "Tasks",
+			"title": "Manage language files",
+			"widgets": "Widgets"
+		}
+	},
+	"layout": {
+		"edit": {
+			"error": "Sorry, cannot update the content of layout script",
+			"help": "You are editing the <b>%s</b> layout of the <b>%s</b> template:",
+			"success": "The content of layout script is updated successfully",
+			"title": "Edit the layout"
+		},
+		"list": {
+			"error": "Sorry, there is an error",
+			"help": "Below are layout scripts of the <b>%s</b> template:",
+			"lastModified": "Last modified",
+			"name": "Name",
+			"notFound": "Not found any layout scripts",
+			"title": "List the template's layout scripts"
+		}
+	},
+	"module": {
+		"install": {
+			"error": "Sorry, cannot install the <b>%s</b> module",
+			"success": "The <b>%s</b> module is installed successfully"
+		},
+		"list": {
+			"extensions": "Extensions",
+			"extensionsHelp": "Click on the module to see the list of available extensions",
+			"modules": "Modules",
+			"title": "Manage modules"
+		},
+		"uninstall": {
+			"confirm": "Are you sure that you really want to uninstall the <b>%s</b> module<br />(all the data of module will be also deleted)?",
+			"error": "Sorry, cannot uninstall the <b>%s</b> module",
+			"success": "The <b>%s</b> module is uninstalled successfully",
+			"title": "Uninstall the module"
+		}
+	},
+	"openid": {
+		"add": {
+			"error": "Sorry, cannot add new OpenID URL",
+			"success": "The OpenID URL is added successfully",
+			"title": "Add new OpenID URL"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the OpenId URL of <b>%s</b>?",
+			"error": "Sorry, cannot delete the OpenID URL",
+			"notFound": "Sorry, cannot find the OpenId URL of <b>%s</b>",
+			"success": "The OpenID URL is deleted successfully",
+			"title": "Delete the OpenID URL"
+		},
+		"list": {
+			"help": "Below are OpenId URLs associating with your account",
+			"notFound": "Not found any OpenID URL",
+			"title": "Manage OpenID URLs"
+		}
+	},
+	"page": {
+		"_share": {
+			"activateTabContainer": "Activate tab container",
+			"cacheLifetime": "Cache lifetime (seconds)",
+			"borderContainerTitleTemplate": "Border container #%s [%s]",
+			"bottom": "Bottom",
+			"bottomRegion": "At the bottom",
+			"center": "Center",
+			"collapseAllWidgets": "Collapse all widgets",
+			"columnTitleTemplate": "Column #%s",
+			"deleteBorderContainer": "Delete border container",
+			"deleteGridContainer": "Delete grid container",
+			"deleteMainContentPane": "Delete main content pane",
+			"deleteTabContainer": "Delete tab container",
+			"deleteWidget": "Delete widget",
+			"editAction": "Edit layout",
+			"expandAllWidgets": "Expand all widgets",
+			"exportLayoutAction": "Export layout to XML",
+			"gridContainerTitleTemplate": "Grid container #%s",
+			"headline": "Headline",
+			"importLayoutAction": "Import layout from XML",
+			"insertBorderContainer": "Insert border container",
+			"insertGridContainer": "Insert grid container",
+			"insertMainContentPane": "Insert main content pane",
+			"insertTabContainer": "Insert tab container",
+			"language": "Language",
+			"layout": "Layout",
+			"left": "Left",
+			"leftRegion": "At the left",
+			"localization": "Localization",
+			"localizationHelp": "Drag the copies of page in other languages from the table of pages<br />and drop them here",
+			"locateAction": "Locate",
+			"mainContent": "Main content",
+			"name": "Name",
+			"nameRequired": "The name is required",
+			"ordering": "Ordering",
+			"properties": "Properties",
+			"removeCacheAction": "Remove cache",
+			"right": "Right",
+			"rightRegion": "At the right",
+			"rootContainer": "Root",
+			"route": "Route",
+			"selectRoute": "Select route",
+			"setFilters": "Set filters",
+			"setGridColumns": "Set grid columns",
+			"sidebar": "Sidebar",
+			"tabContainerTitleTemplate": "Tab container #%s",
+			"template": "Template",
+			"title": "Title",
+			"top": "Top",
+			"topRegion": "At the top",
+			"url": "URL"
+		},	
+		"add": {
+			"error": "Sorry, cannot add new page",
+			"success": "The page is created successfully",
+			"title": "Add new page"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the page named <b>%s</b>?",
+			"error": "Sorry, cannot delete the page",
+			"notFound": "Sorry, cannot find the page",
+			"success": "The page is deleted successfully",
+			"title": "Delete page"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the page",
+			"notFound": "Sorry, cannot find the page with Id of <b>%s</b>",
+			"success": "The page is updated successfully",
+			"title": "Edit the page"
+		},
+		"filter": {
+			"additionalFilters": "Additional filters",
+			"availableFilters": "Available filters",
+			"filterDndHelp": "You can change the order of filters by dragging and dropping to the desired position",
+			"notFound": "Not found any filters",
+			"setClassesHelp": "You can enter the list of class of filters (separated by a comma)",
+			"title": "Set filters"
+		},
+		"import": {
+			"success": "The layout is imported successfully",
+			"title": "Import layout"
+		},
+		"layout": {
+			"error": "Sorry, cannot update the layout of page",
+			"properties": "Properties",
+			"success": "The layout of page is updated successfully",
+			"title": "Layout the page of %s"
+		},
+		"list": {
+			"allTemplates": "All templates",
+			"copyLayoutAction": "Copy layout",
+			"error": "Sorry, there is an error",
+			"layoutAction": "Layout",
+			"notFound": "Not found any pages",
+			"pages": "Pages",
+			"pasteLayoutAction": "Paste layout",
+			"showColumns": "Show columns:",
+			"title": "Manage pages"
+		},
+		"order": {
+			"error": "Sorry, cannot update the order of pages",
+			"success": "The order of pages are saved successfully",
+			"title": "Update order of pages"
+		},
+		"property": {
+			"cacheLifetime": "Cache lifetime",
+			"containerTitle": "Title",
+			"cssClass": "CSS class",
+			"cssStyle": "CSS style",
+			"id": "Id",
+			"seconds": "seconds",
+			"title": "Set properties"
+		}
+	},
+	"password": {
+		"send": {
+			"error": "Sorry, cannot send new password to your email address",
+			"gotoLoginPage": "Goto login page",
+			"notFoundUser": "Sorry, cannot find user with given username and email address",
+			"success": "The new password is sent to your email address. Please check your mailbox (including the spam folder)",
+			"title": "Send new password"
+		}
+	},
+	"permalink": {
+		"config": {
+			"customUrl": "Custom URL",
+			"defaultUrl": "Default URL",
+			"error": "Sorry, cannot customize the links",
+			"help": "You can use the default URL or one of predefined URLs, or create a custom one. In the URL, you can use the available parameters. The parameter masked with (*) is required.",
+			"params": "Parameters",
+			"predefinedUrls": "Predefined URLs",
+			"success": "The links are customized successfully",
+			"title": "Configure permalinks"
+		}
+	},
+	"plugin": {
+		"config": {
+			"error": "Sorry, cannot save the settings of <b>%s</b> plugin",
+			"success": "The settings of <b>%s</b> plugin is updated successfully",
+			"title": "Configure the plugin"
+		},
+		"disable": {
+			"error": "Sorry, cannot disable the <b>%s</b> plugin",
+			"success": "The <b>%s</b> plugin is disabled successfully"
+		},
+		"enable": {
+			"error": "Sorry, cannot enable the <b>%s</b> plugin",
+			"success": "The <b>%s</b> plugin is enabled successfully"
+		},
+		"install": {
+			"error": "Sorry, cannot install the <b>%s</b> plugin",
+			"success": "The <b>%s</b> plugin is installed successfully"
+		},
+		"list": {
+			"notFound": "Not found any plugins",
+			"plugins": "Plugins",
+			"title": "Manage plugins"
+		},
+		"uninstall": {
+			"error": "Sorry, cannot uninstall the <b>%s</b> plugin",
+			"success": "The <b>%s</b> plugin is uninstalled successfully"
+		}
+	},
+	"privilege": {
+		"_share": {
+			"hook": "Hook",
+			"module": "Module",
+			"plugin": "Plugin",
+			"task": "Task",
+			"widget": "Widget"
+		},
+		"list": {
+			"error": "Sorry, cannot update the resources and privileges",
+			"help": "Click on the module to view the list of resources and privileges. Click the <b>Save</b> button above to add new resources, privileges, and remove no longer in use privileges.",
+			"success": "The resources and privileges are updated successfully",
+			"title": "Manage privileges"
+		}
+	},
+	"profile": {
+		"edit": {
+			"error": "Sorry, cannot update your profile",
+			"success": "Your profile is updated successfully",
+			"title": "Edit the profile"
+		}
+	},
+	"registration": {
+		"activate": {
+			"invalidActivationKey": "Invalid activation key",
+			"notFoundActivationKey": "Not found activation key",
+			"success": "Your account is activated successfully. Now you can <a href='%s'>sign in</a>",
+			"title": "Activate account"
+		},
+		"register": {
+			"activationEmailSentError": "Sorry, cannot send activation email to your email address",
+			"activationEmailSentSuccess": "An activation email is sent to your email address. Please check your mailbox (including the spam folder)",
+		    "connectOpenIdHelp": "Connect my account with an OpenId account",
+		    "error": "Sorry, cannot register new account",
+		    "registrationNotEnabled": "Sorry, the registration is not enabled. The administrator does not allow to sign up new account.",
+		    "signupAction": "Sign up",
+		    "success": "The account is created successfully",
+			"title": "Register new account"
+		}
+	},
+	"role": {
+		"_share": {
+			"name": "Name",
+			"nameHelp": "Role's name",
+			"nameRequired": "Role name is required"
+		},
+		"add": {
+			"error": "Sorry, cannot add new role",
+			"success": "The new role is created successfully",
+			"title": "Add new role"
+		},
+		"delete": {
+			"cannotDeleteLockedRole": "You cannot delete the locked role",
+			"cannotDeleteRootRole": "You cannot delete the root role",
+			"cannotDeleteRoleHavingUsers": "You cannot delete the role having users",
+			"confirm": "Are you sure that you want to delete the role named <b>%s</b>?",
+			"error": "Sorry, cannot delete the role",
+			"notFound": "Sorry, cannot find the role",
+			"success": "The role is deleted successfully",
+			"title": "Delete role"
+		},
+		"list": {
+			"addRoleButton": "Add new role",
+			"searchRoleHelp": "Role's name",
+			"title": "Manage roles",
+			"viewAll": "View all"
+		},
+		"lock": {
+			"lockError": "Sorry, cannot lock role",
+			"lockSuccess": "The role is locked successfully",
+			"unlockError": "Sorry, cannot unlock role",
+			"unlockSuccess": "The role is unlocked successfully"
+		},
+		"rename": {
+			"error": "Sorry, cannot update role's name",
+			"success": "The role's name is updated successfully"
+		}
+	},
+	"rule": {
+		"_share": {
+			"permissionAction": "Set permissions"
+		},
+		"role": {
+			"cannotSetLockedRole": "You cannot set permissions to the locked role",
+			"cannotSetRootRole": "You cannot set permissions to the root role",
+			"error": "Sorry, cannot update the role's permissions",
+			"notFound": "Not found role",
+			"settingHelp": "You are setting permissions to the group of <b>%s</b>",
+			"success": "The role's permissions are updated successfully",
+			"title": "Manage role's permissions"
+		},
+		"user": {
+			"cannotSetRootUser": "You cannot set permissions to the root user",
+			"error": "Sorry, cannot update the user's permissions",
+			"notFound": "Not found user",
+			"settingHelp": "You are setting permissions to <b>%s</b>. In most cases, you are recommended to set the permissions to the group which the user belong to.",
+			"success": "The user's permissions are updated successfully",
+			"title": "Manage user's permissions"
+		}
+	},
+	"skin": {
+		"activate": {
+			"error": "Sorry, cannot activate the skin",
+			"success": "The skin is activated successfully"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the content of CSS file",
+			"help": "You are editing the <b>%s</b> file:",
+			"success": "The content of CSS file is updated successfully",
+			"title": "Edit the CSS file"
+		},
+		"list": {
+			"cssFiles": "CSS files",
+			"error": "Sorry, there is an error",
+			"help": "Below are skins of the <b>%s</b> template:",
+			"name": "Name",
+			"notFound": "Not found any skins",
+			"title": "List the template's skins"
+		}
+	},
+	"task": {
+		"_share": {
+			"description": "Description",
+			"lastRun": "Last execution time",
+			"name": "Name",
+			"nextRun": "Next execution time",
+			"title": "Title"
+		},
+		"config": {
+			"error": "Sorry, cannot update the settings of <b>%s</b> task",
+			"success": "The <b>%s</b> task's settings are updated successfully",
+			"title": "Configure the task"
+		},
+		"install": {
+			"error": "Sorry, cannot install the <b>%s</b> task",
+			"success": "The <b>%s</b> task is installed successfully"
+		},
+		"list": {
+			"allModules": "All modules",
+			"error": "Sorry, there is an error",
+			"notFound": "Not found any tasks",
+			"showColumns": "Show columns:",
+			"title": "Manage cron tasks"
+		},
+		"run": {
+			"error": "Sorry, cannot run the <b>%s</b> task",
+			"success": "The <b>%s</b> task is executed successfully",
+			"title": "Run a task"
+		},
+		"schedule": {
+			"april": "April",
+			"august": "August",
+			"day": "Day",
+			"december": "December",
+			"error": "Sorry, cannot schedule the task",
+			"everyDay": "Every day",
+			"everyHour": "Every hour",
+			"everyMinute": "Every minute",
+			"everyMonth": "Every month",
+			"everyWeekday": "Every weekday",
+			"february": "February",
+			"friday": "Friday",
+			"hour": "Hour",
+			"january": "January",
+			"june": "June",
+			"july": "July",
+			"march": "March",
+			"may": "May",
+			"minute": "Minute",
+			"monday": "Monday",
+			"month": "Month",
+			"november": "November",
+			"october": "October",
+			"saturday": "Saturday",
+			"september": "September",
+			"success": "The task is scheduled successfully",
+			"sunday": "Sunday",
+			"thursday": "Thursday",
+			"title": "Schedule the task",
+			"tuesday": "Tuesday",
+			"weekday": "Weekday",
+			"wednesday": "Wednesday"
+		},
+		"uninstall": {
+			"error": "Sorry, cannot uninstall the <b>%s</b> task",
+			"success": "The <b>%s</b> task is uninstalled successfully"
+		}
+	},
+	"template": {
+		"activate": {
+			"error": "Sorry, cannot activate the template",
+			"success": "The template is activated successfully"
+		},
+		"install": {
+			"error": "Sorry, cannot install the template",
+			"success": "The template is installed successfully"
+		},
+		"list": {
+			"layouts": "Layouts",
+			"layoutsHelp": "Click on the name of template to see the list of layouts, and skins",
+			"skins": "Skins",
+			"templates": "Templates",
+			"title": "Manage templates"
+		},
+		"uninstall": {
+			"error": "Sorry, cannot uninstall the template",
+			"success": "The template is uninstalled successfully"
+		}
+	},
+	"user": {
+		"_share": {
+			"accountInfo": "Account",
+			"avatar": "Avatar",
+			"badPassword": "Bad",
+			"bio": "Bio",
+			"confirmPassword": "Confirm password",
+			"confirmPasswordRequired": "The confirmation password is required",
+			"country": "Country",
+			"dob": "Date of birth",
+			"email": "Email",
+			"emailRequired": "Email is required",
+			"emailValidator": "Email is invalid",
+			"facebook": "Facebook",
+			"flickr": "Flickr",
+			"fullName": "Full name",
+			"gender": "Gender",
+			"genderFemale": "Female",
+			"genderMale": "Male",
+			"goodPassword": "Good",
+			"language": "Language",
+			"linkedin": "LinkedIn",
+			"openIdUrl": "OpenID URL",
+			"openIdUrlHelp": "The OpenID URL",
+			"openIdUrlInUse": "The OpenId URL is in use",
+			"openIdUrlRequired": "The OpenID URL is required",
+			"openIdUrlValidator": "The OpenID URL is invalid",
+			"password": "Password",
+			"passwordHelp": "The password",
+			"passwordRequired": "Password is required",
+			"passwordUnchangedHelp": "Leave the textbox empty if you do not want to change the password",
+			"personalInfo": "Personal",
+			"role": "Group",
+			"signature": "Signature",
+			"strongPassword": "Strong",
+			"timezone": "Time zone",
+			"twitter": "Twitter",
+			"username": "Username",
+			"usernameHelp": "The username",
+			"usernameRequired": "Username is required",
+			"usernameValidator": "Username is invalid",
+			"website": "Website",
+			"youtube": "YouTube"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the user",
+			"activateSuccess": "The user is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the user",
+			"deactivateSuccess": "The user is deactivated successfully"
+		},
+		"add": {
+			"adding": "Adding ...",
+			"error": "Sorry, cannot add the user",
+			"newUserButton": "Add new user",
+			"success": "The user is added successfully",
+			"title": "Add new user"
+		},
+		"avatar": {
+			"error": "Sorry, cannot update the user's avatar",
+			"success": "The user's avatar is updated successfully"
+		},
+		"delete": {
+			"cannotDeleteRootUser": "You cannot delete the root user",
+			"confirm": "Are you sure that you want to delete user named <b>%s</b>?",
+			"error": "Sorry, cannot delete the user",
+			"notFound": "Sorry, cannot find the user",
+			"success": "The user is deleted successfully",
+			"title": "Delete user"
+		},
+		"edit": {
+			"error": "Sorry, cannot update user's information",
+			"saving": "Saving ...",
+			"success": "The user's information are updated successfully",
+			"title": "Edit user's information"
+		},
+		"list": {
+			"notFound": "Not found user",
+			"roles": "Roles",
+			"searchUserHelp": "Username or email",
+			"status": "Status",
+			"statusActivated": "Activated",
+			"statusNotActivated": "Not activated",
+			"title": "Manage users",
+			"users": "Users %s",
+			"viewAll": "View all"
+		},
+		"move": {
+			"success": "Moved the user named <b>%s</b> to the group named <b>%s</b> successfully"
+		}
+	},
+	"widget": {
+		"install": {
+			"error": "Sorry, cannot install the <b>%s</b> widget",
+			"success": "The <b>%s</b> widget is installed successfully"
+		},
+		"list": {
+			"notFound": "Not found any widgets",
+			"title": "Manage widgets",
+			"widgets": "Widgets"
+		},
+		"uninstall": {
+			"error": "Sorry, cannot uninstall the <b>%s</b> widget",
+			"success": "The <b>%s</b> widget is uninstalled successfully"
+		}
+	}
+}
