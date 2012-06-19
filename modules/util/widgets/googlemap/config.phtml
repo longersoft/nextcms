@@ -1,0 +1,100 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appForm">
+	<div class="appFormRow" style="width: 100%">
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%; width: 100%', closable: true, doLayout: false">
+			<!-- Basic -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="selected: true, title: '<?php echo $this->translator(true)->_('config.basic'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.address'); ?>:</label>
+					<input id="utilWidgetsGooglemapConfigAddress_<?php echo $this->uid; ?>" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'address', class: 'appWidgetInput', style: 'width: 98%', missingMessage: '<?php echo $this->translator(true)->_('config.addressRequired'); ?>'" />
+				</div>
+				
+				<div id="utilWidgetsGooglemapConfigMessage_<?php echo $this->uid; ?>" class="appFormRow">
+				</div>
+				
+				<div class="appFormRow">
+					<button data-dojo-type="dijit.form.Button">
+						<?php echo $this->translator()->_('config.defineLocationAction'); ?>
+						<script type="dojo/connect" data-dojo-event="onClick">
+						var addressBox = dijit.byId("utilWidgetsGooglemapConfigAddress_<?php echo $this->uid; ?>");
+						dojo.xhrPost({
+							url: "<?php echo $this->url(array(), 'core_extension_render'); ?>",
+							content: {
+								_mod: "util",
+								_name: "googlemap",
+								_type: "widget",
+								_method: "config",
+								_format: "json",
+								noRenderScript: true,
+								address: addressBox.get("value")
+							},
+							handleAs: "json",
+							load: function(data) {
+								if (data.latitude && data.longitude) {
+									addressBox.set("value", data.address);
+									dojo.style("utilWidgetsGooglemapConfigMessage_<?php echo $this->uid; ?>", "display", "none");
+									dijit.byId("utilWidgetsGooglemapConfigLatitude_<?php echo $this->uid; ?>").set("value", data.latitude);
+									dijit.byId("utilWidgetsGooglemapConfigLongitude_<?php echo $this->uid; ?>").set("value", data.longitude);
+								} else {
+									dojo.style("utilWidgetsGooglemapConfigMessage_<?php echo $this->uid; ?>", "display", "block");
+									dojo.attr("utilWidgetsGooglemapConfigMessage_<?php echo $this->uid; ?>", "innerHTML", "<?php echo $this->translator()->_('config.cannotDefineLocation'); ?>");
+								}
+							}
+						});
+						</script>
+					</button>
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.zoomLevel'); ?>:</label>
+					<input data-dojo-type="dijit.form.NumberSpinner" id="utilWidgetsGooglemapConfigZoom_<?php echo $this->uid; ?>" data-dojo-props="name: 'zoom', 'class': 'appWidgetInput', smallDelta: 1, constraints: { min: 1, max: 21, places: 0 }" />
+				</div>
+
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.latitude'); ?>:</label>
+					<input id="utilWidgetsGooglemapConfigLatitude_<?php echo $this->uid; ?>" data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'latitude', class: 'appWidgetInput'" />
+				</div>
+
+				<div class="appFormRow">
+					<label class="appTopLabel"><?php echo $this->translator()->_('config.longitude'); ?>:</label>
+					<input id="utilWidgetsGooglemapConfigLongitude_<?php echo $this->uid; ?>" data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'longitude', 'class': 'appWidgetInput'" />
+				</div>
+			</div>
+			<!-- /Basic -->
+			
+			<!-- Theme -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.theme'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'theme', class: 'appWidgetInput'" />
+				</div>
+			</div>
+			<!-- /Theme -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.NumberSpinner");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+</script>

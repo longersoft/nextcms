@@ -1,0 +1,28 @@
+{
+	"_about": {
+		"description": "Show messages taken from Twitter",
+		"title": "Twitter"
+	},
+	"config": {
+		"basic": "Basic",
+		"isoLanguageCode": "ISO language code (en, fr, ...)",
+		"numberOfMessages": "Number of messages",
+		"numberOfMessagesRequired": "Number of messages is required",
+		"searchByTag": "Search by tag",
+		"searchByUser": "Search by user",
+		"theme": "Theme",
+		"title": "Title",
+		"username": "Username"
+	},
+	"show": {
+		"daysAgo": "%s days ago",
+		"daysHoursAgo": "%s days %s hours ago",
+		"followUs": "Follow us",
+		"hoursAgo": "%s hours ago",
+		"hoursMinutesAgo": "%s hours %s minute ago",
+		"minutesAgo": "%s minutes ago",
+		"minutesSecondsAgo": "%s minutes %s seconds ago",
+		"secondsAgo": "%s seconds ago",
+		"sentByOnDate": "Sent by %s on %s"
+	}
+}

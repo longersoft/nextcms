@@ -1,0 +1,15 @@
+{
+	"_about": {
+		"description": "Show social network links",
+		"title": "Social"
+	},
+	"config": {
+		"basic": "Basic",
+		"facebook": "Facebook page",
+		"introduction": "Introduction",
+		"rss": "RSS channel",
+		"theme": "Theme",
+		"twitter": "Twitter page",
+		"youtube": "Youtube channel"
+	}
+}

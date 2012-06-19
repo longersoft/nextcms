@@ -1,0 +1,32 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2011-10-25
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label class="appTopLabel" for="bad_words"><?php echo $this->translator()->_('config.badWords'); ?>:</label>
+	<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'bad_words', style: 'height: 100px; width: 200px'"><?php echo $this->badWords; ?></textarea>
+</div>
+
+<div class="appFormRow">
+	<label class="appTopLabel" for="replace_with"><?php echo $this->translator()->_('config.replaceWith'); ?>:</label>
+	<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'replace_with', value: '<?php echo $this->replaceWith; ?>', style: 'width: 200px'" />
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+</script>

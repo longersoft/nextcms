@@ -1,0 +1,31 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	plugins
+ * @since		1.0
+ * @version		2011-12-28
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label class="appTopLabel"><?php echo $this->translator()->_('config.frontendIpsHelp'); ?></label>
+	<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'frontend_ips', style: 'height: 100px; width: 100%'"><?php echo $this->frontendIps; ?></textarea>
+</div>
+
+<div class="appFormRow">
+	<label class="appTopLabel"><?php echo $this->translator()->_('config.backendIpsHelp'); ?></label>
+	<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'backend_ips', style: 'height: 100px; width: 100%'"><?php echo $this->backendIps; ?></textarea>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.SimpleTextarea");
+</script>

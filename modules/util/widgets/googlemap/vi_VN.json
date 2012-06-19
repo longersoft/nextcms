@@ -1,0 +1,20 @@
+{
+	"_about": {
+		"description": "Hiển thị vị trí của địa điểm trên bản đồ Google",
+		"title": "Bản đồ Google"
+	},
+	"config": {
+		"address": "Địa chỉ",
+		"addressRequired": "Địa chỉ là bắt buộc",
+		"basic": "Cơ bản",
+		"cannotDefineLocation": "Không thể xác định vị trí. Xin thử lại với địa chỉ khác",
+		"defineLocationAction": "Xác định vị trí",
+		"latitude": "Vi độ",
+		"longitude": "Kinh độ",
+		"theme": "Mẫu giao diện",
+		"zoomLevel": "Cấp độ phóng to"
+	},
+	"show": {
+		"unpreviewableInAjaxMode": "Không thể xem được khi tải bằng Ajax"
+	}
+}

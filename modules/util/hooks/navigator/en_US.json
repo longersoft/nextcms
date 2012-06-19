@@ -1,0 +1,9 @@
+{
+	"_about": {
+		"description": "Create table of content from given text",
+		"title": "Navigator"
+	},
+	"filter": {
+		"header": "Table of contents"
+	}
+}

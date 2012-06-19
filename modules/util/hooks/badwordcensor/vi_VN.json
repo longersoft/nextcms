@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Thay thế từ xấu",
+		"title": "Lọc từ xấu"
+	},
+	"_permission": {
+		"description": "Thay thế từ xấu",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"badWords": "Từ xấu (ngăn cách bằng dấu phẩy)",
+		"replaceWith": "Thay thế bằng"
+	}
+}

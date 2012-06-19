@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Thay thế các ký tự đặc biệt bởi các biểu tượng",
+		"title": "Biểu tượng"
+	},
+	"_permission": {
+		"description": "Thay thế các ký tự đặc biệt bởi các biểu tượng",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"notFoundSkin": "Không tìm thấy skin nào",
+		"selectSkin": "Chọn skin"
+	}
+}

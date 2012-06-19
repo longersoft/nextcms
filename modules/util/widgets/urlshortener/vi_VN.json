@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Rút ngắn liên kết của trang hiện tại",
+		"title": "Rút ngắn liên kết"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"selectService": "Chọn dịch vụ có sẵn",
+		"service": "Dịch vụ rút ngắn liên kết",
+		"theme": "Mẫu giao diện",
+		"typeCustomServiceClass": "Hoặc gõ vào tên lớp PHP của dịch vụ khác"
+	},
+	"show": {
+		"help": "Trang hiện tại có địa chỉ rút gọn"
+	}
+}

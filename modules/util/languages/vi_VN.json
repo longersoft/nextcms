@@ -1,0 +1,11 @@
+{
+	"_about": {
+		"description": "Cung cấp các tiện ích",
+		"title": "Tiện ích"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	}
+}

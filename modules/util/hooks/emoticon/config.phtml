@@ -1,0 +1,36 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if (!$this->skins) : ?>
+<div class="padding-bottom: 8px">
+	<?php echo $this->translator()->_('config.notFoundSkin'); ?>
+</div>
+<?php else : ?>
+<div class="appFormRow">
+	<label for="skin" style="width: 150px"><?php echo $this->translator()->_('config.selectSkin'); ?>:</label>
+	<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'skin'">
+	<?php foreach ($this->skins as $skin) : ?>
+		<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
+	<?php endforeach; ?>
+	</select>
+</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+</script>

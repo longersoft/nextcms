@@ -1,0 +1,23 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-13
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->url) : ?>
+<div class="utilWidgetsUrlShortener">
+	<span><?php echo $this->translator()->_('show.help'); ?>:</span> <a href="<?php echo $this->url; ?>" target="_blank"><?php echo $this->url; ?></a>
+</div>
+<?php endif; ?>

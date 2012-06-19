@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Rút ngắn các liên kết từ đoạn văn bản có sẵn",
+		"title": "Rút ngắn liên kết"
+	},
+	"_permission": {
+		"description": "Rút ngắn liên kết",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"service": "Dịch vụ rút ngắn liên kết"
+	}
+}

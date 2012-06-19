@@ -1,0 +1,32 @@
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+.utilHooksEmoticonIcon { display: inline-block; height: 16px; width: 16px; }
+.utilHooksEmoticonAngel { background: url(angel.png); }
+.utilHooksEmoticonConfused { background: url(confused.png); }
+.utilHooksEmoticonCry { background: url(cry.png); }
+.utilHooksEmoticonAngel { background: url(devil.png); }
+.utilHooksEmoticonEmbarrassed { background: url(embarrassed.png); }
+.utilHooksEmoticonGlasses { background: url(glasses.png); }
+.utilHooksEmoticonGrin { background: url(grin.png); }
+.utilHooksEmoticonKiss { background: url(kiss.png); }
+.utilHooksEmoticonLaugh { background: url(laugh.png); }
+.utilHooksEmoticonRaspberry { background: url(raspberry.png); }
+.utilHooksEmoticonSad { background: url(sad.png); }
+.utilHooksEmoticonSleeping { background: url(sleeping.png); }
+.utilHooksEmoticonSmile { background: url(smile.png); }
+.utilHooksEmoticonSurprise { background: url(surprise.png); }
+.utilHooksEmoticonTongue { background: url(tongue.png); }
+.utilHooksEmoticonUnsure { background: url(unsure.png); }
+.utilHooksEmoticonWink { background: url(wink.png); }

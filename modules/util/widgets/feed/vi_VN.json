@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Hiển thị các bài viết mới nhất từ một kênh RSS",
+		"title": "Feed"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"numberOfEntries": "Số bài viết",
+		"theme": "Mẫu giao diện"
+		"title": "Tiêu đề",
+		"url": "Liên kết"
+	},
+	"show": {
+		"daysAgo": "%s ngày trước",
+		"daysHoursAgo": "%s ngày %s giờ trước",
+		"hoursAgo": "%s giờ trước",
+		"hoursMinutesAgo": "%s giờ %s phút trước",
+		"minutesAgo": "%s phút trước",
+		"minutesSecondsAgo": "%s phút %s giây trước",
+		"secondsAgo": "%s giây trước"
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"_about": {
+		"description": "Show the latest entries from given feed channel",
+		"title": "Feed"
+	},
+	"config": {
+		"basic": "Basic",
+		"numberOfEntries": "Number of entries",
+		"theme": "Theme",
+		"title": "Title",
+		"url": "Feed URL"
+	},
+	"show": {
+		"daysAgo": "%s days ago",
+		"daysHoursAgo": "%s days %s hours ago",
+		"hoursAgo": "%s hours ago",
+		"hoursMinutesAgo": "%s hours %s minute ago",
+		"minutesAgo": "%s minutes ago",
+		"minutesSecondsAgo": "%s minutes %s seconds ago",
+		"secondsAgo": "%s seconds ago"
+	}
+}

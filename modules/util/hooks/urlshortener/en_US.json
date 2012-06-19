@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Shorten all links found in a given text",
+		"title": "URL Shortener"
+	},
+	"_permission": {
+		"description": "Shorten all links",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"service": "Service"
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"_about": {
+		"description": "Provides utilities",
+		"title": "Utility"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	}
+}

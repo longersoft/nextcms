@@ -1,0 +1,20 @@
+{
+	"_about": {
+		"description": "Display location of an address on Google Map",
+		"title": "Google Map"
+	},
+	"config": {
+		"address": "Address",
+		"addressRequired": "The address is required",
+		"basic": "Basic",
+		"cannotDefineLocation": "Cannot define the location. Please try other address",
+		"defineLocationAction": "Define location",
+		"latitude": "Latitude",
+		"longitude": "Longitude",
+		"theme": "Theme",
+		"zoomLevel": "Zoom level"
+	},
+	"show": {
+		"unpreviewableInAjaxMode": "Unpreviewable when loading the widget by Ajax"
+	}
+}

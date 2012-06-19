@@ -1,0 +1,48 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-05-24
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="utilWidgetsShare">
+	<div class="googleplus">
+		<div class="g-plusone" data-size="medium"></div>
+	</div>
+	<div class="twitter">
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="thenextcms">Tweet</a>
+	</div>
+	<div class="facebook">
+		<div id="fb-root"></div>
+		<div class="fb-like" data-send="false" data-layout="button_count" data-width="225" data-show-faces="true" data-font="verdana"></div>
+	</div>
+</div>
+
+<?php $this->script()->captureStart(); ?>
+$(document).ready(function() {
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+	(function() {
+		var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;
+		po.src = "https://apis.google.com/js/plusone.js";
+		var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);
+	})();
+	(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));
+});
+<?php $this->script()->captureEnd(); ?>

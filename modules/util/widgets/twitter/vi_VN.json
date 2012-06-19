@@ -1,0 +1,28 @@
+{
+	"_about": {
+		"description": "Hiển thị các tin nhắn từ Twitter",
+		"title": "Twitter"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"isoLanguageCode": "Mã ngôn ngữ ISO (en, fr, ...)",
+		"numberOfMessages": "Số tin nhắn",
+		"numberOfMessagesRequired": "Số tin nhắn là bắt buộc",
+		"searchByTag": "Tìm kiếm theo tag",
+		"searchByUser": "Tìm kiếm theo người dùng",
+		"theme": "Mẫu giao diện",
+		"title": "Tiêu đề",
+		"username": "Tên tài khoản"
+	},
+	"show": {
+		"daysAgo": "%s ngày trước",
+		"daysHoursAgo": "%s ngày %s giờ trước",
+		"followUs": "Theo đuôi",
+		"hoursAgo": "%s giờ trước",
+		"hoursMinutesAgo": "%s giờ %s phút trước",
+		"minutesAgo": "%s phút trước",
+		"minutesSecondsAgo": "%s phút %s giây trước",
+		"secondsAgo": "%s giây trước",
+		"sentByOnDate": "Gửi bởi %s lúc %s"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Không cho phép truy cập từ các địa chỉ IP nào đó",
+		"title": "Khóa IP"
+	},
+	"_permission": {
+		"description": "Không cho phép truy cập từ các địa chỉ IP nào đó",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"config": {
+		"backendIpsHelp": "Danh sách các địa chỉ IP được truy cập phần quản trị, ngăn cách nhau bởi dấu phẩy (,):",
+		"frontendIpsHelp": "Danh sách các địa chỉ IP bị từ chối truy cập, ngăn cách nhau bởi dấu phẩy (,):"
+	}
+}

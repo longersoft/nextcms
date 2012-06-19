@@ -1,0 +1,57 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/templates/default/js/jquery.colorbox-min.js');
+?>
+
+<?php $this->script()->captureStartOnce('utilHooksSlideshowShow'); ?>
+$(document).ready(function() {
+	// Support Lazy load plugin
+	$(".appMainContentPane").find("img").each(function(index) {
+		var parent = $(this).parent()[0];
+		if (parent.tagName != "A") {
+			var src = $(this).attr("data-original") ? $(this).attr("data-original") : $(this).attr("src");
+			$(this).wrap($("<a/>").attr("href", src).attr("title", $(this).attr("title")));
+		}
+		if ($(this).parents(".appDroppedImage").length == 0) {
+			$(parent).wrap($("<span/>").addClass("appDroppedImage"));
+		}
+		// Show a (+) icon to zoom images if its container has class of "utilHooksSlideshowZoomer"
+		var root = $(this).parents(".appMainContentPane");
+		if ($(root).hasClass("utilHooksSlideshowZoomer")) {
+			var p = parent;
+			if ($(parent).css("overflow") == "hidden") {
+				p = $(parent).parent()[0];
+			}
+			$(p).addClass("zoomContainer");
+			$("<span/>").addClass("zoom").click(function() {
+				$(parent).click();
+			}).appendTo($(p));
+		}
+	});
+	
+	$(".appMainContentPane .appDroppedImage a").colorbox({
+		width: "auto",
+		height: "auto",
+		rel: "appDroppedImage",
+		slideshow: true
+	});
+});
+<?php $this->script()->captureEndOnce('utilHooksSlideshowShow'); ?>

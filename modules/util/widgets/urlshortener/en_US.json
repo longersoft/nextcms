@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Shorten URL of current page",
+		"title": "URL Shortener"
+	},
+	"config": {
+		"basic": "Basic",
+		"selectService": "Select available service",
+		"service": "Service",
+		"theme": "Theme",
+		"typeCustomServiceClass": "Or type the PHP class of custom service"
+	},
+	"show": {
+		"help": "The short URL of page is available"
+	}
+}

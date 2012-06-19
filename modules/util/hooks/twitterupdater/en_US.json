@@ -1,0 +1,27 @@
+{
+	"_about": {
+		"description": "Post new status about new article, photo, video, etc to Twitter after publishing them",
+		"title": "Twitter Updater"
+	},
+	"_permission": {
+		"description": "Post new status on Twitter",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"authorize": {
+		"error": "Sorry, cannot authorize in Twitter. Please try again"
+	},
+	"config": {
+		"accessToken": "Access token",
+		"accessTokenRequired": "The access token is required",
+		"accessTokenSecret": "Access token secret",
+		"accessTokenSecretRequired": "The access token secret is required",
+		"authorizeAction": "Authorize in Twitter and create access token",
+		"shortUrlService": "Short URL service",
+		"statusTemplate": "Status template",
+		"statusTemplateHelp": "You can use #title# and #url# in the template",
+		"statusTemplateRequired": "Status template is required"
+	}
+}

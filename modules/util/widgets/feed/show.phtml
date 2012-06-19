@@ -1,0 +1,42 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2011-11-02
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->entries) : ?>
+<div class="utilWidgetsFeed">
+	<h3><?php echo $this->title; ?></h3>
+	
+	<ul>
+		<?php foreach ($this->entries as $entry) : ?>
+		<li>
+			<a href="<?php echo $entry->link(); ?>"><?php echo $entry->title(); ?></a>
+			<cite>
+				<?php echo $this->dateFormatter()->diff(strtotime($entry->pubDate()), array(
+								'DAY'			=> $this->translator()->_('show.daysAgo'),
+								'DAY_HOUR'		=> $this->translator()->_('show.daysHoursAgo'),
+								'HOUR'			=> $this->translator()->_('show.hoursAgo'),
+								'HOUR_MINUTE'	=> $this->translator()->_('show.hoursMinutesAgo'),
+								'MINUTE'		=> $this->translator()->_('show.minutesAgo'),
+								'MINUTE_SECOND'	=> $this->translator()->_('show.minutesSecondsAgo'),
+								'SECOND'		=> $this->translator()->_('show.secondsAgo'),
+							)); ?>
+			</cite>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

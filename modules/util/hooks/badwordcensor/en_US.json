@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Replace bad words",
+		"title": "Badword Censor"
+	},
+	"_permission": {
+		"description": "Replace bad words",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"badWords": "Bad words (separated by a comma)",
+		"replaceWith": "Replace with"
+	}
+}

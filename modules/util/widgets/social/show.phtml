@@ -1,0 +1,31 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="utilWidgetsSocial">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<?php if ($this->introduction) : ?>
+	<p><?php echo $this->introduction; ?></p>
+	<?php endif; ?>
+	
+	<span>
+		<?php if ($this->rss) : ?><a class="iconRss" href="<?php echo $this->rss; ?>"></a><?php endif; ?>
+		<?php if ($this->facebook) : ?><a class="iconFacebook" href="<?php echo $this->facebook; ?>"></a><?php endif; ?>
+		<?php if ($this->twitter) : ?><a class="iconTwitter" href="<?php echo $this->twitter; ?>"></a><?php endif; ?>
+	</span>
+</div>

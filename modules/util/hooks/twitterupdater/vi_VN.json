@@ -1,0 +1,27 @@
+{
+	"_about": {
+		"description": "Cập nhật bài viết, ảnh, video, ... lên Twitter sau khi chúng được kích hoạt",
+		"title": "Cập nhật Twitter"
+	},
+	"_permission": {
+		"description": "Cập nhật Twitter",
+		"actions": {
+			"config": "Xem form tùy chọn",
+			"save": "Lưu tùy chọn"
+		}
+	},
+	"authorize": {
+		"error": "Xin lỗi, không thể xác thực tài khoản Twitter. Xin hãy thử lại."
+	},
+	"config": {
+		"accessToken": "Mã truy cập (Access token)",
+		"accessTokenRequired": "Mã truy cập là bắt buộc",
+		"accessTokenSecret": "Mã truy cập bí mật (Access token secret)",
+		"accessTokenSecretRequired": "Mã truy cập bí mật là bắt buộc",
+		"authorizeAction": "Xác thực tài khoản Twitter và tạo mã truy cập",
+		"shortUrlService": "Dịch vụ rút ngắn liên kết",
+		"statusTemplate": "Mẫu trạng thái",
+		"statusTemplateHelp": "Bạn có thể sử dụng #title# và #url# trong mẫu trạng thái",
+		"statusTemplateRequired": "Mẫu trạng thái là bắt buộc"
+	}
+}

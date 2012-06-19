@@ -1,0 +1,40 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-26
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->messages) : ?>
+<div class="utilWidgetsTwitter">
+	<?php if ($this->title) : ?><h2><?php if ($this->username) : ?><a href="http://twitter.com/<?php echo $this->username; ?>" target="_blank"><?php echo $this->title; ?></a><?php else : ?><?php echo $this->title; ?><?php endif; ?></h2><?php endif; ?>
+
+	<ul>
+		<?php foreach ($this->messages as $message) : ?>
+		<li>
+			<div class="content"><?php echo $this->helper()->formatText($message['text']); ?></div>
+			<cite class="date">
+				<?php echo sprintf($this->translator()->_('show.sentByOnDate'),
+									'<a href="http://twitter.com/' . $message['from_user'] . '">' . $message['from_user'] . '</a>',
+									$this->helper()->formatTime($message['created_at'])); ?>
+			</cite>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	
+	<?php if ($this->username) : ?>
+	<a class="button" href="http://twitter.com/<?php echo $this->username; ?>" target="_blank"><?php echo $this->translator()->_('show.followUs'); ?></a>
+	<?php endif; ?>
+</div>
+<?php endif; ?>

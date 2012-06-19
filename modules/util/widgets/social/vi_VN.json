@@ -1,0 +1,15 @@
+{
+	"_about": {
+		"description": "Hiển thị liên kết đến các mạng xã hội",
+		"title": "Mạng xã hội"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"facebook": "Trang Facebook",
+		"introduction": "Giới thiệu",
+		"rss": "Kênh RSS",
+		"theme": "Mẫu giao diện",
+		"twitter": "Trang Twitter",
+		"youtube": "Kênh Youtube"
+	}
+}

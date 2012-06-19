@@ -1,0 +1,37 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-02-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="<?php echo $this->APP_LANGUAGE_DIR; ?>">
+<head>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->APP_STATIC_URL; ?>/templates/admin/skins/default/images/favicon.ico" />
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/dojo.js" data-dojo-config="parseOnLoad: true, isDebug: false, ioPublish: true"></script>
+</head>
+<body>
+	<script type="text/javascript">
+	// Update the access token in the original window
+	var openerWindow = window.opener;
+	openerWindow.utilHooksTwitterUpdaterConfigDone.call(openerWindow, {
+		result: <?php if ($this->accessToken && $this->accessTokenSecret) : ?>"APP_RESULT_OK"<?php else : ?>"APP_RESULT_ERROR"<?php endif; ?>,
+		access_token: "<?php echo $this->accessToken; ?>",
+		access_token_secret: "<?php echo $this->accessTokenSecret; ?>"
+	});
+	self.close();
+	</script>
+</body>
+</html>

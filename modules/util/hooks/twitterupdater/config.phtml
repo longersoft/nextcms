@@ -1,0 +1,83 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		util
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appFormRow">
+	<label for="shorturl_service"><?php echo $this->translator()->_('config.shortUrlService'); ?>:</label>
+	<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'shorturl_service', value: '<?php echo $this->shortUrlService; ?>'">
+		<option value="TinyUrlCom">tinyurl.com</option>
+		<option value="IsGd">is.gd</option>
+		<option value="JdemCz">jdem.cz</option>
+		<option value="MetamarkNet">metamark.net</option>
+	</select>
+</div>
+
+<div class="appFormRow">
+	<label><?php echo $this->translator()->_('config.statusTemplate'); ?>:</label>
+	<?php echo $this->translator()->_('config.statusTemplateHelp'); ?>
+</div>
+
+<div class="appFormRow">
+	<label for="status_template">&nbsp;</label>
+	<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'status_template', required: true, style: 'width: 200px', value: '<?php echo $this->statusTemplate; ?>', missingMessage: '<?php echo $this->translator(true)->_('config.statusTemplateRequired'); ?>'" />
+</div>
+
+<div class="appFormRow">
+	<label for="access_token"><?php echo $this->translator()->_('config.accessToken'); ?>:</label>
+	<input id="utilHooksTwitterUpdaterConfigAccessToken" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'access_token', required: true, style: 'width: 200px', value: '<?php echo $this->accessToken; ?>', missingMessage: '<?php echo $this->translator(true)->_('config.accessTokenRequired'); ?>'" />
+</div>
+
+<div class="appFormRow">
+	<label for="access_token_secret"><?php echo $this->translator()->_('config.accessTokenSecret'); ?>:</label>
+	<input id="utilHooksTwitterUpdaterConfigAccessTokenSecret" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'access_token_secret', required: true, style: 'width: 200px', value: '<?php echo $this->accessTokenSecret; ?>', missingMessage: '<?php echo $this->translator(true)->_('config.accessTokenSecretRequired'); ?>'" />
+</div>
+
+<div class="appFormRow">
+	<label>&nbsp;</label>
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="name: 'authorize', type: 'button'">
+		<?php echo $this->translator()->_('config.authorizeAction'); ?>
+		<script type="dojo/connect" data-dojo-event="onClick">
+		window.open("<?php echo $this->url(array(), 'core_extension_render') . '?' . http_build_query(array(
+			'_type'	  => 'hook',
+			'_mod'	  => 'util',
+			'_name'	  => 'twitterupdater',
+			'_method' => 'authorize',
+			'step'	  => 'auth',
+		)); ?>", "", "height=400, width=400, location=no");
+		</script>
+	</button>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.ValidationTextBox");
+
+function utilHooksTwitterUpdaterConfigDone(data) {
+	switch (data.result) {
+		case "APP_RESULT_OK":
+			dijit.byId("utilHooksTwitterUpdaterConfigAccessToken").set("value", data.access_token);
+			dijit.byId("utilHooksTwitterUpdaterConfigAccessTokenSecret").set("value", data.access_token_secret);
+			break;
+		case "APP_RESULT_ERROR":
+			dojo.publish("/app/global/notification", [{
+				message : "<?php echo $this->translator()->_('authorize.error'); ?>",
+				type: "error"
+			}]);
+			break;
+	}
+};
+</script>

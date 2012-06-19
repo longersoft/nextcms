@@ -1,0 +1,17 @@
+{
+	"_about": {
+		"description": "Deny access to the website from IP addresses",
+		"title": "IP Blocker"
+	},
+	"_permission": {
+		"description": "Deny access to the website from IP addresses",
+		"actions": {
+			"config": "Show the setting form",
+			"save": "Save the settings"
+		}
+	},
+	"config": {
+		"backendIpsHelp": "The list of IP addresses that are allowed to access the back-end, separated by a comma:",
+		"frontendIpsHelp": "The list of IP addresses that are denied to access the website, separated by a comma:"
+	}
+}
