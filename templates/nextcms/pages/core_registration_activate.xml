@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone>
+					<mainContentPane />
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

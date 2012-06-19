@@ -1,0 +1,30 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		nextcms
+ * @subpackage	skins
+ * @since		1.0
+ * @version		2012-05-15
+ */
+ 
+.appAddRoleIcon { background-image: url(images/addRole.png); }
+.appAddUserIcon { background-image: url(images/addUser.png); }
+.appAttachmentIcon { background-image: url(images/attachment.png); }
+.appCropIcon { background-image: url(images/crop.png); }
+.appDeactivatedIcon { background-image: url(images/deactivated.png); }
+.appFlipHorizontalIcon { background-image: url(images/flipHorizontal.png); }
+.appFlipVerticalIcon { background-image: url(images/flipVertical.png); }
+.appGridView { background-image: url(images/viewGrid.png); }
+.appKeyIcon { background-image: url(images/key.png); }
+.appListView { background-image: url(images/viewList.png); }
+.appResizeIcon { background-image: url(images/resize.png); }
+.appRotateLeftIcon { background-image: url(images/rotateLeft.png); }
+.appRotateRightIcon { background-image: url(images/rotateRight.png); }
+.appSendIcon { background-image: url(images/send.png); }
+.appSlideshowIcon { background-image: url(images/slideshow.png); }
+.appSpamIcon { background-image: url(images/spam.png); }

@@ -1,0 +1,39 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		nextcms
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->article) : ?>
+
+<?php $this->headTitle()->append($this->article->title); ?>
+<div class="contentArticleView">
+	<?php echo Core_Base_Hook_Registry::getInstance()->executeFilter('Content_FilterArticleTitle', '<h1 class="title">' . $this->article->title . '</h1>'); ?>
+	
+	<?php echo $this->widget('share', 'util'); ?>
+	
+	<div class="content">
+		<?php echo $this->article->content; ?>
+	</div>
+	
+	<?php if ($this->tags) : ?>
+	<div class="tags">
+		<span><?php echo $this->translator()->_('global._share.tags'); ?>:</span>
+		<?php foreach ($this->tags as $tag) : ?><a href="<?php echo $this->url($tag->getProperties(), (Content_Models_Article::TYPE_BLOG == $this->article->type) ? 'content_blog_tag' : 'content_article_tag'); ?>"><?php echo $tag->title; ?></a><?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+</div>
+
+<?php endif; ?>

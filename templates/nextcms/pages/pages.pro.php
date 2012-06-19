@@ -1,0 +1,30 @@
+<?php
+$pages = array();
+$pages['core_index_index']['en_US']['']['url'] = "";
+$pages['core_index_index']['en_US']['']['title'] = "Simply is the best: The next generation of content management system";
+$pages['content_blog_tag']['en_US']['']['url'] = "";
+$pages['file_attachment_download']['en_US']['']['url'] = "";
+$pages['core_registration_register']['en_US']['']['url'] = "";
+$pages['core_registration_activate']['en_US']['']['url'] = "";
+$pages['content_page_view']['en_US']['']['url'] = "";
+$pages['content_index_index']['en_US']['']['url'] = "";
+$pages['content_index_index']['en_US']['']['title'] = "Documentation: where you can find everything to use NextCMS";
+$pages['content_article_tag']['en_US']['']['url'] = "";
+$pages['content_article_search']['en_US']['']['url'] = "";
+$pages['content_article_category']['en_US']['']['url'] = "";
+$pages['media_index_index']['en_US']['']['url'] = "";
+$pages['media_index_index']['en_US']['']['title'] = "Demonstration videos: Easy to learn, easy to follow";
+$pages['media_video_tag']['en_US']['']['url'] = "";
+$pages['media_video_search']['en_US']['']['url'] = "";
+$pages['media_video_view']['en_US']['']['url'] = "";
+$pages['content_article_view']['en_US']['']['url'] = "";
+$pages['media_video_index']['en_US']['']['url'] = "";
+$pages['content_blog_index']['en_US']['']['url'] = "";
+$pages['content_blog_index']['en_US']['']['title'] = "NextCMS team's blog";
+$pages['content_blog_view']['en_US']['']['url'] = "";
+$pages['content_blog_category']['en_US']['']['url'] = "";
+$pages['content_blog_search']['en_US']['']['url'] = "";
+$pages['content_blog_archive_category']['en_US']['']['url'] = "";
+$pages['content_blog_archive']['en_US']['']['url'] = "";
+
+return $pages;

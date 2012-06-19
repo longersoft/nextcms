@@ -1,0 +1,57 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		nextcms
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-13
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="menuWidgetsMenu">
+	<?php
+	echo $this->navigation()
+			  ->menu()
+			  ->renderMenu($this->container);
+	?>
+</div>
+
+<?php $this->script()->captureStartOnce('menuWidgetsMenu'); ?>
+$(document).ready(function() {
+	var w = Math.floor(($(document).width() - $("#wrapper").width()) / 2);
+	$(".menuWidgetsMenu").css("right", w + "px");
+	var locationPath = document.location.pathname;
+	if (locationPath == "") {
+		locationPath = "/";
+	}
+	$(".menuWidgetsMenu").find("a").each(function() {
+		if ($(this).parents("ul").eq(0).hasClass("navigation")) {
+			$(this).wrapInner($("<span/>"));
+		}
+		var href = $(this).attr("href");
+		if ((href == "/" && locationPath == "/") || 
+			(href != "/" && (document.location.href.indexOf(href) != -1 || document.location.pathname.indexOf(href) != -1))) {
+			$(this).addClass("active");
+			var ul = $(this).parents("ul").eq(0);
+			if ("none" == $(ul).css("display")) {
+				$(ul).prev().addClass("active");
+			}
+		}
+	});
+	$(".menuWidgetsMenu ul.navigation li").hover(function() {
+		$(this).addClass("hover");
+		$("ul:first", this).show();
+	}, function() {
+		$(this).removeClass("hover");
+		$("ul:first", this).hide();
+	});
+});
+<?php $this->script()->captureEndOnce('menuWidgetsMenu'); ?>

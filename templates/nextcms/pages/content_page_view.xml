@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu">
+						<params>
+							<param name="menu_id">
+								<value><![CDATA[1]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone>
+					<mainContentPane cssClass="utilHooksSlideshowZoomer">
+						<filters>
+							<filter class="util_hooks_slideshow_hook" />
+						</filters>
+					</mainContentPane>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="bottom">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" cssClass="bottomContainer">
+						<params>
+							<param name="menu_id">
+								<value><![CDATA[2]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[simple]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

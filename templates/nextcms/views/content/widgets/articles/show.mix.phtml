@@ -1,0 +1,40 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		nextcms
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numArticles > 0) : ?>
+<div class="contentWidgetsArticlesMix">
+	<?php if ($this->title) : ?><h2><?php echo $this->title; ?></h2><?php endif; ?>
+	
+	<dl>
+		<dt>
+			<a href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>">
+				<img src="<?php echo $this->articles[0]->getCover('thumbnail'); ?>" title="<?php echo addslashes($this->articles[0]->getCoverTitle()); ?>" />
+			</a>
+			<span>
+				<a href="<?php echo $this->articles[0]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[0]->title); ?>"><?php echo $this->articles[0]->title; ?></a>
+				<br />
+				<cite><?php echo $this->dateFormatter()->diff(strtotime($this->articles[0]->activated_date), $this->timeDiffFormats); ?></cite>
+			</span>
+		</dt>
+		
+		<?php for ($i = 1; $i < $this->numArticles; $i++) : ?>
+		<dd><a href="<?php echo $this->articles[$i]->getViewUrl(); ?>" title="<?php echo addslashes($this->articles[$i]->title); ?>"><?php echo $this->articles[$i]->title; ?></a></dd>
+		<?php endfor; ?>
+	</dl>
+</div>
+<?php endif; ?>

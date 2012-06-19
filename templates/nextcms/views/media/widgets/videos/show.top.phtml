@@ -1,0 +1,64 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		nextcms
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-09
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->videos) : ?>
+
+<?php 
+$this->script()->appendFile($this->APP_STATIC_URL . '/templates/nextcms/js/jquery.cycle.min.js');
+?>
+
+<div class="mediaWidgetsVideosTop">
+	<div class="summary"></div>
+	<div class="slide">
+		<?php foreach ($this->videos as $video) : ?>
+		<div>
+			<a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>" title="<?php echo addslashes($video->title); ?>">
+				<img src="<?php echo $video->getPoster('large'); ?>" data-original="<?php echo $video->getPoster('large'); ?>" title="<?php echo addslashes($video->title); ?>" />
+			</a>
+			<div class="desc">
+				<h2><a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>"><?php echo $video->title; ?></a></h2>
+				<span>
+					<?php echo sprintf($this->translator()->_('show.by'), $video->getAuthor()); ?>, <?php echo sprintf($this->translator()->_('show.numViews'), $video->num_views); ?>
+				</span>
+			</div>
+		</div>
+		<?php endforeach; ?>
+	</div>
+	<a href="<?php echo $this->url($video->getProperties(), 'media_video_view'); ?>" class="player"></a>
+</div>
+
+<?php $this->script()->captureStartOnce('mediaWidgetsVideosTop'); ?>
+$(document).ready(function() {
+	$(".mediaWidgetsVideosTop .slide").after("<ul class='nav'>").cycle({
+		fx: "fade",
+		speed: 400,
+		timeout: 0, // 3000
+		pager: "..mediaWidgetsVideosTop .nav",
+		pagerAnchorBuilder: function(idx, slide) {
+			// Support Lazyload plugin
+			return '<li><a href="#"><img src="' + $(slide).find("img").attr("data-original") + '"/></a></li>';
+		},
+		before: function() {
+			var summary = $(this).parents(".mediaWidgetsVideosTop").find(".summary").eq(0);
+			$(summary).html($(this).find(".desc").eq(0).html());
+		}
+	});
+});
+<?php $this->script()->captureEndOnce('mediaWidgetsVideosTop'); ?>
+
+<?php endif; ?>

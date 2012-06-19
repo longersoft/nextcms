@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu">
+						<params>
+							<param name="menu_id">
+								<value><![CDATA[1]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+					<widget module="content" name="editor" cssClass="fullContainer">
+						<params>
+							<param name="content">
+								<value><![CDATA[<h1>Documentation</h1>
+<p>Donec eros velit, tempus ac ultrices tempus, ultricies ullamcorper justo. Suspendisse malesuada leo a magna auctor nec sagittis lorem rutrum. In nulla sapien, ultricies a luctus sed, facilisis vitae orci.</p>]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center" cssClass="docContainer">
+			<gridContainer>
+				<zone cssClass="docLeftContainer">
+					<widget module="content" name="searchbox" title="Search">
+						<params>
+							<param name="type">
+								<value><![CDATA[article]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+					<widget module="content" name="categories" title="Navigation">
+						<params>
+							<param name="language">
+								<value><![CDATA[en_US]]></value>
+							</param>
+							<param name="category_id">
+								<value><![CDATA[1]]></value>
+							</param>
+							<param name="type">
+								<value><![CDATA[article]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+				<zone cssClass="docRightContainer">
+					<widget module="content" name="breadcrumb">
+						<params>
+							<param name="language">
+								<value><![CDATA[en_US]]></value>
+							</param>
+							<param name="category_id">
+								<value><![CDATA[__AUTO__]]></value>
+							</param>
+							<param name="type">
+								<value><![CDATA[article]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+					<mainContentPane cssClass="utilHooksSlideshowZoomer">
+						<filters>
+							<filter class="util_hooks_slideshow_hook" />
+							<filter class="util_hooks_navigator_hook" />
+						</filters>
+					</mainContentPane>
+					<widget module="util" name="urlshortener">
+						<params>
+							<param name="service">
+								<value><![CDATA[TinyUrlCom]]></value>
+							</param>
+							<param name="custom_service">
+								<value><![CDATA[]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+					<widget module="comment" name="comments">
+						<params>
+							<param name="entity_class">
+								<value><![CDATA[Content_Models_Article]]></value>
+							</param>
+							<param name="entity_id">
+								<value><![CDATA[__AUTO__]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="bottom">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" cssClass="bottomContainer">
+						<params>
+							<param name="menu_id">
+								<value><![CDATA[2]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[simple]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

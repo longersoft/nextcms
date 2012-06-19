@@ -1,0 +1,35 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		nextcms
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="menuWidgetsMenuSimple">
+	<?php
+	echo $this->navigation()
+			  ->menu()
+			  ->renderMenu($this->container);
+	?>
+</div>
+
+<?php $this->script()->captureStartOnce('menuWidgetsMenuSimple'); ?>
+$(document).ready(function() {
+	$(".menuWidgetsMenuSimple").find("li").each(function(index) {
+		if (index > 0) {
+			$(this).before($("<li/>").html(":"));
+		}
+	});
+});
+<?php $this->script()->captureEndOnce('menuWidgetsMenuSimple'); ?>
