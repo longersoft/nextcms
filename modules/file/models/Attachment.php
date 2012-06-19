@@ -10,7 +10,7 @@
  * @package		file
  * @subpackage	models
  * @since		1.0
- * @version		2012-06-11
+ * @version		2012-06-19
  */
 
 defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
@@ -44,4 +44,20 @@ class File_Models_Attachment extends Core_Base_Models_Entity
 		'language'		=> null,
 		'translations'	=> null,
 	);
+	
+	/**
+	 * @see Core_Base_Models_Entity::getId()
+	 */
+	public function getId()
+	{
+		return $this->_properties['attachment_id'];
+	}
+	
+	/**
+	 * @see Core_Base_Models_Entity::getTitle()
+	 */
+	public function getTitle()
+	{
+		return $this->_properties['title'];
+	}
 }
