@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+				<zone>
+					<widget module="content" name="searchbox">
+						<params>
+							<param name="type" value="blog" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone cssClass="c660">
+					<mainContentPane />
+				</zone>
+				<zone cssClass="c300">
+					<widget module="content" name="categories" title="Categories">
+						<params>
+							<param name="type" value="blog" />
+							<param name="show_num_articles" value="1" />
+						</params>
+					</widget>
+					<widget module="content" name="archive" title="Archives">
+						<params>
+							<param name="type" value="blog" />
+							<param name="category_id" value="__AUTO__" />
+						</params>
+					</widget>
+					<widget module="tag" name="tagcloud" title="Tag cloud">
+						<params>
+							<param name="entity_class" value="Content_Models_Article" />
+							<param name="route_name" value="content_blog_tag" />
+							<param name="limit" value="20" />
+						</params>
+					</widget>
+					<widget module="ad" name="banners" />
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

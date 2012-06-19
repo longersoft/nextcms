@@ -1,0 +1,33 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		default
+ * @subpackage	layouts
+ * @since		1.0
+ * @version		2012-03-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<p class="logo"><a href="<?php echo $this->url(array(), 'core_index_index'); ?>" title="<?php echo addslashes($this->config('core', 'site_title', '')); ?>"><img src="<?php echo $this->APP_STATIC_URL; ?>/templates/<?php echo $this->APP_TEMPLATE; ?>/skins/<?php echo $this->APP_SKIN; ?>/images/headerLogo.jpg" title="<?php echo addslashes($this->config('core', 'site_title', '')); ?>" height="60" width="204" /></a></p>
+<p class="slogan"><?php echo $this->config('core', 'site_title', ''); ?></p>
+<div class="welcome">
+	<p>&nbsp;</p>
+	
+	<?php if (Zend_Auth::getInstance()->hasIdentity()) : ?>
+		<span><?php echo sprintf($this->translator()->setLanguageDir('modules/core/languages')->_('global.layout.welcome'), Zend_Auth::getInstance()->getIdentity()->user_name); ?></span>
+		<span><a href="<?php echo $this->url(array(), 'core_auth_logout'); ?>"><?php echo $this->translator()->_('global.layout.logout'); ?></a></span>
+	<?php else : ?>
+		<span><a href="<?php echo $this->url(array(), 'core_auth_login'); ?>"><?php echo $this->translator()->setLanguageDir('modules/core/languages')->_('global.layout.login'); ?></a></span>
+		<?php if ($this->config('core', 'register_enabled') == 'true') : ?>
+		<span><a href="<?php echo $this->url(array(), 'core_registration_register'); ?>"><?php echo $this->translator()->_('global.layout.register'); ?></a></span>
+		<?php endif; ?>
+	<?php endif; ?>
+</div>

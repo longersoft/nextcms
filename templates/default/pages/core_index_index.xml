@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+				<zone>
+					<widget module="content" name="searchbox">
+						<params>
+							<param name="type" value="article" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="content" name="articles">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="cover" />
+							<param name="limit" value="6" />
+						</params>
+					</widget>
+					<widget module="content" name="articles">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="headline" />
+							<param name="limit" value="3" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center" cssClass="homeCenterContainer">
+			<gridContainer>
+				<zone cssClass="c660">
+					<widget module="content" name="articles" title="Editor's Picks">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="mix" />
+							<param name="limit" value="4" />
+						</params>
+					</widget>
+					<widget module="content" name="articles" title="Editor's Blog">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="simple" />
+							<param name="limit" value="4" />
+						</params>
+					</widget>
+					<widget module="media" name="videos" title="Video Clips">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="mix" />
+							<param name="limit" value="4" />
+						</params>
+					</widget>
+				</zone>
+				<zone cssClass="c300">
+					<widget module="poll" name="poll" />
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="bottom">
+			<gridContainer>
+				<zone>
+					<widget module="media" name="photos">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="slide" />
+							<param name="limit" value="10" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="bottom" cssClass="bottomContainer">
+			<gridContainer>
+				<zone>
+					<widget module="content" name="editor" title="About us">
+						<params>
+							<param name="content" value="" />
+						</params>
+					</widget>
+				</zone>
+				<zone>
+					<widget module="util" name="twitter" title="@thenextcms">
+						<params>
+							<param name="search_by" value="username" />
+							<param name="username" value="thenextcms" />
+							<param name="limit" value="1" />
+						</params>
+					</widget>
+				</zone>
+				<zone>
+					<widget module="util" name="social" title="Follow us">
+						<params>
+							<param name="introduction" value="" />
+							<param name="rss" value="" />
+							<param name="facebook" value="" />
+							<param name="twitter" value="http://twitter.com/thenextcms" />
+							<param name="youtube" value="http://youtube.com/user/thenextcms" />
+						</params>
+					</widget>
+				</zone>
+				<zone>
+					<widget module="content" name="editor" title="Contact us">
+						<params>
+							<param name="content" value="" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

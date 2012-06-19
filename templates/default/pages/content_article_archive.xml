@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+				<zone>
+					<widget module="content" name="searchbox">
+						<params>
+							<param name="type" value="article" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="content" name="breadcrumb">
+						<params>
+							<param name="type" value="article" />
+							<param name="category_id" value="__AUTO__" />
+						</params>
+					</widget>
+					<widget module="content" name="archive">
+						<params>
+							<param name="type" value="article" />
+							<param name="theme" value="horizontal" />
+							<param name="category_id" value="__AUTO__" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone>
+					<mainContentPane />
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

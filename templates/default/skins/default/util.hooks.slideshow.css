@@ -1,0 +1,32 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		default
+ * @subpackage	skins
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/* Override the colorbox styles */
+#cboxOverlay { background: #000; }
+#colorbox {}
+#cboxContent { margin-top: 20px; }
+.cboxIframe { background: #fff; }
+#cboxError { border: 1px solid #ccc; padding: 50px; }
+#cboxLoadedContent { background: transparent; text-align: center; }
+#cboxTitle { color: white; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; left: 0; line-height: 18px; padding: 0 0 3px 0; position: absolute; top: -20px; }
+#cboxCurrent { display: none; }
+#cboxSlideshow { color: #fff; position: absolute; right: 0; text-indent: -9999px; top: 30px; }
+#cboxPrevious { background: url(images/util.hooks.slideshow.png) no-repeat top left; height: 62px; left: 0; margin-top: -32px; position: absolute; text-indent: -9999px; top: 50%; width: 62px; }
+#cboxPrevious:hover { background-position: bottom left; }
+#cboxNext { background: url(images/util.hooks.slideshow.png) no-repeat top right; height: 62px; margin-top: -32px; position: absolute; right: 0; text-indent: -9999px; top: 50%; width: 62px; }
+#cboxNext:hover { background-position: bottom right; }
+#cboxLoadingOverlay { background: #000; }
+#cboxLoadingGraphic { background: url(images/util.hooks.slideshow.loading.gif) no-repeat center center; }
+#cboxClose { background: url(images/util.hooks.slideshow.close.png) no-repeat top center; display: block; height: 25px; position: absolute; right: 0; text-indent: -9999px; top: -15px; width: 25px; }
+#cboxClose:hover { background-position: bottom center; }

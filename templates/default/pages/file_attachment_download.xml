@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone cssClass="c660">
+					<mainContentPane>
+					</mainContentPane>
+				</zone>
+				<zone cssClass="c300">
+					<tabContainer>
+						<gridContainer title="Most downloaded">
+							<zone>
+								<widget module="file" name="attachments">
+									<params>
+										<param name="limit">
+											<value><![CDATA[5]]></value>
+										</param>
+										<param name="language">
+											<value><![CDATA[en_US]]></value>
+										</param>
+										<param name="data_source">
+											<value><![CDATA[most_downloaded]]></value>
+										</param>
+										<param name="attachment_ids[]">
+											<value><![CDATA[Array]]></value>
+										</param>
+										<param name="theme">
+											<value><![CDATA[mostdownloaded]]></value>
+										</param>
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+						<gridContainer title="Latest attachments">
+							<zone>
+								<widget module="file" name="attachments">
+									<params>
+										<param name="limit">
+											<value><![CDATA[5]]></value>
+										</param>
+										<param name="language">
+											<value><![CDATA[en_US]]></value>
+										</param>
+										<param name="data_source">
+											<value><![CDATA[latest]]></value>
+										</param>
+										<param name="theme">
+											<value><![CDATA[]]></value>
+										</param>
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+					</tabContainer>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="bottom">
+			<gridContainer>
+				<zone>
+					<widget module="comment" name="comments">
+						<params>
+							<param name="entity_class">
+								<value><![CDATA[File_Models_Attachment]]></value>
+							</param>
+							<param name="entity_id">
+								<value><![CDATA[__AUTO__]]></value>
+							</param>
+							<param name="theme">
+								<value><![CDATA[]]></value>
+							</param>
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

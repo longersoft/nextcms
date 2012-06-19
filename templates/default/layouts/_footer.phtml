@@ -1,0 +1,24 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		default
+ * @subpackage	layouts
+ * @since		1.0
+ * @version		2012-03-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<p class="logo"><a href="<?php echo $this->url(array(), 'core_index_index'); ?>" title="<?php echo addslashes($this->config('core', 'site_title', '')); ?>"><img src="<?php echo $this->APP_STATIC_URL; ?>/templates/<?php echo $this->APP_TEMPLATE; ?>/skins/<?php echo $this->APP_SKIN; ?>/images/footerLogo.jpg" title="<?php echo addslashes($this->config('core', 'site_title', '')); ?>" height="40" width="155" /></a></p>
+<p class="copyright">
+	&copy; <?php echo date('Y'); ?> <?php echo $this->config('core', 'site_name', ''); ?>
+	<br />
+	All rights reserved.
+</p>

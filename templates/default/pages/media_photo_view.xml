@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+				<zone>
+					<widget module="media" name="searchbox">
+						<params>
+							<param name="type" value="photo" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone cssClass="c660">
+					<mainContentPane />
+					<widget module="comment" name="comments">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="entity_class" value="Media_Models_Photo" />
+							<param name="entity_id" value="__AUTO__" />
+						</params>
+					</widget>
+				</zone>
+				<zone cssClass="c300">
+					<widget module="media" name="photos">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="title" value="More photos from the album" />
+							<param name="theme" value="square" />
+							<param name="limit" value="12" />
+							<param name="album_id" value="__AUTO__" />
+						</params>
+					</widget>
+					<widget module="ad" name="banners" />
+					<widget module="media" name="photos" title="Latest photos">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="square" />
+							<param name="limit" value="12" />
+						</params>
+					</widget>
+					<widget module="media" name="albums" title="Latest albums">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="list" />
+							<param name="limit" value="4" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

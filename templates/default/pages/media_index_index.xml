@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<borderContainer region="center">
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="menu" name="menu" />
+				</zone>
+				<zone>
+					<widget module="media" name="searchbox">
+						<params>
+							<param name="type" value="photo" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="top">
+			<gridContainer>
+				<zone>
+					<widget module="media" name="photos">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="full" />
+							<param name="limit" value="5" />
+						</params>
+					</widget>
+					<widget module="media" name="photos" title="Most downloaded">
+						<params>
+							<param name="data_source" value="most_downloaded" />
+							<param name="theme" value="thumbnail" />
+							<param name="limit" value="5" />
+						</params>
+					</widget>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+		<borderContainer region="center">
+			<gridContainer>
+				<zone cssClass="c660">
+					<widget module="media" name="photos" title="Latest photos">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="mix" />
+							<param name="limit" value="9" />
+						</params>
+					</widget>
+					<widget module="media" name="albums" title="Latest albums">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="tiles" />
+							<param name="limit" value="9" />
+						</params>
+					</widget>
+					<widget module="media" name="videos" title="Latest video clips">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="mix" />
+							<param name="limit" value="4" />
+						</params>
+					</widget>
+					<widget module="media" name="playlists" title="Latest playlists">
+						<params>
+							<param name="data_source" value="latest" />
+							<param name="theme" value="tiles" />
+							<param name="limit" value="9" />
+						</params>
+					</widget>
+				</zone>
+				<zone cssClass="c300">
+					<widget module="ad" name="banners" />
+					<tabContainer title="Most viewed">
+						<gridContainer title="Photos">
+							<zone>
+								<widget module="media" name="photos">
+									<params>
+										<param name="data_source" value="most_viewed" />
+										<param name="theme" value="grid" />
+										<param name="limit" value="9" />
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+						<gridContainer title="Albums">
+							<zone>
+								<widget module="media" name="albums">
+									<params>
+										<param name="data_source" value="most_viewed" />
+										<param name="theme" value="grid" />
+										<param name="limit" value="9" />
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+						<gridContainer title="Videos">
+							<zone>
+								<widget module="media" name="videos">
+									<params>
+										<param name="data_source" value="most_viewed" />
+										<param name="theme" value="grid" />
+										<param name="limit" value="9" />
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+						<gridContainer title="Playlists">
+							<zone>
+								<widget module="media" name="playlists">
+									<params>
+										<param name="data_source" value="most_viewed" />
+										<param name="theme" value="grid" />
+										<param name="limit" value="9" />
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+					</tabContainer>
+					<tabContainer title="Most commented">
+						<gridContainer title="Photos">
+							<zone>
+								<widget module="media" name="photos">
+									<params>
+										<param name="data_source" value="most_commented" />
+										<param name="theme" value="list" />
+										<param name="limit" value="4" />
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+						<gridContainer title="Videos">
+							<zone>
+								<widget module="media" name="videos">
+									<params>
+										<param name="data_source" value="most_commented" />
+										<param name="theme" value="list" />
+										<param name="limit" value="4" />
+									</params>
+								</widget>
+							</zone>
+						</gridContainer>
+					</tabContainer>
+				</zone>
+			</gridContainer>
+		</borderContainer>
+	</borderContainer>
+</layout>

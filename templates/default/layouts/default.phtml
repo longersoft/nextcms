@@ -1,0 +1,112 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	templates
+ * @package		default
+ * @subpackage	layouts
+ * @since		1.0
+ * @version		2012-04-04
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<?php echo $this->headTitle(); ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->APP_CHARSET; ?>" />
+	<?php echo $this->headMeta(); ?>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->APP_STATIC_URL; ?>/templates/<?php echo $this->APP_TEMPLATE; ?>/skins/<?php echo $this->APP_SKIN; ?>/images/favicon.ico" />
+	<?php
+	$this->style()
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/' . $this->dojoConfig()->getTheme() . '.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dijit/themes/' . $this->dojoConfig()->getTheme() . '/document.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/templates/' . $this->APP_TEMPLATE .'/skins/' . $this->APP_SKIN . '/styles.css')
+		 ->appendStylesheet($this->APP_STATIC_URL . '/static/js/dojo/' . APP_DOJO_VER . '/dojox/widget/Toaster/Toaster.css');
+	echo $this->style()->minify();
+	?>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojo/dojo.js" data-dojo-config="parseOnLoad: true, isDebug: false, ioPublish: true"></script>
+	<script type="text/javascript" src="<?php echo $this->APP_STATIC_URL; ?>/static/js/jquery/<?php echo APP_JQUERY_VER; ?>/jquery.min.js"></script>
+	<script type="text/javascript">
+	dojo.registerModulePath("core", "<?php echo $this->APP_STATIC_URL; ?>/modules/core");
+	dojo.require("core.js.base.I18N");
+	dojo.require("core.js.Constant");
+	core.js.base.I18N.setLocale("<?php echo $this->APP_LANGUAGE; ?>");
+	core.js.Constant.ROOT_URL = "<?php echo $this->APP_ROOT_URL; ?>";
+	</script>
+</head>
+<body class="<?php echo $this->dojoConfig()->getTheme(); ?>">
+	<div id="wrapper">
+		<!-- Header -->
+		<div id="header">
+			<?php if ($header = dirname(__FILE__) . DS . '_header.'. Zend_Controller_Front::getInstance()->getRequest()->getParam('lang', $this->APP_LANGUAGE) . '.phtml') : ?>
+				<?php if (file_exists($header)) : ?>
+				<?php include_once $header; ?>
+				<?php else : ?>
+				<?php include_once dirname(__FILE__) . DS . '_header.phtml'; ?>
+				<?php endif; ?>
+			<?php endif; ?>
+		</div>
+		<!-- /Header -->
+	
+		<!-- Content -->
+		<div id="main">
+			<?php if ($page = $this->pageMapper()) : ?>
+			<?php include_once $page; ?>
+			<?php else : ?>
+			<?php echo $this->layout()->content; ?>
+			<?php endif; ?>
+		</div>
+		<!-- /Content -->
+		
+		<!-- Footer -->
+		<div id="footer">
+			<?php if ($header = dirname(__FILE__) . DS . '_footer.'. Zend_Controller_Front::getInstance()->getRequest()->getParam('lang', $this->APP_LANGUAGE) . '.phtml') : ?>
+				<?php if (file_exists($header)) : ?>
+				<?php include_once $header; ?>
+				<?php else : ?>
+				<?php include_once dirname(__FILE__) . DS . '_footer.phtml'; ?>
+				<?php endif; ?>
+			<?php endif; ?>
+		</div>
+		<!-- /Footer -->
+		
+		<!-- Notifications -->
+		<div data-dojo-type="dojox.widget.Toaster" data-dojo-props="positionDirection: 'tr-down', messageTopic: '/app/global/notification', separator: '<hr />'"></div>
+		<!-- /Notifications -->
+	</div>
+
+<?php $this->script()->captureStart(); ?>
+dojo.require("dojox.widget.Toaster");
+$(document).ready(function() {
+	// Tabs click handler
+	$(".appTabTitleContainer a").click(function() {
+		var tabContainer = $(this).parents(".appTabContainer");
+		$(tabContainer).find(".appTabTitleContainer a").removeClass("active");
+		$(this).addClass("active");
+		
+		var index = $(tabContainer).find(".appTabTitleContainer a").index($(this));
+		$(tabContainer).find(".appTab").hide();
+		$(tabContainer).find(".appTab").eq(index).show();
+	});
+	$(".appTabTitleContainer").each(function() {
+		if ($(this).find(".appTabTitleActivated").length == 0) {
+			$(this).find("a").eq(0).click();
+		} else {
+			$(this).find(".appTabTitleActivated").eq(0).find("a").eq(0).click();
+		}
+	});
+});
+<?php $this->script()->captureEnd(); ?>
+<?php
+// Push the script at the bottom of page
+echo $this->script()->minify();
+?>
+</body>
+</html>
