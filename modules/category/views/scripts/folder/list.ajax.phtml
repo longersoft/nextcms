@@ -1,0 +1,27 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		category
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-27
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->folders) : ?>
+<ul class="categoryFolderItemsContainer">
+	<?php foreach ($this->folders as $folder) : ?>
+	<li id="categoryFolderListItem_<?php echo $folder->folder_id; ?>" class="categoryFolderItem" data-app-entity-props="<?php echo $this->encoder()->encode($folder); ?>">
+		<a class="categoryFolderName" href="javascript: void(0);"><?php echo $folder->name; ?></a>
+	</li>
+	<?php endforeach; ?>
+</ul>
+<?php endif; ?>

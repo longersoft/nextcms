@@ -1,0 +1,118 @@
+{
+	"_about": {
+		"description": "Manage categories",
+		"title": "Category"
+	},
+	"_permission": {
+		"category": {
+			"description": "Manage categories",
+			"actions": {
+				"add": "Add new category",
+				"delete": "Delete category",
+				"edit": "Edit category",
+				"list": "List categories",
+				"move": "Move category",
+				"rename": "Rename category"
+			}
+		},
+		"folder": {
+			"description": "Manage folders",
+			"actions": {
+				"add": "Add new folder",
+				"delete": "Delete folder",
+				"list": "List folders",
+				"rename": "Rename folder"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"allLanguages": "All languages",
+			"cancelAction": "Cancel",
+			"closeAction": "Close",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"language": "Language",
+			"loadingAction": "Loading ...",
+			"localizeAction": "Localize",
+			"refreshAction": "Refresh",
+			"renameAction": "Rename",
+			"saveAction": "Save",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"category": {
+		"_share": {
+			"addSubCategoryAction": "Add sub category",
+			"image": "Image",
+			"language": "Language",
+			"localization": "Localization",
+			"localizationHelp": "Drag the copies of category in other languages from the category tree<br />and drop them here",
+			"metaDescriptionTag": "Meta description tag",
+			"metaKeywordTag": "Meta keyword tag",
+			"name": "Name",
+			"nameRequired": "The name is required",
+			"parent": "Parent category",
+			"properties": "Properties",
+			"slug": "Slug",
+			"slugRequired": "The slug is required"
+		},
+		"add": {
+			"error": "Sorry, cannot add new category",
+			"success": "The new category is created successfully",
+			"title": "Add new category"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the category named <b>%s</b>?",
+			"error": "Sorry, cannot delete the category",
+			"notFound": "Sorry, cannot find the category",
+			"success": "The category is deleted successfully",
+			"title": "Delete the category"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the category",
+			"notFound": "Sorry, cannot find the category",
+			"success": "The category is updated successfully",
+			"title": "Update category"
+		},
+		"list": {
+			"rootLabel": "Root category",
+			"title": "Manage categories"
+		},
+		"move": {
+			"error": "Sorry, cannot move the category",
+			"success": "The category is moved successfully"
+		},
+		"rename": {
+			"error": "Sorry, cannot rename the category",
+			"success": "The category's name is updated successfully",
+			"title": "Rename category"
+		}
+	},
+	"folder": {
+		"_share": {
+			"language": "Language",
+			"name": "Name",
+			"nameRequired": "The name is required"
+		},
+		"add": {
+			"error": "Sorry, cannot add new folder",
+			"success": "The new folder is created successfully",
+			"title": "Add new folder"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the folder named <b>%s</b>?",
+			"error": "Sorry, cannot delete the folder",
+			"notFound": "Sorry, cannot find the folder",
+			"success": "The folder is deleted successfully",
+			"title": "Delete a folder"
+		},
+		"rename": {
+			"error": "Sorry, cannot rename the folder",
+			"success": "The folder's name is updated successfully",
+			"title": "Rename a folder"
+		}
+	}
+}

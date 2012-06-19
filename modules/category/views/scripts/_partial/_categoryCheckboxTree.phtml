@@ -1,0 +1,41 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		category
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript">
+dojo.registerModulePath("category", "<?php echo $this->APP_STATIC_URL; ?>/modules/category");
+
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("category.js.views.CategoryCheckboxTree");
+
+dojo.addOnLoad(function() {
+	<?php foreach (array(
+			'category_category_list',
+		) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});
+	<?php endforeach; ?>
+	
+	var categoryCheckboxTree = new category.js.views.CategoryCheckboxTree("<?php echo $this->params['id']; ?>", "<?php echo $this->module; ?>", "<?php echo $this->language; ?>", {
+		name: "<?php echo $this->params['name']; ?>",
+		selected: "<?php echo $this->params['selected']; ?>",
+		disabled: <?php if ($this->params['disabled']) : ?>true<?php else : ?>false<?php endif; ?>
+	});
+});
+</script>

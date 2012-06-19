@@ -1,0 +1,69 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		category
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-03-28
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('folder.delete.title'));
+?>
+
+<div>
+<?php if (!$this->folder) : ?>
+	<?php echo $this->translator()->_('folder.delete.notFound'); ?>
+<?php else : ?>
+	<?php echo sprintf($this->translator()->_('folder.delete.confirm'), $this->folder->name); ?>
+<?php endif; ?>
+</div>
+
+<div class="dijitDialogPaneActionBar">
+	<!-- YesButton -->
+	<?php if ($this->folder) : ?>
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.yesMessage'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'category_folder_delete'); ?>",
+			content: {
+				folder_id: "<?php echo $this->folder->folder_id; ?>",
+				format: "json"
+			},
+			handleAs: "json",
+			load: function(data) {
+				dojo.publish("/app/category/folder/delete/onComplete", [ data ]);
+			}
+		});
+		</script>			
+	</button>
+	<?php endif; ?>
+	<!-- /YesButton -->
+
+	<!-- NoButton -->
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php if ($this->category) : ?>
+			<?php echo $this->translator()->_('global._share.noMessage'); ?>
+		<?php else : ?>
+			<?php echo $this->translator()->_('global._share.closeAction'); ?>
+		<?php endif; ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.publish("/app/category/folder/delete/onCancel");
+		</script>
+	</button>
+	<!-- /NoButton -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+</script>

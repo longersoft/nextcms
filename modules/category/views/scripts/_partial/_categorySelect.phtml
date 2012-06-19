@@ -1,0 +1,30 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		category
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<select data-dojo-type="dijit.form.Select" data-dojo-props="name: '<?php echo $this->params['name']; ?>', maxHeight: 300, disabled: <?php if ($this->params['disabled']): ?>true<?php else : ?>false<?php endif; ?>">
+	<option value="">---</option>
+	<?php if ($this->categories) : ?>
+	<?php foreach ($this->categories as $category) : ?>
+	<option value="<?php echo $category->category_id; ?>"<?php if (isset($this->params['selected']) && $this->params['selected'] == $category->category_id) : ?> selected="selected"<?php endif; ?>><?php echo str_repeat('---', $category->depth) . $category->name; ?></option>
+	<?php endforeach; ?>
+	<?php endif; ?>
+</select>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+</script>

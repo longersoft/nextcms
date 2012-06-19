@@ -1,0 +1,118 @@
+{
+	"_about": {
+		"description": "Quản lý chuyên mục",
+		"title": "Chuyên mục"
+	},
+	"_permission": {
+		"category": {
+			"description": "Quản lý chuyên mục",
+			"actions": {
+				"add": "Thêm mới chuyên mục",
+				"delete": "Xóa chuyên mục",
+				"edit": "Sửa chuyên mục",
+				"list": "Xem danh sách chuyên mục",
+				"move": "Di chuyển chuyên mục",
+				"rename": "Đổi tên chuyên mục"
+			}
+		},
+		"folder": {
+			"description": "Quản lý thư mục",
+			"actions": {
+				"add": "Thêm mới thư mục",
+				"delete": "Xóa thư mục",
+				"list": "Xem danh sách thư mục",
+				"rename": "Đổi tên thư mục"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"cancelAction": "Hủy",
+			"closeAction": "Đóng",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"language": "Ngôn ngữ",
+			"loadingAction": "Đang tải ...",
+			"localizeAction": "Địa phương hóa",
+			"refreshAction": "Tải lại",
+			"renameAction": "Đổi tên",
+			"saveAction": "Lưu",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"category": {
+		"_share": {
+			"addSubCategoryAction": "Thêm chuyên mục con",
+			"image": "Ảnh",
+			"language": "Ngôn ngữ",
+			"localization": "Địa phương hóa",
+			"localizationHelp": "Gắp bản sao của chuyên mục trong các ngôn ngữ khác từ cây chuyên mục<br />và thả vào đây",
+			"metaDescriptionTag": "Thẻ mô tả (meta description)",
+			"metaKeywordTag": "Thẻ từ khóa (meta keyword)",
+			"name": "Tên",
+			"nameRequired": "Tên là bắt buộc",
+			"parent": "Chuyên mục cha",
+			"properties": "Thuộc tính",
+			"slug": "Tiêu đề rút gọn",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm mới chuyên mục",
+			"success": "Chuyên mục mới đã được tạo thành công",
+			"title": "Thêm mới chuyên mục"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa chuyên mục <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa chuyên mục",
+			"notFound": "Xin lỗi, không tìm thấy chuyên mục",
+			"success": "Chuyên mục đã được xóa thành công",
+			"title": "Xóa chuyên mục"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật chuyên mục",
+			"notFound": "Xin lỗi, không tìm thấy chuyên mục",
+			"success": "Chuyên mục đã được cập nhật thành công",
+			"title": "Cập nhật chuyên mục"
+		},
+		"list": {
+			"rootLabel": "Chuyên mục gốc",
+			"title": "Quản lý chuyên mục"
+		},
+		"move": {
+			"error": "Xin lỗi, không thể chuyển chuyên mục",
+			"success": "Chuyên mục đã được chuyển thành công"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể đổi tên chuyên mục",
+			"success": "Chuyên mục đã được đổi tên thành công",
+			"title": "Đổi tên chuyên mục"
+		}
+	},
+	"folder": {
+		"_share": {
+			"language": "Ngôn ngữ",
+			"name": "Tên",
+			"nameRequired": "Tên là bắt buộc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm mới thư mục",
+			"success": "Thư mục mới đã được tạo thành công",
+			"title": "Thêm mới thư mục"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa thư mục <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa thư mục",
+			"notFound": "Xin lỗi, không tìm thấy thư mục",
+			"success": "Thư mục đã được xóa thành công",
+			"title": "Xóa thư mục"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể đổi tên thư mục",
+			"success": "Thư mục đã được đổi tên thành công",
+			"title": "Đổi tên thư mục"
+		}
+	}
+}

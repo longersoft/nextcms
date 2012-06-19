@@ -1,0 +1,25 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		category
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-05-11
+ */
+ 
+/********** MANAGE FOLDERS **********/
+.categoryFolderItemsContainer { list-style-type: none; margin: 0; padding: 0; }
+.categoryFolderItem { display: block; border-bottom: 1px solid #B5BCC7; padding: 5px; }
+.categoryFolderItemSelected { background: #CFE5FA; }
+.categoryFolderName { text-decoration: none; }
+.categoryFolderItem:hover { background-color: #abd6ff; }
+
+/* Dnd */
+.categoryFolderItemsContainer .dojoDndContainerOver { background: #EDEDED /*#EDEDED*/; }
+.categoryFolderItemsContainer .dojoDndItemSelected { background: #CFE5FA; }
+.categoryFolderItemsContainer .dojoDndItemAnchor { background: #CFE5FA; }

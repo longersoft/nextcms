@@ -1,0 +1,72 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		category
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-29
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('category.list.title'));
+?>
+
+<div id="categoryCategoryListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top'">
+		<div id="categoryCategoryListToolbar"></div>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- CategoryTreeView -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+		<div id="categoryCategoryListTree"></div>
+	</div>
+	<!-- /CategoryTreeView -->
+</div>
+
+<script type="text/javascript">
+dojo.registerModulePath("category", "<?php echo $this->APP_STATIC_URL; ?>/modules/category");
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("category.js.controllers.CategoryController");
+dojo.require("category.js.views.CategoryToolbar");
+dojo.require("category.js.views.CategoryTreeView");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'category_category_add', 'category_category_delete', 'category_category_edit', 'category_category_list', 'category_category_move',
+					'category_category_rename',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	// Localization
+	core.js.base.Config.set("core", "localization_languages", <?php echo $this->config("core", "localization_languages", '{"en_US":"English"}'); ?>);
+	
+	var categoryController = new category.js.controllers.CategoryController("contentArticleListCategoryContainer");
+	categoryController.setModule("<?php echo $this->module; ?>")
+					  .setLanguage("<?php echo $this->language; ?>")
+					  .setHelperContainer("<?php echo $this->helperContainer; ?>") 
+					  .setCategoryToolbar(new category.js.views.CategoryToolbar("categoryCategoryListToolbar"))
+					  .setCategoryTreeView(new category.js.views.CategoryTreeView("categoryCategoryListTree"));
+});
+</script>
