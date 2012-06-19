@@ -1,0 +1,11 @@
+{
+	"_about": {
+		"description": "Show a menu",
+		"title": "Menu"
+	},
+	"config": {
+		"basic": "Basic",
+		"selectMenu": "Select menu",
+		"theme": "Theme"
+	}
+}

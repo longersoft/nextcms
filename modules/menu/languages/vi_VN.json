@@ -1,0 +1,89 @@
+{
+	"_about": {
+		"description": "Quản lý menu",
+		"title": "Menu"
+	},
+	"_menu": {
+		"menu": {
+			"list": "Quản lý menu"
+		}
+	},
+	"_permission": {
+		"menu": {
+			"description": "Quản lý menu",
+			"actions": {
+				"add": "Thêm menu",
+				"delete": "Xóa menu",
+				"edit": "Sửa menu",
+				"list": "Xem danh sách menu"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"cancelAction": "Hủy",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"loadingAction": "Đang tải ...",
+			"localizeAction": "Địa phương hóa",
+			"refreshAction": "Tải lại",
+			"saveAction": "Lưu",
+			"searchAction": "Tìm",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"menu": {
+		"_share": {
+			"createdDate": "Ngày tạo",
+			"cssClass": "Lớp CSS",
+			"cssStyle": "Kiểu CSS",
+			"description": "Mô tả",
+			"htmlId": "HTML Id",
+			"image": "Ảnh",
+			"item": "Phần tử",
+			"itemsTree": "Cây phần tử",
+			"language": "Ngôn ngữ",
+			"link": "Liên kết",
+			"linkRequired": "Liên kết là bắt buộc",
+			"localization": "Địa phương hóa",
+			"localizationHelp": "Gắp bản sao của menu trong các ngôn ngữ khác từ bảng danh sách menu<br />và thả vào đây",
+			"properties": "Thuộc tính",
+			"structure": "Cấu trúc",
+			"subTitle": "Tiêu đề phụ",
+			"target": "Đích",
+			"targetBlank": "Mở trên một cửa sổ mới của trình duyệt",
+			"targetSelf": "Mở trên cửa sổ hiện tại của trình duyệt",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"treeRootLabel": "Nút gốc"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm menu mới",
+			"success": "Menu đã được tạo thành công",
+			"title": "Thêm menu mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa menu tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa menu",
+			"notFound": "Xin lỗi, không thể tìm thấy menu",
+			"success": "Menu đã được xóa thành công",
+			"title": "Xóa menu"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật menu",
+			"notFound": "Xin lỗi, không thể tìm thấy menu có Id là <b>%s</b>",
+			"success": "Menu đã được cập nhật thành công",
+			"title": "Cập nhật menu"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"notFound": "Không tìm thấy menu nào",
+			"searchMenuHelp": "Tiêu đề",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý menu"
+		}
+	}
+}

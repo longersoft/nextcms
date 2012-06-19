@@ -1,0 +1,89 @@
+{
+	"_about": {
+		"description": "Build and manage menus",
+		"title": "Menu"
+	},
+	"_menu": {
+		"menu": {
+			"list": "Manage menus"
+		}
+	},
+	"_permission": {
+		"menu": {
+			"description": "Manage menus",
+			"actions": {
+				"add": "Add new menu",
+				"delete": "Delete menu",
+				"edit": "Edit menu",
+				"list": "List menus"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"allLanguages": "All languages",
+			"cancelAction": "Cancel",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"loadingAction": "Loading ...",
+			"localizeAction": "Localize",
+			"refreshAction": "Refresh",
+			"saveAction": "Save",
+			"searchAction": "Search",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"menu": {
+		"_share": {
+			"createdDate": "Created date",
+			"cssClass": "CSS class",
+			"cssStyle": "CSS style",
+			"description": "Description",
+			"htmlId": "HTML Id",
+			"image": "Image",
+			"item": "Item",
+			"itemsTree": "Items Tree",
+			"language": "Language",
+			"link": "Link",
+			"linkRequired": "The link is required",
+			"localization": "Localization",
+			"localizationHelp": "Drag the copies of menu in other languages from the table of menus<br />and drop them here",
+			"properties": "Properties",
+			"structure": "Structure",
+			"subTitle": "Sub-title",
+			"target": "Target",
+			"targetBlank": "Open in a new tab",
+			"targetSelf": "Open in the same tab",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"treeRootLabel": "Root node"
+		},
+		"add": {
+			"error": "Sorry, cannot add new menu",
+			"success": "The menu is created successfully",
+			"title": "Add new menu"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the menu titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the menu",
+			"notFound": "Sorry, cannot find the menu",
+			"success": "The menu is deleted successfully",
+			"title": "Delete menu"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the menu",
+			"notFound": "Sorry, cannot find the menu with Id of <b>%s</b>",
+			"success": "The menu is updated successfully",
+			"title": "Edit the menu"
+		},
+		"list": {
+			"error": "Sorry, there is error",
+			"notFound": "Not found any menus",
+			"searchMenuHelp": "Title",
+			"showColumns": "Show columns:",
+			"title": "Manage menus"
+		}
+	}
+}

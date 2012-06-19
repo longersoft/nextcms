@@ -1,0 +1,11 @@
+{
+	"_about": {
+		"description": "Hiển thị menu",
+		"title": "Menu"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"selectMenu": "Lựa chọn menu",
+		"theme": "Mẫu giao diện"
+	}
+}

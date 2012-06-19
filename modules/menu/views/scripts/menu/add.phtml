@@ -1,0 +1,362 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		menu
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('menu.add.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/menu/css/admin/default/styles.css");
+</script>
+
+<div id="menuMenuAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button id="menuMenuAddSaveButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			core.js.base.controllers.Subscriber.unsubscribe("/app/menu/menu/add", "/app/global/dnd/onDropLink");
+			dojo.publish("/app/menu/menu/add/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, region: 'center'">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('menu.add.title'); ?></span></h2>
+		</div>
+	
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<form id="menuMenuAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('menu._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="language"><?php echo $this->translator()->_('menu._share.language'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language'">
+						<?php foreach ($this->languages as $language => $name) : ?>
+							<option value="<?php echo $language; ?>"<?php if ($language == $this->language) : ?> selected="selected"<?php else : ?> disabled="disabled"<?php endif; ?>><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+				
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('menu._share.title'); ?>:</label>
+						<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->title); ?><?php endif; ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('menu._share.titleRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('menu._share.description'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'description', style: 'width: 300px; height: 150px'"><?php if ($this->source && $this->source->description) : ?><?php echo $this->source->description; ?><?php endif; ?></textarea>
+					</div>
+					
+					<input type="hidden" name="format" value="json" />
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Structure -->
+				<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: false, title: '<?php echo $this->translator(true)->_('menu._share.structure'); ?>', style: 'margin-top: 8px'">
+					<!-- Item -->
+					<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, region: 'left', style: 'width: 50%', class: 'appForm menuItemFormContainer'">
+						<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top'">
+							<div class="appHeadline">
+								<span><?php echo $this->translator()->_('menu._share.item'); ?></span>
+							</div>
+						</div>
+						
+						<div id="menuMenuAddItemContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+							<div id="menuMenuAddItemFormContainer" style="margin: 4px; padding: 4px">
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.title'); ?>:</label>
+									<input id="menuMenuAddTitleTextBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="itemProperty: 'title', type: 'text', style: 'width: 95%', required: true, missingMessage: '<?php echo $this->translator(true)->_('menu._share.titleRequired'); ?>'" />
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.subTitle'); ?>:</label>
+									<input data-dojo-type="dijit.form.TextBox" data-dojo-props="itemProperty: 'sub_title', type: 'text', style: 'width: 95%'" />
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.description'); ?>:</label>
+									<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="itemProperty: 'description', style: 'width: 95%; height: 100px'"></textarea>
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.link'); ?>:</label>
+									<div data-dojo-type="dijit.form.TextBox" data-dojo-props="itemProperty: 'link', type: 'text', style: 'width: 95%', required: true, missingMessage: '<?php echo $this->translator(true)->_('menu._share.linkRequired'); ?>'">
+										<script type="dojo/connect">
+										core.js.base.controllers.Subscriber.subscribe("/app/menu/menu/add", "/app/global/dnd/onDropLink", this, function(data) {
+											if (dojo.attr(data.target, "id") == this.id) {
+												dijit.byId("menuMenuAddTitleTextBox").set("value", data.title);
+											}
+										});
+										</script>
+									</div>
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.image'); ?>:</label>
+									<input data-dojo-type="dijit.form.TextBox" data-dojo-props="itemProperty: 'image', type: 'text', style: 'width: 95%'" />
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.target'); ?>:</label>
+									<select id="menuMenuAddTargetSelect" data-dojo-type="dijit.form.Select" data-dojo-props="itemProperty: 'target'">
+										<option value="_self"><?php echo $this->translator()->_('menu._share.targetSelf'); ?></option>
+										<option value="_blank"><?php echo $this->translator()->_('menu._share.targetBlank'); ?></option>
+									</select>
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.htmlId'); ?>:</label>
+									<input data-dojo-type="dijit.form.TextBox" data-dojo-props="itemProperty: 'html_id', type: 'text', style: 'width: 95%'" />
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.cssClass'); ?>:</label>
+									<input data-dojo-type="dijit.form.TextBox" data-dojo-props="itemProperty: 'css_class', type: 'text', style: 'width: 95%'" />
+								</div>
+								
+								<div class="appFormRow">
+									<label class="appTopLabel"><?php echo $this->translator()->_('menu._share.cssStyle'); ?>:</label>
+									<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="itemProperty: 'css_style', style: 'width: 95%; height: 100px'"></textarea>
+								</div>
+								
+								<div class="appFormRow">
+									<button id="menuMenuAddNewItemButton" data-dojo-type="dijit.form.Button" data-dojo-props="label: '<?php echo $this->translator(true)->_('global._share.addAction'); ?>'"></button>
+									
+									<button data-dojo-type="dijit.form.Button" data-dojo-props="label: '<?php echo $this->translator(true)->_('global._share.cancelAction'); ?>'">
+										<script type="dojo/connect" data-dojo-event="onClick">
+										dojo.attr("menuMenuAddItemId", "value", "");
+										dojo.forEach(dijit.byId("menuMenuAddItemContainer").getChildren(), function(child) {
+											if (name = child.get("itemProperty")) {
+												child.set("value", "");
+											}
+										});
+										dijit.byId("menuMenuAddTargetSelect").set("value", "_self");
+										dijit.byId("menuMenuAddNewItemButton").set("label", "<?php echo $this->translator()->_('global._share.addAction'); ?>");
+										</script>
+									</button>
+								</div>
+								
+								<input type="hidden" id="menuMenuAddItemId" value="" />
+							</div>
+						</div>
+					</div>
+					<!-- /Item -->
+					
+					<!-- ItemTree -->
+					<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, region: 'center', style: 'padding: 0; width: 50%'"> 
+						<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top'">
+							<div class="appHeadline">
+								<span><?php echo $this->translator()->_('menu._share.itemsTree'); ?></span>
+							</div>
+						</div>
+						
+						<div id="menuMenuAddItemTreeContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+						</div>
+					</div>
+					<!-- /ItemTree -->
+				</div>
+				<!-- /Structure -->
+				
+				<!-- Localization -->
+				<div id="menuMenuAddLocalizedContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('menu._share.localization'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+					<?php if ($this->source) : ?>
+					<div class="menuMenuAddLocalizedItem" style="padding: 2px 8px">
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->title); ?>', style: 'width: 300px', readOnly: true" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->language); ?>', style: 'margin: 0 8px; width: 100px', readOnly: true" />
+						<input type="hidden" name="translations" value='<?php echo $this->source->translations; ?>' />
+						
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', label: '<?php echo $this->translator(true)->_('global._share.deleteAction'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onClick">
+							dojo.destroy(dojo.query(this.domNode).closest(".menuMenuAddLocalizedItem")[0]);
+							if (dojo.query(".menuMenuAddLocalizedItem", "menuMenuAddLocalizedContainer").length == 0) {
+								// Show the guide
+								dojo.style("menuMenuAddLocalizedHelp", "display", "block");
+							}
+							</script>
+						</button>
+					</div>
+					<?php endif; ?>
+					
+					<div id="menuMenuAddLocalizedHelp" class="appCenter" style="display: <?php if ($this->source) : ?>none<?php else : ?>block<?php endif; ?>">
+						<div><?php echo $this->translator()->_('menu._share.localizationHelp'); ?></div>
+					</div>
+				</div>
+				<!-- /Localization -->
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.grid.enhanced.plugins.GridSource");
+
+dojo.registerModulePath("menu", "<?php echo $this->APP_STATIC_URL; ?>/modules/menu");
+dojo.require("core.js.base.controllers.Subscriber");
+dojo.require("menu.js.views.ItemTreeView");
+
+dojo.addOnLoad(function() {
+	var target = new dojox.grid.enhanced.plugins.GridSource("menuMenuAddLocalizedContainer", {
+		isSource: false,
+		insertNodesForGrid: false
+	});
+	dojo.connect(target, "onDropGridRows", function(grid, rowIndexes) {
+		var sourceItems = [];
+		dojo.forEach(rowIndexes, function(rowIndex, index) {
+			var item = grid.getItem(rowIndex);
+			if (item) {
+				sourceItems.push(item);
+			}
+		});
+
+		if (sourceItems.length > 0) {
+			// Hide the guide
+			dojo.style("menuMenuAddLocalizedHelp", "display", "none");
+		}
+
+		dojo.forEach(sourceItems, function(item) {
+			var div = dojo.create("div", {
+				className: "menuMenuAddLocalizedItem",
+				style: "padding: 2px 8px"
+			}, "menuMenuAddLocalizedContainer");
+
+			new dijit.form.TextBox({
+				value: item.title[0],
+				style: "width: 300px",
+				readOnly: true
+			}).placeAt(div);
+			
+			new dijit.form.TextBox({
+				value: item.language[0],
+				style: "margin: 0 8px; width: 100px",
+				readOnly: true
+			}).placeAt(div);
+
+			dojo.create("input", {
+				name: "translations",
+				type: "hidden",
+				value: item.translations[0]
+			}, div);
+
+			new dijit.form.Button({
+				label: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>",
+				onClick: function() {
+					dojo.destroy(div);
+					if (dojo.query(".menuMenuAddLocalizedItem", "menuMenuAddLocalizedContainer").length == 0) {
+						// Show the guide
+						dojo.style("menuMenuAddLocalizedHelp", "display", "block");
+					}
+				}
+			}).placeAt(div);
+		});
+	});
+	
+	var handler = dojo.subscribe("/app/global/onLoadComplete/menu_menu_add", function() {
+		var itemTreeView = new menu.js.views.ItemTreeView("menuMenuAddItemTreeContainer");
+		<?php if ($this->sourceItems) : ?>
+		itemTreeView.setItems(<?php echo $this->sourceItems; ?>);
+		<?php endif; ?>
+
+		// Quickly edit the node by dragging the node and dropping it on the form
+		new dojo.dnd.Target("menuMenuAddItemFormContainer", {
+			accept: ["treeNode"],
+			onDropExternal: function(source, nodes, copy) {
+				var treeNode = dijit.byNode(nodes[0]);
+				if (treeNode) {
+					if (treeNode.getTreePath().length == 2) {
+						// User drop the root node
+						// Do nothing
+						// FIXME: Is there a better way to check if a node is the root one?
+					} else {
+						itemTreeView.onEditItem(treeNode.item);
+					}
+				}
+			}
+		});
+		
+		// Add new item handler
+		dojo.connect(dijit.byId("menuMenuAddNewItemButton"), "onClick", function() {
+			var item = {
+				item_id: dojo.attr("menuMenuAddItemId", "value")
+			};
+			dojo.forEach(dijit.byId("menuMenuAddItemContainer").getChildren(), function(child) {
+				if (name = child.get("itemProperty")) {
+					item[name] = child.get("value");
+				}
+			});
+			itemTreeView.saveItem(item);
+		});
+
+		// Edit item handler
+		dojo.connect(itemTreeView, "onEditItem", function(/*dojo.data.Item*/ item) {
+			// Change the label of "Add item" button
+			dijit.byId("menuMenuAddNewItemButton").set("label", "<?php echo $this->translator()->_('global._share.saveAction'); ?>");
+			
+			// Populate data to the item form
+			dojo.attr("menuMenuAddItemId", "value", item.item_id[0]);
+			dojo.forEach(dijit.byId("menuMenuAddItemContainer").getChildren(), function(child) {
+				if (name = child.get("itemProperty")) {
+					if (item[name] && item[name][0]) {
+						child.set("value", item[name][0]);
+					}
+				}
+			});
+		});
+
+		// Submit form handler
+		dojo.connect(dijit.byId("menuMenuAddSaveButton"), "onClick", function() {
+			var items = itemTreeView.getItems();
+			if (dijit.byId("menuMenuAddForm").validate()) {
+				var params = dojo.formToObject("menuMenuAddForm");
+				params.items = dojo.toJson(items);
+				dojo.publish("/app/menu/menu/add/onStart");
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'menu_menu_add'); ?>",
+					content: params,
+					handleAs: "json",
+					load: function(data) {
+						dojo.publish("/app/menu/menu/add/onComplete", [ data ]);
+					}
+				});
+			}
+		});
+
+		dojo.unsubscribe(handler);
+	});
+});
+</script>
