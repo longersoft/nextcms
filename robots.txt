@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /configs
+Disallow: /controllers
+Disallow: /data
+Disallow: /libraries
+Disallow: /modules
+Disallow: /static
+Disallow: /temp
+Disallow: /templates
+Disallow: /upload
