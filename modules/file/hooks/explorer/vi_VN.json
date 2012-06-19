@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Xem các tệp đã tải lên",
+		"title": "Explorer"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"menu": {
+		"label": "Hộp công cụ Explorer"
+	},
+	"show": {
+		"goHomeAction": "Đến thư mục gốc",
+		"listHelp": "Nhấp vào biểu tượng Tải lại để xem danh sách các tệp",
+		"path": "Đường dẫn",
+		"refreshAction": "Tải lại",
+		"viewAsGridAction": "Xem dạng lưới",
+		"viewAsListAction": "Xem dạng danh sách",
+		"title": "File Explorer"
+	}
+}

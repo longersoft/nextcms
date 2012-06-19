@@ -1,0 +1,277 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-19
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('attachment.add.title'));
+?>
+
+<form id="fileAttachmentAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'file_attachment_add'); ?>', method: 'POST', encType: 'multipart/form-data', class: 'appForm'">
+<div id="fileAttachmentAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button id="fileAttachmentAddSubmitButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', disabled: true, iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/connect" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/attachment/add/onStart");
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/attachment/add/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- AddAttachmentForm -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, region: 'center'">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('attachment.add.title'); ?></span></h2>
+		</div>
+	
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('attachment._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="language"><?php echo $this->translator()->_('attachment._share.language'); ?>:</label>
+						<select id="fileAttachmentAddLanguage" data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language'">
+						<?php foreach ($this->languages as $language => $name) : ?>
+							<option value="<?php echo $language; ?>"<?php if ($language == $this->language) : ?> selected="selected"<?php else : ?> disabled="disabled"<?php endif; ?>><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('attachment._share.title'); ?>:</label>
+						<div data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', value: '<?php if ($this->source) : ?><?php echo addslashes($this->source->title); ?><?php endif; ?>', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('attachment._share.titleRequired'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.xhrPost({
+								url: "<?php echo $this->url(array(), 'core_helper_slug'); ?>",
+								content: {
+									locale: dijit.byId("fileAttachmentAddLanguage").get("value"),
+									input: value
+								},
+								handleAs: "json",
+								load: function(data) {
+									dijit.byId("fileAttachmentAddSlugTextBox").set("value", data.output);
+								}
+							});
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="slug"><?php echo $this->translator()->_('attachment._share.slug'); ?>:</label>
+						<input id="fileAttachmentAddSlugTextBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'slug', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('attachment._share.slugRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="description"><?php echo $this->translator()->_('attachment._share.description'); ?>:</label>
+						<textarea id="fileAttachmentAddDescriptionTextarea" name="description" style="height: 150px; width: 300px"><?php if ($this->source && $this->source->description) : ?><?php echo $this->escape($this->source->description); ?><?php endif; ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="auth_required">&nbsp;</label>
+						<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'auth_required', checked: <?php if ($this->source && $this->source->auth_required == 1) : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('attachment._share.authRequiredHelp'); ?>
+					</div>
+					
+					<div class="appFormRow">
+						<label>&nbsp;</label>
+						<div data-dojo-type="dijit.form.CheckBox">
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.style("fileAttachmentAddPasswordContainer", "display", value ? "block": "none");
+							dijit.byId("fileAttachmentAddPasswordTextBox").set("disabled", value ? false : true);
+							</script>
+						</div>
+						<?php echo $this->translator()->_('attachment._share.passwordRequiredHelp'); ?>
+					</div>
+					
+					<div id="fileAttachmentAddPasswordContainer" class="appFormRow" style="display: none">
+						<label for="password"><?php echo $this->translator()->_('attachment._share.password'); ?>:</label>
+						<div id="fileAttachmentAddPasswordTextBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'password', disabled: true, type: 'password', style: 'width: 200px', class: 'appLeft'">
+							<script type="dojo/connect">
+							this._passwordStrengthMeter = new core.js.views.PasswordStrengthMeter("fileAttachmentAddPasswordStrengthMeter");
+							</script>
+							<script type="dojo/connect" data-dojo-event="onKeyUp">
+							this._passwordStrengthMeter.checkPassword(this.get("value"));
+							</script>
+						</div>
+						
+						<!-- PasswordStrengthMeter -->
+						<div class="appLeft" id="fileAttachmentAddPasswordStrengthMeter"></div>
+						<!-- /PasswordStrengthMeter -->
+						
+						<div class="appClear"></div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="uploadedfiles">&nbsp;</label>
+						<div data-dojo-type="dojox.form.Uploader" data-dojo-props="name: 'uploadedfiles', multiple: false, type: 'file', uploadOnSelect: false, label: '<?php echo $this->translator(true)->_('global._share.browseFilesAction'); ?>', style: 'width: 150px'">
+							<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="fileArray">
+							dijit.byId("fileAttachmentAddSubmitButton").set("disabled", false);
+							</script>
+							<script type="dojo/method" data-dojo-event="onBegin" data-dojo-args="dataArray">
+							this.set("disabled", true);
+							</script>
+							<script type="dojo/method" data-dojo-event="onComplete" data-dojo-args="dataArray">
+							this.set("disabled", false);
+							dojo.publish("/app/file/attachment/add/onComplete", [ dataArray ]);
+							</script>
+						</div>
+					</div>
+					
+					<input type="hidden" name="format" value="json" />
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Localization -->
+				<div id="fileAttachmentAddLocalizedContainer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('attachment._share.localization'); ?>', class: 'appBorderContainer', style: 'margin-top: 8px'">
+					<?php if ($this->source) : ?>
+					<div class="fileAttachmentAddLocalizedItem" style="padding: 2px 8px">
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->title); ?>', style: 'width: 300px', readOnly: true" />
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="value: '<?php echo addslashes($this->source->language); ?>', style: 'margin: 0 8px; width: 100px', readOnly: true" />
+						<input type="hidden" name="translations" value='<?php echo $this->source->translations; ?>' />
+						
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', label: '<?php echo $this->translator(true)->_('global._share.deleteAction'); ?>'">
+							<script type="dojo/connect" data-dojo-event="onClick">
+							dojo.destroy(dojo.query(this.domNode).closest(".fileAttachmentAddLocalizedItem")[0]);
+							if (dojo.query(".fileAttachmentAddLocalizedItem", "fileAttachmentAddLocalizedContainer").length == 0) {
+								// Show the guide
+								dojo.style("fileAttachmentAddLocalizedHelp", "display", "block");
+							}
+							</script>
+						</button>
+					</div>
+					<?php endif; ?>
+					
+					<div id="fileAttachmentAddLocalizedHelp" class="appCenter" style="display: <?php if ($this->source) : ?>none<?php else : ?>block<?php endif; ?>">
+						<div><?php echo $this->translator()->_('attachment._share.localizationHelp'); ?></div>
+					</div>
+				</div>
+				<!-- /Localization -->
+			</div>
+		</div>
+	</div>
+	<!-- /AddAttachmentForm -->
+</div>
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.form.Uploader");
+dojo.require("dojox.form.uploader.plugins.Flash");
+dojo.require("dojox.grid.enhanced.plugins.GridSource");
+
+dojo.require("core.js.views.PasswordStrengthMeter");
+
+dojo.addOnLoad(function() {
+	var handler = dojo.subscribe("/app/global/onLoadComplete/file_attachment_add", function() {
+		tinyMCE.init({
+			theme: "advanced",
+			plugins: "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo",
+			theme_advanced_buttons3: "link,unlink,anchor,image,media,cleanup,code,|,preview,|,forecolor,backcolor",
+			theme_advanced_buttons4: "tablecontrols,ltr,rtl", //",tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+			theme_advanced_toolbar_location: "top",
+			theme_advanced_toolbar_align: "left",
+			theme_advanced_resizing : true,
+			mode: "exact",
+			elements: "fileAttachmentAddDescriptionTextarea",
+			width: "300px",
+			height: "350px",
+			relative_urls: false,
+			remove_script_host: false,
+			setup: function(ed) {
+				ed.onChange.add(function(ed, l) {
+					dojo.query("#" + ed.id)[0].innerHTML = l.content;
+				});
+			}
+		});
+		dojo.unsubscribe(handler);
+	});
+	
+	// Allow to drag an attachment from the grid and drop on the localized container
+	var target = new dojox.grid.enhanced.plugins.GridSource("fileAttachmentAddLocalizedContainer", {
+		isSource: false,
+		insertNodesForGrid: false
+	});
+	dojo.connect(target, "onDropGridRows", function(grid, rowIndexes) {
+		var sourceItems = [];
+		dojo.forEach(rowIndexes, function(rowIndex, index) {
+			var item = grid.getItem(rowIndex);
+			if (item) {
+				sourceItems.push(item);
+			}
+		});
+
+		if (sourceItems.length > 0) {
+			// Hide the guide
+			dojo.style("fileAttachmentAddLocalizedHelp", "display", "none");
+		}
+
+		dojo.forEach(sourceItems, function(item) {
+			var div = dojo.create("div", {
+				className: "fileAttachmentAddLocalizedItem",
+				style: "padding: 2px 8px"
+			}, "fileAttachmentAddLocalizedContainer");
+
+			new dijit.form.TextBox({
+				value: item.title[0],
+				style: "width: 300px",
+				readOnly: true
+			}).placeAt(div);
+			
+			new dijit.form.TextBox({
+				value: item.language[0],
+				style: "margin: 0 8px; width: 100px",
+				readOnly: true
+			}).placeAt(div);
+
+			dojo.create("input", {
+				name: "translations",
+				type: "hidden",
+				value: item.translations[0]
+			}, div);
+
+			new dijit.form.Button({
+				label: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>",
+				onClick: function() {
+					dojo.destroy(div);
+					if (dojo.query(".fileAttachmentAddLocalizedItem", "fileAttachmentAddLocalizedContainer").length == 0) {
+						// Show the guide
+						dojo.style("fileAttachmentAddLocalizedHelp", "display", "block");
+					}
+				}
+			}).placeAt(div);
+		});
+	});
+});
+</script>

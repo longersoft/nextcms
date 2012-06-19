@@ -1,0 +1,157 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/grid/enhanced/resources/<?php echo $this->dojoConfig()->getTheme(); ?>/EnhancedGrid.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/file/css/admin/default/styles.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/image/resources/Lightbox.css");
+</script>
+
+<div id="fileExplorerListRootContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline', gutters: true, style: 'height: 100%; padding: 0; width: 100%;'">
+	<!-- LeftPane -->
+	<div id="fileExplorerListAccordionContainer" data-dojo-type="dijit.layout.AccordionContainer" 
+		data-dojo-props="region: 'leading', minSize: 200, splitter: true, style: 'margin: 0; padding: 0; width: 20%'">
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, title: '<?php echo $this->translator(true)->_('connection.list.title'); ?>', style: 'margin: -8px'">
+			<!-- Toolbar -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+				<div id="fileExplorerListConnectionToolbar"></div>
+			</div>
+			<!-- /Toolbar -->
+			
+			<!-- Connections -->
+			<div id="fileExplorerListConnectionsContainer" data-dojo-type="dijit.layout.ContentPane" 
+				data-dojo-props="region: 'center', class: 'fileConnectionList'">
+				<?php echo $this->action('list', 'connection', 'file'); ?>
+			</div>
+			<!-- /Connections -->
+		</div>
+		
+		<div id="fileExplorerListDirPane" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="title: '<?php echo $this->translator(true)->_('explorer.list.directories'); ?>'" style="margin: -8px">
+			<!-- Directories -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'">
+				<div id="fileExplorerListDirTree"></div>
+			</div>
+			<!-- Directories -->
+			
+			<!-- Bookmark -->
+			<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'bottom', splitter: true, gutters: false, style: 'height: 30%'">
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+					<div class="appTitleBar" style="border-top: none; border-left: none; border-right: none">
+						<?php echo $this->translator()->_('bookmark.list.bookmarks'); ?>
+					</div>
+				</div>
+				
+				<div id="fileExplorerListBookmark" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+				</div>
+			</div>
+			<!-- /Bookmark -->
+		</div>
+	</div>
+	<!-- /LeftPane -->
+	
+	<!-- CenterPane -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="fileExplorerListFileToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+	
+		<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+			<!-- PathBreadcrumb -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false, class: 'appContentPane'">
+				<h2 class="appHeadline" style="margin: 0; padding: 0">
+					<span><?php echo $this->translator()->_('explorer.list.path'); ?>:</span><span id="fileExplorerListPathBreadcrumb" class="fileExplorerPathBreadcrumb">./</span>
+				</h2>
+			</div>
+			<!-- /PathBreadcrumb -->
+			
+			<!-- Files -->
+			<div id="fileExplorerListFileGrid" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', style: 'height: 100%; width: 100%', class: 'appContentPane'">
+			</div>
+			<!-- /Files -->
+		</div>
+	</div>
+	<!-- /CenterPane -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/file/languages')->_('explorer.list.title'); ?>";
+
+dojo.registerModulePath("file", "<?php echo $this->APP_STATIC_URL; ?>/modules/file");
+
+dojo.require("dijit.layout.AccordionContainer");
+dojo.require("dijit.layout.BorderContainer");
+
+dojo.require("core.js.base.Config");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("file.js.controllers.ExplorerController");
+dojo.require("file.js.views.BookmarkListView");
+dojo.require("file.js.views.ConnectionContextMenu");
+dojo.require("file.js.views.ConnectionListView");
+dojo.require("file.js.views.ConnectionToolbar");
+dojo.require("file.js.views.DirectoryTreeView");
+dojo.require("file.js.views.FileDataGrid");
+dojo.require("file.js.views.FileToolbar");
+dojo.require("file.js.views.PathBreadcrumb");
+
+dojo.addOnLoad(function() {
+	// Config the type of viewable file
+	core.js.base.Config.set("file", "viewable_files", "<?php echo $this->config('file', 'viewable_files', 'bmp,gif,jpeg,jpg,png,css,js,html,php,phtml,sql,txt,xml'); ?>");
+	core.js.base.Config.set("file", "editable_files", "<?php echo $this->config('file', 'editable_files', 'css,js,html,php,phtml,sql,txt,xml'); ?>");
+
+	// Set the type of decompressable and compressable files
+	core.js.base.Config.set("file", "decompressable_files", "<?php echo $this->archive()->getDecompressableExts(); ?>");
+	core.js.base.Config.set("file", "compressable_files", "<?php echo $this->archive()->getCompressableExts(); ?>");
+	
+	// Provide the actions
+	<?php foreach (array(
+					'file_bookmark_add', 'file_bookmark_delete', 'file_bookmark_list', 'file_bookmark_rename',
+					'file_connection_add', 'file_connection_connect', 'file_connection_delete', 'file_connection_disconnect', 'file_connection_edit', 
+					'file_connection_list', 'file_connection_rename',
+					'file_explorer_add', 'file_explorer_compress', 'file_explorer_copy', 'file_explorer_delete', 'file_explorer_download',
+					'file_explorer_edit', 'file_explorer_extract', 'file_explorer_list', 'file_explorer_move', 'file_explorer_perm',
+					'file_explorer_rename', 'file_explorer_upload', 'file_explorer_view',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	dojo.subscribe("/app/file/connection/connect/onConnected", function(connectionId) {
+		// Activate the tree pane
+		dijit.byId("fileExplorerListAccordionContainer").selectChild(dijit.byId("fileExplorerListDirPane"));
+	});
+	
+	var explorerController = new file.js.controllers.ExplorerController("fileExplorerListRootContainer");
+	explorerController.setBookmarkListView(new file.js.views.BookmarkListView("fileExplorerListBookmark"))
+					  .setConnectionContextMenu(new file.js.views.ConnectionContextMenu())
+					  .setConnectionListView(new file.js.views.ConnectionListView("fileExplorerListConnectionsContainer"))
+					  .setConnectionToolbar(new file.js.views.ConnectionToolbar("fileExplorerListConnectionToolbar"))
+					  .setDirectoryTreeView(new file.js.views.DirectoryTreeView("fileExplorerListDirTree"))
+					  .setFileDataGrid(new file.js.views.FileDataGrid("fileExplorerListFileGrid"))
+					  .setFileToolbar(new file.js.views.FileToolbar("fileExplorerListFileToolbar"))
+					  .setPathBreadcrumb(new file.js.views.PathBreadcrumb("fileExplorerListPathBreadcrumb"));
+});
+</script>

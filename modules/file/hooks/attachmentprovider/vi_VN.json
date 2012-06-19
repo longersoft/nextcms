@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Cung cấp liên kết để tải các tệp đính kèm",
+		"title": "Cung cấp tệp đính kèm"
+	},
+	"menu": {
+		"label": "Cung cấp tệp đính kèm"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"show": {
+		"keywordHelp": "Tiêu đề tệp",
+		"notAllowed": "Bạn không có quyền xem danh sách tệp đính kèm",
+		"refreshAction": "Tải lại",
+		"searchAction": "Tìm",
+		"searchHelp": "Nhấp vào biểu tượng Tìm kiếm để xem danh sách các tệp đính kèm",
+		"selectLanguageAction": "Ngôn ngữ",
+		"title": "Tệp"
+	}
+}

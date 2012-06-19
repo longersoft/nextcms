@@ -1,0 +1,68 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('connection.delete.title'));
+?>
+
+<div>
+	<?php if (!$this->connection) : ?>
+	<?php echo sprintf($this->translator()->_('connection.delete.notFound'), $this->connection_id); ?>
+	<?php else : ?>
+	<?php echo sprintf($this->translator()->_('connection.delete.confirm'), $this->connection->name); ?>
+	<?php endif; ?>
+</div>
+
+<div class="dijitDialogPaneActionBar">
+	<!-- YesButton -->
+	<?php if ($this->connection) : ?>
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.yesMessage'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		this.set("disabled", true);
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'file_connection_delete'); ?>",
+			content: { 
+				format: "json",
+				connection_id: "<?php echo $this->connection_id; ?>"
+			},
+			handleAs: "json",
+			load: function(data) {
+				if (data.result == "APP_RESULT_OK") {
+					dojo.publish("/app/file/connection/delete/onSuccess", [ data ]);
+				}
+			}
+		});
+		</script>
+	</button>
+	<?php endif; ?>
+	<!-- /YesButton -->
+	
+	<!-- NoButton -->
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_($this->connection ? 'global._share.noMessage' : 'global._share.cancelAction'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.publish("/app/file/connection/delete/onCancel");
+		</script>
+	</button>
+	<!-- /NoButton -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+</script>

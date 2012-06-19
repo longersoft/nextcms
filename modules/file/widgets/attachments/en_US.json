@@ -1,0 +1,25 @@
+{
+	"_about": {
+		"description": "Show the link to download attachments",
+		"title": "Attachments"
+	},
+	"config": {
+		"basic": "Basic",
+		"dataSource": "Data source",
+		"dragDropHelp": "Drag and drop attachments here",
+		"language": "Language",
+		"latestAttachments": "Latest attachments",
+		"mostDownloadedAttachments": "Most downloaded attachments",
+		"moveDownAction": "Down",
+		"moveUpAction": "Up",
+		"numberOfAttachments": "The number of attachments",
+		"removeAction": "Remove",
+		"setOfAttachments": "Set of attachments",
+		"theme": "Theme"
+	},
+	"show": {
+		"by": "By %s",
+		"dateFormat": "Y-m-d",
+		"numDownloads": "%s downloads"
+	}
+}

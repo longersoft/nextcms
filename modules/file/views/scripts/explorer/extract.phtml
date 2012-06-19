@@ -1,0 +1,75 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.extract.title'));
+?>
+
+<form id="fileExplorerExtractForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'file_explorer_extract'); ?>', method: 'POST', class: 'appForm'">
+	<div class="appFormRow">
+		<label for="path" style="width: 100px"><?php echo $this->translator()->_('explorer._share.filePath'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" 
+			data-dojo-props="type: 'text', name: 'path', value: '<?php echo addslashes($this->path); ?>', width: '100px', readOnly: true" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="destination" style="width: 100px"><?php echo $this->translator()->_('explorer.extract.destination'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'destination', value: '<?php echo addslashes($this->destination); ?>', width: '100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('explorer.extract.destinationRequired'); ?>'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="overwrite" style="width: 100px">&nbsp;</label>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'overwrite', checked: false" /> <?php echo $this->translator()->_('explorer.extract.overwriteExistentFiles'); ?> 
+	</div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<button id="fileExplorerUploadSubmitButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.extractAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/extract/onStart");
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'file_explorer_extract'); ?>",
+				content: dojo.formToObject("fileExplorerExtractForm"),
+				handleAs: "json",
+				load: function(data) {
+					dojo.publish("/app/file/explorer/extract/onComplete", [ data ]);
+				}
+			});
+			</script>
+		</button>
+	
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/extract/onCancel");
+			</script>
+		</button>
+	</div>
+	
+	<input type="hidden" name="connection_id" value="<?php echo $this->connection_id; ?>" />
+	<input type="hidden" name="format" value="json" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

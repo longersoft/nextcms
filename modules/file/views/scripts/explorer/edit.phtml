@@ -1,0 +1,86 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.edit.title'));
+?>
+
+<form id="fileExplorerEditForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'file_explorer_edit'); ?>', method: 'POST', class: 'appForm'">
+<div id="fileExplorerEditContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dijit.byId("fileExplorerEditStandby").show();
+			
+			// DOJO LESSON: Use dojo.formToObject() to get the value of all input element inside the form, 
+			// including the hidden elements.
+			// Meanwhile, dijit.byId(formId).attr("value") does not include the value of hidden elements
+			var params = dojo.formToObject("fileExplorerEditForm");
+
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'file_explorer_edit'); ?>",
+				content: params,
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("fileExplorerEditStandby").hide();
+					if (data.result == "APP_RESULT_OK") {
+						dojo.publish("/app/file/explorer/edit/onSuccess", [ params.path ]);
+					} else {
+						dojo.publish("/app/file/explorer/edit/onError", [ params.path ]);
+					}
+				}
+			});
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/edit/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- Toolbar -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', design: 'sidebar', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', class: 'appContentPane'">
+			<?php echo sprintf($this->translator()->_('explorer.edit.title'), $this->path); ?>
+		</div>
+		
+		<textarea id="fileExplorerEditFileContent" data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'content', region: 'center', style: 'height: 100%; margin: 8px; width: 100%'"><?php echo $this->content; ?></textarea>
+	</div>
+	
+	<input type="hidden" name="format" value="json" />
+	<input type="hidden" name="connection_id" value="<?php echo $this->connection_id; ?>" />
+	<input type="hidden" name="path" value="<?php echo addslashes($this->path); ?>" />
+</div>
+</form>
+
+<div id="fileExplorerEditStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'fileExplorerEditContainer', imageText: '<?php echo $this->translator(true)->_('global._share.savingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+</script>

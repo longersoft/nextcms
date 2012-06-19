@@ -1,0 +1,20 @@
+{
+	"_about": {
+		"description": "Show an uploader, allows to upload and insert upload files to desired target",
+		"title": "Uploader"
+	},
+	"menu": {
+		"label": "Uploader toolbox"
+	},
+	"show": {
+		"bigFileSizeError": "The file size is greater than allowed size",
+		"browseFilesAction": "Browse files and Upload ...",
+		"fileName": "Name",
+		"fileSize": "Size",
+		"maxUploadSize": "The maxium size of uploaded file is %s",
+		"notAllowed": "You are not allowed to upload",
+		"notUploadableExtensionError": "The file type is not allowed to upload",
+		"title": "Uploader",
+		"uploadError": "Cannot upload the file"
+	}
+}

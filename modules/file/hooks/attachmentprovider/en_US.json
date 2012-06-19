@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Provide link to download attachments",
+		"title": "Attachments Provider"
+	},
+	"menu": {
+		"label": "Attachments provider"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"show": {
+		"keywordHelp": "File's title",
+		"notAllowed": "You are not allowed to view the list of attachments",
+		"refreshAction": "Refresh",
+		"searchAction": "Search",
+		"searchHelp": "Click the Search icon to view the list of attachments",
+		"selectLanguageAction": "Language",
+		"title": "File"
+	}
+}

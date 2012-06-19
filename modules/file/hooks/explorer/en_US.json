@@ -1,0 +1,23 @@
+{
+	"_about": {
+		"description": "Browse uploaded files",
+		"title": "Explorer"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"menu": {
+		"label": "Explorer toolbox"
+	},
+	"show": {
+		"goHomeAction": "Go to root directory",
+		"listHelp": "Click the Refresh icon to view the list of files",
+		"path": "Path",
+		"refreshAction": "Refresh",
+		"viewAsGridAction": "Grid view",
+		"viewAsListAction": "List view",
+		"title": "File Explorer"
+	}
+}

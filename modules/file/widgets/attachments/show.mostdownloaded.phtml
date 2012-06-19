@@ -1,0 +1,33 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-06-19
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->numAttachments > 0) : ?>
+<div class="fileWidgetsAttachmentMostDownloaded">
+	<ul>
+		<?php foreach ($this->attachments as $attachment) : ?>
+		<li>
+			<a href="<?php echo $this->url($attachment->getProperties(), 'file_attachment_download'); ?>"><?php echo $attachment->title; ?> (<?php echo $this->fileFormatter()->formatSize($attachment->size); ?>)</a>
+			<br />
+			<span>
+				<?php echo sprintf($this->translator()->_('show.numDownloads'), $attachment->num_downloads); ?>
+			</span>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

@@ -1,0 +1,465 @@
+{
+	"_about": {
+		"description": "Quản lý tệp",
+		"title": "Tệp"
+	},
+	"_menu": {
+		"attachment": {
+			"list": "Quản lý tệp đính kèm"
+		},
+		"config": {
+			"config": "Cấu hình module"
+		},
+		"explorer": {
+			"list": "Quản lý tệp"
+		}
+	},
+	"_permission": {
+		"attachment": {
+			"description": "Quản lý tệp đính kèm",
+			"actions": {
+				"add": "Thêm tệp đính kèm mới",
+				"delete": "Xóa tệp đính kèm",
+				"edit": "Cập nhật tệp đính kèm",
+				"list": "Xem danh sách các tệp đính kèm"
+			}
+		},
+		"bookmark": {
+			"description": "Quản lý thư mục được đánh dấu",
+			"actions": {
+				"add": "Đánh dấu thư mục",
+				"delete": "Gỡ bỏ đánh dấu",
+				"list": "Xem danh sách các thư mục được đánh dấu",
+				"rename": "Đổi tên đánh dấu"
+			}
+		},
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		},
+		"connection": {
+			"description": "Quản lý kết nối",
+			"actions": {
+				"add": "Thêm kết nối",
+				"connect": "Kết nối",
+				"delete": "Xóa kết nối",
+				"disconnect": "Ngắt kết nối",
+				"edit": "Cập nhật kết nối",
+				"list": "Xem danh sách các kết nối",
+				"rename": "Đổi tên kết nối"
+			}
+		},
+		"explorer": {
+			"description": "Quản lý tệp",
+			"actions": {
+				"add": "Tạo thư mục mới",
+				"compress": "Nén tệp",
+				"copy": "Chép tệp",
+				"delete": "Xóa tệp",
+				"download": "Tải tệp xuống",
+				"edit": "Sửa tệp",
+				"extract": "Giải nén các tệp nén",
+				"list": "Xem danh sách các tệp",
+				"move": "Di chuyển tệp",
+				"perm": "Thiết lập quyền truy xuất",
+				"rename": "Đổi tên tệp",
+				"upload": "Tải tệp lên",
+				"view": "Xem tệp"
+			}
+		},
+		"file": {
+			"description": "Quản lý tệp",
+			"actions": {
+				"upload": "Tải tệp lên"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Thêm",
+			"allLanguages": "Tất cả ngôn ngữ",
+			"backwardAction": "Quay lại",
+			"browseFilesAction": "Chọn tệp",
+			"cancelAction": "Hủy",
+			"compressAction": "Nén",
+			"connectAction": "Kết nối",
+			"copyAction": "Chép",
+			"cutAction": "Di chuyển",
+			"deleteAction": "Xóa",
+			"disconnectAction": "Ngắt kết nối",
+			"downloadAction": "Tải xuống",
+			"editAction": "Sửa",
+			"extractAction": "Giải nén",
+			"forwardAction": "Chuyển tiếp",
+			"goHomeAction": "Thư mục gốc",
+			"loadingAction": "Đang tải ...",
+			"localizeAction": "Địa phương hóa",
+			"numDownloads": "%s lượt tải về",
+			"pasteAction": "Dán",
+			"pasteWithoutOverwritingAction": "Dán và ghi đè các tệp đã có",
+			"refreshAction": "Tải lại",
+			"renameAction": "Đổi tên",
+			"saveAction": "Lưu",
+			"savingAction": "Đang lưu ...",
+			"searchAction": "Tìm",
+			"uploadAction": "Tải lên",
+			"uploadingAction": "Đang tải lên ...",
+			"viewAction": "Xem",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"attachment": {
+		"_share": {
+			"authRequiredHelp": "Yêu cầu đăng nhập để tải tệp đính kèm",
+			"description": "Mô tả",
+			"hash": "Mã (hash)",
+			"language": "Ngôn ngữ",
+			"localization": "Địa phương hóa",
+			"localizationHelp": "Gắp bản sao của tệp đính kèm trong các ngôn ngữ khác từ bảng danh sách tệp đính kèm<br />và thả vào đây",
+			"name": "Tên",
+			"numDownloads": "Số lượt tải về",
+			"password": "Mật khẩu",
+			"passwordRequiredHelp": "Yêu cầu mật khẩu để tải tệp đính kèm",
+			"passwordUnchangedHelp": "Để trống ô này nếu bạn không muốn thay đổi mật khẩu",
+			"properties": "Thuộc tính",
+			"size": "Dung lượng",
+			"slug": "Tiêu đề rút gọn",
+			"slugRequired": "Tiêu đề rút gọn là bắt buộc",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"uploadedDate": "Ngày tải"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm tệp đính kèm",
+			"success": "Tệp đính kèm đã được thêm thành công",
+			"title": "Thêm tệp đính kèm"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa tệp đính kèm tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa tệp đính kèm",
+			"notFound": "Xin lỗi, không thể tìm thấy tệp đính kèm",
+			"success": "Tệp đính kèm đã được xóa thành công",
+			"title": "Xóa tệp đính kèm"
+		},
+		"download": {
+			"authRequired": "Để tải về tệp đính kèm, bạn phải <a href='%s'>đăng nhập</a>",
+			"error": "Xin lỗi, không thể tải về tệp đính kèm",
+			"notFound": "Xin lỗi, không thể tìm thấy tệp đính kèm",
+			"passwordRequired": "Để tải về tệp đính kèm, bạn phải nhập mật khẩu vào ô dưới đây",
+			"title": "Tải về tệp đính kèm"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật tệp đính kèm",
+			"notFound": "Xin lỗi, không tìm thấy tệp đính kèm có Id là <b>%s</b>",
+			"success": "Tệp đính kèm đã được cập nhật thành công",
+			"title": "Sửa tệp đính kèm"
+		},
+		"list": {
+			"error": "Xin lỗi, có lỗi xảy ra",
+			"notFound": "Không tìm thấy tệp đính kèm nào",
+			"searchHelp": "Tiêu đề",
+			"showColumns": "Hiển thị các cột:",
+			"title": "Quản lý tệp đính kèm"
+		}
+	},
+	"bookmark": {
+		"_share": {
+			"bookmarkAction": "Đánh dấu thư mục này",
+			"unbookmarkAction": "Gỡ bỏ đánh dấu thư mục này"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể đánh dấu thư mục",
+			"success": "Thư mục đã được đánh dấu thành công"
+		},
+		"delete": {
+			"error": "Xin lỗi, không thể gỡ bỏ đánh dấu thư mục",
+			"success": "Thư mục đã được gỡ bỏ đánh dấu thành công"
+		},
+		"list": {
+			"bookmarks": "Đánh dấu",
+			"deleteHelp": "Nhấp chuột vào biểu tượng để gỡ bỏ đánh dấu",
+			"renameHelp": "Nhấp chuột vào biểu tượng để đổi tên"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể đổi tên đánh dấu",
+			"success": "Tên đánh dấu đã được cập nhật thành công"
+		}
+	},
+	"config": {
+		"_share": {
+			"editableFileExtensions": "Phần mở rộng của các tệp có thể sửa nội dung được (phân cách nhau bởi dấu phẩy)",
+			"explorer": "Quản lý tệp",
+			"imageToolkit": "Thư viện xử lý ảnh",
+			"imageToolkitGd": "GD",
+			"imageToolkitImagick": "Imagick",
+			"sizeHeightRequired": "Chiều cao là bắt buộc",
+			"sizeWidthRequired": "Chiều rộng là bắt buộc",
+			"thumbnailCrop": "Crop",
+			"thumbnailLarge": "Lớn",
+			"thumbnailMedium": "Trung bình",
+			"thumbnailSizes": "Kích thước của các ảnh thu nhỏ theo pixel (Rộng x Cao)",
+			"thumbnailSmall": "Nhỏ",
+			"thumbnailSquare": "Vuông",
+			"thumbnailThumbnail": "Ảnh thu nhỏ",
+			"uploadableFileExtensions": "Phần mở rộng của các tệp có thể tải lên được (phân cách nhau bởi dấu phẩy)",
+			"uploadDirTemplate": "Đường dẫn mẫu của thư mục lưu tệp",
+			"uploadDirTemplateRequired": "Đường dẫn mẫu của thư mục lưu tệp là bắt buộc",
+			"uploader": "Trình tải tệp",
+			"viewableFileExtensions": "Phần mở rộng của các tệp có thể xem được (phân cách nhau bởi dấu phẩy)",
+			"watermarkColor": "Màu",
+			"watermarkFont": "Phông chữ",
+			"watermarkFontRequired": "Phông chữ là bắt buộc",
+			"watermarkFontSize": "Kích thước phông",
+			"watermarkFontSizeMeasuredAuto": "Tự động điều chỉnh kích thước phông dựa trên chiều rộng của ảnh",
+			"watermarkImage": "Ảnh",
+			"watermarkImageRequired": "Ảnh dùng để đánh dấu là bắt buộc",
+			"watermarkImages": "Đánh dấu ảnh",
+			"watermarkNone": "Không đánh dấu ảnh",
+			"watermarkOpacity": "Độ trong suốt (opacity)",
+			"watermarkPositionBottom": "Đáy",
+			"watermarkPositionCenter": "Giữa",
+			"watermarkPositionHorizontal": "Vị trí đánh dấu theo chiều ngang",
+			"watermarkPositionLeft": "Trái",
+			"watermarkPositionMiddle": "Giữa",
+			"watermarkPositionRight": "Phải",
+			"watermarkPositionTop": "Đỉnh",
+			"watermarkPositionVertical": "Vị trí đánh dấu theo chiều thẳng đứng",
+			"watermarkRotationAngle": "Góc quay",
+			"watermarkText": "Văn bản",
+			"watermarkTextRequired": "Văn bản là bắt buộc",
+			"watermarkThumbnails": "Đánh dấu ảnh các ảnh có kích thước sau đây",
+			"watermarkUsingImage": "Đánh dấu ảnh bằng ảnh",
+			"watermarkUsingText": "Đánh dấu ảnh bằng văn bản"
+		},
+		"config": {
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"title": "Cấu hình module Tệp"
+		}
+	},
+	"connection": {
+		"_share": {
+			"initPath": "Thư mục xuất phát",
+			"name": "Tên",
+			"password": "Mật khẩu",
+			"port": "Cổng",
+			"server": "Máy chủ",
+			"type": "Kiểu",
+			"typeFtp": "Ftp",
+			"typeLocal": "Cục bộ",
+			"username": "Tên đăng nhập"
+		},
+		"add": {
+			"newConnectionButton": "Thêm kết nối",
+			"success": "Kết nối đã được thêm thành công",
+			"title": "Thêm kết nối"
+		},
+		"connect": {
+			"error": "Xin lỗi, không thể kết nối",
+			"success": "Đã kết nối thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn muốn xóa kết nối có tên là <b>%s</b>?",
+			"notFound": "Xin lỗi, không thể tìm thấy kết nối với Id là <b>%s</b>",
+			"success": "Kết nối đã được xóa thành công",
+			"title": "Xóa kết nối"
+		},
+		"disconnect": {
+			"error": "Xin lỗi, không thể ngắt kết nối",
+			"success": "Đã ngắt kết nối thành công"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật kết nối",
+			"notFound": "Xin lỗi, không tìm thấy kết nối có Id là <b>%s</b>",
+			"success": "Kết nối đã được cập nhật thành công",
+			"title": "Sửa kết nối"
+		},
+		"list": {
+			"title": "Kết nối"
+		},
+		"rename": {
+			"success": "Tên kết nối đã được cập nhật thành công"
+		}
+	},
+	"explorer": {
+		"_share": {
+			"changePermissionsAction": "Thay đổi quyền truy xuất tệp",
+			"createDirectoryAction": "Tạo thư mục mới",
+			"directoryName": "Tên thư mục",
+			"directoryNameRequired": "Tên thư mục là bắt buộc",
+			"fileCurrentName": "Tên hiện tại",
+			"fileName": "Tên tệp",
+			"fileNameRequired": "Tên tệp là bắt buộc",
+			"filePath": "Đường dẫn",
+			"filePermissions": "Quyền truy xuất",
+			"fileSize": "Dung lượng",
+			"fileType": "Kiểu",
+			"modifiedDate": "Ngày chỉnh sửa",
+			"extensions": {
+				"_dir": "Thư mục",
+				"_file": "Tệp",
+				"_unknown": "Tệp %s",
+				"7z": "Nén định dạng 7-Zip",
+				"avi": "Video định dạng AVI",
+				"bmp": "Ảnh BMP",
+				"bz2": "Nén định dạng BZIP2",
+				"c": "Mã nguồn C",
+				"cfc": "Tệp Cold Fusion",
+				"cfm": "Tệp mẫu Cold Fusion",
+				"chm": "Tệp trợ giúp HTML đã được biên dịch",
+				"class": "Lớp Java",
+				"conf": "Tệp cấu hình",
+				"config": "Tệp cấu hình",
+				"cpp": "Mã nguồn C++",
+				"cs": "Mã nguồn C#",
+				"css": "Tệp CSS",
+				"csv": "Tệp CSV",
+				"doc": "Tài liệu Microsoft Word",
+				"docx": "Tài liệu Microsoft Word",
+				"dot": "Tài liệu mẫu Microsoft Word",
+				"exe": "Tệp có thể thực thi được",
+				"gif": "Ảnh GIF",
+				"gz": "Nén định dạng GZIP",
+				"inc": "Mã nguồn PHP",
+				"ini": "Tệp cấu hình",
+				"iso": "Bản sao đĩa định dạng ISO",
+				"java": "Mã nguồn Java",
+				"jpeg": "Ảnh JPEG",
+				"jpg": "Ảnh JPG",
+				"js": "Mã nguồn Javascript",
+				"html": "Tài liệu HTML",
+				"mov": "Phim",
+				"mp3": "Âm thanh MP3",
+				"mp4": "Phime MP4",
+				"mpg": "Phim MPG",
+				"odc": "Biểu đồ OpenOffice",
+				"odf": "OpenOffice Interchange Format",
+				"odg": "OpenOffice Drawing",
+				"odi": "Ảnh OpenOffice",
+				"odp": "Trình diễn OpenOffice",
+				"ods": "Bảng tính OpenOffice",
+				"odt": "Tài liệu OpenOffice",
+				"pdf": "Tài liệu PDF",
+				"php": "Mã nguồn PHP",
+				"phtml": "Mã nguồn PHP",
+				"pl": "Mã nguồn Perl",
+				"png": "Ảnh PNG",
+				"ppt": "Trình diễn Microsoft PowerPoint",
+				"pptx": "Trình diễn Microsoft PowerPoint",
+				"py": "Mã nguồn Python",
+				"ram": "Tệp RealMedia",
+				"rar": "Nén định dạng RAR",
+				"rb": "Mã nguồn Ruby",
+				"rm": "Tệp RealMedia",
+				"rtf": "Tài liệu RTF",
+				"sql": "Kịch bản SQL",
+				"swf": "Tệp Flash",
+				"tar": "Nén định dạng TAR",
+				"tgz": "Nén định dạng GZIP",
+				"txt": "Tài liệu văn bản",
+				"wav": "Âm thanh WAV",
+				"wma": "Tệp âm thanh WMA",
+				"wmv": "Tệp phim WMV",
+				"xls": "Bảng tính Microsoft Excel",
+				"xlsx": "Bảng tính Microsoft Excel",
+				"xml": "Tài liệu XML",
+				"zip": "Nén định dạng ZIP"
+			}
+		},
+		"add": {
+			"error": "Xin lỗi, cannot create directory",
+			"success": "The new directory is created successfully",
+			"title": "Create new directory"
+		},
+		"compress": {
+			"destination": "Destination",
+			"destinationRequired": "The destination file is required",
+			"error": "Xin lỗi, cannot compress file",
+			"extensions": {
+				"tar": "Tar",
+				"zip": "Zip"
+			},
+			"notSupported": "Xin lỗi, cannot compress file because the required extensions have not been installed on the server",
+			"overwriteExistentFiles": "Overwrite existent files",
+			"success": "The file is compressed successfully",
+			"title": "Compress file",
+			"type": "Type"
+		},
+		"copy": {
+			"error": "Xin lỗi, không thể chép tệp",
+			"success": "Các tệp đã được chép thành công"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa tệp/thư mục tại đường dẫn <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa tệp/thư mục",
+			"success": "Tệp/thư mục đã được xóa thành công",
+			"title": "Xóa tệp/thư mục"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể lưu tệp",
+			"success": "Tệp đã được cập nhật thành công",
+			"title": "Bạn đang chỉnh sửa tệp tại đường dẫn <b>%s</b>"
+		},
+		"extract": {
+			"destination": "Giải nén vào",
+			"destinationRequired": "Thư mục đích là bắt buộc",
+			"error": "Xin lỗi, không thể giải nén tệp",
+			"overwriteExistentFiles": "Ghi đè các tệp đã tồn tại",
+			"success": "Tệp đã được giải nén thành công",
+			"title": "Giải nén tệp"
+		},
+		"list": {
+			"directories": "Thư mục",
+			"error": "Xin lỗi, không thể liệt kê các tệp",
+			"fileNotFound": "Không tìm thấy tệp nào",
+			"openContainingDirectory": "Mở thư mục chứa tệp",
+			"path": "Đường dẫn",
+			"rootDirectory": "Thư mục gốc",
+			"searchCaseSensitive": "Phân biệt chữ hoa-thường",
+			"searchFileHelp": "Tên của tệp",
+			"searchInSubFolders": "Tìm trong các thư mục con",
+			"searchOptions": "Tùy chọn tìm kiếm",
+			"searchRegularExpression": "Biểu thức",
+			"showColumns": "Hiển thị các cột:",
+			"showFilesOnly": "Chỉ hiển thị các tệp",
+			"showHiddenFiles": "Hiển thị các tệp ẩn",
+			"title": "Quản lý tệp",
+			"viewFilter": "Lọc"
+		},
+		"move": {
+			"error": "Xin lỗi, không thể di chuyển tệp",
+			"success": "Các tệp đã được di chuyển thành công"
+		},
+		"perm": {
+			"applyRecursively": "Áp dụng cho tất cả thư mục con",
+			"groupUser": "Nhóm",
+			"otherUser": "Khác",
+			"ownerUser": "Sở hữu",
+			"executePermission": "Thực thi",
+			"executePermissionAbbr": "x",
+			"readPermission": "Đọc",
+			"readPermissionAbbr": "r",
+			"writePermission": "Ghi",
+			"writePermissionAbbr": "w",
+			"error": "Xin lỗi, không thể thiết lập quyền truy xuất",
+			"success": "Quyền truy xuất tệp đã được cập nhật thành công",
+			"title": "Thay đổi quyền truy xuất"
+		},
+		"rename": {
+			"error": "Xin lỗi, không thể đổi tên tệp/thư mục",
+			"success": "Tệp/thư mục đã được đổi tên thành công",
+			"title": "Đổi tên tệp/thư mục"
+		},
+		"upload": {
+			"overwriteExistentFiles": "Ghi đè các tệp đã tồn tại",
+			"success": "Tệp đã được tải lên thành công",
+			"title": "Tải tệp lên"
+		},
+		"view": {
+			"title": "Bạn đang xem tệp tại đường dẫn <b>%s</b>"
+		}
+	}
+}

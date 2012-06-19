@@ -1,0 +1,465 @@
+{
+	"_about": {
+		"description": "This module is used to manage files",
+		"title": "File"
+	},
+	"_menu": {
+		"attachment": {
+			"list": "Manage attachments"
+		},
+		"config": {
+			"config": "Configure module"
+		},
+		"explorer": {
+			"list": "File explorer"
+		}
+	},
+	"_permission": {
+		"attachment": {
+			"description": "Manage attachments",
+			"actions": {
+				"add": "Add new attachment",
+				"delete": "Delete attachment",
+				"edit": "Update attachment",
+				"list": "List attachments"
+			}
+		},
+		"bookmark": {
+			"description": "Manage bookmarks",
+			"actions": {
+				"add": "Add new bookmark",
+				"delete": "Delete bookmark",
+				"list": "List bookmarks",
+				"rename": "Rename bookmark"
+			}
+		},
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		},
+		"connection": {
+			"description": "Manage connections",
+			"actions": {
+				"add": "Add new connection",
+				"connect": "Connect the connection",
+				"delete": "Delete connection",
+				"disconnect": "Disconnect the connection",
+				"edit": "Update connection",
+				"list": "List connections",
+				"rename": "Rename connection"
+			}
+		},
+		"explorer": {
+			"description": "File explorer",
+			"actions": {
+				"add": "Add new directory",
+				"compress": "Compress file",
+				"copy": "Copy files",
+				"delete": "Delete file",
+				"download": "Download file",
+				"edit": "Edit file",
+				"extract": "Extract compressed file",
+				"list": "List files",
+				"move": "Move files",
+				"perm": "Set file permissions",
+				"rename": "Rename file",
+				"upload": "Upload files",
+				"view": "View file"
+			}
+		},
+		"file": {
+			"description": "Manage files",
+			"actions": {
+				"upload": "Upload files"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"addAction": "Add",
+			"allLanguages": "All languages",
+			"backwardAction": "Backward",
+			"browseFilesAction": "Browse file(s)",
+			"cancelAction": "Cancel",
+			"compressAction": "Compress",
+			"connectAction": "Connect",
+			"copyAction": "Copy",
+			"cutAction": "Cut",
+			"deleteAction": "Delete",
+			"disconnectAction": "Disconnect",
+			"downloadAction": "Download",
+			"editAction": "Edit",
+			"extractAction": "Extract",
+			"forwardAction": "Forward",
+			"goHomeAction": "Go home",
+			"loadingAction": "Loading ...",
+			"localizeAction": "Localize",
+			"numDownloads": "%s downloads",
+			"pasteAction": "Paste",
+			"pasteWithoutOverwritingAction": "Paste without overwriting",
+			"refreshAction": "Refresh",
+			"renameAction": "Rename",
+			"saveAction": "Save",
+			"savingAction": "Saving ...",
+			"searchAction": "Search",
+			"uploadAction": "Upload",
+			"uploadingAction": "Uploading ...",
+			"viewAction": "View",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"attachment": {
+		"_share": {
+			"authRequiredHelp": "Require authentication to download the attachment",
+			"description": "Description",
+			"hash": "Hash",
+			"language": "Language",
+			"localization": "Localization",
+			"localizationHelp": "Drag the copies of attachment in other languages from the table of attachments<br />and drop them here",
+			"name": "Name",
+			"numDownloads": "Number of downloads",
+			"password": "Password",
+			"passwordRequiredHelp": "Require password to download the attachment",
+			"passwordUnchangedHelp": "Leave the textbox empty if you do not want to change the password",
+			"properties": "Properties",
+			"size": "Size",
+			"slug": "Slug",
+			"slugRequired": "The slug is required",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"uploadedDate": "Uploaded date"
+		},
+		"add": {
+			"error": "Sorry, cannot add new attachment",
+			"success": "The attachment is added successfully",
+			"title": "Add new attachment"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the attachment titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the attachment",
+			"notFound": "Sorry, cannot find the attachment",
+			"success": "The attachment is deleted successfully",
+			"title": "Delete attachment"
+		},
+		"download": {
+			"authRequired": "You have to <a href='%s'>sign in</a> to download the attachment",
+			"error": "Sorry, cannot download the attachment",
+			"notFound": "Sorry, cannot find the attachment",
+			"passwordRequired": "In order to download the attachment, you have to type the password in the following text box",
+			"title": "Download an attachment"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the attachment",
+			"notFound": "Sorry, cannot find the attachment with Id of <b>%s</b>",
+			"success": "The attachment is updated successfully",
+			"title": "Edit the attachment"
+		},
+		"list": {
+			"error": "Sorry, there is error",
+			"notFound": "Not found any attachments",
+			"searchHelp": "Title",
+			"showColumns": "Show columns:",
+			"title": "Manage attachments"
+		}
+	},
+	"bookmark": {
+		"_share": {
+			"bookmarkAction": "Bookmark this directory",
+			"unbookmarkAction": "Remove bookmark of this directory"
+		},
+		"add": {
+			"error": "Sorry, cannot bookmark the directory",
+			"success": "The bookmark is created successfully"
+		},
+		"delete": {
+			"error": "Sorry, cannot remove bookmark of the directory",
+			"success": "The bookmark is removed successfully"
+		},
+		"list": {
+			"bookmarks": "Bookmarks",
+			"deleteHelp": "Click on the icon to remove the bookmark",
+			"renameHelp": "Click on the icon to rename"
+		},
+		"rename": {
+			"error": "Sorry, cannot rename the bookmark",
+			"success": "The bookmark's name is updated successfully"
+		}
+	},
+	"config": {
+		"_share": {
+			"editableFileExtensions": "Extensions of editable files (separated by a comma)",
+			"explorer": "File Explorer",
+			"imageToolkit": "Image toolkit",
+			"imageToolkitGd": "GD",
+			"imageToolkitImagick": "Imagick",
+			"sizeHeightRequired": "Height is required",
+			"sizeWidthRequired": "Width is required",
+			"thumbnailCrop": "Crop",
+			"thumbnailLarge": "Large",
+			"thumbnailMedium": "Medium",
+			"thumbnailSizes": "Size of thumbnails in pixels (width x height)",
+			"thumbnailSmall": "Small",
+			"thumbnailSquare": "Square",
+			"thumbnailThumbnail": "Thumbnail",
+			"uploadableFileExtensions": "Extensions of uploadable files (separated by a comma)",
+			"uploadDirTemplate": "Template path upload directory",
+			"uploadDirTemplateRequired": "The template path of upload directory is required",
+			"uploader": "Uploader",
+			"viewableFileExtensions": "Extensions of viewable files (separated by a comma)",
+			"watermarkColor": "Color",
+			"watermarkFont": "Font",
+			"watermarkFontRequired": "The watermark font is required",
+			"watermarkFontSize": "Font size",
+			"watermarkFontSizeMeasuredAuto": "Automatically measure the font size based on the width of image",
+			"watermarkImage": "Image",
+			"watermarkImageRequired": "The watermark image is required",
+			"watermarkImages": "Add watermark to images",
+			"watermarkNone": "Do not add watermark",
+			"watermarkOpacity": "Opacity",
+			"watermarkPositionBottom": "Bottom",
+			"watermarkPositionCenter": "Center",
+			"watermarkPositionHorizontal": "Horizontal position",
+			"watermarkPositionLeft": "Left",
+			"watermarkPositionMiddle": "Middle",
+			"watermarkPositionRight": "Right",
+			"watermarkPositionTop": "Top",
+			"watermarkPositionVertical": "Vertical position",
+			"watermarkRotationAngle": "Rotation angle",
+			"watermarkText": "Text",
+			"watermarkTextRequired": "The watermark text is required",
+			"watermarkThumbnails": "Add watermark to the following thumbnails",
+			"watermarkUsingImage": "Add watermark using an image",
+			"watermarkUsingText": "Add watermark using a text"
+		},
+		"config": {
+			"error": "Sorry, cannot update the module's settings",
+			"success": "The module's settings are updated successfully",
+			"title": "Configure the File module"
+		}
+	},
+	"connection": {
+		"_share": {
+			"initPath": "Init Path",
+			"name": "Name",
+			"password": "Password",
+			"port": "Port",
+			"server": "Server",
+			"type": "Type",
+			"typeFtp": "Ftp",
+			"typeLocal": "Local",
+			"username": "Username"
+		},
+		"add": {
+			"newConnectionButton": "Add new connection",
+			"success": "The connection is created successfully",
+			"title": "Add new connection"
+		},
+		"connect": {
+			"error": "Sorry, cannot connect",
+			"success": "Connected successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the connection named <b>%s</b>?",
+			"notFound": "Sorry, cannot find the connection with Id as <b>%s</b>",
+			"success": "The connection is removed successfully",
+			"title": "Delete connection"
+		},
+		"disconnect": {
+			"error": "Sorry, cannot disconnect",
+			"success": "Disconnected successfully"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the connection",
+			"notFound": "Sorry, cannot find the connection with Id of <b>%s</b>",
+			"success": "The connection is updated successfully",
+			"title": "Edit the connection"
+		},
+		"list": {
+			"title": "Connections"
+		},
+		"rename": {
+			"success": "The connection's name is updated successfully"
+		}
+	},
+	"explorer": {
+		"_share": {
+			"changePermissionsAction": "Change file permissions",
+			"createDirectoryAction": "Create new directory",
+			"directoryName": "Directory name",
+			"directoryNameRequired": "The directory name is required",
+			"fileCurrentName": "Current name",
+			"fileName": "File name",
+			"fileNameRequired": "The file name is required",
+			"filePath": "Path",
+			"filePermissions": "Permissions",
+			"fileSize": "Size",
+			"fileType": "Type",
+			"modifiedDate": "Modified date",
+			"extensions": {
+				"_dir": "Directory",
+				"_file": "File",
+				"_unknown": "%s File",
+				"7z": "7-Zip Archive",
+				"avi": "AVI Video",
+				"bmp": "BMP Image",
+				"bz2": "BZIP2 Archive",
+				"c": "C Source File",
+				"cfc": "Cold Fusion File",
+				"cfm": "Cold Fusion Template File",
+				"chm": "Microsoft Compiled HTML Help File",
+				"class": "Java Class",
+				"conf": "Configuration File",
+				"config": "Configuration File",
+				"cpp": "C++ Source File",
+				"cs": "C# Source File",
+				"css": "CSS File",
+				"csv": "Comma Separated Value Data File",
+				"doc": "Microsoft Word Document",
+				"docx": "Microsoft Word Document",
+				"dot": "Microsoft Word Document Template",
+				"exe": "Executable File",
+				"gif": "GIF Image",
+				"gz": "GZIP Archive",
+				"inc": "PHP Script",
+				"ini": "Configuration File",
+				"iso": "Disk Image",
+				"java": "Java Source File",
+				"jpeg": "JPEG Image",
+				"jpg": "JPG Image",
+				"js": "Javascript Source File",
+				"html": "HTML Document",
+				"mov": "Movie",
+				"mp3": "MP3 Audio",
+				"mp4": "MP4 Video",
+				"mpg": "MPG Video",
+				"odc": "OpenOffice Chart",
+				"odf": "OpenOffice Interchange Format",
+				"odg": "OpenOffice Drawing",
+				"odi": "OpenOffice Image",
+				"odp": "OpenOffice Presentation",
+				"ods": "OpenOffice Spreadsheet",
+				"odt": "OpenOffice Text Document",
+				"pdf": "PDF Document",
+				"php": "PHP Script",
+				"phtml": "PHP Script",
+				"pl": "Perl Script",
+				"png": "PNG Image",
+				"ppt": "Microsoft PowerPoint Presentation",
+				"pptx": "Microsoft PowerPoint Presentation",
+				"py": "Python Script",
+				"ram": "RealMedia Metafile",
+				"rar": "RAR Archive",
+				"rb": "Ruby Script",
+				"rm": "RealMedia File",
+				"rtf": "Rich Text Document",
+				"sql": "SQL Script",
+				"swf": "Flash File",
+				"tar": "TAR Archive",
+				"tgz": "GZIP Archive",
+				"txt": "Text Document",
+				"wav": "WAV Audio",
+				"wma": "Windows Media Audio File",
+				"wmv": "Windows Media Video File",
+				"xls": "Microsoft Excel Worksheet",
+				"xlsx": "Microsoft Excel Worksheet",
+				"xml": "XML Document",
+				"zip": "ZIP Archive"
+			}
+		},
+		"add": {
+			"error": "Sorry, cannot create directory",
+			"success": "The new directory is created successfully",
+			"title": "Create new directory"
+		},
+		"compress": {
+			"destination": "Destination",
+			"destinationRequired": "The destination file is required",
+			"error": "Sorry, cannot compress file",
+			"extensions": {
+				"tar": "Tar",
+				"zip": "Zip"
+			},
+			"notSupported": "Sorry, cannot compress file because the required extensions have not been installed on the server",
+			"overwriteExistentFiles": "Overwrite existent files",
+			"success": "The file is compressed successfully",
+			"title": "Compress file",
+			"type": "Type"
+		},
+		"copy": {
+			"error": "Sorry, cannot copy file(s)",
+			"success": "The file(s) are copied successfully"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete file/directory located at <b>%s</b>?",
+			"error": "Sorry, cannot delete file/directory",
+			"success": "The file/directory is removed successfully",
+			"title": "Delete file/directory"
+		},
+		"edit": {
+			"error": "Sorry, cannot save the file",
+			"success": "The file is updated successfully",
+			"title": "You are editing the file located at <b>%s</b>"
+		},
+		"extract": {
+			"destination": "Extract to",
+			"destinationRequired": "The destination directory is required",
+			"error": "Sorry, cannot decompress file",
+			"overwriteExistentFiles": "Overwrite existent files",
+			"success": "The file is decompressed successfully",
+			"title": "Extract compressed file"
+		},
+		"list": {
+			"directories": "Directories",
+			"error": "Sorry, cannot list the files",
+			"fileNotFound": "There is no file",
+			"openContainingDirectory": "Open the containing directory",
+			"path": "Path",
+			"rootDirectory": "Root Directory",
+			"searchCaseSensitive": "Case sensitive",
+			"searchFileHelp": "File's name",
+			"searchInSubFolders": "Search in all sub-folders",
+			"searchOptions": "Search options",
+			"searchRegularExpression": "Regular expression",
+			"showColumns": "Show columns:",
+			"showFilesOnly": "Show files only",
+			"showHiddenFiles": "Show hidden files",
+			"title": "File explorer",
+			"viewFilter": "View filter"
+		},
+		"move": {
+			"error": "Sorry, cannot move file(s)",
+			"success": "The file(s) are moved successfully"
+		},
+		"perm": {
+			"applyRecursively": "Apply to sub-directories recursively",
+			"groupUser": "Group",
+			"otherUser": "Other",
+			"ownerUser": "Owner",
+			"executePermission": "Execute",
+			"executePermissionAbbr": "x",
+			"readPermission": "Read",
+			"readPermissionAbbr": "r",
+			"writePermission": "Write",
+			"writePermissionAbbr": "w",
+			"error": "Sorry, cannot set the permissions",
+			"success": "The file permissions are updated successfully",
+			"title": "Change file permissions"
+		},
+		"rename": {
+			"error": "Sorry, cannot rename file/directory",
+			"success": "The name of file/directory is updated successfully",
+			"title": "Rename file/directory"
+		},
+		"upload": {
+			"overwriteExistentFiles": "Overwrite existent files",
+			"success": "The file is uploaded successfully",
+			"title": "Upload new file"
+		},
+		"view": {
+			"title": "You are viewing the file located at <b>%s</b>"
+		}
+	}
+}

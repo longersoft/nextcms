@@ -1,0 +1,25 @@
+{
+	"_about": {
+		"description": "Hiển thị liên kết để tải các tệp đính kèm",
+		"title": "Tệp đính kèm"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"dataSource": "Nguồn dữ liệu",
+		"dragDropHelp": "Gắp và thả tệp đính kèm ở đây",
+		"language": "Ngôn ngữ",
+		"latestAttachments": "Tệp đính kèm mới nhất",
+		"mostDownloadedAttachments": "Tệp đính kèm được tải nhiều nhất",
+		"moveDownAction": "Lên",
+		"moveUpAction": "Xuống",
+		"numberOfAttachments": "Số tệp đính kèm",
+		"removeAction": "Xóa",
+		"setOfAttachments": "Tập các tệp đính kèm",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"by": "Bởi %s",
+		"dateFormat": "d-m-Y",
+		"numDownloads": "%s lượt tải"
+	}
+}

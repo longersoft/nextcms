@@ -1,0 +1,181 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if (!$this->accessor()->route('file_file_upload')) : ?>
+
+<div id="fileHooksUploaderContainer" class="fileHooksUploaderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, title: '<?php echo $this->translator(true)->_('show.title'); ?>', class: 'appContentPane'">
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', style: 'border: none'">
+		<?php echo $this->translator()->_('show.notAllowed'); ?>
+	</div>
+</div>
+
+<?php else : ?>
+
+<div id="fileHooksUploaderContainer" class="fileHooksUploaderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, title: '<?php echo $this->translator(true)->_('show.title'); ?>', class: 'appContentPane'">
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'top', style: 'border: none'">
+		<div style="padding-bottom: 8px">
+			<?php echo sprintf($this->translator()->_('show.maxUploadSize'), ini_get('upload_max_filesize')); ?>
+		</div>
+	
+		<form data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'file_file_upload'); ?>', method: 'POST', encType: 'multipart/form-data', class: 'appForm'">
+		<div id="fileHooksUploaderUploader" data-dojo-type="dojox.form.Uploader" data-dojo-props="name: 'uploadedfiles', multiple: true, type: 'file', uploadOnSelect: true, label: '<?php echo $this->translator(true)->_('show.browseFilesAction'); ?>', url: '<?php echo $this->url(array(), 'file_file_upload'); ?>?PHPSESSID=<?php echo Zend_Session::getId(); ?>&mod=<?php echo $this->module; ?>&thumbnail=false', _url: '<?php echo $this->url(array(), 'file_file_upload'); ?>?PHPSESSID=<?php echo Zend_Session::getId(); ?>&thumbnail=false', _module: '<?php echo $this->module; ?>', style: 'width: 200px'">
+			<script type="dojo/method" data-dojo-event="onBegin" data-dojo-args="dataArray">
+			this.set("disabled", true);
+			</script>
+			<script type="dojo/method" data-dojo-event="onComplete" data-dojo-args="dataArray">
+			this.set("disabled", false);
+			var template = dojo.byId("fileHooksUploaderFileTemplate").innerHTML;
+			for (var i in dataArray) {
+				// Check error
+				if (dataArray[i].original.error) {
+					var message;
+					switch (dataArray[i].original.error) {
+						case "<?php echo File_Services_Uploader::ERROR_NOT_UPLOADABLE_EXT; ?>":
+							message = "<?php echo $this->translator()->_('show.notUploadableExtensionError'); ?>";
+							break;
+						case "<?php echo File_Services_Uploader::ERROR_BIG_FILE_SIZE; ?>":
+							message = "<?php echo $this->translator()->_('show.bigFileSizeError'); ?>";
+							break;
+						default:
+							message = "<?php echo $this->translator()->_('show.uploadError'); ?>";
+							break;
+					}
+					dojo.publish("/app/global/notification", [{
+						message: message,
+						type: "error"
+					}]);
+					continue;
+				}
+
+				var html = template.replace(/{file_name}/g, dataArray[i].original.name)
+								   .replace(/{file_url}/g, dataArray[i].original.url)
+								   .replace(/{file_size}/g, file.js.views.FileFormatter.formatSize(dataArray[i].original.size));
+				var div = dojo.create("div", {
+					className: "fileHooksUploaderFileItem dojoDndItem",
+					innerHTML: html
+				}, "fileHooksUploaderFilesContainer");
+
+				switch (dataArray[i].original.extension.toLowerCase()) {
+					case "bmp":
+					case "gif":
+					case "jpg":
+					case "jpeg":
+					case "png":
+						var img = dojo.query("img", div)[0];
+						dojo.attr(img, "src", core.js.Constant.ROOT_URL + dataArray[i].original.url);
+						dojo.attr(div, {
+							dndtype: "appDndImage",
+							"data-app-dndimage": dojo.toJson({
+								url: core.js.Constant.ROOT_URL + dataArray[i].original.url,
+								title: dataArray[i].original.name
+							})
+						});
+						break;
+					// TODO: Add more extensions supported by the Strobe Media Playback
+					case "f4v":
+					case "flv":
+					case "m4v":
+					case "mov":
+					case "mp3":
+					case "mp4":
+					case "swf":
+						dojo.attr(div, {
+							dndtype: "appDndVideo,appDndLink",
+							"data-app-dndlink": core.js.base.Encoder.encode({
+								url: core.js.Constant.ROOT_URL + dataArray[i].original.url,
+								title: dataArray[i].original.name
+							}),
+							"data-app-dndvideo": core.js.base.Encoder.encode({
+								src: core.js.Constant.ROOT_URL + dataArray[i].original.url,
+								poster: ""
+							})
+						});
+						break;
+					default:
+						dojo.attr(div, {
+							dndtype: "appDndLink",
+							"data-app-dndlink": core.js.base.Encoder.encode({
+								url: core.js.Constant.ROOT_URL + dataArray[i].original.url,
+								title: dataArray[i].original.name
+							})
+						});
+						break;
+				}
+			}
+			</script>
+		</div>
+		</form>
+	</div>
+	
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+		<div class="fileHooksUploaderFiles" id="fileHooksUploaderFilesContainer" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+			<!-- LESSON: I can easily modify the template for each file item -->
+			<div id="fileHooksUploaderFileTemplate" class="fileHooksUploaderFileItem dojoDndItem" style="display: none">
+				<div class="fileHooksUploaderThumbnail">
+					<img src="<?php echo $this->APP_ROOT_URL; ?>/modules/file/hooks/uploader/file.png" />				
+				</div>
+				<div class="fileHooksUploaderFileInfo">
+					<?php echo $this->translator()->_('show.fileName'); ?>: <a href="<?php echo $this->APP_ROOT_URL; ?>{file_url}" target="_blank">{file_name}</a><br />
+					<?php echo $this->translator()->_('show.fileSize'); ?>: {file_size}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* file.hooks.uploader */
+dojo.require("dijit.form.Form");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojox.layout.ContentPane");
+dojo.require("dojox.form.Uploader");
+dojo.require("dojox.form.uploader.plugins.Flash");
+
+dojo.registerModulePath("file", "<?php echo $this->APP_STATIC_URL; ?>/modules/file");
+dojo.require("core.js.base.Encoder");
+dojo.require("core.js.Constant");
+dojo.require("file.js.views.FileFormatter");
+
+dojo.addOnLoad(function() {
+	// Update the uploader endpoint when loading a back-end URL
+	dojo.subscribe("/app/global/onHashChange", function(hash) {
+		var obj = dojo.queryToObject(hash);
+		if (!obj.u) {
+			return;
+		}
+		var url = obj.u;
+		var prefixUrl = "<?php echo $this->backendUrl(); ?>";
+		if (url.substr(0, prefixUrl.length) == prefixUrl) {
+			url = url.substr(prefixUrl.length);
+			// Now, url is in the format of /module/controller/action/query
+			if (url.length > 0 && url[0] == "/") {
+				url = url.substr(1);
+			}
+			var pos = url.indexOf("/");
+			var module = (pos == -1) ? url : url.substr(0, pos);
+
+			var uploader = dijit.byId("fileHooksUploaderUploader");
+			uploader.set("_module", module);
+			uploader.set("url", uploader.get("_url") + "&mod=" + uploader.get("_module"));
+		}
+	});
+});
+<?php $this->script()->captureEnd(); ?>
+
+<?php endif; ?>

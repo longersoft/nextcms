@@ -1,0 +1,246 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-06-19
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/file/widgets/attachments/admin.css");
+</script>
+
+<div class="appForm">
+	<div class="appFormRow" style="width: 100%">
+		<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%; width: 100%', closable: true, doLayout: false">
+			<!-- Basic -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="selected: true, title: '<?php echo $this->translator(true)->_('config.basic'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<label class="appTopLabel" for="limit"><?php echo $this->translator()->_('config.numberOfAttachments'); ?>:</label>
+					<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'limit', class: 'appWidgetInput', style: 'width: 100px'" />
+				</div>
+				
+				<div class="appFormRow">
+					<label class="appTopLabel" for="lang"><?php echo $this->translator()->_('config.language'); ?>:</label>
+					<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'language', value: '<?php echo $this->language; ?>', class: 'appWidgetInput'">
+						<?php if ($this->languages) : ?>
+						<?php foreach ($this->languages as $language => $name) : ?>
+						<option value="<?php echo $language; ?>"><?php echo $name; ?></option>
+						<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</div>
+			</div>
+			<!-- /Basic -->
+		
+			<!-- DataSource -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.dataSource'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<div data-dojo-type="dijit.form.RadioButton" data-dojo-props="type: 'radio', name: 'data_source', value: 'latest', class: 'appWidgetInput'">
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						if (value) {
+							dojo.style("fileWidgetsAttachmentsConfigSetContainer_<?php echo $this->uid; ?>", "display", "none");
+						}
+						</script>
+					</div>
+					<?php echo $this->translator()->_('config.latestAttachments'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<div data-dojo-type="dijit.form.RadioButton" data-dojo-props="type: 'radio', name: 'data_source', value: 'most_downloaded', class: 'appWidgetInput'">
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						if (value) {
+							dojo.style("fileWidgetsAttachmentsConfigSetContainer_<?php echo $this->uid; ?>", "display", "none");
+						}
+						</script>
+					</div>
+					<?php echo $this->translator()->_('config.mostDownloadedAttachments'); ?>
+				</div>
+				
+				<div class="appFormRow">
+					<div data-dojo-type="dijit.form.RadioButton" data-dojo-props="type: 'radio', name: 'data_source', value: 'set', class: 'appWidgetInput'">
+						<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+						if (value) {
+							dojo.style("fileWidgetsAttachmentsConfigSetContainer_<?php echo $this->uid; ?>", "display", "block");
+						}
+						</script>
+					</div>
+					<?php echo $this->translator()->_('config.setOfAttachments'); ?>
+				</div>
+				
+				<div class="appFormRow" id="fileWidgetsAttachmentsConfigSetContainer_<?php echo $this->uid; ?>" style="display: none; margin: 0 5px">
+					<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="style: 'height: 200px; padding: 0; width: 100%', class: 'appBorderContainer'">
+						<div id="fileWidgetsAttachmentsConfigAttachmentsContainer_<?php echo $this->uid; ?>" class="fileWidgetsAttachmentsConfigAttachmentItemsContainer" style="height: 100%">
+							<div id="fileWidgetsAttachmentsConfigSetHelp_<?php echo $this->uid; ?>" style="display: <?php if (count($this->attachments) == 0) : ?>block<?php else : ?>none<?php endif; ?>; padding-top: 100px; text-align: center">
+								<?php echo $this->translator()->_('config.dragDropHelp'); ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /DataSource -->
+			
+			<!-- Theme -->
+			<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config.theme'); ?>', style: 'padding-top: 8px'">
+				<div class="appFormRow">
+					<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'theme', class: 'appWidgetInput'" />
+				</div>
+			</div>
+			<!-- /Theme -->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojo.window");
+dojo.require("dojox.fx");
+
+dojo.require("core.js.base.Encoder");
+dojo.require("core.js.Constant");
+
+dojo.provide("file.widgets.attachments.ConfigController");
+
+// Array of attachment's Ids in the set
+file.widgets.attachments.ConfigController._attachmentIds = [];
+
+file.widgets.attachments.ConfigController.addAttachment = function(/*Object*/ attachment, /*String*/ uid) {
+	// summary:
+	//		Adds an attachment to the set
+	// attachment:
+	//		The attachment data, contains the following properties:
+	//		- title
+	//		- attachment_id
+	//		- title
+	//		- slug
+	//		- hash
+	//		- language
+	// uid:
+	//		The unique Id which can be used to define the set container
+	if (dojo.indexOf(file.widgets.attachments.ConfigController._attachmentIds, attachment.attachment_id) != -1) {
+		return;
+	}
+	file.widgets.attachments.ConfigController._attachmentIds.push(attachment.attachment_id);
+	
+	var div = dojo.create("div", {
+		className: "dojoDndItem fileWidgetsAttachmentsConfigAttachmentItem",
+		dndtype: "fileWidgetsAttachmentsConfigAttachmentItemDnd"
+	}, "fileWidgetsAttachmentsConfigAttachmentsContainer_" + uid);
+
+	// Title
+	dojo.create("div", {
+		innerHTML: attachment.title,
+		style: "padding-bottom: 4px"
+	}, div);
+
+	// Actions container
+	var span = dojo.create("span", {
+		className: "fileWidgetsAttachmentsConfigAction"
+	}, div);
+
+	// Removing action
+	var removingLink = dojo.create("a", {
+		href: "javascript: void(0);",
+		innerHTML: "<?php echo $this->translator()->_('config.removeAction'); ?>"
+	}, span);
+	dojo.connect(removingLink, "onclick", function() {
+		dojo.destroy(div);
+		var index = dojo.indexOf(file.widgets.attachments.ConfigController._attachmentIds, attachment.attachment_id);
+		file.widgets.attachments.ConfigController._attachmentIds.splice(index, 1);
+		
+		// Show the guide if there is no attachments
+		if (dojo.query(".fileWidgetsAttachmentsConfigAttachmentItem", "fileWidgetsAttachmentsConfigAttachmentsContainer_" + uid).length == 0) {
+			dojo.style("fileWidgetsAttachmentsConfigSetHelp_" + uid, "display", "block");
+		}
+	});
+
+	// Moving up action
+	var movingUpLink = dojo.create("a", {
+		href: "javascript: void(0);",
+		innerHTML: "<?php echo $this->translator()->_('config.moveUpAction'); ?>"
+	}, span);
+	dojo.connect(movingUpLink, "onclick", function() {
+		var items = dojo.query(".fileWidgetsAttachmentsConfigAttachmentItem", "fileWidgetsAttachmentsConfigAttachmentsContainer_" + uid);
+		var index = dojo.indexOf(items, div);
+		if (index > 0 && items.length > 1) {
+			dojo.place(div, items[index - 1], "before");
+			dojo.window.scrollIntoView(div);
+			dojox.fx.highlight({
+				node: div,
+				duration: 2000
+			}).play();
+		}
+	});
+	
+	// Moving down action
+	var movingDownLink = dojo.create("a", {
+		href: "javascript: void(0);",
+		innerHTML: "<?php echo $this->translator()->_('config.moveDownAction'); ?>"
+	}, span);
+	dojo.connect(movingDownLink, "onclick", function() {
+		var items = dojo.query(".fileWidgetsAttachmentsConfigAttachmentItem", "fileWidgetsAttachmentsConfigAttachmentsContainer_" + uid);
+		var index = dojo.indexOf(items, div);
+		if (index < items.length - 1 && items.length > 1) {
+			dojo.place(div, items[index + 1], "after");
+			dojo.window.scrollIntoView(div);
+			dojox.fx.highlight({
+				node: div,
+				duration: 2000
+			}).play();
+		}
+	});
+
+	// Hidden input
+	dojo.create("input", {
+		type: "hidden",
+		appWidgetInputName: "attachment_ids[]",
+		name: "attachment_ids[]",
+		value: attachment.attachment_id,
+		className: "appWidgetInput"
+	}, div);
+	
+	dojo.create("div", {
+		className: "appClear"
+	}, div);	
+};
+
+dojo.addOnLoad(function() {
+	// Load the attachments in set
+	<?php foreach ($this->attachments as $attachment) : ?>
+	file.widgets.attachments.ConfigController.addAttachment(<?php echo Zend_Json::encode($attachment); ?>, "<?php echo $this->uid; ?>");
+	<?php endforeach; ?>
+	
+	new dojo.dnd.AutoSource("fileWidgetsAttachmentsConfigAttachmentsContainer_<?php echo $this->uid; ?>", {
+		accept: ["appDndLink", "fileWidgetsAttachmentsConfigAttachmentItemDnd"],
+		onDropExternal: function(source, nodes, copy) {
+			var node = nodes[0];
+			if (dojo.attr(node, "data-app-entity-class") != "File_Models_Attachment") {
+				return;
+			}
+
+			// Hide the guides
+			dojo.style("fileWidgetsAttachmentsConfigSetHelp_<?php echo $this->uid; ?>", "display", "none");
+			
+			var attachment = core.js.base.Encoder.decode(dojo.attr(node, "data-app-entity-props"));
+			file.widgets.attachments.ConfigController.addAttachment(attachment, "<?php echo $this->uid; ?>");
+		}
+	});
+});
+</script>

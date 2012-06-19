@@ -1,0 +1,259 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('config._share.title'));
+?>
+
+<script type="text/javascript">
+// DOJO LESSON: I have to use Javascript to load the CSS file for the Color Picker widget
+// because if I don't, the page will show a horizontal scroll
+dojo.create("link", {
+	href: "<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/widget/ColorPicker/ColorPicker.css",
+	media: "screen",
+	rel: "stylesheet",
+	type: "text/css"
+}, dojo.query("head")[0]);
+</script>
+
+<div id="fileConfigConfigContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; padding: 0; width: 100%', class: 'appBorderContainer'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			if (dijit.byId("fileConfigConfigForm").validate()) {
+				dijit.byId("fileConfigConfigStandby").show();
+				_this.set("disabled", true);
+
+				var params = dojo.formToObject("fileConfigConfigForm");
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'file_config_config'); ?>",
+					content: params,
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dijit.byId("fileConfigConfigStandby").hide();
+						dojo.publish("/app/global/notification", [{
+							message: (data.result == "APP_RESULT_OK") ? "<?php echo $this->translator()->_('config.config.success'); ?>" : "<?php echo $this->translator()->_('config.config.error'); ?>",
+							type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+						}]);
+						
+						if (data.result == "APP_RESULT_OK") {
+							dojo.publish("/app/file/config/config/onSetWatermark", [ params.watermark_using ]);
+						}
+					}
+				});
+			}
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- ConfigForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center'" class="appContentPane">
+		<form id="fileConfigConfigForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config.config.title'); ?></span></h2>
+			
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="closable: true, nested: true, style: 'height: 100%'">
+				<!-- Uploader -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config._share.uploader'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="uploadable_files"><?php echo $this->translator()->_('config._share.uploadableFileExtensions'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'uploadable_files', style: 'height: 100px; width: 300px'"><?php echo $this->config('file', 'uploadable_files', 'bmp,gif,jpeg,jpg,png,txt,zip'); ?></textarea>
+					</div>
+				
+					<div class="appFormRow">
+						<label for="upload_dir_template"><?php echo $this->translator()->_('config._share.uploadDirTemplate'); ?>:</label>
+						<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'upload_dir_template', value: '<?php if ($this->uploadDirTemplate) : ?><?php echo addslashes($this->uploadDirTemplate); ?><?php endif; ?>', style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config._share.uploadDirTemplateRequired'); ?>'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="image_toolkit"><?php echo $this->translator()->_('config._share.imageToolkit'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'image_toolkit', value: '<?php echo $this->imageToolkit; ?>'">
+							<option value="gd"<?php if (!extension_loaded('gd')): ?> disabled="disabled"<?php endif; ?>><?php echo $this->translator()->_('config._share.imageToolkitGd'); ?></option>
+							<option value="imagick"<?php if (!extension_loaded('imagick')): ?> disabled="disabled"<?php endif; ?>><?php echo $this->translator()->_('config._share.imageToolkitImagick'); ?></option>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label>&nbsp;</label>
+						<?php echo $this->translator()->_('config._share.thumbnailSizes'); ?>:
+					</div>
+					
+					<?php foreach ($this->thumbnailSizes as $thumb => $value) : ?>
+					<div class="appFormRow">
+						<label><?php echo $this->translator()->_('config._share.thumbnail' . ucfirst($thumb)); ?>:</label>
+						<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'width[]', value: '<?php echo $value['width']; ?>', style: 'width: 50px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config._share.sizeWidthRequired'); ?>'" /> x <input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'height[]', value: '<?php echo $value['height']; ?>', style: 'width: 50px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config._share.sizeHeightRequired'); ?>'" />
+						<input type="hidden" name="thumb[]" value="<?php echo $thumb; ?>" />
+						<input type="hidden" name="method[]" value="<?php echo $value['method']; ?>" />
+					</div>
+					<?php endforeach; ?>
+					
+					<!-- Watermark -->
+					<h2 class="appHeadline" style="margin-top: 0"><span><?php echo $this->translator()->_('config._share.watermarkImages'); ?></span></h2>
+					
+					<div class="appFormRow">
+						<label for="watermark_using">&nbsp;</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'watermark_using', value: '<?php echo $this->watermarkOptions['using']; ?>'">
+							<option value="none"><?php echo $this->translator()->_('config._share.watermarkNone'); ?></option>
+							<option value="image"><?php echo $this->translator()->_('config._share.watermarkUsingImage'); ?></option>
+							<option value="text"><?php echo $this->translator()->_('config._share.watermarkUsingText'); ?></option>
+							
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dojo.style("fileConfigConfigWatermarkTextContainer", "display", value == "text" ? "block" : "none");
+							dojo.style("fileConfigConfigWatermarkImageContainer", "display", value == "image" ? "block" : "none");
+							dojo.style("fileConfigConfigWatermarkPositionContainer", "display", value == "none" ? "none" : "block");
+							dijit.byId("fileConfigConfigWatermarkText").set("disabled", value != "text");
+							dijit.byId("fileConfigConfigWatermarkFont").set("disabled", value != "text");
+							dijit.byId("fileConfigConfigWatermarkImage").set("disabled", value != "image");
+							</script>
+						</select>
+					</div>
+					
+					<div id="fileConfigConfigWatermarkTextContainer" style="display: <?php if ($this->watermarkOptions['using'] == 'text') : ?>block<?php else : ?>none<?php endif; ?>">
+						<div class="appFormRow">
+							<label for="watermark_text"><?php echo $this->translator()->_('config._share.watermarkText'); ?>:</label>
+							<input id="fileConfigConfigWatermarkText" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'watermark_text', value: '<?php echo addslashes($this->watermarkOptions['text']); ?>', disabled: <?php if ($this->watermarkOptions['using'] == 'text') : ?>false<?php else : ?>true<?php endif; ?>, style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config._share.watermarkTextRequired'); ?>'" /> 
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_color"><?php echo $this->translator()->_('config._share.watermarkColor'); ?>:</label>
+							<input id="fileConfigConfigWatermarkColor" data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'watermark_color', value: '<?php echo $this->watermarkOptions['color']; ?>', style: 'width: 100px'" />
+							<div data-dojo-type="dijit.form.DropDownButton">
+								<span><?php echo $this->translator()->_('config._share.watermarkColor'); ?></span>
+								<div data-dojo-type="dojox.widget.ColorPicker" data-dojo-props="value: '<?php echo $this->watermarkOptions['color']; ?>'">
+									<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+									dijit.byId("fileConfigConfigWatermarkColor").set("value", value);
+									</script>
+								</div>
+							</div>
+							<div class="appClear"></div>
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_font"><?php echo $this->translator()->_('config._share.watermarkFont'); ?>:</label>
+							<input id="fileConfigConfigWatermarkFont" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'watermark_font', value: '<?php echo addslashes($this->watermarkOptions['font']); ?>', disabled: <?php if ($this->watermarkOptions['using'] == 'text') : ?>false<?php else : ?>true<?php endif; ?>, style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config._share.watermarkFontRequired'); ?>'" />
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_font_size"><?php echo $this->translator()->_('config._share.watermarkFontSize'); ?>:</label>
+							<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'watermark_font_size', value: '<?php echo $this->watermarkOptions['font_size']; ?>', style: 'width: 50px'" /> px
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_font_measured">&nbsp;</label>
+							<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'watermark_font_measured', value: 1, checked: <?php if ($this->watermarkOptions['font_measured']) : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('config._share.watermarkFontSizeMeasuredAuto'); ?>
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_rotation_angle"><?php echo $this->translator()->_('config._share.watermarkRotationAngle'); ?>:</label>
+							<input data-dojo-type="dijit.form.NumberSpinner" data-dojo-props="name: 'watermark_rotation_angle', constraints: {min: 0, max: 360}, smallDelta: 1, value: '<?php echo $this->watermarkOptions['rotation_angle']; ?>', style: 'width: 50px'" />
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_opacity"><?php echo $this->translator()->_('config._share.watermarkOpacity'); ?>:</label>
+							<input data-dojo-type="dijit.form.NumberSpinner" data-dojo-props="name: 'watermark_opacity', constraints: {min: 0, max: 100}, smallDelta: 1, value: '<?php echo $this->watermarkOptions['opacity']; ?>', style: 'width: 50px'" />
+						</div>
+					</div>
+					
+					<div id="fileConfigConfigWatermarkImageContainer" style="display: <?php if ($this->watermarkOptions['using'] == 'image') : ?>block<?php else : ?>none<?php endif; ?>">
+						<div class="appFormRow">
+							<label for="watermark_image"><?php echo $this->translator()->_('config._share.watermarkImage'); ?>:</label>
+							<input id="fileConfigConfigWatermarkImage" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'watermark_image', value: '<?php echo addslashes($this->watermarkOptions['image']); ?>', disabled: <?php if ($this->watermarkOptions['using'] == 'image') : ?>false<?php else : ?>true<?php endif; ?>, style: 'width: 400px', required: true, missingMessage: '<?php echo $this->translator(true)->_('config._share.watermarkImageRequired'); ?>'" /> 
+						</div>
+					</div>
+					
+					<div id="fileConfigConfigWatermarkPositionContainer" style="display: <?php if ($this->watermarkOptions['using'] == 'none') : ?>none<?php else : ?>block<?php endif; ?>">
+						<div class="appFormRow">
+							<label for="watermark_horizontal_pos"><?php echo $this->translator()->_('config._share.watermarkPositionHorizontal'); ?>:</label>
+							<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'watermark_horizontal_pos', value: '<?php echo $this->watermarkOptions['horizontal_pos']; ?>'">
+								<option value="left"><?php echo $this->translator()->_('config._share.watermarkPositionLeft'); ?></option>
+								<option value="center"><?php echo $this->translator()->_('config._share.watermarkPositionCenter'); ?></option>
+								<option value="right"><?php echo $this->translator()->_('config._share.watermarkPositionRight'); ?></option>
+							</select>
+						</div>
+						
+						<div class="appFormRow">
+							<label for="watermark_vertical_pos"><?php echo $this->translator()->_('config._share.watermarkPositionVertical'); ?>:</label>
+							<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'watermark_vertical_pos', value: '<?php echo $this->watermarkOptions['vertical_pos']; ?>'">
+								<option value="top"><?php echo $this->translator()->_('config._share.watermarkPositionTop'); ?></option>
+								<option value="middle"><?php echo $this->translator()->_('config._share.watermarkPositionMiddle'); ?></option>
+								<option value="bottom"><?php echo $this->translator()->_('config._share.watermarkPositionBottom'); ?></option>
+							</select>
+						</div>
+						
+						<div class="appFormRow">
+							<label>&nbsp;</label>
+							<?php echo $this->translator()->_('config._share.watermarkThumbnails'); ?>:
+						</div>
+						
+						<?php foreach ($this->thumbnailSizes as $thumb => $value) : ?>
+						<div class="appFormRow">
+							<label>&nbsp;</label>
+							<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'watermark_thumbnails[]', value: '<?php echo $thumb; ?>', checked: <?php if ($this->watermarkOptions['thumbnails'] && in_array($thumb, explode(',', $this->watermarkOptions['thumbnails']))) : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('config._share.thumbnail' . ucfirst($thumb)); ?>
+						</div>
+						<?php endforeach; ?>
+					</div>
+					<!-- /Watermark -->
+				</div>
+				<!-- /Uploader -->
+				
+				<!-- FileExplorer -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('config._share.explorer'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="viewable_files"><?php echo $this->translator()->_('config._share.viewableFileExtensions'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'viewable_files', style: 'height: 100px; width: 300px'"><?php echo $this->config('file', 'viewable_files', 'bmp,gif,jpeg,jpg,png,css,js,html,php,phtml,sql,txt,xml'); ?></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="editable_files"><?php echo $this->translator()->_('config._share.editableFileExtensions'); ?>:</label>
+						<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'editable_files', style: 'height: 100px; width: 300px'"><?php echo $this->config('file', 'editable_files', 'css,js,html,php,phtml,sql,txt,xml'); ?></textarea>
+					</div>
+				</div>
+				<!-- /FileExplorer -->
+			</div>
+			
+			<input type="hidden" name="format" value="json" />
+		</form>
+	</div>
+	<!-- /ConfigForm -->
+</div>
+
+<div id="fileConfigConfigStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'fileConfigConfigContainer', imageText: '<?php echo $this->translator(true)->_('global._share.loadingAction'); ?>'"></div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/file/languages')->_('config.config.title'); ?>";
+
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.DropDownButton");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.NumberSpinner");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.ColorPicker");
+dojo.require("dojox.widget.Standby");
+</script>

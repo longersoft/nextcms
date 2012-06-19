@@ -1,0 +1,126 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('connection.add.title'));
+?>
+
+<div id="fileConnectionAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			if (dijit.byId("fileConnectionAddForm").validate()) {
+				dijit.byId("fileConnectionAddStandby").show();
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'file_connection_add'); ?>",
+					content: dojo.formToObject("fileConnectionAddForm"),
+					handleAs: "json",
+					load: function(data) {
+						dijit.byId("fileConnectionAddStandby").hide();
+						if (data.result == "APP_RESULT_OK") {
+							dojo.publish("/app/file/connection/add/onSuccess");
+						}
+					}
+				});
+			}
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/connection/add/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- AddConnectionForm -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', design: 'sidebar', gutters: false, class: 'appContentPane'">
+	<form id="fileConnectionAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo $this->translator()->_('connection.add.title'); ?></span>
+		</h2>
+		
+		<div class="appFormRow">
+			<label for="name"><?php echo $this->translator()->_('connection._share.name'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'name', style: 'width: 200px'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="type"><?php echo $this->translator()->_('connection._share.type'); ?>:</label>
+			<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'type'">
+				<option value="local"><?php echo $this->translator()->_('connection._share.typeLocal'); ?></option>
+				<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+				var disabled = (value == "local");
+				dojo.forEach(["fileConnectionAddServer", "fileConnectionAddPort", "fileConnectionAddUsername", "fileConnectionAddPassword"], function(id, index) {
+					dijit.byId(id).set("disabled", disabled);
+				});
+				</script>
+			</select>
+		</div>
+		
+		<div class="appFormRow">
+			<label for="server"><?php echo $this->translator()->_('connection._share.server'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" 
+				data-dojo-props="name: 'server', id: 'fileConnectionAddServer', disabled: true, style: 'width: 200px'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="port"><?php echo $this->translator()->_('connection._share.port'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" 
+				data-dojo-props="name: 'port', id: 'fileConnectionAddPort', disabled: true, style: 'width: 100px'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="init_path"><?php echo $this->translator()->_('connection._share.initPath'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'init_path', style: 'width: 300px'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="user_name"><?php echo $this->translator()->_('connection._share.username'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" 
+				data-dojo-props="name: 'user_name', id: 'fileConnectionAddUsername', disabled: true, style: 'width: 200px'" />
+		</div>
+		
+		<div class="appFormRow">
+			<label for="password"><?php echo $this->translator()->_('connection._share.password'); ?>:</label>
+			<input data-dojo-type="dijit.form.TextBox" 
+				data-dojo-props="name: 'password', type: 'password', id: 'fileConnectionAddPassword', disabled: true, style: 'width: 200px'" />
+		</div>
+		
+		<input type="hidden" name="format" value="json" />
+	</form>
+	</div>
+	<!-- /AddConnectionForm -->
+</div>
+
+<div id="fileConnectionAddStandby" data-dojo-type="dojox.widget.Standby" data-dojo-props="target: 'fileConnectionAddContainer', imageText: '<?php echo $this->translator(true)->_('global._share.savingAction'); ?>'"></div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.widget.Standby");
+</script>

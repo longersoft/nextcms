@@ -1,0 +1,59 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	css
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+/********** MANAGE ATTACHMENTS **********/
+.fileAttachmentPasswordRequired { background: url(images/password.png) top left no-repeat; padding: 4px 0 4px 20px; }
+
+/********** MANAGE CONNECTIONS **********/
+.fileConnectionList {}
+.fileConnectionItemsContainer { margin: 0; padding: 0; }
+.fileConnectionItem { list-style-type: none; margin: 0; padding: 4px 9px 2px 9px; vertical-align: middle; }
+.fileConnectionItem:hover, .fileConnectionItemHover { background-color: #EFEFEF; border: solid 1px #769DC0; padding: 3px 8px 1px 8px; }
+.fileConnectionItemSelected { background: #CFE5FA url(images/highlight.png) top left repeat-x; border: solid 1px #769DC0; padding: 3px 8px 1px 8px; }
+.fileConnectionName {}
+
+/* Icons */
+.fileConnectionConnectIcon { background-image: url(images/connect.png); }
+.fileConnectionDisconnectIcon { background-image: url(images/disconnect.png); }
+
+/********** FILE EXPLORER **********/
+/* File grid */
+.fileExplorerListFolderRow { font-weight: normal; }
+.fileExplorerListFileRow { font-weight: normal; }
+.fileExplorerListFileNameCell { background-position: left center; background-repeat: no-repeat; padding: 2px 0px 2px 20px; }
+.fileExplorerOpenFolderIcon { background-image: url(images/openFolder.png); }
+.fileExplorerTextEditorIcon { background-image: url(images/textEditor.png); }
+
+/* Path Breadcrumb */
+.fileExplorerPathBreadcrumb span { color: blue; cursor: pointer; padding: 0; }
+
+/* Icons */
+.fileExplorerAddFolderIcon { background-image: url(images/addFolder.png); }
+.fileExplorerBackwardIcon { background-image: url(images/backward.png); }
+.fileExplorerBackwardDisabledIcon { background-image: url(images/backwardDisabled.png); }
+.fileExplorerCompressIcon { background-image: url(images/compress.png); }
+.fileExplorerExtractIcon { background-image: url(images/extract.png); }
+.fileExplorerForwardIcon { background-image: url(images/forward.png); }
+.fileExplorerForwardDisabledIcon { background-image: url(images/forwardDisabled.png); }
+.fileExplorerHomeIcon { background-image: url(images/home.png); }
+
+/********** MANAGE BOOKMARKS **********/
+.fileBookmarkItem { clear: both; height: 20px; }
+.fileBookmarkItem .dijitInline { float: left; }
+.fileBookmarkUnbookmarkIcon { background: url(images/bookmark.png) left center no-repeat; float: left; height: 16px; padding-right: 5px; text-indent: -9999px; width: 20px; }
+.fileBookmarkUnbookmarkIcon:hover { background: url(images/unbookmark.png) left center no-repeat; cursor: pointer; }
+.fileBookmarkNameContainer { float: left; }
+.fileBookmarkRenameIcon { background: url(images/rename.png) left center no-repeat; display: none; float: right; padding-left: 5px; text-indent: -9999px; width: 20px; }
+.fileBookmarkRenameIcon:hover { cursor: pointer; }
+.fileBookmarkName { color: blue; cursor: pointer; text-decoration: none; }

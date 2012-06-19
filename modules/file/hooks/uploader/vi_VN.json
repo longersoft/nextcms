@@ -1,0 +1,20 @@
+{
+	"_about": {
+		"description": "Hiển thị công cụ tải lên, cho phép tải tệp và chèn tệp đã tải lên vào vị trí mong muốn",
+		"title": "Tải lên"
+	},
+	"menu": {
+		"label": "Công cụ tải lên"
+	},
+	"show": {
+		"bigFileSizeError": "Dung lượng của tệp lớn hơn dung lượng cho phép",
+		"browseFilesAction": "Chọn tệp và Tải lên ...",
+		"fileName": "Tên",
+		"fileSize": "Dung lượng",
+		"maxUploadSize": "Dung lượng tối đa của tệp tải lên là %s",
+		"notAllowed": "Bạn không có quyền tải tệp lên",
+		"notUploadableExtensionError": "Kiểu của tệp không được phép tải lên",
+		"title": "Tải lên",
+		"uploadError": "Không thể tải tệp lên"
+	}
+}

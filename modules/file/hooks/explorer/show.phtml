@@ -1,0 +1,69 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-30
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div id="fileHooksExplorerContainer"data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, title: '<?php echo $this->translator(true)->_('show.title'); ?>', class: 'appContentPane'">
+	<!-- Paths -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false, style: 'padding: 8px 0'">
+		<?php echo $this->translator()->_('show.path'); ?>: <span id="fileHooksExplorerPathBreadcrumb" class="fileHooksExplorerPathBreadcrumb">/</span>
+	</div>
+	<!-- /Paths -->
+	
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false, class: 'appBorderContainer'">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="fileHooksExplorerToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- Files -->
+		<div id="fileHooksExplorerListView" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', loadingMessage: '<div class=appCenter><div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div></div>', style: 'height: 100%; width: 100%'">
+			<div class="appCenter">
+				<div><?php echo $this->translator()->_('show.listHelp'); ?></div>
+			</div>
+		</div>
+		<!-- /Files -->
+	</div>
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* file.hooks.explorer */
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Toolbar");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.registerModulePath("file", "<?php echo $this->APP_STATIC_URL; ?>/modules/file");
+dojo.require("core.js.base.controllers.ActionProvider");
+dojo.require("file.hooks.explorer.ExplorerController");
+dojo.require("file.hooks.explorer.ExplorerToolbar");
+dojo.require("file.hooks.explorer.FileListView");
+dojo.require("file.js.views.PathBreadcrumb");
+
+dojo.addOnLoad(function() {
+	// Provide the action
+	core.js.base.controllers.ActionProvider.set("core_extension_render", {
+		url: "<?php echo $this->url(array(), 'core_extension_render'); ?>",
+		isAllowed: true
+	});
+	
+	var explorerController = new file.hooks.explorer.ExplorerController("fileHooksExplorerContainer");
+	explorerController.setToolbar(new file.hooks.explorer.ExplorerToolbar("fileHooksExplorerToolbar"))
+					  .setFileListView(new file.hooks.explorer.FileListView("fileHooksExplorerListView"))
+					  .setPathBreadcrumb(new file.js.views.PathBreadcrumb("fileHooksExplorerPathBreadcrumb"));
+});
+<?php $this->script()->captureEnd(); ?>

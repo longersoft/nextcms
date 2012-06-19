@@ -1,0 +1,65 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.delete.title'));
+?>
+
+<div>
+	<?php echo sprintf($this->translator()->_('explorer.delete.confirm'), $this->item['path']); ?>
+</div>
+
+<div class="dijitDialogPaneActionBar">
+	<!-- YesButton -->
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.yesMessage'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'file_explorer_delete'); ?>",
+			content: { 
+				format: "json",
+				connection_id: "<?php echo $this->connection_id; ?>", 
+				path: "<?php echo addslashes($this->item['path']); ?>", 
+				directory: <?php if ($this->item['directory']) : ?>true<?php else : ?>false<?php endif; ?>
+			},
+			handleAs: "json",
+			load: function(data) {
+				if (data.result == "APP_RESULT_OK") {
+					dojo.publish("/app/file/explorer/delete/onSuccess", [ data ]);
+				} else {
+					dojo.publish("/app/file/explorer/delete/onError", [ data ]);
+				}
+			}
+		});
+		</script>
+	</button>
+	<!-- /YesButton -->
+	
+	<!-- NoButton -->
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.noMessage'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.publish("/app/file/explorer/delete/onCancel");
+		</script>
+	</button>
+	<!-- /NoButton -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+</script>

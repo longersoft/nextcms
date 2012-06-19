@@ -1,0 +1,20 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+.fileHooksUploaderFiles { margin: 0; padding: 0; }
+.fileHooksUploaderFileItem:last-child { border-bottom: none; }
+.fileHooksUploaderFileItem { border-bottom: 1px solid #ccc; clear: both; padding: 8px 0; }
+.fileHooksUploaderThumbnail { float: left; padding-right: 8px; }
+.fileHooksUploaderThumbnail img { height: 32px; width: 32px; }
+.fileHooksUploaderFileTemplate { display: none; }

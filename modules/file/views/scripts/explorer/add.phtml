@@ -1,0 +1,86 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.add.title'));
+?>
+
+<form id="fileExplorerAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<script type="dojo/method" data-dojo-event="onSubmit" data-dojo-args="e">
+	e.preventDefault();
+	if (this.validate()) {
+		var _this  = this;
+		var params = dojo.formToObject("fileExplorerAddForm");
+		dojo.xhrPost({
+			url: "<?php echo $this->url(array(), 'file_explorer_add'); ?>",
+			content: params,
+			handleAs: "json",
+			load: function(data) {
+				// Reset form
+				_this.reset();
+
+				// Publish the channel
+				var topicData = {
+					path: params.path,
+					name: params.name
+				};
+				if (data.result == "APP_RESULT_OK") {
+					dojo.publish("/app/file/explorer/add/onSuccess", [ topicData ]);
+				} else {
+					dojo.publish("/app/file/explorer/add/onError", [ topicData ]);
+				}
+			}
+		});
+	}
+	</script>
+	
+	<div class="appFormRow">
+		<label for="path" style="width: 100px"><?php echo $this->translator()->_('explorer._share.filePath'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox"
+			data-dojo-props="type: 'text', name: 'path', value: '<?php echo addslashes($this->path); ?>', width: '100px', readOnly: true" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="name" style="width: 100px"><?php echo $this->translator()->_('explorer._share.directoryName'); ?>:</label>
+		<input data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'name', width: '100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('explorer._share.directoryNameRequired'); ?>'" />
+	</div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/add/onCancel");
+			</script>
+		</button>
+	</div>
+	
+	<input type="hidden" name="format" value="json" />
+	<input type="hidden" name="connection_id" value="<?php echo $this->connection_id; ?>" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+</script>

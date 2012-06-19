@@ -1,0 +1,168 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-06-19
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if (!$this->accessor()->route('file_attachment_list')) : ?>
+
+<div id="fileHooksAttachmentProviderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.title'); ?>', class: 'appContentPane'">
+	<div data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center', style: 'border: none'">
+		<?php echo $this->translator()->_('show.notAllowed'); ?>
+	</div>
+</div>
+
+<?php else : ?>
+
+<div id="fileHooksAttachmentProviderContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="gutters: false, title: '<?php echo $this->translator(true)->_('show.title'); ?>'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+		<div data-dojo-type="dijit.Toolbar">
+			<input id="fileHooksAttachmentProviderSearchBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', placeHolder: '<?php echo $this->translator(true)->_('show.keywordHelp'); ?>', style: 'width: 150px'" />
+			<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', showLabel: false, iconClass: 'appIcon appSearchIcon', label: '<?php echo $this->translator(true)->_('show.searchAction'); ?>'">
+				<script type="dojo/connect" data-dojo-event="onClick">
+				var keyword = dijit.byId("fileHooksAttachmentProviderSearchBox").get("value");
+				file.hooks.attachmentprovider.AttachmentController.searchAttachments({
+					keyword: keyword,
+					page: 1
+				});
+				</script>
+			</button>
+			
+			<?php if ($this->languages) : ?>
+			<div id="fileHooksAttachmentProviderLanguageDropDown" data-dojo-type="dijit.form.DropDownButton" data-dojo-props="label: '<?php echo $this->translator(true)->_('show.selectLanguageAction'); ?>'">
+				<div data-dojo-type="dijit.Menu">
+					<?php foreach ($this->languages as $locale => $name) : ?>
+					<div data-dojo-type="dijit.MenuItem" data-dojo-props="appLocale: '<?php echo $locale; ?>', label: '<?php echo $name; ?>', iconClass: 'appIcon appFlag_<?php echo $locale; ?>'">
+						<script type="dojo/connect" data-dojo-event="onClick">
+						dijit.byId("fileHooksAttachmentProviderLanguageDropDown").set("label", this.label);
+						dijit.byId("fileHooksAttachmentProviderLanguageDropDown").set("iconClass", this.iconClass);
+						file.hooks.attachmentprovider.AttachmentController._criteria.language = this.appLocale;
+						</script>
+					</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+		</div>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- Attachments -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', style: 'height: 100%; width: 100%'">
+		<div id="fileHooksAttachmentProviderItemsContainer" class="appContentPane" class="coreHooksLinkProviderLinkItemsContainer" data-dojo-type="dojo.dnd.AutoSource" data-dojo-props="accept: [], selfAccept: false, selfCopy: false">
+			<div id="fileHooksAttachmentProviderTemplate" style="display: none">
+				<a href="{attachment_link}" title="{attachment_title}">{attachment_title} (.{attachment_extension}, {attachment_size})</a>
+			</div>
+		</div>
+		
+		<div id="fileHooksAttachmentProviderHelp" class="appCenter">
+			<div><?php echo $this->translator()->_('show.searchHelp'); ?></div>
+		</div>
+	</div>
+	<!-- /Attachments -->
+	
+	<!-- Paginator -->
+	<div id="fileHooksAttachmentProviderPaginator" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'height: 26px; padding: -8px'">
+	</div>
+	<!-- /Paginator -->
+</div>
+
+<?php $this->script()->captureStart(); ?>
+/* file.hooks.attachmentprovider */
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.DropDownButton");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+dojo.require("dijit.Menu");
+dojo.require("dijit.MenuItem");
+dojo.require("dijit.Toolbar");
+dojo.require("dojo.dnd.Source");
+dojo.require("dojo.NodeList-traverse");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.registerModulePath("file", "<?php echo $this->APP_STATIC_URL; ?>/modules/file");
+dojo.require("core.js.base.Encoder");
+dojo.provide("file.hooks.attachmentprovider.AttachmentController");
+dojo.require("file.js.views.FileFormatter");
+
+file.hooks.attachmentprovider.AttachmentController.PAGINATOR_TOPIC = "/app/file/hooks/attachmentprovider/onGotoPage";
+
+file.hooks.attachmentprovider.AttachmentController._criteria = { 
+	keyword: null,
+	page: 1,
+	per_page: 20,
+	language: "<?php echo $this->language; ?>"
+};
+
+file.hooks.attachmentprovider.AttachmentController.searchAttachments = function(/*Object*/ criteria) {
+	dojo.mixin(file.hooks.attachmentprovider.AttachmentController._criteria, criteria);
+	var q = core.js.base.Encoder.encode(file.hooks.attachmentprovider.AttachmentController._criteria);
+
+	dojo.style("fileHooksAttachmentProviderItemsContainer", "display", "none");
+	dojo.style("fileHooksAttachmentProviderHelp", "display", "block");
+	dojo.byId("fileHooksAttachmentProviderHelp").innerHTML = '<div><span class=dijitContentPaneLoading><?php echo $this->translator(true)->_('global._share.loadingAction'); ?></span></div>';
+	
+	dojo.xhrPost({
+		url: "<?php echo $this->url(array(), 'file_attachment_list'); ?>",
+		content: {
+			format: "json",
+			topic: file.hooks.attachmentprovider.AttachmentController.PAGINATOR_TOPIC,
+			q: q
+		},
+		handleAs: "json",
+		load: function(data) {
+			dojo.query(".fileHooksAttachmentProviderLinkItem", "fileHooksAttachmentProviderItemsContainer").orphan();
+
+			// Hide the searching guide
+			dojo.style("fileHooksAttachmentProviderHelp", "display", "none");
+			dojo.style("fileHooksAttachmentProviderItemsContainer", "display", "block");
+			
+			var template = dojo.byId("fileHooksAttachmentProviderTemplate").innerHTML;
+			dojo.forEach(data.data.items, function(attachment) {
+				var html = template.replace(/{attachment_link}/g, attachment.link)
+								   .replace(/{attachment_title}/g, attachment.title)
+								   .replace(/{attachment_extension}/g, attachment.extension)
+								   .replace(/{attachment_size}/g, file.js.views.FileFormatter.formatSize(attachment.size, "0 byte"));
+				dojo.create("div", {
+					className: "dojoDndItem fileHooksAttachmentProviderLinkItem",
+					innerHTML: html,
+					dndtype: "appDndLink",
+					style: "padding-bottom: 4px",
+					"data-app-entity-class": "File_Models_Attachment",
+					"data-app-entity-props": core.js.base.Encoder.encode(attachment, ["attachment_id", "title", "slug", "hash", "language"])
+				}, "fileHooksAttachmentProviderItemsContainer");
+			});
+			
+			// Update paginator
+			if (data.data.items.length > 0) {
+				dijit.byId("fileHooksAttachmentProviderPaginator").setContent(data.paginator);
+			}
+		}
+	});
+};
+
+dojo.subscribe(file.hooks.attachmentprovider.AttachmentController.PAGINATOR_TOPIC, function(/*Integer*/ page) {
+	// summary:
+	//		Paging handler
+	file.hooks.attachmentprovider.AttachmentController.searchAttachments({
+		page: page
+	});
+});
+<?php $this->script()->captureEnd(); ?>
+
+<?php endif; ?>

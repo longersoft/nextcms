@@ -1,0 +1,103 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2011-10-18
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.perm.title'));
+?>
+
+<form id="fileExplorerPermForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+	<script type="dojo/method" data-dojo-event="onSubmit" data-dojo-args="e">
+	e.preventDefault();
+	var params = dojo.formToObject("fileExplorerPermForm");
+	dojo.publish("/app/file/explorer/perm/onStart");
+	dojo.xhrPost({
+		url: "<?php echo $this->url(array(), 'file_explorer_perm'); ?>",
+		content: params,
+		handleAs: "json",
+		load: function(data) {
+			// Publish the channel
+			if (data.result == "APP_RESULT_OK") {
+				dojo.publish("/app/file/explorer/perm/onSuccess", [{ path: params.path }]);
+			} else {
+				dojo.publish("/app/file/explorer/perm/onError", [{ path: params.path }]);
+			}
+		}
+	});
+	</script>
+	
+	<div class="appFormRow">
+		<label for="path" style="width: 100px"><?php echo $this->translator()->_('explorer._share.filePath'); ?>:</label>
+		<input data-dojo-type="dijit.form.TextBox" 
+			data-dojo-props="type: 'text', name: 'path', value: '<?php echo addslashes($this->path); ?>', width: '100px', readOnly: true" />
+	</div>
+	
+	<div class="appFormRow">
+		<label style="width: 100px"><?php echo $this->translator()->_('explorer.perm.ownerUser'); ?>:</label>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'owner_read', checked: <?php if ($this->permsString[0] == 'r') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.readPermissionAbbr'); ?>
+		<span style="padding: 0 10px">&nbsp;</span>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'owner_write', checked: <?php if ($this->permsString[1] == 'w') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.writePermissionAbbr'); ?>
+		<span style="padding: 0 10px">&nbsp;</span>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'owner_execute', checked: <?php if ($this->permsString[2] == 'x') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.executePermissionAbbr'); ?>
+	</div>
+	
+	<div class="appFormRow">
+		<label style="width: 100px"><?php echo $this->translator()->_('explorer.perm.groupUser'); ?>:</label>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'group_read', checked: <?php if ($this->permsString[3] == 'r') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.readPermissionAbbr'); ?>
+		<span style="padding: 0 10px">&nbsp;</span>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'group_write', checked: <?php if ($this->permsString[4] == 'w') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.writePermissionAbbr'); ?>
+		<span style="padding: 0 10px">&nbsp;</span>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'group_execute', checked: <?php if ($this->permsString[5] == 'x') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.executePermissionAbbr'); ?>
+	</div>
+	
+	<div class="appFormRow">
+		<label style="width: 100px"><?php echo $this->translator()->_('explorer.perm.otherUser'); ?>:</label>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'other_read', checked: <?php if ($this->permsString[6] == 'r') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.readPermissionAbbr'); ?>
+		<span style="padding: 0 10px">&nbsp;</span>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'other_write', checked: <?php if ($this->permsString[7] == 'w') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.writePermissionAbbr'); ?>
+		<span style="padding: 0 10px">&nbsp;</span>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'other_execute', checked: <?php if ($this->permsString[8] == 'x') : ?>true<?php else : ?>false<?php endif; ?>" /> <?php echo $this->translator()->_('explorer.perm.executePermissionAbbr'); ?>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="recurse" style="width: 100px">&nbsp;</label>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'recurse', checked: false" /> <?php echo $this->translator()->_('explorer.perm.applyRecursively'); ?>
+	</div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'submit'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/perm/onCancel");
+			</script>
+		</button>
+	</div>
+	
+	<input type="hidden" name="format" value="json" />
+	<input type="hidden" name="connection_id" value="<?php echo $this->connection_id; ?>" />
+</form>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+</script>

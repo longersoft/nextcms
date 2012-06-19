@@ -1,0 +1,64 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-03-10
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Files -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, style: 'padding: 8px'">
+		<?php if ($this->files) : ?>
+
+		<?php foreach ($this->files as $file) : ?>
+		<div class="fileHooksExplorerFileItem<?php if ($file['is_dir']) : ?> fileHooksExplorerDirItem<?php endif; ?>"
+			data-app-entity-props="<?php echo $this->encoder()->encode(array(
+																		'name'		 => $file['name'],
+																		'path'		 => $file['path'],
+																		'upload_dir' => $this->uploadDir,
+																		'extension'  => $file['extension'],
+																		'is_dir'	 => $file['is_dir'],
+																		'view_type'  => $this->criteria['view_type'],
+																	)); ?>">
+			<div class="fileHooksExplorerFileIcon" title="<?php echo addslashes($file['name']); ?> (<?php echo $this->fileFormatter()->formatSize($file['size'], '0 byte'); ?>)">
+			<?php if ($file['is_dir'] || !$this->helper()->findIcon($file['extension'])) : ?>
+				<img src="<?php echo $this->APP_STATIC_URL; ?>/modules/file/hooks/explorer/files/_blank.png" width="32px" height="32px" />
+			<?php elseif (in_array($file['extension'], array('bmp', 'jpg', 'jpeg', 'gif', 'png'))) : ?>
+				<img src="<?php echo $this->APP_ROOT_URL; ?>/<?php echo $this->uploadDir; ?>/<?php echo $file['path']; ?>" width="75px" height="75px" />
+			<?php else : ?>
+				<img src="<?php echo $this->APP_STATIC_URL; ?>/modules/file/hooks/explorer/files/<?php echo $file['extension']; ?>.png" width="32px" height="32px" />
+			<?php endif; ?>
+			</div>
+			<div class="fileHooksExplorerSortFileName"><?php echo $this->stringFormatter()->sub($file['name'], 8); ?></div>
+			<div class="fileHooksExplorerFullFileName"><?php echo $file['name']; ?></div>
+			<div class="fileHooksExplorerFileSize"><?php echo $this->fileFormatter()->formatSize($file['size'], '0 byte'); ?></div>
+			<div class="appClear"></div>
+		</div>
+		<?php endforeach; ?>
+		
+		<?php endif; ?>
+	</div>
+	<!-- /Files -->
+
+	<!-- Paginator -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false, style: 'padding: -8px'">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/file/hooks/explorer/search/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+</script>

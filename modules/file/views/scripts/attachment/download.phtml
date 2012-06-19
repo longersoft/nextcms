@@ -1,0 +1,52 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-11
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->append($this->attachment->title);
+?>
+
+<?php echo $this->flashMessenger(); ?>
+
+<div class="fileAttachmentDownload">
+	<h1><?php echo $this->attachment->title; ?></h1>
+	
+	<p class="meta"><?php echo $this->attachment->uploaded_date; ?> <span>|</span> <?php echo sprintf($this->translator()->_('global._share.numDownloads'), $this->attachment->num_downloads); ?></p>
+	
+	<hr />
+	
+	<?php if ($this->attachment->description) : ?><div class="summary"><?php echo nl2br($this->attachment->description); ?></div><?php endif; ?>
+
+	<h2><?php echo $this->translator()->_('global._share.downloadAction'); ?></h2>
+
+	<p class="meta"><?php echo $this->attachment->title; ?> <span>|</span> <?php echo basename($this->attachment->path); ?> <span>|</span> <?php echo $this->fileFormatter()->formatSize($this->attachment->size); ?></p>
+
+	<?php if ($this->authRequired) : ?>
+		<?php echo sprintf($this->translator()->_('attachment.download.authRequired'), $this->url(array(), 'core_auth_login')); ?>
+	<?php else : ?>
+	
+	<form method="post" action="<?php echo $this->url($this->attachment->getProperties(), 'file_attachment_download'); ?>">
+		<?php if ($this->passRequired) : ?>
+		<?php echo $this->translator()->_('attachment.download.passwordRequired'); ?><br />
+		<input type="password" style="width: 200px; margin-right: 10px" name="password" />
+		<?php endif; ?>
+	
+		<button type="submit"><?php echo $this->translator()->_('global._share.downloadAction'); ?></button>
+	</form>
+	
+	<?php endif; ?>
+</div>

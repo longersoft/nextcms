@@ -1,0 +1,106 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		file
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php 
+$this->headTitle()->set($this->translator()->_('explorer.compress.title'));
+?>
+
+<?php if (count($this->compressableExts) == 0) : ?>
+
+<div class="padding: 8px">
+	<?php echo $this->translator()->_('explorer.compress.notSupported'); ?>
+</div>
+<div class="dijitDialogPaneActionBar">
+	<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+		<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+		<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+		dojo.publish("/app/file/explorer/compress/onCancel");
+		</script>
+	</button>
+</div>
+
+<?php else : ?>
+
+<form id="fileExplorerCompressForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '<?php echo $this->url(array(), 'file_explorer_extract'); ?>', method: 'POST', class: 'appForm'">
+	<div class="appFormRow">
+		<label for="path" style="width: 100px"><?php echo $this->translator()->_('explorer._share.filePath'); ?>:</label>
+		<input id="fileExplorerCompressPath" data-dojo-type="dijit.form.TextBox"
+			data-dojo-props="type: 'text', name: 'path', value: '<?php echo addslashes($this->path); ?>', width: '100px', readOnly: true" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="destination" style="width: 100px"><?php echo $this->translator()->_('explorer.compress.type'); ?>:</label>
+		<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'adapter'">
+			<?php foreach ($this->compressableExts as $extension) : ?>
+			<option value="<?php echo $extension; ?>"><?php echo $this->translator()->_('explorer.compress.extensions.' . $extension); ?></option>
+			<?php endforeach; ?>
+			<script type="dojo/method" data-dojo-event="onChange" data-dojo-args="value">
+			dijit.byId("fileExplorerCompressDestination").attr("value", dijit.byId("fileExplorerCompressPath").attr("value") + "." + value);
+			</script>
+		</select>
+	</div>
+	
+	<div class="appFormRow">
+		<label for="destination" style="width: 100px"><?php echo $this->translator()->_('explorer.compress.destination'); ?>:</label>
+		<input id="fileExplorerCompressDestination" data-dojo-type="dijit.form.ValidationTextBox"
+			data-dojo-props="type: 'text', name: 'destination', value: '<?php echo addslashes($this->destination); ?>', width: '100px', required: true, missingMessage: '<?php echo $this->translator(true)->_('explorer.compress.destinationRequired'); ?>'" />
+	</div>
+	
+	<div class="appFormRow">
+		<label for="overwrite" style="width: 100px">&nbsp;</label>
+		<input data-dojo-type="dijit.form.CheckBox" data-dojo-props="name: 'overwrite', checked: false" /> <?php echo $this->translator()->_('explorer.compress.overwriteExistentFiles'); ?> 
+	</div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<button id="fileExplorerUploadSubmitButton" data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.compressAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/compress/onStart");
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'file_explorer_compress'); ?>",
+				content: dojo.formToObject("fileExplorerCompressForm"),
+				handleAs: "json",
+				load: function(data) {
+					dojo.publish("/app/file/explorer/compress/onComplete", [ data ]);
+				}
+			});
+			</script>
+		</button>
+	
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dojo.publish("/app/file/explorer/compress/onCancel");
+			</script>
+		</button>
+	</div>
+	
+	<input type="hidden" name="connection_id" value="<?php echo $this->connection_id; ?>" />
+	<input type="hidden" name="format" value="json" />
+</form>
+
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.CheckBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+</script>
