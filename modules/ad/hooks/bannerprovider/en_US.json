@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Search for banners and allows to drag and drop the banners to other target",
+		"title": "Banner Provider"
+	},
+	"menu": {
+		"label": "Banner Provider"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Loading ..."
+		}
+	},
+	"show": {
+		"banners": "Banners",
+		"keywordHelp": "Banner's title",
+		"notFound": "Not found any banners",
+		"searchAction": "Search",
+		"searchHelp": "Click the Search icon to view the list of banners"
+	}
+}

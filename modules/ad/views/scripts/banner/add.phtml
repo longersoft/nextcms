@@ -1,0 +1,221 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-05-24
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('banner.add.title'));
+?>
+
+<div id="adBannerAddContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false, style: 'height: 100%; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.Toolbar" data-dojo-props="region: 'top', splitter: false">
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appSaveIcon'">
+			<?php echo $this->translator()->_('global._share.saveAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var _this = this;
+			if (dijit.byId("adBannerAddForm").validate()) {
+				_this.set("disabled", true);
+				dojo.publish("/app/ad/banner/add/onStart");
+				dojo.xhrPost({
+					url: "<?php echo $this->url(array(), 'ad_banner_add'); ?>",
+					content: dojo.formToObject("adBannerAddForm"),
+					handleAs: "json",
+					load: function(data) {
+						_this.set("disabled", false);
+						dojo.publish("/app/ad/banner/add/onComplete", [ data ]);
+					}
+				});
+			}
+			</script>
+		</button>
+		
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button', iconClass: 'appIcon appCancelIcon'">
+			<?php echo $this->translator()->_('global._share.cancelAction'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			core.js.base.controllers.Subscriber.unsubscribe("/app/ad/banner/add", "/app/global/dnd/onDropImage");
+			core.js.base.controllers.Subscriber.unsubscribe("/app/ad/banner/add", "/app/global/dnd/onDropLink");
+			dojo.publish("/app/ad/banner/add/onCancel");
+			</script>
+		</button>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- Form -->
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', style: 'padding: 8px 8px 0 8px'">
+			<h2 class="appHeadline" style="margin: 0"><span><?php echo $this->translator()->_('banner.add.title'); ?></span></h2>
+		</div>
+		
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', class: 'appContentPane'">
+			<form id="adBannerAddForm" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST', class: 'appForm'">
+			<div data-dojo-type="dijit.layout.TabContainer" data-dojo-props="nested: true, style: 'height: 100%'">
+				<!-- Properties -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('banner._share.properties'); ?>', class: 'appContentPane'">
+					<div class="appFormRow">
+						<label for="title"><?php echo $this->translator()->_('banner._share.title'); ?>:</label>
+						<input id="adBannerAddTitleBox" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="type: 'text', name: 'title', style: 'width: 300px', required: true, missingMessage: '<?php echo $this->translator(true)->_('banner._share.titleRequired'); ?>'" />			
+					</div>
+					
+					<div class="appFormRow">
+						<label for="banner_format"><?php echo $this->translator()->_('banner._share.format'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'banner_format', style: 'width: 100px'">
+							<option value="<?php echo Ad_Models_Banner::FORMAT_IMAGE; ?>"><?php echo $this->translator()->_('banner._share.image'); ?></option>
+							<option value="<?php echo Ad_Models_Banner::FORMAT_FLASH; ?>"><?php echo $this->translator()->_('banner._share.flash'); ?></option>
+							<option value="<?php echo Ad_Models_Banner::FORMAT_HTML; ?>"><?php echo $this->translator()->_('banner._share.html'); ?></option>
+							<option value="<?php echo Ad_Models_Banner::FORMAT_JAVASCRIPT; ?>"><?php echo $this->translator()->_('banner._share.javascript'); ?></option>
+							
+							<script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="value">
+							dijit.byId("adBannerAddCodeTextarea").set("disabled", value == "image");
+							</script>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="code"><?php echo $this->translator()->_('banner._share.code'); ?>:</label>
+						<textarea id="adBannerAddCodeTextarea" data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'code', disabled: true, style: 'width: 300px; height: 150px'"></textarea>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="url"><?php echo $this->translator()->_('banner._share.url'); ?>:</label>
+						<div data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'url', style: 'width: 300px'">
+							<script type="dojo/connect">
+							core.js.base.controllers.Subscriber.subscribe("/app/ad/banner/add", "/app/global/dnd/onDropImage", this, function(data) {
+								if (dojo.attr(data.target, "id") == this.id) {
+									dijit.byId("adBannerAddTitleBox").set("value", data.title);
+								}
+							});
+							core.js.base.controllers.Subscriber.subscribe("/app/ad/banner/add", "/app/global/dnd/onDropLink", this, function(data) {
+								if (dojo.attr(data.target, "id") == this.id) {
+									dijit.byId("adBannerAddTitleBox").set("value", data.title);
+								}
+							});
+							</script>
+						</div>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="target"><?php echo $this->translator()->_('banner._share.target'); ?>:</label>
+						<select data-dojo-type="dijit.form.Select" data-dojo-props="name: 'target', style: 'width: 300px'">
+							<option value="_blank"><?php echo $this->translator()->_('banner._share.targetBlank'); ?></option>
+							<option value="_self"><?php echo $this->translator()->_('banner._share.targetSelf'); ?></option>
+						</select>
+					</div>
+					
+					<div class="appFormRow">
+						<label for="target_url"><?php echo $this->translator()->_('banner._share.targetUrl'); ?>:</label>
+						<input data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', name: 'target_url', style: 'width: 300px'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="from_date"><?php echo $this->translator()->_('banner._share.fromDate'); ?>:</label>
+						<input data-dojo-type="dijit.form.DateTextBox" data-dojo-props="type: 'text', name: 'from_date'" />
+					</div>
+					
+					<div class="appFormRow">
+						<label for="to_date"><?php echo $this->translator()->_('banner._share.toDate'); ?>:</label>
+						<input data-dojo-type="dijit.form.DateTextBox" data-dojo-props="type: 'text', name: 'to_date'" />
+					</div>
+				</div>
+				<!-- /Properties -->
+				
+				<!-- Links -->
+				<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: '<?php echo $this->translator(true)->_('banner._share.links'); ?>', class: 'appContentPane'">
+					<div style="padding-bottom: 8px"><?php echo $this->translator()->_('banner._share.linksHelp'); ?></div>
+					
+					<div style="padding-bottom: 4px">
+						<span style="width: 310px" class="appLeft"><?php echo $this->translator()->_('banner._share.link'); ?>:</span>
+						<span class="appLeft"><?php echo $this->translator()->_('banner._share.zone'); ?>:</span>
+					</div>
+					
+					<div class="appClear"></div>
+					
+					<div style="padding-bottom: 4px">
+						<input id="adBannerAddLinkTextBox" data-dojo-type="dijit.form.TextBox" data-dojo-props="type: 'text', style: 'width: 300px'" />
+						<select id="adBannerAddZoneSelect" data-dojo-type="dijit.form.Select" data-dojo-props="style: 'width: 200px', maxHeight: 200">
+						<?php if ($this->zones) : ?>
+							<?php foreach ($this->zones as $zone) : ?>
+							<option value="<?php echo $zone->zone_id; ?>"><?php echo $zone->name; ?></option>
+							<?php endforeach; ?>
+						<?php endif; ?>
+						</select>
+						<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+							<?php echo $this->translator()->_('global._share.addAction'); ?>
+							<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+							var link   = dijit.byId("adBannerAddLinkTextBox").get("value");
+							var zoneId = dijit.byId("adBannerAddZoneSelect").get("value");
+							var zone   = dijit.byId("adBannerAddZoneSelect").getOptions(zoneId);
+							if (link == "") {
+								dojo.publish("/app/global/notification", [{
+									message: "<?php echo $this->translator()->_('banner._share.linkRequired'); ?>",
+									type: "error"
+								}]);
+								return;
+							}
+							// Add link item
+							var div = dojo.create("div", {
+								className: "adBannerAddLinkItem"
+							}, "adBannerAddLinksContainer");
+							new dijit.form.TextBox({
+								name: "links[]",
+								style: "width: 300px; margin-right: 5px",
+								value: link,
+								readOnly: true
+							}).placeAt(div);
+							new dijit.form.TextBox({
+								style: "width: 200px; margin-right: 5px",
+								value: zone.label,
+								readOnly: true
+							}).placeAt(div);
+							dojo.create("input", {
+								type: "hidden",
+								name: "zones[]",
+								value: zoneId
+							}, div);
+							new dijit.form.Button({
+								type: "button",
+								label: "<?php echo $this->translator()->_('global._share.deleteAction'); ?>",
+								onClick: function() {
+									dojo.destroy(div);
+								}
+							}).placeAt(div);
+							</script>
+						</button>
+					</div>
+					
+					<div id="adBannerAddLinksContainer"></div>
+				</div>
+				<!-- /Links -->
+				
+				<input type="hidden" name="format" value="json" />
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.Select");
+dojo.require("dijit.form.SimpleTextarea");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.TabContainer");
+</script>

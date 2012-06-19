@@ -1,0 +1,32 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-22
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->zone && count($this->banners) > 0) : ?>
+<?php
+$this->script()
+	 ->appendFile($this->APP_STATIC_URL . '/static/js/swfobject/swfobject.js')
+	 ->appendFile($this->APP_STATIC_URL . '/modules/ad/js/Banner.js')
+	 ->appendFile($this->APP_STATIC_URL . '/modules/ad/js/Zone.js');
+?>
+<div class="adWidgetsBanners" id="adWidgetsBannerZone_<?php echo $this->zone->zone_id; ?>">
+	<div class="label"><?php echo $this->translator()->_('show.advertising'); ?></div>
+	<?php $this->script()->captureStart(); ?>
+	new ad.js.Zone("adWidgetsBannerZone_<?php echo $this->zone->zone_id; ?>", "<?php echo $this->zone->width; ?>", "<?php echo $this->zone->height; ?>").addBanners(<?php echo Zend_Json::encode($this->banners); ?>).render();
+	<?php $this->script()->captureEnd(); ?>
+</div>
+<?php endif; ?>

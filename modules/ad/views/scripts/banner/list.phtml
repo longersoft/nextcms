@@ -1,0 +1,75 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('banner.list.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/ad/css/admin/default/styles.css");
+</script>
+
+<div id="adBannerListContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, style: 'height: 100%; width: 100%; padding: 0'">
+	<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: false">
+		<!-- Toolbar -->
+		<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false">
+			<div id="adBannerListToolbar"></div>
+		</div>
+		<!-- /Toolbar -->
+		
+		<!-- Banners -->
+		<div id="adBannerListBannersContainer" data-dojo-type="dojox.layout.ContentPane" data-dojo-props="region: 'center'">
+			<?php echo $this->render('banner/list.ajax.phtml', array('banners' => $this->banners)); ?>
+		</div>
+		<!-- /Banners -->
+	</div>
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/ad/languages')->_('banner.list.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dojox.layout.ContentPane");
+
+dojo.registerModulePath("ad", "<?php echo $this->APP_STATIC_URL; ?>/modules/ad");
+dojo.require("ad.js.controllers.BannerController");
+dojo.require("ad.js.views.BannerContextMenu");
+dojo.require("ad.js.views.BannerListView");
+dojo.require("ad.js.views.BannerToolbar");
+dojo.require("core.js.base.controllers.ActionProvider");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'ad_banner_activate', 'ad_banner_add', 'ad_banner_delete', 'ad_banner_edit', 'ad_banner_list',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	var bannerController = new ad.js.controllers.BannerController("adBannerListContainer");
+	bannerController.setBannerToolbar(new ad.js.views.BannerToolbar("adBannerListToolbar"))
+					.setBannerListView(new ad.js.views.BannerListView("adBannerListBannersContainer"))
+					.setBannerContextMenu(new ad.js.views.BannerContextMenu())
+					.initSearchCriteria(<?php echo Zend_Json::encode($this->criteria); ?>);
+});
+</script>

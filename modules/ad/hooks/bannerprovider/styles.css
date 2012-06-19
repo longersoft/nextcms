@@ -1,0 +1,25 @@
+/**
+ * NextCMS
+ *
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	hooks
+ * @since		1.0
+ * @version		2012-05-11
+ */
+
+.adHooksBannerProviderBannersContainer .adHooksBannerProviderBannerItem { display: inline-block; list-style-type: none; margin-bottom: 20px; margin-right: 10px; padding: 5px; vertical-align: top; width: 75px; }
+.adHooksBannerProviderBannersContainer .adHooksBannerProviderBannerItem img { height: 60px; width: 60px; }
+
+/* Icon */
+.adHooksBannerProviderIcon { background-image: url(bannerprovider16.png); }
+
+/* Dnd */
+.adHooksBannerProviderBannersContainer .dojoDndItem { padding: 5px; }
+.adHooksBannerProviderBannersContainer .dojoDndItemSelected { background: #CFE5FA; }
+.adHooksBannerProviderBannersContainer .dojoDndItemAnchor { background: #CFE5FA; }
+.adHooksBannerProviderBannersContainer .dojoDndContainerOver { background: #CFE5FA; }

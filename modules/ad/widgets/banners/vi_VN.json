@@ -1,0 +1,13 @@
+{
+	"_about": {
+		"description": "Hiển thị banner quảng cáo",
+		"title": "Banner"
+	},
+	"config": {
+		"notFoundZones": "Không tìm thấy vị trí đặt quảng cáo nào",
+		"selectZone": "Lựa chọn vị trí đặt quảng cáo"
+	},
+	"show": {
+		"advertising": "Quảng cáo"
+	}
+}

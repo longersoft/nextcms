@@ -1,0 +1,78 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-12
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('banner.place.title'));
+?>
+
+<script type="text/javascript">
+dojo.require("core.js.base.Resource");
+// Don't forget to add two following CSS files when working with Grid and Portlet
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/layout/resources/GridContainer.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/static/js/dojo/<?php echo APP_DOJO_VER; ?>/dojox/widget/Portlet/Portlet.css");
+core.js.base.Resource.loadCss("<?php echo $this->APP_STATIC_URL; ?>/modules/ad/css/admin/default/styles.css");
+core.js.base.Resource.loadJs("<?php echo $this->APP_STATIC_URL; ?>/static/js/swfobject/swfobject.js");
+</script>
+
+<div id="adBannerPlaceContainer" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', gutters: true, style: 'height: 100%; padding: 0; width: 100%'">
+	<!-- Toolbar -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top', splitter: false, style: 'border-bottom: none'">
+		<div id="adBannerPlaceToolbar"></div>
+	</div>
+	<!-- /Toolbar -->
+	
+	<!-- LayoutEditor -->
+	<div id="adBannerPlaceEditor" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'center', style: 'height: 100%; padding: 0; width: 100%', class: 'appLayoutBorderContainer'">
+		<div class="appCenter">
+			<div><?php echo $this->translator()->_('banner.place.help'); ?></div>
+		</div>
+	</div>
+	<!-- /LayoutEditor -->
+</div>
+
+<script type="text/javascript">
+document.title = "<?php echo $this->translator()->setLanguageDir('/modules/ad/languages')->_('banner.place.title'); ?>";
+
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+
+dojo.registerModulePath("ad", "<?php echo $this->APP_STATIC_URL; ?>/modules/ad");
+dojo.require("ad.js.controllers.LayoutController");
+dojo.require("ad.js.views.LayoutContainer");
+dojo.require("ad.js.views.LayoutToolbar");
+dojo.require("core.js.base.controllers.ActionProvider");
+
+dojo.addOnLoad(function() {
+	// Provide the actions
+	<?php foreach (array(
+					'ad_banner_place',
+				) as $name) : ?>
+	core.js.base.controllers.ActionProvider.set("<?php echo $name; ?>", {
+		url: "<?php echo $this->url(array(), $name); ?>",
+		isAllowed: <?php if ($this->accessor()->route($name)) : ?>true<?php else : ?>false<?php endif; ?>
+	});	
+	<?php endforeach; ?>
+
+	var layoutToolbar = new ad.js.views.LayoutToolbar("adBannerPlaceToolbar");
+	layoutToolbar.setTemplates(<?php echo Zend_Json::encode($this->templates); ?>);
+	
+	var layoutController = new ad.js.controllers.LayoutController("adBannerPlaceContainer");
+	layoutController.setLayoutToolbar(layoutToolbar)
+					.setLayoutContainer(new ad.js.views.LayoutContainer("adBannerPlaceEditor"));
+});
+</script>

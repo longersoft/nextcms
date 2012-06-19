@@ -1,0 +1,13 @@
+{
+	"_about": {
+		"description": "Show banners",
+		"title": "Banners"
+	},
+	"config": {
+		"notFoundZones": "Not found any zones",
+		"selectZone": "Select zone"
+	},
+	"show": {
+		"advertising": "Advertising"
+	}
+}

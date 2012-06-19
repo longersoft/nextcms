@@ -1,0 +1,9 @@
+{
+	"_about": {
+		"description": "Show Google Adsense banners",
+		"title": "Google Adsense"
+	},
+	"config": {
+		"code": "The Google Adsense code"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"_about": {
+		"description": "Tìm kiếm banner và cho phép gắp, thả banner vào các vùng chứa khác",
+		"title": "Tìm kiếm banner"
+	},
+	"menu": {
+		"label": "Tìm kiếm banner"
+	},
+	"global": {
+		"_share": {
+			"loadingAction": "Đang tải ..."
+		}
+	},
+	"show": {
+		"banners": "Banner",
+		"keywordHelp": "Tiêu đề banner",
+		"notFound": "Không tìm thấy banner nào",
+		"searchAction": "Tìm kiếm",
+		"searchHelp": "Nhấp biểu tượng Tìm kiếm để xem danh sách các banner"
+	}
+}

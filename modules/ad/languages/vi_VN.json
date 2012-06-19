@@ -1,0 +1,147 @@
+{
+	"_about": {
+		"description": "Quản lý banner",
+		"title": "Quảng cáo"
+	},
+	"_menu": {
+		"banner": {
+			"list": "Quản lý banner",
+			"place": "Đặt banner trên trang"
+		},
+		"zone": {
+			"list": "Quản lý vị trí"
+		}
+	},
+	"_permission": {
+		"banner": {
+			"description": "Quản lý banner",
+			"actions": {
+				"activate": "Kích hoạt banner",
+				"add": "Thêm banner mới",
+				"delete": "Xóa banner",
+				"edit": "Sửa thông tin banner",
+				"list": "Xem danh sách banner",
+				"place": "Đặt banner trên trang"
+			}
+		},
+		"zone": {
+			"description": "Quản lý vị trí đặt banner",
+			"actions": {
+				"add": "Thêm vị trí mới",
+				"delete": "Xóa vị trí",
+				"edit": "Sửa vị trí",
+				"list": "Xem danh sách vị trí"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Kích hoạt",
+			"addAction": "Thêm",
+			"cancelAction": "Hủy",
+			"deactivateAction": "Hủy kích hoạt",
+			"deleteAction": "Xóa",
+			"editAction": "Sửa",
+			"loadingAction": "Đang tải ...",
+			"refreshAction": "Tải lại",
+			"saveAction": "Lưu",
+			"searchAction": "Tìm",
+			"noMessage": "Không",
+			"yesMessage": "Có"
+		}
+	},
+	"banner": {
+		"_share": {
+			"code": "Mã",
+			"flash": "Flash",
+			"format": "Định dạng",
+			"fromDate": "Từ ngày",
+			"html": "HTML",
+			"image": "Ảnh",
+			"javascript": "Javascript",
+			"link": "Liên kết",
+			"linkRequired": "Liên kết là bắt buộc",
+			"links": "Liên kết",
+			"linksHelp": "Xác định các trang và vị trí trên trang bạn muốn hiển thị banner",
+			"notPreviewable": "Không thể xem trước",
+			"properties": "Thuộc tính",
+			"target": "Đích",
+			"targetBlank": "Mở trên một cửa sổ mới của trình duyệt",
+			"targetSelf": "Mở trên cửa sổ hiện tại của trình duyệt",
+			"targetUrl": "Liên kết đích",
+			"title": "Tiêu đề",
+			"titleRequired": "Tiêu đề là bắt buộc",
+			"toDate": "Đến ngày",
+			"url": "Đường dẫn",
+			"zone": "Vị trí"
+		},
+		"activate": {
+			"activateError": "Xin lỗi, không thể kích hoạt banner",
+			"activateSuccess": "Banner đã được kích hoạt thành công",
+			"deactivateError": "Xin lỗi, không thể hủy kích hoạt banner",
+			"deactivateSuccess": "Banner đã được hủy kích hoạt thành công"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm banner mới",
+			"success": "Banner mới đã được thêm thành công",
+			"title": "Thêm banner mới"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn rằng bạn muốn xóa banner tiêu đề <b>%s</b>?",
+			"error": "Xin lỗi, không thể xóa banner",
+			"notFound": "Xin lỗi, không thể tìm thấy banner",
+			"success": "Banner đã được xóa thành công",
+			"title": "Xóa banner"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật banner",
+			"success": "Banner đã được cập nhật thành công",
+			"title": "Cập nhật banner"
+		},
+		"list": {
+			"banners": "Banner %s",
+			"notFound": "Không tìm thấy banner nào",
+			"searchHelp": "Từ khóa",
+			"title": "Quản lý banner"
+		},
+		"place": {
+			"error": "Xin lỗi, không thể cập nhật vị trí của banner trên trang",
+			"help": "Lựa chọn mẫu, sau đó chọn trang để tải bố cục của trang",
+			"mainContent": "Nội dung chính",
+			"selectPage": "Chọn trang",
+			"selectTemplate": "Chọn mẫu",
+			"success": "Vị trí của banner trên trang đã được cập nhật thành công",
+			"title": "Đặt banner trên trang",
+			"widgetTitleTemplate": "Widget %s"
+		}
+	},
+	"zone": {
+		"_share": {
+			"height": "Cao",
+			"name": "Tên",
+			"nameRequired": "Tên vị trí là bắt buộc",
+			"width": "Rộng"
+		},
+		"add": {
+			"error": "Xin lỗi, không thể thêm vị trí mới",
+			"success": "Vị trí mới đã được tạo thành công",
+			"title": "Thêm vị trí mới"
+		},
+		"edit": {
+			"error": "Xin lỗi, không thể cập nhật vị trí",
+			"success": "Vị trí đã được cập nhật thành công",
+			"title": "Cập nhật vị trí"
+		},
+		"delete": {
+			"confirm": "Bạn có chắc chắn muốn xóa vị trí này?",
+			"error": "Xin lỗi, không thể xóa vị trí",
+			"success": "Vị trí đặt banner đã được xóa thành công",
+			"title": "Xóa vị trí"
+		},
+		"list": {
+			"help": "Dưới đây là danh sách các vị trí",
+			"notFound": "Không tìm thấy vị trí nào",
+			"title": "Quản lý vị trí"
+		}
+	}
+}

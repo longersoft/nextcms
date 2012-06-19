@@ -1,0 +1,135 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('zone.list.title'));
+?>
+
+<?php if (!$this->zones || count($this->zones) == 0) : ?>
+	<?php echo $this->translator()->_('zone.list.notFound'); ?>
+<?php else : ?>
+	<div><?php echo $this->translator()->_('zone.list.help'); ?>:</div>
+	
+	<?php foreach ($this->zones as $zone) : ?>
+	<div style="margin: 4px 0" id="adZoneListZoneContainer_<?php echo $zone->zone_id; ?>">
+		<form id="adZoneListUpdateForm_<?php echo $zone->zone_id; ?>" data-dojo-type="dijit.form.Form" data-dojo-props="action: '', method: 'POST'">
+			<input data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="name: 'name', value: '<?php echo addslashes($zone->name); ?>', required: true, style: 'width: 300px', placeHolder: '<?php echo $this->translator(true)->_('zone._share.name'); ?>', missingMessage: '<?php echo $this->translator(true)->_('zone._share.nameRequired'); ?>'" />
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'width', value: '<?php echo $zone->width; ?>', style: 'width: 100px', placeHolder: '<?php echo $this->translator(true)->_('zone._share.width'); ?>'" />
+			<input data-dojo-type="dijit.form.TextBox" data-dojo-props="name: 'height', value: '<?php echo $zone->height; ?>', style: 'width: 100px', placeHolder: '<?php echo $this->translator(true)->_('zone._share.height'); ?>'" />
+			
+			<input type="hidden" name="zone_id" value="<?php echo $zone->zone_id; ?>" />
+			
+			<!-- SaveButton -->
+			<?php if ($this->accessor()->route('ad_zone_edit')) : ?>
+			<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+				<?php echo $this->translator()->_('global._share.saveAction'); ?>
+				<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+				var _this = this;
+				var formId = "adZoneListUpdateForm_<?php echo $zone->zone_id; ?>";
+				if (dijit.byId(formId).validate()) {
+					_this.set("disabled", true);
+					dojo.xhrPost({
+						url: "<?php echo $this->url(array(), 'ad_zone_edit'); ?>",
+						content: dojo.formToObject(formId),
+						handleAs: "json",
+						load: function(data) {
+							_this.set("disabled", false);
+							var message = (data.result == "APP_RESULT_OK")
+											? "<?php echo $this->translator()->_('zone.edit.success'); ?>"
+											: "<?php echo $this->translator()->_('zone.edit.error'); ?>";
+							dojo.publish("/app/global/notification", [{
+								message: message,
+								type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+							}]);
+						}
+					});
+				}
+				</script>
+			</button>
+			<?php endif; ?>
+			<!-- /SaveButton -->
+			
+			<!-- DeleteButton -->
+			<?php if ($this->accessor()->route('ad_zone_delete')) : ?>
+			<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+				<?php echo $this->translator()->_('global._share.deleteAction'); ?>
+				<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+				dijit.byId("adZoneListDeleteDialog").set("appZoneId", "<?php echo $zone->zone_id; ?>");
+				dijit.byId("adZoneListDeleteDialog").show();
+				</script>
+			</button>
+			<?php endif; ?>
+			<!-- /DeleteButton -->
+		</form>
+	</div>
+	<?php endforeach; ?>
+<?php endif; ?>
+
+<!-- DeleteZoneDialog -->
+<div id="adZoneListDeleteDialog" data-dojo-type="dojox.widget.DialogSimple" data-dojo-props="appZoneId: null, title: '<?php echo $this->translator(true)->_('zone.delete.title'); ?>'">
+	<div><?php echo $this->translator()->_('zone.delete.confirm'); ?></div>
+	
+	<div class="dijitDialogPaneActionBar">
+		<!-- YesButton -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.yesMessage'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			var zoneId = dijit.byId("adZoneListDeleteDialog").get("appZoneId");
+			dojo.xhrPost({
+				url: "<?php echo $this->url(array(), 'ad_zone_delete'); ?>",
+				content: {
+					zone_id: zoneId
+				},
+				handleAs: "json",
+				load: function(data) {
+					dijit.byId("adZoneListDeleteDialog").hide();
+					var message = (data.result == "APP_RESULT_OK")
+									? "<?php echo $this->translator()->_('zone.delete.success'); ?>"
+									: "<?php echo $this->translator()->_('zone.delete.error'); ?>";
+					dojo.publish("/app/global/notification", [{
+						message: message,
+						type: (data.result == "APP_RESULT_OK") ? "message" : "error"
+					}]);
+					if (data.result == "APP_RESULT_OK") {
+						dojo.query("#adZoneListZoneContainer_" + zoneId).orphan();
+					}
+				}
+			});
+			</script>
+		</button>
+		<!-- /YesButton -->
+		
+		<!-- NoButton -->
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="type: 'button'">
+			<?php echo $this->translator()->_('global._share.noMessage'); ?>
+			<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="e">
+			dijit.byId("adZoneListDeleteDialog").hide();
+			</script>
+		</button>
+		<!-- /NoButton -->
+	</div>
+</div>
+<!-- /DeleteZoneDialog -->
+
+<script type="text/javascript">
+dojo.require("dijit.form.Button");
+dojo.require("dijit.form.Form");
+dojo.require("dijit.form.TextBox");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dojox.widget.DialogSimple");
+</script>

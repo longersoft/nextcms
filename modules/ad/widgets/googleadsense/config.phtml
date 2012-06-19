@@ -1,0 +1,28 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-05-24
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<div class="appForm">
+	<div class="appFormRow">
+		<label class="appTopLabel"><?php echo $this->translator()->_('config.code'); ?>:</label>
+		<textarea data-dojo-type="dijit.form.SimpleTextarea" data-dojo-props="name: 'code', class: 'appWidgetInput', style: 'height: 100px; width: 98%'"></textarea>
+	</div>
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.form.SimpleTextarea");
+</script>

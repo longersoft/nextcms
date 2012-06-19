@@ -1,0 +1,62 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	views
+ * @since		1.0
+ * @version		2012-06-01
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php
+$this->headTitle()->set($this->translator()->_('banner.list.title'));
+?>
+
+<div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'sidebar', gutters: false">
+	<!-- Banners -->
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'center', splitter: false, class: 'appContentPane'">
+		<h2 class="appHeadline" style="margin-top: 0">
+			<span><?php echo sprintf($this->translator()->_('banner.list.banners'), '<span class="adBannerListCounter">' . $this->total . '</span>'); ?></span>
+		</h2>
+		
+		<?php if ($this->total == 0) : ?>
+			<?php echo $this->translator()->_('banner.list.notFound'); ?>
+		<?php else : ?>
+			<div class="adBannerItemsContainer">
+			<?php foreach ($this->banners as $banner) : ?>
+				<div class="adBannerItem" id="adBannerListItem_<?php echo $banner->banner_id; ?>" data-app-entity-props="<?php echo $this->encoder()->encode($banner, array('banner_id', 'status', 'title')); ?>">
+					<?php if ($banner->format == Ad_Models_Banner::FORMAT_IMAGE) : ?>
+						<img src="<?php echo $this->APP_ROOT_URL . '/' . ltrim($banner->url, '/'); ?>" />
+					<?php else : ?>
+						<img src="<?php echo $this->APP_ROOT_URL; ?>/modules/ad/images/defaultBanner.png" />
+					<?php endif; ?>
+					<br />
+					<span class="adBannerTitle"><?php echo $banner->title; ?></span>
+				</div>
+			<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+	</div>
+	<!-- /Banners -->
+	
+	<!-- Paginator -->
+	<?php if ($this->paginator->count() > 1) : ?>
+	<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'bottom', splitter: false">
+	<?php echo $this->paginator('slidingToolbar')->render($this->paginator, "javascript: dojo.publish('/app/ad/banner/list/onGotoPage', [__PAGE__]);"); ?>
+	</div>
+	<?php endif; ?>
+	<!-- /Paginator -->
+</div>
+
+<script type="text/javascript">
+dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.layout.ContentPane");
+</script>

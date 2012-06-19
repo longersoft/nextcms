@@ -1,0 +1,147 @@
+{
+	"_about": {
+		"description": "Manage banners",
+		"title": "Advertising"
+	},
+	"_menu": {
+		"banner": {
+			"list": "Manage banners",
+			"place": "Place banner on pages"
+		},
+		"zone": {
+			"list": "Manage zones"
+		}
+	},
+	"_permission": {
+		"banner": {
+			"description": "Manage banners",
+			"actions": {
+				"activate": "Activate banner",
+				"add": "Add new banner",
+				"delete": "Delete banner",
+				"edit": "Edit banner",
+				"list": "List banners",
+				"place": "Place banner on pages"
+			}
+		},
+		"zone": {
+			"description": "Manage zones",
+			"actions": {
+				"add": "Add new zone",
+				"delete": "Delete zone",
+				"edit": "Edit zone",
+				"list": "List zones"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"activateAction": "Activate",
+			"addAction": "Add",
+			"cancelAction": "Cancel",
+			"deactivateAction": "Deactivate",
+			"deleteAction": "Delete",
+			"editAction": "Edit",
+			"loadingAction": "Loading ...",
+			"refreshAction": "Refresh",
+			"saveAction": "Save",
+			"searchAction": "Search",
+			"noMessage": "No",
+			"yesMessage": "Yes"
+		}
+	},
+	"banner": {
+		"_share": {
+			"code": "Code",
+			"flash": "Flash",
+			"format": "Format",
+			"fromDate": "From date",
+			"html": "HTML",
+			"image": "Image",
+			"javascript": "Javascript",
+			"link": "Link",
+			"linkRequired": "The link is required",
+			"links": "Links",
+			"linksHelp": "Specify the page and the zone you want to show the banner",
+			"notPreviewable": "Not previewable",
+			"properties": "Properties",
+			"target": "Target",
+			"targetBlank": "Open in a new tab",
+			"targetSelf": "Open in the same tab",
+			"targetUrl": "Target URL",
+			"title": "Title",
+			"titleRequired": "The title is required",
+			"toDate": "To date",
+			"url": "URL",
+			"zone": "Zone"
+		},
+		"activate": {
+			"activateError": "Sorry, cannot activate the banner",
+			"activateSuccess": "The banner is activated successfully",
+			"deactivateError": "Sorry, cannot deactivate the banner",
+			"deactivateSuccess": "The banner is deactivated successfully"
+		},
+		"add": {
+			"error": "Sorry, cannot add new banner",
+			"success": "The new banner is created successfully",
+			"title": "Add new banner"
+		},
+		"delete": {
+			"confirm": "Are you sure that you want to delete the banner titled <b>%s</b>?",
+			"error": "Sorry, cannot delete the banner",
+			"notFound": "Sorry, cannot find the banner",
+			"success": "The banner is deleted successfully",
+			"title": "Delete the banner"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the banner",
+			"success": "The banner is updated successfully",
+			"title": "Edit the banner"
+		},
+		"list": {
+			"banners": "Banners %s",
+			"notFound": "Not found any banners",
+			"searchHelp": "Keyword",
+			"title": "Manage banners"
+		},
+		"place": {
+			"error": "Sorry, cannot update the banner's positions on the page",
+			"help": "Select the template, and then select the page to load the layout of page",
+			"mainContent": "Main content",
+			"selectPage": "Select page",
+			"selectTemplate": "Select template",
+			"success": "The banner's positions on page are updated successfully",
+			"title": "Place banner on pages",
+			"widgetTitleTemplate": "%s widget"
+		}
+	},
+	"zone": {
+		"_share": {
+			"height": "Height",
+			"name": "Name",
+			"nameRequired": "The name is required",
+			"width": "Width"
+		},
+		"add": {
+			"error": "Sorry, cannot add new zone",
+			"success": "The new zone is created successfully",
+			"title": "Add new zone"
+		},
+		"edit": {
+			"error": "Sorry, cannot update the zone",
+			"success": "The zone is updated successfully",
+			"title": "Edit the zone"
+		},
+		"delete": {
+			"confirm": "Are you sure that you really want to delete the zone?",
+			"error": "Sorry, cannot delete the zone",
+			"success": "The zone is deleted successfully",
+			"title": "Delete the zone"
+		},
+		"list": {
+			"help": "Below are the list of zones",
+			"notFound": "Not found any zones",
+			"title": "Manage zones"
+		}
+	}
+}

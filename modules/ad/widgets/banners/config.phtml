@@ -1,0 +1,36 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		ad
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-03-22
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if (!$this->zones || count($this->zones) == 0) : ?>
+	<?php echo $this->translator()->_('config.notFoundZones'); ?>
+<?php else : ?>
+<div class="appForm">
+	<div class="appFormRow">
+		<label class="appTopLabel"><?php echo $this->translator()->_('config.selectZone'); ?>:</label>
+		<select data-dojo-type="dijit.form.Select" data-dojo-props="maxHeight: 200, name: 'zone_id', class: 'appWidgetInput'">
+			<?php foreach ($this->zones as $zone) : ?>
+			<option value="<?php echo $zone->zone_id; ?>"><?php echo $zone->name; ?></option>
+			<?php endforeach; ?>
+		</select>
+	</div>
+</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+dojo.require("dijit.form.Select");
+</script>
