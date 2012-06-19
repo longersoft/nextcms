@@ -1,0 +1,27 @@
+{
+	"_about": {
+		"description": "Allow users to vote the comments, articles, photos, ...",
+		"title": "Vote"
+	},
+	"_permission": {
+		"config": {
+			"description": "Configure module",
+			"actions": {
+				"config": "Configure module"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"saveAction": "Save"
+		}
+	},
+	"config": {
+		"config": {
+			"authenticationRequired": "Require login to vote",
+			"error": "Sorry, cannot update the module's settings",
+			"success": "The module's settings are updated successfully",
+			"title": "Configure the Vote module"
+		}
+	}
+}

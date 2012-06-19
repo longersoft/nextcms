@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Show like and dislike buttons to vote given article, photo, video, etc.",
+		"title": "Vote"
+	},
+	"config": {
+		"basic": "Basic",
+		"theme": "Theme"
+	},
+	"show": {
+		"alreadyVoted": "You already voted",
+		"authenticationRequired": "You have to login to vote",
+		"dislike": "Dislike %s",
+		"like": "Like %s"
+	}
+}

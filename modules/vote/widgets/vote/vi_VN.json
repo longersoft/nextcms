@@ -1,0 +1,16 @@
+{
+	"_about": {
+		"description": "Hiển thị các nút Thích và Không Thích để đánh giá bài viết, ảnh, video, v.v",
+		"title": "Đánh giá"
+	},
+	"config": {
+		"basic": "Cơ bản",
+		"theme": "Mẫu giao diện"
+	},
+	"show": {
+		"alreadyVoted": "Bạn đã đánh giá",
+		"authenticationRequired": "Bạn phải đăng nhập mới có thể đánh giá",
+		"dislike": "Không thích %s",
+		"like": "Thích %s"
+	}
+}

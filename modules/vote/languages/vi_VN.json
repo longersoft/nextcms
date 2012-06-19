@@ -1,0 +1,27 @@
+{
+	"_about": {
+		"description": "Cho phép người dùng đánh giá bình luận, bài viết, ảnh, ...",
+		"title": "Đánh giá"
+	},
+	"_permission": {
+		"config": {
+			"description": "Cấu hình module",
+			"actions": {
+				"config": "Cấu hình module"
+			}
+		}
+	},
+	"global": {
+		"_share": {
+			"saveAction": "Lưu"
+		}
+	},
+	"config": {
+		"config": {
+			"authenticationRequired": "Yêu cầu đăng nhập để đánh giá",
+			"error": "Xin lỗi, không thể cập nhật các tùy chọn của module",
+			"success": "Các tùy chọn của module đã được cập nhật thành công",
+			"title": "Cấu hình module Đánh giá"
+		}
+	}
+}

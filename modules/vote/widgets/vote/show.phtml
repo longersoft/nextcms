@@ -1,0 +1,56 @@
+<?php
+/**
+ * NextCMS
+ * 
+ * @author		Nguyen Huu Phuoc <thenextcms@gmail.com>
+ * @copyright	Copyright (c) 2011 - 2012, Nguyen Huu Phuoc
+ * @license		http://nextcms.org/license.txt	(GNU GPL version 2 or later)
+ * @link		http://nextcms.org
+ * @category	modules
+ * @package		vote
+ * @subpackage	widgets
+ * @since		1.0
+ * @version		2012-04-06
+ */
+
+defined('APP_VALID_REQUEST') || die('You cannot access the script directly.');
+?>
+
+<?php if ($this->entity['entity_id'] && $this->entity['entity_class']) : ?>
+<div class="voteWidgetsVote">
+	<a class="like" data-app-voted="<?php echo $this->voted ? 'true' : 'false'; ?>" data-app-entity-props="<?php echo $this->encodedEntity; ?>"<?php if ($this->voted) : ?> style="cursor: default" title="<?php echo $this->translator(true)->_('show.alreadyVoted'); ?>"<?php elseif ($this->authRequired) : ?> href="<?php echo $this->url(array(), 'core_auth_login'); ?>" title="<?php echo $this->translator(true)->_('show.authenticationRequired'); ?>"<?php endif; ?>><span><?php echo $this->numUps; ?></span></a>
+	<a class="dislike" data-app-voted="<?php echo $this->voted ? 'true' : 'false'; ?>" data-app-entity-props="<?php echo $this->encodedEntity; ?>"<?php if ($this->voted) : ?> style="cursor: default" title="<?php echo $this->translator(true)->_('show.alreadyVoted'); ?>"<?php elseif ($this->authRequired) : ?> href="<?php echo $this->url(array(), 'core_auth_login'); ?>" title="<?php echo $this->translator(true)->_('show.authenticationRequired'); ?>"<?php endif; ?>><span><?php echo $this->numDowns; ?></span></a> 
+</div>
+
+<?php $this->script()->captureStartOnce('voteWidgetsVote'); ?>
+$(document).ready(function() {
+	$(".voteWidgetsVote .like, .voteWidgetsVote .dislike").click(function() {
+		var widget = $(this).parents(".voteWidgetsVote");
+		var vote   = $(this).hasClass("like") ? 1 : -1;
+		var props  = $(this).attr("data-app-entity-props");
+		if ($(this).attr("data-app-voted") + "" == "false") {
+			$.get("<?php echo $this->url(array(), 'core_widget_render'); ?>", {
+				"_mod": "vote",
+				"_name": "vote",
+				"_method": "vote",
+				"_format": "json",
+				noRenderScript: true,
+				vote: vote,
+				entity: props
+			}, function(data) {
+				if (data.result == "APP_RESULT_OK") {
+					$(widget).find(".like, .dislike")
+							 .unbind("click")
+							 .css("cursor", "default")
+							 .attr("data-app-voted", "true")
+							 .attr("title", "<?php echo $this->translator(true)->_('show.alreadyVoted'); ?>");
+					// Update the counter
+					var counter = $(widget).find((data.vote == 1) ? ".like span" : ".dislike span")[0];
+					$(counter).html(parseInt($(counter).html()) + 1);
+				}
+			});
+		}
+	});
+});
+<?php $this->script()->captureEndOnce('voteWidgetsVote'); ?>
+<?php endif; ?>
