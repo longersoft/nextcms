@@ -1,0 +1,326 @@
+[*] Add appCenter class: Place the DIV element at center of its parent element
+[*] Add Dojo and jQuery versions, so I can test other versions later
+[*] Place the loading message at center of the containing element
+[*] Show error notification if the action is done unsuccessfully
+[*] Show the number of characters of title and description of article/photo/video
+[ad] Add default cover of banner
+[ad] Add Google Adsense widget
+[ad] Add JS type to the list of accepted banner's format
+[ad] Automatically set the banner title after dropping a file to the URL box
+[ad] BannerProvider hook
+[ad] Banners listing: Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode banner's properties
+[ad] Banners widget
+[ad] Manage banners
+[ad] Manage zones
+[ad] Place banners on page
+[ad] Place banners on page: Add separator to template and page select controls
+[ad] Place banners on page: Support main content pane and tab containers
+[category] Adding/updating category: Place the localizing guide message at the center of the localization pane
+[category] Category context menu: Add sub-category
+[category] Category Tree: Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode tree node properties
+[category] When move category, back-up the original category's Id
+[comment] Comments widget
+[comment] Module configuration: Add "Require authentication to comment" option
+[comment] Rename object_* properties to entity_*
+[comment] Show a link to toggle the quote comment
+[comment] Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode entity's properties
+[comment] Vote comments
+[content] Add "Blog entry" type
+[content] Add "Mark as featured article" option
+[content] Add Content_Models_Article::getAuthor() method
+[content] Add Content_Models_Article::getCover($size) method
+[content] Add Content_Models_Article::getCoverTitle() method
+[content] Add meta keyword and description tags to article
+[content] Add num_views field to the content_article table
+[content] Add page of viewing articles by a given tag
+[content] Add page of viewing static page
+[content] Add sitemap declaration to robots.txt after installing the content module
+[content] Add title for article's cover
+[content] Adding/Updating article: Do NOT show the preview of content
+[content] Adding/updating article: Place the localizing guide message at the center of the localization pane
+[content] archive widget: Add "type" parameter
+[content] Archive widget: Show number of articles in each date of a given month
+[content] Article widget: Choose the articles from various types of data source
+[content] Articles manager: Init the toolbar based on given criteria
+[content] articles widget: Add "ticker" theme
+[content] Articles widget: Add featured, image icon, video icon options
+[content] Articles widget: Add type field
+[content] Articles widget: Choose theme
+[content] Breadcrumb widget
+[content] breadcrumb widget: Add "type" parameter
+[content] categories widget: Active the current category
+[content] categories widget: Does not show the number of articles if it is equal to zero
+[content] categories widget: Show the category image
+[content] Change icons field to image_icon and video_icon fields
+[content] Check if the article's slug is taken or not
+[content] content_feed_index route: Add "type" parameter
+[content] Content_Services_Article::find() now allow to pass the array of article's Ids
+[content] Define XML layout for searching page
+[content] Editor widget: Add media button to the TinyMCE toolbar
+[content] Fix issue: Cannot split the content of article to other widget
+[content] Fixed articles widget issue: Cannot load the category based on the selected language
+[content] LinkProvider: Add a menu item to activate the associated tab in the Link toolbox
+[content] LinkProvider: Place the help messages at the center of result content pane
+[content] Make the LinkProvider as article provider
+[content] Organize articles using folders
+[content] Remove associations between articles and tag after deleting a tag
+[content] Rename data-app-article attribute as data-app-entity-props
+[content] RSS/Atom channel of given author
+[content] Save order of articles in the same category
+[content] Searchbox widget
+[content] Set the cover's title as the title of image after dropping an image to cover area
+[content] Set the meta keywords tag based on the tags of article
+[content] Show article's tags in the page of viewing article
+[content] Show the RSS link at the page of viewing article/blog entry details
+[content] Tag article
+[content] The feed route that does not response valid XML feeds
+[content] Update number of comments of article after updating comment's status
+[content] Update sitemap after activating an article
+[content] Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode entity's properties
+[content] View articles sitemap
+[content] View sitemap of articles by year and month
+[core] Access logs manager: Filter by IP address
+[core] Add caching static resources options to .htaccess to improve page loading
+[core] Add compressed version of core.js.base.I18N and core.js.Constant for front-end optimization
+[core] Add compressing text, html, javascript, css and xml options to .htaccess
+[core] Add Core_Services_Hook::getOptionsByInstance() and Core_Services_Hook::setOptionsForInstance() to get and set hook's options
+[core] Add Core_Services_Plugin::getOptionsByInstance() and Core_Services_Plugin::setOptionsForInstance() to get and set plugin's options
+[core] Add Core_Services_Task::getOptionsByInstance() and Core_Services_Task::setOptionsForInstance() to get and set task's options
+[core] Add home page to frontend pages which user can define its layout
+[core] Add noTheming parameter to extension when rendering configuration script
+[core] Add the password unchanged guide to the updating profile page
+[core] Adding/updating page: Place the localizing guide message at the center of the localization pane
+[core] admin layout: Add icon to the toolbox panes
+[core] Admin layout: Add icons to Homepage, Private Messages, Profile, OpenId menu items
+[core] Admin layout: Expand the toolbox pane if it is hidden
+[core] admin layout: Group Image, File toolboxes
+[core] Admin layout: Place the scripts at the bottom of page
+[core] admin layout: Show Link toolbox
+[core] admin layout: Show video toolbox
+[core] After dropping an image to TinyMCE editor, wrap the img and title in a "span" tag with class appDroppedImage
+[core] After installing the app, the number of root users must be 1, not 2
+[core] Allow to run cron with specified cron name and module
+[core] Allow to set a callback after dropping a link from the Link toolbox
+[core] Auth plugin: Allow to config the permission of a route depending on
+[core] AutoBackup task: View, download, delete SQL file
+[core] Back-end layout: Add "Powered by NextCMS" container
+[core] Clean the cache
+[core] core.js.base.Encoder: Add encode() and decode() methods which might be used frequently
+[core] Core_Application_Resource_Module: Loads modules which are installed, not all modules found in the "modules" directory
+[core] Core_Base_Hook_Registry: Add $echo parameter that indicates that the app will echo after calling hook method or not
+[core] Cron tasks manager: Run a task
+[core] Debug plugin: Add a menu item under the Modules > Core menu to open the Debug toolbox
+[core] Debug plugin: Add an icon to the Debug tab
+[core] Don't load the widgets on user's dashboard if user is viewing other page
+[core] Enable/disable a plugin
+[core] Encoder view helper: Encode and decode entity properties
+[core] Entity class: Set the array of properties which user want to get their values
+[core] Extension about.php file: Change 'installQueries' to install->queries
+[core] Extensions use xxAction() to name the methods
+[core] Fix Layout Editor: Causes an error if the widget has a too long parameter
+[core] Fix Offline plugin: Does not work in the front-end
+[core] Fix the Core_Filters_Highlight: Now it does not break the HTML tags anymore
+[core] Fix the Layout Editor issue: Cannot use multiple radio buttons with the same name in different widgets
+[core] Fix the permalink settings issue: Does not work with static route
+[core] Fix the Style view helper: Does not show the RSS link in the head section if the caching CSS is enabled
+[core] Highlight filter: Highlight searching keyword
+[core] Improve the TargetManager: The images and links just need to set the
+[core] In the back-end, add a menu item to active UserProvider hook
+[core] Install and uninstall extension: Execute callbacks defined in the about.php file
+[core] Install popular hooks/widgets after installing the app
+[core] Install template: Add all pages found in the template configuration file
+[core] Install Wizard: Add password generator
+[core] Install Wizard: Cannot get the route URL when calling the installing callbacks
+[core] Install Wizard: Check password strength
+[core] Install Wizard: Set the language in the config file (configs/application.{APP_ENV}.php)
+[core] Layout Editor: Add "_ajax" parameter to indicate that the widget is loaded by Ajax
+[core] Layout Editor: Allow to set the list of filter classes
+[core] Layout Editor: Allow to set the parameter's name as array by using []
+[core] Layout Editor: Cannot drop image, video, etc to the TinyMCE editor after dropping it to other position/zone/grid
+[core] Layout Editor: Cannot remove the filter
+[core] Layout Editor: Change the order of filters
+[core] Layout Editor: Collapse/Expand all portlets in a grid container or in all containers
+[core] Layout Editor: Copy/paste layout data between pages
+[core] Layout Editor: Don't allow to open multiple instances of page's layout editor
+[core] Layout Editor: Drag the layout from the Layout toolbox and drop over a border container node
+[core] Layout Editor: Drag the tree node to move the associated widget
+[core] Layout Editor: Drag widget from Layout toolbox and drop on the layout tree view
+[core] Layout Editor: Fix _loadWidgetParams(), now allow to place the widget input inside other container (tab container, ...)
+[core] Layout Editor: Highlight the container associating with the selected tree node
+[core] Layout Editor: Highlight the widget when moving the mouse over the associated node on the tree
+[core] Layout Editor: If there are tab container side the portlet pane, the portlet does not show the content of selected tab until I click on a tab title
+[core] Layout Editor: Import (export) layout from (to) a XML file
+[core] Layout Editor: Init the checked attribute of RadioButton/CheckBox widgets after loading the layout data
+[core] Layout Editor: Insert main content pane
+[core] Layout Editor: Set active tab
+[core] Layout Editor: Set cache life time to widget
+[core] Layout Editor: Set filters for the main content
+[core] Layout Editor: Set icon to the layout tree node based on the node type (border/grid container or widget)
+[core] Layout Editor: Set more descriptive label to the layout tree node
+[core] Layout Editor: Set the filter(s) to widget's output
+[core] Layout Editor: Set the layout of border container to 'headline' or 'sidebar'
+[core] Layout Editor: Support Tab container
+[core] Layout Editor: Use CDATA to store parameter's value in the XML file
+[core] Layout Editor: Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode widget's properties
+[core] Lazyload plugin
+[core] Lazyload plugin: Does not enable if the response returns an XML output (such as XML Feed)
+[core] Lazyload plugin: Remove caching scripts after installing/uninstalling the plugin
+[core] Login widget
+[core] Login widget: Hide the OpenId logging in link if OpenId is not enabled
+[core] Manage language files
+[core] Managing privileges page: Show 4 Title Panes on each row
+[core] Module configurator: Add compress and cache CSS and JS settings
+[core] Module configurator: Allow to use memcache to store sessions
+[core] Module configurator: Cache settings
+[core] Module configurator: Disable cron task in web requests
+[core] Module configurator: Enable/disable OpenId registration
+[core] Module configurator: Set notification position and duration
+[core] Module configurator: Set the Captcha options
+[core] Module configurator: Set the cookie domain
+[core] Module configurator: Set the localization languages
+[core] Module configurator: Set the prefix of administrator URL
+[core] Module configurator: Set the static server
+[core] Move captcha.ttf to the core module
+[core] Move CSS styles of PasswordStrengthMeter to admin skin to resuse later
+[core] Move methods of the UserCounter view helper to the User view helper
+[core] Move the feed configurations to core module
+[core] PageMapper view helper: Load the page associated with current route
+[core] Pages manager: Add title, set title of page (for <title> tag) if it is set
+[core] Paginator view helper: Reset the language dir after rendering the pager
+[core] Parse the widget tags in given content and render the widgets
+[core] PasswordStrengthMeter: Don't show the status bar if the password is empty
+[core] Permalink settings: Reset links to default
+[core] Place the CSS files required by hooks at the head section of page
+[core] Refactor: Add $role->isRootRole() method to check if a role is root one
+[core] Refactor: Add $user->isRootUser() method to check if an user is root one
+[core] Registeration: Set default role for new user
+[core] Remove all associating resources, privileges after uninstalling extension (module/plugin/hook/task/widget)
+[core] Remove cached data of page
+[core] Remove role inheritance
+[core] Rename data-app-thumbnails as data-app-dndthumbnails
+[core] Script view helper: Allow to use dynamic data (binded from PHP code) in the script (between captureStart() and captureEnd() methods)
+[core] Script view helper: Show widget's inline script only once time in page
+[core] Script view helper: When the compressing JS is updated, load new JS file instead of adding timestamp to query string
+[core] Set cache lifetime for pages
+[core] Set styles to the selected module
+[core] Set the level of error reporting based on the environment
+[core] Set the meta description and meta keywords for the homepage
+[core] Setting permissions: Add checkbox to select/unselect all privileges
+[core] Show a friendly message of 404 Not Found error
+[core] Show additional menus to perform available actions of a task
+[core] Show confirmation dialog when uninstalling the module
+[core] Show the default title at the page of showing error messages
+[core] Show the plugin/hook configuration form in a pane instead of a popup dialog
+[core] Style view helper: When the compressing CSS is updated, load new CSS file instead of adding timestamp to query string
+[core] Support dragging and dropping images: Rename data-app-path attribute as data-app-dndimage
+[core] Support dragging and dropping links: The link data (url, title) can be defined via "data-app-dndlink" attribute
+[core] Support module bootstrapping. Also, the module bootstrapper is called if and only if the a module route is requested
+[core] Support RTL language
+[core] TargetManager class: Handle drag and drop video
+[core] Tasks manager: Show the last and next execution time
+[core] Templates manager: Auto show buttons when hover the template container
+[core] The hook does not get the correct language file when apply many filters to the main content/widget
+[core] The value of data-app-dndlink attribute must be encoded using core.js.base.Encoder.encode() method (JS) or encoder view helper (PHP)
+[core] The Vietnamese language file (/modules/core/languages/vi_VN.json) is not valid JSON file
+[core] Unsubscribe events of old page after loading new URL
+[core] UserProvider hook: show not found message if there is no users
+[core] Users manager: Init the toolbar based on given criteria
+[core] Users Manager: Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode entity's properties
+[core] Widget view helper: Return if the module has not been installed yet
+[file] Add File_Services_Attachment::increaseNumDownloads() method
+[file] Add watermark to uploaded images
+[file] Adding/updating attachments: Place the localizing guide message at the center of the localization pane
+[file] Attachment Links Provider: Add a menu item to activate the associated tab in the Link toolbox
+[file] Attachment table: Add number of downloads column
+[file] Attachments Manager: Add slug field
+[file] Cannot save the settings
+[file] Config the uploadable file types
+[file] File Explorer hook: Format the data of uploaded file element to support showing a player after dropping file to TinyMCE editor
+[file] Generate unique hash for each attachment
+[file] Improve UI of the pages of adding/updating attachment
+[file] Move watermark.ttf to the file module
+[file] Set the watermark options
+[file] The page to download attachment
+[file] Uploader hook: Format the data of uploaded file element to support showing a player after dropping file to TinyMCE editor
+[file] Uploader hook: Show the maxium size of uploaded file
+[file] Uploader: Generate the name of uploaded file on server based on the name of original file
+[file] Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode entity's properties
+[media] Activate/deactivate album
+[media] Activate/deactivate photo
+[media] Activate/deactivate playlist
+[media] Activate/deactivate video
+[media] Add duration to video
+[media] Add localization to the album/photo/playlist/video
+[media] Add Media_Models_Photo::getThumbnail($size) method
+[media] Add Media_Models_Video::getPoster($size) method
+[media] Add page of listing videos in the front-end
+[media] Add page of viewing photos by given tag
+[media] Add page of viewing videos by given tag
+[media] Add PhotoProvider to the Image toolbox
+[media] Add VideoProvider to the Video toolbox
+[media] Add watermark option when uploading photos
+[media] Editor hook: Disable or enable the "Add watermark" option based on the file module's settings
+[media] Embed player page
+[media] Fix issue: Cannot add photos to album
+[media] Fix issue: Cannot add videos to playlist
+[media] Flickr widget: List the images taken from Flickr (by user, tag)
+[media] Import photos from Flickr
+[media] Media_Services_Photo::find() now allow to pass the array of photo's Ids
+[media] Photo entity: Add num_downloads field
+[media] Photo Provider: Allow to choose the size of thumbnail
+[media] Photo/Video provider: Only show the activated photos/videos
+[media] PhotoProvider: Provide the array of thumbnails
+[media] Photos widget
+[media] Replace a photo with other one (keep the thumbnails URLs)
+[media] Set the title after dropping an uploaded video at the page of adding/updating video
+[media] Show the maximum size of uploaded files at the page of uploading photos
+[media] Tag photo
+[media] Tag video
+[media] Update album's cover by dropping an image from the Image Editor toolbox
+[media] Update number of comments of photo after updating comment's status
+[media] Update number of comments of video after updating comment's status
+[media] Update playlist's poster by dropping an image from the Image Editor toolbox
+[media] Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode entity's properties
+[media] Videos widget
+[media] Vote photo
+[media] Vote video
+[menu] Adding/updating menu: Place the localizing guide message at the center of the localization pane
+[menu] Cannot show the menu items tree when editing the menu
+[menu] Menu builder: Set ID, CSS classes, CSS styles to menu item
+[menu] menu widget: Fix the HTML id and target attributes
+[message] Private Messages Manager: Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode entity's properties
+[message] Refactor: Move private message managements in the Core module to new module
+[poll] Adding/updating poll: Place the localizing guide message at the center of the localization pane
+[poll] Poll widget
+[poll] poll widget: Allow to vote only one time from the same IP or authenticated user
+[seo] Gatracker plugin: Use Script view helper to append Google Analytic tracker script
+[seo] Sitemap Builder: Use Encoder view helper and core.js.base.Encoder.decode()  to encode and decode sitemap item's properties
+[seo] Verification plugin: Support Bing verification tag
+[tag] Automatically generate the slug when suggest a tag
+[tag] Configure module
+[tag] Manage tags
+[tag] Refactor: Add TagCollector view helper to render a box container that can be used to contain tags dragged from the Tags provider
+[tag] Tag provider
+[tag] Tag sugesstions
+[tag] TagCloud widget
+[util] Add Share widget
+[util] BadwordCensor hook: Replace bad words
+[util] Cannot update options of IpBlocker plugin
+[util] Email Obfuscator plugin
+[util] Email Obfuscator plugin: Use Script view helper to append mail address encoder script
+[util] GoogleMap widget
+[util] IP Blocker plugin: Set the IP address that are allowed to access the back-end section
+[util] Minifier plugin: Minify HTML output
+[util] Navigator hook: Creates table of content from given text
+[util] Navigator hook: Return if there is no heading found
+[util] Slideshow hook: Show a slideshow of all images found in a given content
+[util] Social widget
+[util] The filter hooks now implements Zend_Filter_Interface
+[util] Twitter updater hook: Post new status about new article, photo, video, etc to Twitter after publishing them
+[util] Twitter widget
+[util] URL Shortener Hook: Shortens all links found in a given text
+[util] URL Shortener widget: Shorten URL of current page
+[util] urlshortener hook: Use DomDocument to get all links instead of using regular expression
+[util] UrlShortener widget: Allow to use custom service
+[vote] Add "Require login to vote" setting
+[vote] Vote widget
